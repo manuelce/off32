@@ -120,7 +120,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
           <button onClick={() => setContactOpen(true)} style={{ background: '#fe3812', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '13px 24px', borderRadius: '999px', border: 'none', cursor: 'pointer', letterSpacing: '0.5px' }}>
             contatta {p.name.split(' ')[0]} →
           </button>
-          <button style={{ background: 'transparent', color: '#888', fontSize: '12px', padding: '11px 24px', border: '1px solid #EDE8DF', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px' } as any}>
+          <button style={{ background: '#F8F5F0', color: '#888', fontSize: '12px', padding: '11px 24px', border: '1px solid #EDE8DF', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px' }}>
             richiedi collaborazione
           </button>
           {/* mini stats */}
