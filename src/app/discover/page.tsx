@@ -52,7 +52,7 @@ export default function DiscoverPage() {
             <a key={link} href={`/${link === 'discover' ? 'discover' : link}`} style={{ fontSize: '11px', color: link === 'discover' ? '#fff' : '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none', background: link === 'discover' ? '#2a2a2a' : 'transparent' }}>{link}</a>
           ))}
         </div>
-        <a href="/apply" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
+        <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
           Entra nell&apos;hub
         </a>
       </nav>

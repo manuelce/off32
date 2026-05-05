@@ -101,9 +101,10 @@ export default function Home() {
               <span key={link} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px' }}>{link}</span>
             ))}
           </div>
-          <button style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', border: 'none', cursor: 'pointer', letterSpacing: '0.5px' }}>
-            Entra nell&apos;hub
-          </button>
+          <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
+              Entra nell'hub
+          </a>
+          
         </nav>
 
         {/* ── 02 HERO — video sfondo, testo basso sinistra ── */}
