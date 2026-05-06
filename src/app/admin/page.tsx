@@ -31,74 +31,30 @@ export default function AdminPage() {
   // ── APPROVA PROFESSIONISTA → crea profilo + professionista ──────────────
   const approveApplication = async (app: any) => {
     setActionLoading(app.id)
-
+  
     // 1. Aggiorna stato candidatura
-    const { error: appError } = await supabase
-      .from('applications')
-      .update({ status: 'approved' })
-      .eq('id', app.id)
-
-    if (appError) {
-      alert('Errore aggiornamento candidatura: ' + appError.message)
-      setActionLoading(null)
-      return
-    }
-
-    // 2. Genera username dallo slug del nome
+    await supabase.from('applications').update({ status: 'approved' }).eq('id', app.id)
+  
+    // 2. Genera username univoco
     const username = app.full_name
       .toLowerCase()
       .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '')
-
-    // 3. Crea profilo in auth placeholder (usiamo un uuid fisso basato sull'email)
-    // Nota: il profilo reale verrà creato quando l'utente fa login con Clerk
-    // Per ora creiamo direttamente il professionista con un user_id temporaneo
-    const tempUserId = crypto.randomUUID()
-
-    // 4. Prova a inserire in profiles (potrebbe fallire se esiste già)
-    await supabase.from('profiles').upsert([{
-      id: tempUserId,
-      email: app.email,
-      role: 'professional',
-    }]).select()
-
-    // 5. Crea il professionista
-    const { error: profError } = await supabase
-    .from('professionals')
-    .upsert([{
-        user_id: tempUserId,
-        username: username,
-        full_name: app.full_name,
-        bio: app.motivation || '',
-        city: app.city || '',
-        status: 'approved',
-        plan: 'free',
-        available: true,
-        experience_years: 0,
-      }])
-
-    if (profError) {
-      // Se lo username esiste già aggiunge un numero
-      if (profError.code === '23505') {
-        const usernameAlt = username + '-' + Date.now().toString().slice(-4)
-        await supabase.from('professionals').insert([{
-          user_id: tempUserId,
-          username: usernameAlt,
-          full_name: app.full_name,
-          bio: app.motivation || '',
-          city: app.city || '',
-          status: 'approved',
-          plan: 'free',
-          available: true,
-          experience_years: 0,
-        }])
-      } else {
-        alert('Errore creazione professionista: ' + profError.message)
-        setActionLoading(null)
-        return
-      }
-    }
-
+      .replace(/[^a-z0-9-]/g, '') + '-' + Date.now().toString().slice(-4)
+  
+    // 3. Crea professionista direttamente (senza profilo)
+    const { error } = await supabase.from('professionals').insert([{
+      username: username,
+      full_name: app.full_name,
+      bio: app.motivation || '',
+      city: app.city || '',
+      status: 'approved',
+      plan: 'free',
+      available: true,
+      experience_years: 0,
+    }])
+  
+    if (error) alert('Errore: ' + error.message)
+  
     setActionLoading(null)
     fetchData()
   }
