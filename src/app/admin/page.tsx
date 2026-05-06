@@ -56,7 +56,7 @@ export default function AdminPage() {
     const tempUserId = crypto.randomUUID()
 
     // 4. Prova a inserire in profiles (potrebbe fallire se esiste già)
-    await supabase.from('profiles').insert([{
+    await supabase.from('profiles').upsert([{
       id: tempUserId,
       email: app.email,
       role: 'professional',
@@ -64,8 +64,8 @@ export default function AdminPage() {
 
     // 5. Crea il professionista
     const { error: profError } = await supabase
-      .from('professionals')
-      .insert([{
+    .from('professionals')
+    .upsert([{
         user_id: tempUserId,
         username: username,
         full_name: app.full_name,
