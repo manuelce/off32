@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
 
 const SKILLS_NEEDED = [
   'web developer', 'illustratore', '3D / motion',
@@ -37,9 +38,35 @@ export default function ClientApplyPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!form.full_name || !form.email || !form.description) {
+      alert('Compila tutti i campi obbligatori.')
+      return
+    }
+  
     setStatus('loading')
-    setTimeout(() => setStatus('success'), 1400)
+  
+    const { error } = await supabase
+      .from('client_applications')
+      .insert([{
+        full_name: form.full_name,
+        email: form.email,
+        company: form.company,
+        website: form.website,
+        skills_needed: selectedSkills,
+        budget_range: selectedBudget,
+        timeline: form.timeline,
+        description: form.description,
+        status: 'pending',
+      }])
+  
+    if (error) {
+      alert('Errore: ' + error.message)
+      setStatus('idle')
+      return
+    }
+  
+    setStatus('success')
   }
 
   if (status === 'success') {
