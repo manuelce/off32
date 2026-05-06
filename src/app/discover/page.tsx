@@ -1,21 +1,27 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
 const SKILLS = ['tutti', 'web dev', 'illustrazione', '3D / motion', 'UX / UI', 'marketing', 'copywriting']
 const CITIES = ['Milano', 'Roma', 'Torino', 'Bologna', 'Napoli', 'Firenze', 'Remote']
 const LEVELS = ['senior', 'mid', 'junior']
 
-const PROFESSIONALS = [
-  { initials: 'MR', name: 'Marco Ricci', role: 'Web Developer', city: 'Milano', tags: ['React', 'Next.js', 'Shopify'], bg: '#EEF8F3', color: '#0F6E56', premium: true, projects: 34, rating: 4.9, available: true, level: 'senior', skill: 'web dev', bio: 'Sviluppo eCommerce performanti e app web custom. Non faccio vetrine — faccio strumenti che vendono.' },
-  { initials: 'SL', name: 'Sara Longo', role: 'Illustratrice', city: 'Roma', tags: ['Branding', 'Editorial', 'Procreate'], bg: '#EEEDFE', color: '#534AB7', premium: true, projects: 21, rating: 5.0, available: true, level: 'senior', skill: 'illustrazione', bio: 'Illustratrice editoriale e brand designer. Trasforma concetti complessi in immagini memorabili.' },
-  { initials: 'AF', name: 'Alex Ferro', role: '3D Artist', city: 'Torino', tags: ['Blender', 'Cinema 4D', 'Motion'], bg: '#FDF0EB', color: '#993C1D', premium: true, projects: 18, rating: 4.8, available: true, level: 'senior', skill: '3D / motion', bio: '3D artist e motion designer. Crea mondi digitali con attenzione maniacale ai dettagli.' },
-  { initials: 'GV', name: 'Giulia Vitale', role: 'UX Designer', city: 'Napoli', tags: ['Figma', 'Research', 'Webflow'], bg: '#FEF8EE', color: '#854F0B', premium: false, projects: 29, rating: 4.7, available: true, level: 'mid', skill: 'UX / UI', bio: 'Designer con ossessione per la semplicità. Ogni interfaccia che progetto deve essere intuitiva al primo tocco.' },
-  { initials: 'DC', name: 'Dario Conti', role: 'Full Stack Developer', city: 'Bologna', tags: ['Vue.js', 'Laravel', 'MySQL'], bg: '#EEF8F3', color: '#0F6E56', premium: false, projects: 41, rating: 4.5, available: false, level: 'senior', skill: 'web dev', bio: 'Full stack developer con 8 anni di esperienza. Specializzato in architetture scalabili e API performanti.' },
-  { initials: 'FM', name: 'Federica Mele', role: 'Motion Designer', city: 'Firenze', tags: ['After Effects', 'Lottie', '3D'], bg: '#FDF0EB', color: '#993C1D', premium: false, projects: 15, rating: 4.9, available: true, level: 'mid', skill: '3D / motion', bio: 'Motion designer con focus su animazioni web e video. Ogni pixel si muove con un motivo preciso.' },
-  { initials: 'LP', name: 'Luca Pellegrini', role: 'Brand Designer', city: 'Milano', tags: ['Branding', 'Figma', 'Illustrator'], bg: '#EEEDFE', color: '#534AB7', premium: false, projects: 23, rating: 4.6, available: true, level: 'mid', skill: 'UX / UI', bio: 'Brand designer con esperienza nel settore luxury e startup. Il brand è la prima impressione — deve durare.' },
-  { initials: 'RB', name: 'Roberta Bianchi', role: 'Copywriter', city: 'Roma', tags: ['Copy', 'Content', 'SEO'], bg: '#F0FEF0', color: '#2D7A2D', premium: false, projects: 38, rating: 4.8, available: true, level: 'senior', skill: 'copywriting', bio: 'Copywriter con 10 anni di esperienza. Le parole giuste al momento giusto cambiano tutto.' },
-  { initials: 'TM', name: 'Tommaso Mari', role: 'Marketing Strategist', city: 'Milano', tags: ['Meta Ads', 'Google Ads', 'SEO'], bg: '#FEF8EE', color: '#854F0B', premium: false, projects: 19, rating: 4.4, available: false, level: 'mid', skill: 'marketing', bio: 'Stratega digitale con focus su performance marketing. I numeri non mentono — li faccio parlare.' },
+const PROFESSIONALS_STATIC = [
+  { initials: 'MR', name: 'Marco Ricci', role: 'Web Developer', city: 'Milano', tags: ['React', 'Next.js', 'Shopify'], bg: '#EEF8F3', color: '#0F6E56', premium: true, projects: 34, rating: 4.9, available: true, level: 'senior', skill: 'web dev', bio: 'Sviluppo eCommerce performanti e app web custom. Non faccio vetrine — faccio strumenti che vendono.', slug: 'marco-ricci' },
+  { initials: 'SL', name: 'Sara Longo', role: 'Illustratrice', city: 'Roma', tags: ['Branding', 'Editorial', 'Procreate'], bg: '#EEEDFE', color: '#534AB7', premium: true, projects: 21, rating: 5.0, available: true, level: 'senior', skill: 'illustrazione', bio: 'Illustratrice editoriale e brand designer. Trasforma concetti complessi in immagini memorabili.', slug: 'sara-longo' },
+  { initials: 'AF', name: 'Alex Ferro', role: '3D Artist', city: 'Torino', tags: ['Blender', 'Cinema 4D', 'Motion'], bg: '#FDF0EB', color: '#993C1D', premium: true, projects: 18, rating: 4.8, available: true, level: 'senior', skill: '3D / motion', bio: '3D artist e motion designer. Crea mondi digitali con attenzione maniacale ai dettagli.', slug: 'alex-ferro' },
+  { initials: 'GV', name: 'Giulia Vitale', role: 'UX Designer', city: 'Napoli', tags: ['Figma', 'Research', 'Webflow'], bg: '#FEF8EE', color: '#854F0B', premium: false, projects: 29, rating: 4.7, available: true, level: 'mid', skill: 'UX / UI', bio: 'Designer con ossessione per la semplicità. Ogni interfaccia che progetto deve essere intuitiva al primo tocco.', slug: 'giulia-vitale' },
+  { initials: 'DC', name: 'Dario Conti', role: 'Full Stack Developer', city: 'Bologna', tags: ['Vue.js', 'Laravel', 'MySQL'], bg: '#EEF8F3', color: '#0F6E56', premium: false, projects: 41, rating: 4.5, available: false, level: 'senior', skill: 'web dev', bio: 'Full stack developer con 8 anni di esperienza. Specializzato in architetture scalabili e API performanti.', slug: 'dario-conti' },
+  { initials: 'FM', name: 'Federica Mele', role: 'Motion Designer', city: 'Firenze', tags: ['After Effects', 'Lottie', '3D'], bg: '#FDF0EB', color: '#993C1D', premium: false, projects: 15, rating: 4.9, available: true, level: 'mid', skill: '3D / motion', bio: 'Motion designer con focus su animazioni web e video. Ogni pixel si muove con un motivo preciso.', slug: 'federica-mele' },
+  { initials: 'LP', name: 'Luca Pellegrini', role: 'Brand Designer', city: 'Milano', tags: ['Branding', 'Figma', 'Illustrator'], bg: '#EEEDFE', color: '#534AB7', premium: false, projects: 23, rating: 4.6, available: true, level: 'mid', skill: 'UX / UI', bio: 'Brand designer con esperienza nel settore luxury e startup. Il brand è la prima impressione — deve durare.', slug: 'luca-pellegrini' },
+  { initials: 'RB', name: 'Roberta Bianchi', role: 'Copywriter', city: 'Roma', tags: ['Copy', 'Content', 'SEO'], bg: '#F0FEF0', color: '#2D7A2D', premium: false, projects: 38, rating: 4.8, available: true, level: 'senior', skill: 'copywriting', bio: 'Copywriter con 10 anni di esperienza. Le parole giuste al momento giusto cambiano tutto.', slug: 'roberta-bianchi' },
+  { initials: 'TM', name: 'Tommaso Mari', role: 'Marketing Strategist', city: 'Milano', tags: ['Meta Ads', 'Google Ads', 'SEO'], bg: '#FEF8EE', color: '#854F0B', premium: false, projects: 19, rating: 4.4, available: false, level: 'mid', skill: 'marketing', bio: 'Stratega digitale con focus su performance marketing. I numeri non mentono — li faccio parlare.', slug: 'tommaso-mari' },
 ]
+
+const sideLabel: React.CSSProperties = {
+  fontSize: '9px', letterSpacing: '2px', color: '#AAA098',
+  textTransform: 'uppercase', marginBottom: '10px', fontFamily: 'monospace',
+}
 
 export default function DiscoverPage() {
   const [activeSkill, setActiveSkill] = useState('tutti')
@@ -24,18 +30,51 @@ export default function DiscoverPage() {
   const [onlyAvailable, setOnlyAvailable] = useState(false)
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('rilevanza')
+  const [dbProfessionals, setDbProfessionals] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filtered = PROFESSIONALS.filter(p => {
+  useEffect(() => {
+    const fetchProfessionals = async () => {
+      const { data } = await supabase
+        .from('professionals')
+        .select(`*, professional_skills ( level, skills ( name, category ) )`)
+        .eq('status', 'approved')
+        .order('plan', { ascending: false })
+
+      if (data && data.length > 0) {
+        const mapped = data.map(p => ({
+          initials: p.full_name?.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase() || 'XX',
+          name: p.full_name,
+          role: p.username || 'Professionista',
+          city: p.city || 'Italia',
+          tags: p.professional_skills?.map((ps: any) => ps.skills?.name).filter(Boolean).slice(0, 3) || [],
+          bg: '#EEF8F3', color: '#0F6E56',
+          premium: p.plan === 'studio',
+          projects: 0, rating: 5.0,
+          available: p.available,
+          level: 'senior', skill: 'web dev',
+          bio: p.bio || 'Professionista verificato OFF32.',
+          slug: p.username,
+        }))
+        setDbProfessionals(mapped)
+      }
+      setLoading(false)
+    }
+    fetchProfessionals()
+  }, [])
+
+  const allProfessionals = dbProfessionals.length > 0 ? dbProfessionals : PROFESSIONALS_STATIC
+
+  const filtered = allProfessionals.filter(p => {
     if (activeSkill !== 'tutti' && p.skill !== activeSkill) return false
     if (activeCity && p.city !== activeCity) return false
     if (activeLevel && p.level !== activeLevel) return false
     if (onlyAvailable && !p.available) return false
-    if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))) return false
+    if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.tags.some((t: string) => t.toLowerCase().includes(search.toLowerCase()))) return false
     return true
   }).sort((a, b) => {
     if (sort === 'rating') return b.rating - a.rating
     if (sort === 'progetti') return b.projects - a.projects
-    // rilevanza: premium prima
     return (b.premium ? 1 : 0) - (a.premium ? 1 : 0)
   })
 
@@ -49,7 +88,7 @@ export default function DiscoverPage() {
         </a>
         <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
           {['discover', 'about', 'blog', 'contatti'].map(link => (
-            <a key={link} href={`/${link === 'discover' ? 'discover' : link}`} style={{ fontSize: '11px', color: link === 'discover' ? '#fff' : '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none', background: link === 'discover' ? '#2a2a2a' : 'transparent' }}>{link}</a>
+            <a key={link} href={`/${link}`} style={{ fontSize: '11px', color: link === 'discover' ? '#fff' : '#666', padding: '4px 14px', borderRadius: '999px', letterSpacing: '0.3px', textDecoration: 'none', background: link === 'discover' ? '#2a2a2a' : 'transparent' }}>{link}</a>
           ))}
         </div>
         <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
@@ -59,7 +98,7 @@ export default function DiscoverPage() {
 
       {/* HERO SCURO */}
       <div style={{ background: '#0D0D0D', padding: '52px 5% 48px', borderBottom: '1px solid #1C1C1C' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '12px' }}>// discover · off32.com</div>
+        <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '12px' }}>// discover · off32.it</div>
         <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 300, color: '#fff', letterSpacing: '-1.5px', lineHeight: 1.1, marginBottom: '12px' }}>
           I migliori{' '}
           <span style={{ position: 'relative', display: 'inline-block' }}>
@@ -71,7 +110,11 @@ export default function DiscoverPage() {
           Ogni profilo è stato approvato dal team OFF32. Nessun dilettante, nessuna vetrina vuota. Solo chi ha dimostrato di saper fare.
         </p>
         <div style={{ display: 'flex', gap: '32px' }}>
-          {[{ num: `${PROFESSIONALS.length}+`, label: 'professionisti' }, { num: '100%', label: 'verificati' }, { num: '8', label: 'skill area' }].map(s => (
+          {[
+            { num: `${allProfessionals.length}+`, label: 'professionisti' },
+            { num: '100%', label: 'verificati' },
+            { num: '8', label: 'skill area' },
+          ].map(s => (
             <div key={s.label}>
               <div style={{ fontSize: '28px', fontWeight: 800, color: '#fff', letterSpacing: '-1px', lineHeight: 1 }}>{s.num}</div>
               <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#333', textTransform: 'uppercase' as const, marginTop: '4px' }}>{s.label}</div>
@@ -80,21 +123,16 @@ export default function DiscoverPage() {
         </div>
       </div>
 
-      {/* BODY — sidebar + risultati */}
+      {/* BODY */}
       <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr' }} className="discover-grid">
 
-        {/* SIDEBAR FILTRI */}
+        {/* SIDEBAR */}
         <div style={{ background: '#E8E2D8', borderRight: '1px solid #DDD8CE', padding: '28px 20px', display: 'flex', flexDirection: 'column' as const, gap: '24px', position: 'sticky' as const, top: '58px', height: 'calc(100vh - 58px)', overflowY: 'auto' as const }}>
 
           {/* search */}
           <div style={{ background: '#fff', border: '1px solid #DDD8CE', borderRadius: '8px', padding: '9px 12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="4" stroke="#CCC8C0" strokeWidth="1.2"/><path d="M8.5 8.5L11 11" stroke="#CCC8C0" strokeWidth="1.2" strokeLinecap="round"/></svg>
-            <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="cerca per nome o skill…"
-              style={{ border: 'none', outline: 'none', fontSize: '11px', color: '#555', background: 'transparent', width: '100%', fontFamily: "'Axiforma', sans-serif" }}
-            />
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="cerca per nome o skill…" style={{ border: 'none', outline: 'none', fontSize: '11px', color: '#555', background: 'transparent', width: '100%', fontFamily: "'Axiforma', sans-serif" }} />
           </div>
 
           {/* skill */}
@@ -107,7 +145,9 @@ export default function DiscoverPage() {
                     <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: activeSkill === s ? '#fe3812' : '#CCC8C0' }}></div>
                     <span style={{ fontSize: '12px', color: activeSkill === s ? '#0D0D0D' : '#888', fontWeight: activeSkill === s ? 600 : 400 }}>{s}</span>
                   </div>
-                  <span style={{ fontSize: '10px', color: '#CCC8C0' }}>{s === 'tutti' ? PROFESSIONALS.length : PROFESSIONALS.filter(p => p.skill === s).length}</span>
+                  <span style={{ fontSize: '10px', color: '#CCC8C0' }}>
+                    {s === 'tutti' ? allProfessionals.length : allProfessionals.filter(p => p.skill === s).length}
+                  </span>
                 </div>
               ))}
             </div>
@@ -162,7 +202,10 @@ export default function DiscoverPage() {
         <div style={{ padding: '24px 28px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ fontSize: '12px', color: '#AAA098' }}>
-              Trovati <strong style={{ color: '#0D0D0D' }}>{filtered.length}</strong> professionisti
+              {loading
+                ? 'Caricamento...'
+                : <>Trovati <strong style={{ color: '#0D0D0D' }}>{filtered.length}</strong> professionisti {dbProfessionals.length === 0 && <span style={{ color: '#CCC8C0' }}>(demo)</span>}</>
+              }
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '11px', color: '#AAA098' }}>ordina per</span>
@@ -174,7 +217,12 @@ export default function DiscoverPage() {
             </div>
           </div>
 
-          {filtered.length === 0 ? (
+          {loading ? (
+            <div style={{ textAlign: 'center' as const, padding: '80px 0', color: '#AAA098' }}>
+              <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
+              <div style={{ fontSize: '14px' }}>Caricamento professionisti...</div>
+            </div>
+          ) : filtered.length === 0 ? (
             <div style={{ textAlign: 'center' as const, padding: '80px 0', color: '#AAA098' }}>
               <div style={{ fontSize: '32px', marginBottom: '12px' }}>🔍</div>
               <div style={{ fontSize: '14px', marginBottom: '8px' }}>Nessun professionista trovato</div>
@@ -182,10 +230,9 @@ export default function DiscoverPage() {
             </div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }} className="results-grid">
-              {filtered.map(p => (
-                <a key={p.initials} href={`/p/${p.name.toLowerCase().replace(' ', '-')}`} style={{ textDecoration: 'none' }}>
-                  <div style={{ background: '#fff', border: `1px solid ${p.premium ? '#fe381230' : '#EDE8DF'}`, borderRadius: '10px', padding: '16px', cursor: 'pointer', borderWidth: p.premium ? '1.5px' : '1px', transition: 'border-color 0.15s', height: '100%' }}>
-                    {/* top */}
+              {filtered.map((p, idx) => (
+                <a key={p.slug || idx} href={`/p/${p.slug}`} style={{ textDecoration: 'none' }}>
+                  <div style={{ background: '#fff', border: `${p.premium ? '1.5px' : '1px'} solid ${p.premium ? '#fe381230' : '#EDE8DF'}`, borderRadius: '10px', padding: '16px', cursor: 'pointer', height: '100%' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '12px' }}>
                       <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: p.bg, border: `1px solid ${p.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, color: p.color, flexShrink: 0 }}>{p.initials}</div>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -197,13 +244,10 @@ export default function DiscoverPage() {
                         </div>
                       </div>
                     </div>
-                    {/* bio */}
                     <p style={{ fontSize: '11px', color: '#888', lineHeight: 1.6, marginBottom: '12px' }}>{p.bio}</p>
-                    {/* tags */}
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' as const, marginBottom: '12px' }}>
-                      {p.tags.map(t => <span key={t} style={{ fontSize: '9px', padding: '3px 9px', border: '1px solid #EDE8DF', borderRadius: '999px', color: '#888', background: '#F8F5F0' }}>{t}</span>)}
+                      {p.tags.map((t: string) => <span key={t} style={{ fontSize: '9px', padding: '3px 9px', border: '1px solid #EDE8DF', borderRadius: '999px', color: '#888', background: '#F8F5F0' }}>{t}</span>)}
                     </div>
-                    {/* footer */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid #F0EBE4' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <div style={{ display: 'flex', gap: '2px' }}>
@@ -245,13 +289,4 @@ export default function DiscoverPage() {
 
     </main>
   )
-}
-
-const sideLabel: React.CSSProperties = {
-  fontSize: '9px',
-  letterSpacing: '2px',
-  color: '#AAA098',
-  textTransform: 'uppercase',
-  marginBottom: '10px',
-  fontFamily: 'monospace',
 }
