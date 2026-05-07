@@ -1,8 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { supabase } from '@/lib/supabase'
 
-export default function ProfilePage({ params }: { params: { username: string } }) {
+export default function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = use(params)
   const [p, setP] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -15,7 +16,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
       const { data, error } = await supabase
         .from('professionals')
         .select('*')
-        .eq('username', params.username)
+        .eq('username', username)
         .single()
 
       if (error || !data) {
@@ -61,7 +62,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
     }
 
     fetchProfile()
-  }, [params.username])
+  }, [username])
 
   const Stars = ({ rating }: { rating: number }) => (
     <div style={{ display: 'flex', gap: '2px' }}>
@@ -131,7 +132,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
         <span style={{ fontSize: '10px', color: '#CCC8C0' }}>/</span>
         <a href="/discover" style={{ fontSize: '10px', color: '#AAA098', textDecoration: 'none', fontFamily: 'monospace' }}>discover</a>
         <span style={{ fontSize: '10px', color: '#CCC8C0' }}>/</span>
-        <span style={{ fontSize: '10px', color: '#555', fontFamily: 'monospace' }}>{params.username}</span>
+        <span style={{ fontSize: '10px', color: '#555', fontFamily: 'monospace' }}>{username}</span>
       </div>
 
       {/* PROFILE HERO */}
@@ -146,7 +147,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
           </div>
           {/* info */}
           <div>
-            <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#AAA098', marginBottom: '10px' }}>off32.com / discover / {params.username}</div>
+            <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#AAA098', marginBottom: '10px' }}>off32.com / discover / {username}</div>
             <h1 style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-1px', color: '#0D0D0D', marginBottom: '6px', lineHeight: 1 }}>{p.name}</h1>
             <div style={{ fontSize: '13px', color: '#888', marginBottom: '14px' }}>{p.role} · <span style={{ color: '#fe3812', fontWeight: 600 }}>{p.specialty}</span></div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap' as const }}>
