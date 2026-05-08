@@ -77,13 +77,24 @@ export default function ApplyPage() {
         status: 'pending',
       }])
 
-    if (sbError) {
-      setStatus('error')
-      setError('Qualcosa è andato storto. Riprova o scrivici a connect@off32.com')
-      return
-    }
-
-    setStatus('success')
+      if (sbError) {
+        setStatus('error')
+        setError('Qualcosa è andato storto. Riprova o scrivici a connect@off32.com')
+        return
+      }
+  
+      // Invia email di conferma
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'application',
+          name: form.full_name,
+          email: form.email,
+        }),
+      })
+  
+      setStatus('success')
   }
 
   // ── SUCCESSO ──────────────────────────────────────────────────────────────

@@ -66,7 +66,15 @@ export default function ClientApplyPage() {
       return
     }
   
-    setStatus('success')
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'client',
+        name: form.full_name,
+        email: form.email,
+      }),
+    })
   }
 
   if (status === 'success') {
