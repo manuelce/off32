@@ -52,7 +52,15 @@ export default function AdminPage() {
       .replace(/[^a-z0-9-]/g, '') + '-' + Date.now().toString().slice(-4)
 
     // 3. Crea professionista direttamente (senza foreign key su profiles)
-    const { error: profError } = await supabase.from('professionals').insert([{
+    // 3. Controlla se esiste già e crea solo se non c'è
+    const { data: existing } = await supabase
+    .from('professionals')
+    .select('id')
+    .eq('full_name', app.full_name)
+    .maybeSingle()
+
+    if (!existing) {
+    const { error } = await supabase.from('professionals').insert([{
       username,
       full_name: app.full_name,
       bio: app.motivation || '',
@@ -62,25 +70,7 @@ export default function AdminPage() {
       available: true,
       experience_years: 0,
     }])
-
-    if (profError) {
-      // Se username duplicato riprova con timestamp diverso
-      if (profError.code === '23505') {
-        await supabase.from('professionals').insert([{
-          username: username + '-' + Math.floor(Math.random() * 1000),
-          full_name: app.full_name,
-          bio: app.motivation || '',
-          city: app.city || '',
-          status: 'approved',
-          plan: 'free',
-          available: true,
-          experience_years: 0,
-        }])
-      } else {
-        alert('Errore creazione professionista: ' + profError.message)
-        setActionLoading(null)
-        return
-      }
+    if (error) alert('Errore creazione: ' + error.message)
     }
 
     // 4. Aggiorna lo stato locale IMMEDIATAMENTE senza refetch
