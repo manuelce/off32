@@ -20,7 +20,7 @@ export default function LoginPage() {
 
       {/* CLERK SIGN IN */}
       <SignIn
-        routing="hash"
+        routing="path" path="/login"
         appearance={{
           variables: {
             colorPrimary: '#fe3812',
