@@ -16,10 +16,11 @@ export default function SignUpPage() {
         <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '36px' }} />
       </a>
       <SignUp
-        routing="path"
-        path="/sign-up"
-        appearance={{
-          variables: {
+            routing="path"
+            path="/sign-up"
+            forceRedirectUrl="/dashboard"
+            appearance={{
+            variables: {
             colorPrimary: '#fe3812',
             colorBackground: '#ffffff',
             colorText: '#0D0D0D',

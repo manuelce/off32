@@ -16,9 +16,10 @@ export default function LoginCatchAll() {
         <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '36px' }} />
       </a>
       <SignIn
-       routing="hash"
-        appearance={{
-          variables: {
+            routing="hash"
+            forceRedirectUrl="/dashboard"
+            appearance={{
+             variables: {
             colorPrimary: '#fe3812',
             colorBackground: '#ffffff',
             colorText: '#0D0D0D',
