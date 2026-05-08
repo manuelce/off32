@@ -1,4 +1,5 @@
 'use client'
+import { useAuth } from '@clerk/nextjs'
 import { useEffect, useState, useRef } from 'react'
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const { isSignedIn } = useAuth()
 
   useEffect(() => {
     const duration = 2400
@@ -106,8 +108,8 @@ export default function Home() {
             <a key={link.label} href={link.href} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
           ))}
           </div>
-          <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-              Entra nell'hub
+          <a href={isSignedIn ? '/dashboard' : '/login'} style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
+            Entra nell&apos;hub
           </a>
           
         </nav>
