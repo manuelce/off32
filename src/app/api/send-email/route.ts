@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     if (type === 'application') {
       // Email al candidato
       await resend.emails.send({
-        from: 'OFF32 <onboarding@resend.dev>',
+        from: 'OFF32 <noreply@off32.it>',
         to: email,
         subject: 'Candidatura ricevuta — OFF32',
         html: `
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
 
       // Email a te (admin)
       await resend.emails.send({
-        from: 'OFF32 <onboarding@resend.dev>',
+        from: 'OFF32 <noreply@off32.it>',
         to: 'manuel.cerasuolo@gmail.com',
         subject: `Nuova candidatura da ${name}`,
         html: `
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     if (type === 'client') {
       // Email al cliente
       await resend.emails.send({
-        from: 'OFF32 <onboarding@resend.dev>',
+        from: 'OFF32 <noreply@off32.it>',
         to: email,
         subject: 'Brief ricevuta — OFF32',
         html: `
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
 
       // Email a te (admin)
       await resend.emails.send({
-        from: 'OFF32 <onboarding@resend.dev>',
+        from: 'OFF32 <noreply@off32.it>',
         to: 'manuel.cerasuolo@gmail.com',
         subject: `Nuova brief cliente da ${name}`,
         html: `
