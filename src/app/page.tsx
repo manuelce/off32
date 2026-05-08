@@ -97,9 +97,14 @@ export default function Home() {
         }}>
           <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
           <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
-            {['Discover', 'About', 'Blog', 'Contatti'].map(link => (
-              <span key={link} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px' }}>{link}</span>
-            ))}
+          {[
+            { label: 'Discover', href: '/discover' },
+            { label: 'About', href: '/about' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Contatti', href: '/contatti' },
+          ].map(link => (
+            <a key={link.label} href={link.href} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+          ))}
           </div>
           <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
               Entra nell'hub
@@ -248,7 +253,7 @@ export default function Home() {
           </div>
 
           {/* Card piccola sotto destra */}
-          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', marginBottom: '0' }}>
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', marginBottom: '0', paddingBottom: '50px' }}>
             <div style={{ background: '#111', border: '1px solid #1C1C1C', borderRadius: '12px', padding: '28px', cursor: 'pointer', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between', minHeight: '180px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
                 <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#FEF8EE', border: '1px solid #854F0B30', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, color: '#854F0B', flexShrink: 0 }}>GV</div>
@@ -261,17 +266,16 @@ export default function Home() {
                 {['Figma', 'Research', 'Webflow'].map(t => <span key={t} style={{ fontSize: '9px', padding: '3px 10px', border: '1px solid #1E1E1E', borderRadius: '999px', color: '#444' }}>{t}</span>)}
               </div>
             </div>
-            <div style={{ background: '#fe3812', border: '1px solid #1C1C1C', borderRadius: '12px', padding: '28px', display: 'flex', flexDirection: 'column' as const, justifyContent: 'center', alignItems: 'center', minHeight: '180px', cursor: 'pointer' }}>
-              <span style={{ fontSize: '14px', fontWeight: 700, color: '#fff', letterSpacing: '2px', textTransform: 'uppercase' as const }}>TUTTI I PROFILI →</span>
+          
+           <div style={{ background: '#9fff00', borderRadius: '12px', padding: '28px', display: 'flex', flexDirection: 'column' as const, justifyContent: 'center', alignItems: 'center', minHeight: '180px', cursor: 'pointer' }}>
+                <a href="/discover" style={{ color: '#0D0D0D', fontSize: '11px', fontWeight: 700, padding: '11px 28px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
+                TUTTI I PROFILI →
+                </a>
             </div>
+          
           </div>
 
-          {/* Bottone ALL WORKS */}
-          <div style={{ textAlign: 'center' as const, padding: '32px 0 48px' }}>
-            <button style={{ background: '#9fff00', color: '#0D0D0D', fontSize: '13px', fontWeight: 700, padding: '14px 48px', borderRadius: '999px', border: 'none', cursor: 'pointer', letterSpacing: '2px' }}>
-              ALL WORKS
-            </button>
-          </div>
+        
         </section>
 
         {/* ── 07 "AMIAMO I DETTAGLI" → IL NETWORK ── */}
@@ -367,20 +371,24 @@ export default function Home() {
             Pronto a fare parte<br />dei migliori?
           </h2>
           <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginBottom: '40px', lineHeight: 1.7 }}>
-            Fai domanda. Se il tuo lavoro parla per te, trovi il tuo posto in OFF32.
+            Fai domanda. Lavora su progetti reali con clienti veri, trova il tuo posto in OFF32.
           </p>
-          <button style={{ background: '#0D0D0D', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '14px 40px', borderRadius: '999px', border: 'none', cursor: 'pointer', letterSpacing: '0.5px' }}>
+          <a href="/apply" style={{ background: '#0D0D0D', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '14px 40px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
             CREA IL TUO PROFILO →
-          </button>
+          </a>
         </section>
 
         {/* ── 11 FOOTER — come il vecchio 3 colonne ── */}
         <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
             <div style={{ display: 'flex', gap: '28px' }}>
-              {['DISCOVER', 'BLOG', 'PRIVACY POLICY'].map(l => (
-                <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600 }}>{l}</span>
-              ))}
+            {[
+              { label: 'DISCOVER', href: '/discover' },
+              { label: 'BLOG', href: '/blog' },
+              { label: 'PRIVACY POLICY', href: '/privacy' },
+            ].map(l => (
+              <a key={l.label} href={l.href} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600, textDecoration: 'none' }}>{l.label}</a>
+            ))}
             </div>
             <span style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', fontWeight: 700 }}>OFF32</span>
             <div style={{ display: 'flex', gap: '28px' }}>
@@ -399,9 +407,13 @@ export default function Home() {
         }}>
           <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '24px', width: 'auto' }} />
           <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #222', borderRadius: '999px', padding: '4px 8px' }}>
-            {['discover', 'about', 'blog'].map(link => (
-              <span key={link} style={{ fontSize: '10px', color: '#666', padding: '3px 10px', borderRadius: '999px', cursor: 'pointer' }}>{link}</span>
-            ))}
+          {[
+            { label: 'discover', href: '/discover' },
+            { label: 'about', href: '/about' },
+            { label: 'blog', href: '/blog' },
+          ].map(link => (
+            <a key={link.label} href={link.href} style={{ fontSize: '10px', color: '#666', padding: '3px 10px', borderRadius: '999px', cursor: 'pointer', textDecoration: 'none' }}>{link.label}</a>
+          ))}
           </div>
           <button style={{ background: '#fe3812', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '7px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer' }}>entra</button>
         </nav>

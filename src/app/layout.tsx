@@ -5,6 +5,9 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'OFF32 — Officina digitale',
   description: 'Il network dei professionisti digitali italiani.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
