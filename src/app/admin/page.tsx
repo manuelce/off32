@@ -12,16 +12,17 @@ export default function AdminPage() {
   const [applications, setApplications] = useState<any[]>([])
   const [clientApps, setClientApps] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<Status | 'all'>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('adminFilter') as Status | 'all') || 'pending'
-    }
-    return 'pending'
-  })
+  const [filter, setFilter] = useState<Status | 'all'>('pending')
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [successIds, setSuccessIds] = useState<string[]>([])
 
   useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('adminFilter') as Status | 'all'
+      if (saved) setFilter(saved)
+    }
+  }, [])
 
   const handleFilterChange = (value: string) => {
     setFilter(value as Status | 'all')
