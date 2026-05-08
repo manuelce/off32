@@ -12,7 +12,7 @@ export default function AdminPage() {
   const [applications, setApplications] = useState<any[]>([])
   const [clientApps, setClientApps] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<Status | 'all'>('pending')
+  const [filter, setFilter] = useState<Status | 'all'>('all')
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [successIds, setSuccessIds] = useState<string[]>([])
 
