@@ -12,11 +12,23 @@ export default function AdminPage() {
   const [applications, setApplications] = useState<any[]>([])
   const [clientApps, setClientApps] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<Status | 'all'>('pending')
+  const [filter, setFilter] = useState<Status | 'all'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('adminFilter') as Status | 'all') || 'pending'
+    }
+    return 'pending'
+  })
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [successIds, setSuccessIds] = useState<string[]>([])
 
   useEffect(() => { fetchData() }, [])
+
+  const handleFilterChange = (value: string) => {
+    setFilter(value as Status | 'all')
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('adminFilter', value)
+    }
+  }
 
   const fetchData = async () => {
     setLoading(true)
@@ -29,11 +41,9 @@ export default function AdminPage() {
     setLoading(false)
   }
 
-  // ── APPROVA PROFESSIONISTA ───────────────────────────────────────────────
   const approveApplication = async (app: any) => {
     setActionLoading(app.id)
 
-    // 1. Aggiorna stato candidatura
     const { error: appError } = await supabase
       .from('applications')
       .update({ status: 'approved' })
@@ -45,40 +55,37 @@ export default function AdminPage() {
       return
     }
 
-    // 2. Genera username univoco
     const username = app.full_name
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '') + '-' + Date.now().toString().slice(-4)
 
-    // 3. Crea professionista direttamente (senza foreign key su profiles)
-    // 3. Controlla se esiste già e crea solo se non c'è
     const { data: existing } = await supabase
-    .from('professionals')
-    .select('id')
-    .eq('full_name', app.full_name)
-    .maybeSingle()
+      .from('professionals')
+      .select('id')
+      .eq('full_name', app.full_name)
+      .maybeSingle()
 
     if (!existing) {
-    const { error } = await supabase.from('professionals').insert([{
-      username,
-      full_name: app.full_name,
-      bio: app.motivation || '',
-      city: app.city || '',
-      status: 'approved',
-      plan: 'free',
-      available: true,
-      experience_years: 0,
-    }])
-    if (error) alert('Errore creazione: ' + error.message)
+      const { error } = await supabase.from('professionals').insert([{
+        username,
+        full_name: app.full_name,
+        bio: app.motivation || '',
+        city: app.city || '',
+        status: 'approved',
+        plan: 'free',
+        available: true,
+        experience_years: 0,
+      }])
+      if (error) alert('Errore creazione: ' + error.message)
     }
 
-    // 4. Aggiorna lo stato locale IMMEDIATAMENTE senza refetch
     setApplications(prev =>
       prev.map(a => a.id === app.id ? { ...a, status: 'approved' } : a)
     )
     setSuccessIds(prev => [...prev, app.id])
     setActionLoading(null)
+    handleFilterChange('approved')
   }
 
   const rejectApplication = async (id: string, table: string) => {
@@ -100,6 +107,7 @@ export default function AdminPage() {
     } else {
       setClientApps(prev => prev.map(a => a.id === id ? { ...a, status: 'pending' } : a))
     }
+    handleFilterChange('pending')
   }
 
   const approveClient = async (id: string) => {
@@ -107,6 +115,7 @@ export default function AdminPage() {
     await supabase.from('client_applications').update({ status: 'approved' }).eq('id', id)
     setClientApps(prev => prev.map(a => a.id === id ? { ...a, status: 'approved' } : a))
     setActionLoading(null)
+    handleFilterChange('approved')
   }
 
   const filtered = applications.filter(a => filter === 'all' || a.status === filter)
@@ -127,28 +136,16 @@ export default function AdminPage() {
     }
     const c = colors[status] || colors.pending
     return (
-      <span style={{
-        fontSize: '9px', padding: '3px 10px',
-        background: c.bg, color: c.color,
-        borderRadius: '999px', fontWeight: 700, letterSpacing: '0.5px'
-      }}>
+      <span style={{ fontSize: '9px', padding: '3px 10px', background: c.bg, color: c.color, borderRadius: '999px', fontWeight: 700, letterSpacing: '0.5px' }}>
         {c.label}
       </span>
     )
   }
 
   return (
-    <main style={{
-      background: '#F0EBE0', minHeight: '100vh',
-      fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D'
-    }}>
+    <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
 
-      {/* NAVBAR */}
-      <nav style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 5%', background: '#0D0D0D',
-        position: 'sticky', top: 0, zIndex: 100
-      }}>
+      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 5%', background: '#0D0D0D', position: 'sticky', top: 0, zIndex: 100 }}>
         <a href="/" style={{ textDecoration: 'none' }}>
           <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '28px', width: 'auto' }} />
         </a>
@@ -158,16 +155,12 @@ export default function AdminPage() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '11px', color: '#444' }}>{user?.emailAddresses[0]?.emailAddress}</span>
-          <a href="/dashboard" style={{
-            fontSize: '11px', color: '#666', textDecoration: 'none',
-            border: '1px solid #222', padding: '6px 14px', borderRadius: '999px'
-          }}>dashboard →</a>
+          <a href="/dashboard" style={{ fontSize: '11px', color: '#666', textDecoration: 'none', border: '1px solid #222', padding: '6px 14px', borderRadius: '999px' }}>dashboard →</a>
         </div>
       </nav>
 
       <div style={{ padding: '40px 5%' }}>
 
-        {/* HEADER + STATS */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '8px' }}>// pannello admin</div>
           <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#0D0D0D', letterSpacing: '-0.5px', marginBottom: '24px' }}>Gestione candidature</h1>
@@ -186,11 +179,7 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* TABS */}
-        <div style={{
-          display: 'flex', gap: '2px', background: '#E8E2D8',
-          borderRadius: '999px', padding: '4px', marginBottom: '24px', width: 'fit-content'
-        }}>
+        <div style={{ display: 'flex', gap: '2px', background: '#E8E2D8', borderRadius: '999px', padding: '4px', marginBottom: '24px', width: 'fit-content' }}>
           {[
             { id: 'candidature', label: `Professionisti (${applications.length})` },
             { id: 'clienti', label: `Clienti (${clientApps.length})` },
@@ -206,7 +195,6 @@ export default function AdminPage() {
           ))}
         </div>
 
-        {/* FILTRI */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
           {[
             { value: 'all', label: 'Tutti' },
@@ -214,7 +202,7 @@ export default function AdminPage() {
             { value: 'approved', label: 'Approvati' },
             { value: 'rejected', label: 'Rifiutati' },
           ].map(f => (
-            <button key={f.value} onClick={() => setFilter(f.value as any)} style={{
+            <button key={f.value} onClick={() => handleFilterChange(f.value)} style={{
               fontSize: '11px', padding: '5px 14px',
               border: `1px solid ${filter === f.value ? '#0D0D0D' : '#EDE8DF'}`,
               borderRadius: '999px',
@@ -223,17 +211,11 @@ export default function AdminPage() {
               cursor: 'pointer', fontFamily: "'Axiforma', sans-serif",
             }}>{f.label}</button>
           ))}
-          <button onClick={fetchData} style={{
-            fontSize: '11px', padding: '5px 14px',
-            border: '1px solid #EDE8DF', borderRadius: '999px',
-            background: '#fff', color: '#888', cursor: 'pointer',
-            marginLeft: 'auto', fontFamily: "'Axiforma', sans-serif"
-          }}>
+          <button onClick={fetchData} style={{ fontSize: '11px', padding: '5px 14px', border: '1px solid #EDE8DF', borderRadius: '999px', background: '#fff', color: '#888', cursor: 'pointer', marginLeft: 'auto', fontFamily: "'Axiforma', sans-serif" }}>
             ↻ aggiorna
           </button>
         </div>
 
-        {/* CANDIDATURE PROFESSIONISTI */}
         {activeTab === 'candidature' && (
           <div>
             {loading ? (
@@ -247,19 +229,12 @@ export default function AdminPage() {
               <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '12px' }}>
                 {filtered.map(app => (
                   <div key={app.id} style={{
-                    background: '#fff', border: '1px solid #EDE8DF',
-                    borderRadius: '12px', padding: '24px',
-                    borderLeft: app.status === 'approved' ? '3px solid #0F6E56' :
-                               app.status === 'rejected' ? '3px solid #EDE8DF' : '3px solid #fe3812'
+                    background: '#fff', border: '1px solid #EDE8DF', borderRadius: '12px', padding: '24px',
+                    borderLeft: app.status === 'approved' ? '3px solid #0F6E56' : app.status === 'rejected' ? '3px solid #EDE8DF' : '3px solid #fe3812'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                       <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                        <div style={{
-                          width: '44px', height: '44px', borderRadius: '50%',
-                          background: '#EEF8F3', display: 'flex', alignItems: 'center',
-                          justifyContent: 'center', fontSize: '14px', fontWeight: 700,
-                          color: '#0F6E56', flexShrink: 0
-                        }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#EEF8F3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 700, color: '#0F6E56', flexShrink: 0 }}>
                           {app.full_name?.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase()}
                         </div>
                         <div>
@@ -270,13 +245,10 @@ export default function AdminPage() {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'flex-end', gap: '6px' }}>
                         <StatusBadge status={app.status} />
-                        <span style={{ fontSize: '9px', color: '#CCC8C0', fontFamily: 'monospace' }}>
-                          {new Date(app.created_at).toLocaleDateString('it-IT')}
-                        </span>
+                        <span style={{ fontSize: '9px', color: '#CCC8C0', fontFamily: 'monospace' }}>{new Date(app.created_at).toLocaleDateString('it-IT')}</span>
                       </div>
                     </div>
 
-                    {/* skill */}
                     {app.skills?.length > 0 && (
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' as const, marginBottom: '12px' }}>
                         {app.skills.map((s: string) => (
@@ -285,52 +257,26 @@ export default function AdminPage() {
                       </div>
                     )}
 
-                    {/* motivazione */}
                     {app.motivation && (
                       <div style={{ background: '#F8F5F0', borderRadius: '8px', padding: '12px 16px', marginBottom: '16px', fontSize: '12px', color: '#666', lineHeight: 1.65, fontStyle: 'italic' }}>
                         &ldquo;{app.motivation}&rdquo;
                       </div>
                     )}
 
-                    {/* links */}
                     <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' as const }}>
-                      {app.portfolio_url && (
-                        <a href={app.portfolio_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#fe3812', textDecoration: 'none', border: '1px solid #fe381230', padding: '5px 14px', borderRadius: '999px', background: '#FDF5F2' }}>Portfolio ↗</a>
-                      )}
-                      {app.work_url_1 && (
-                        <a href={app.work_url_1} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#555', textDecoration: 'none', border: '1px solid #EDE8DF', padding: '5px 14px', borderRadius: '999px' }}>Lavoro 1 ↗</a>
-                      )}
-                      {app.work_url_2 && (
-                        <a href={app.work_url_2} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#555', textDecoration: 'none', border: '1px solid #EDE8DF', padding: '5px 14px', borderRadius: '999px' }}>Lavoro 2 ↗</a>
-                      )}
+                      {app.portfolio_url && <a href={app.portfolio_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#fe3812', textDecoration: 'none', border: '1px solid #fe381230', padding: '5px 14px', borderRadius: '999px', background: '#FDF5F2' }}>Portfolio ↗</a>}
+                      {app.work_url_1 && <a href={app.work_url_1} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#555', textDecoration: 'none', border: '1px solid #EDE8DF', padding: '5px 14px', borderRadius: '999px' }}>Lavoro 1 ↗</a>}
+                      {app.work_url_2 && <a href={app.work_url_2} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#555', textDecoration: 'none', border: '1px solid #EDE8DF', padding: '5px 14px', borderRadius: '999px' }}>Lavoro 2 ↗</a>}
                     </div>
 
-                    {/* azioni */}
                     {app.status === 'pending' && (
                       <div style={{ display: 'flex', gap: '8px', paddingTop: '16px', borderTop: '1px solid #F0EBE4' }}>
-                        <button
-                          onClick={() => approveApplication(app)}
-                          disabled={actionLoading === app.id}
-                          style={{
-                            flex: 1,
-                            background: actionLoading === app.id ? '#888' : '#0F6E56',
-                            color: '#fff', fontSize: '12px', fontWeight: 700,
-                            padding: '10px', borderRadius: '999px', border: 'none',
-                            cursor: actionLoading === app.id ? 'not-allowed' : 'pointer',
-                            transition: 'background 0.2s'
-                          }}
-                        >
+                        <button onClick={() => approveApplication(app)} disabled={actionLoading === app.id}
+                          style={{ flex: 1, background: actionLoading === app.id ? '#888' : '#0F6E56', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '10px', borderRadius: '999px', border: 'none', cursor: actionLoading === app.id ? 'not-allowed' : 'pointer' }}>
                           {actionLoading === app.id ? '⏳ Approvazione in corso...' : '✓ Approva e crea profilo'}
                         </button>
-                        <button
-                          onClick={() => rejectApplication(app.id, 'applications')}
-                          disabled={actionLoading === app.id}
-                          style={{
-                            flex: 1, background: '#F8F5F0', color: '#888',
-                            fontSize: '12px', fontWeight: 700, padding: '10px',
-                            borderRadius: '999px', border: '1px solid #EDE8DF', cursor: 'pointer'
-                          }}
-                        >
+                        <button onClick={() => rejectApplication(app.id, 'applications')} disabled={actionLoading === app.id}
+                          style={{ flex: 1, background: '#F8F5F0', color: '#888', fontSize: '12px', fontWeight: 700, padding: '10px', borderRadius: '999px', border: '1px solid #EDE8DF', cursor: 'pointer' }}>
                           × Rifiuta
                         </button>
                       </div>
@@ -341,21 +287,9 @@ export default function AdminPage() {
                         <div style={{ fontSize: '11px', color: '#0F6E56', fontWeight: 700 }}>
                           {successIds.includes(app.id) ? '🎉 Profilo appena creato su discover!' : '✓ Profilo creato su discover'}
                         </div>
-                        <a
-                          href="/discover"
-                          target="_blank"
-                          style={{ fontSize: '10px', color: '#0F6E56', textDecoration: 'underline', marginLeft: '4px' }}
-                        >
-                          Vedi →
-                        </a>
-                        <button
-                          onClick={() => resetToPending(app.id, 'applications')}
-                          style={{
-                            fontSize: '10px', color: '#888', background: 'transparent',
-                            border: '1px solid #EDE8DF', borderRadius: '999px', padding: '4px 12px',
-                            cursor: 'pointer', marginLeft: 'auto', fontFamily: "'Axiforma', sans-serif"
-                          }}
-                        >
+                        <a href="/discover" target="_blank" style={{ fontSize: '10px', color: '#0F6E56', textDecoration: 'underline', marginLeft: '4px' }}>Vedi →</a>
+                        <button onClick={() => resetToPending(app.id, 'applications')}
+                          style={{ fontSize: '10px', color: '#888', background: 'transparent', border: '1px solid #EDE8DF', borderRadius: '999px', padding: '4px 12px', cursor: 'pointer', marginLeft: 'auto', fontFamily: "'Axiforma', sans-serif" }}>
                           ↩ Rimetti in attesa
                         </button>
                       </div>
@@ -363,14 +297,8 @@ export default function AdminPage() {
 
                     {app.status === 'rejected' && (
                       <div style={{ paddingTop: '12px', borderTop: '1px solid #F0EBE4' }}>
-                        <button
-                          onClick={() => resetToPending(app.id, 'applications')}
-                          style={{
-                            fontSize: '11px', color: '#888', background: 'transparent',
-                            border: '1px solid #EDE8DF', borderRadius: '999px', padding: '6px 16px',
-                            cursor: 'pointer', fontFamily: "'Axiforma', sans-serif"
-                          }}
-                        >
+                        <button onClick={() => resetToPending(app.id, 'applications')}
+                          style={{ fontSize: '11px', color: '#888', background: 'transparent', border: '1px solid #EDE8DF', borderRadius: '999px', padding: '6px 16px', cursor: 'pointer', fontFamily: "'Axiforma', sans-serif" }}>
                           ↩ Rimetti in attesa
                         </button>
                       </div>
@@ -382,7 +310,6 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* BRIEF CLIENTI */}
         {activeTab === 'clienti' && (
           <div>
             {loading ? (
@@ -400,15 +327,11 @@ export default function AdminPage() {
                       <div>
                         <div style={{ fontSize: '16px', fontWeight: 700, color: '#0D0D0D', marginBottom: '2px' }}>{app.full_name}</div>
                         <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>{app.company || 'Privato'} · {app.email}</div>
-                        {app.website && (
-                          <a href={app.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#fe3812', textDecoration: 'none' }}>{app.website} ↗</a>
-                        )}
+                        {app.website && <a href={app.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#fe3812', textDecoration: 'none' }}>{app.website} ↗</a>}
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'flex-end', gap: '6px' }}>
                         <StatusBadge status={app.status} />
-                        <span style={{ fontSize: '9px', color: '#CCC8C0', fontFamily: 'monospace' }}>
-                          {new Date(app.created_at).toLocaleDateString('it-IT')}
-                        </span>
+                        <span style={{ fontSize: '9px', color: '#CCC8C0', fontFamily: 'monospace' }}>{new Date(app.created_at).toLocaleDateString('it-IT')}</span>
                       </div>
                     </div>
 
@@ -425,9 +348,7 @@ export default function AdminPage() {
 
                     {app.skills_needed?.length > 0 && (
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' as const, marginBottom: '12px' }}>
-                        {app.skills_needed.map((s: string) => (
-                          <span key={s} style={{ fontSize: '9px', padding: '3px 10px', border: '1px solid #EDE8DF', borderRadius: '999px', color: '#888', background: '#F8F5F0' }}>{s}</span>
-                        ))}
+                        {app.skills_needed.map((s: string) => <span key={s} style={{ fontSize: '9px', padding: '3px 10px', border: '1px solid #EDE8DF', borderRadius: '999px', color: '#888', background: '#F8F5F0' }}>{s}</span>)}
                       </div>
                     )}
 
@@ -439,26 +360,12 @@ export default function AdminPage() {
 
                     {app.status === 'pending' && (
                       <div style={{ display: 'flex', gap: '8px', paddingTop: '16px', borderTop: '1px solid #F0EBE4' }}>
-                        <button
-                          onClick={() => approveClient(app.id)}
-                          disabled={actionLoading === app.id}
-                          style={{
-                            flex: 1,
-                            background: actionLoading === app.id ? '#888' : '#534AB7',
-                            color: '#fff', fontSize: '12px', fontWeight: 700,
-                            padding: '10px', borderRadius: '999px', border: 'none', cursor: 'pointer'
-                          }}
-                        >
+                        <button onClick={() => approveClient(app.id)} disabled={actionLoading === app.id}
+                          style={{ flex: 1, background: actionLoading === app.id ? '#888' : '#534AB7', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '10px', borderRadius: '999px', border: 'none', cursor: 'pointer' }}>
                           {actionLoading === app.id ? '⏳ Approvazione...' : '✓ Approva brief'}
                         </button>
-                        <button
-                          onClick={() => rejectApplication(app.id, 'client_applications')}
-                          style={{
-                            flex: 1, background: '#F8F5F0', color: '#888',
-                            fontSize: '12px', fontWeight: 700, padding: '10px',
-                            borderRadius: '999px', border: '1px solid #EDE8DF', cursor: 'pointer'
-                          }}
-                        >
+                        <button onClick={() => rejectApplication(app.id, 'client_applications')}
+                          style={{ flex: 1, background: '#F8F5F0', color: '#888', fontSize: '12px', fontWeight: 700, padding: '10px', borderRadius: '999px', border: '1px solid #EDE8DF', cursor: 'pointer' }}>
                           × Rifiuta
                         </button>
                       </div>
@@ -466,14 +373,8 @@ export default function AdminPage() {
 
                     {app.status !== 'pending' && (
                       <div style={{ paddingTop: '12px', borderTop: '1px solid #F0EBE4' }}>
-                        <button
-                          onClick={() => resetToPending(app.id, 'client_applications')}
-                          style={{
-                            fontSize: '11px', color: '#888', background: 'transparent',
-                            border: '1px solid #EDE8DF', borderRadius: '999px', padding: '6px 16px',
-                            cursor: 'pointer', fontFamily: "'Axiforma', sans-serif"
-                          }}
-                        >
+                        <button onClick={() => resetToPending(app.id, 'client_applications')}
+                          style={{ fontSize: '11px', color: '#888', background: 'transparent', border: '1px solid #EDE8DF', borderRadius: '999px', padding: '6px 16px', cursor: 'pointer', fontFamily: "'Axiforma', sans-serif" }}>
                           ↩ Rimetti in attesa
                         </button>
                       </div>
