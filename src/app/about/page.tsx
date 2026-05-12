@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
+import Navbar from '@/components/Navbar'
 
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0)
@@ -27,19 +28,7 @@ export default function AboutPage() {
     <main style={{ background: '#0D0D0D', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#fff' }}>
 
       {/* NAVBAR */}
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 5%', background: '#fe3812', position: 'sticky', top: 0, zIndex: 100 }}>
-        <a href="/" style={{ textDecoration: 'none' }}>
-          <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
-        </a>
-        <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
-          {['discover', 'about', 'blog', 'contatti'].map(link => (
-            <a key={link} href={`/${link}`} style={{ fontSize: '11px', color: link === 'about' ? '#fff' : '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none', background: link === 'about' ? '#2a2a2a' : 'transparent' }}>{link}</a>
-          ))}
-        </div>
-        <a href="/login" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-          Entra nell&apos;hub
-        </a>
-      </nav>
+      <Navbar />
 
       {/* HERO MANIFESTO */}
       <section style={{ padding: '96px 5% 80px', borderBottom: '1px solid #1C1C1C', maxWidth: '900px' }}>
