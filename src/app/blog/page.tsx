@@ -15,8 +15,10 @@ const POSTS = [
     date: 'Mar 2025', readTime: '6 min', featured: true,
     bg: '#0A1510',
   },
+
   {
     slug: 'scegliere-clienti-giusti',
+    image: '/blog/img/prova.jpg',
     category: 'community',
     tag: 'Community',
     title: 'La selezione dei professionisti e non solo: perché la qualità non si negozia',
@@ -24,7 +26,8 @@ const POSTS = [
     author: { initials: 'MR', name: 'Marco Ricci', role: 'Web Developer', bg: '#EEF8F3', color: '#0F6E56' },
     date: 'Feb 2025', readTime: '4 min', featured: true,
     bg: '#12102A',
-  },
+  }
+  ,
   {
     slug: 'ecommerce-performante-2025',
     category: 'sviluppo',
@@ -134,7 +137,7 @@ export default function BlogPage() {
               {featured.map(post => (
                 <a key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
                   <div style={{ background: '#fff', border: '1px solid #E0D8CC', borderRadius: '14px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
-                    <div style={{ height: '220px', background: post.bg, display: 'flex', alignItems: 'flex-end', padding: '20px', position: 'relative' as const }}>
+                  <div style={{ height: '220px', background: post.image ? `url(${post.image}) center/cover no-repeat` : post.bg,display: 'flex', alignItems: 'flex-end', padding: '20px', position: 'relative' as const }}>
                       <span style={{ fontSize: '9px', padding: '4px 12px', background: '#fe3812', color: '#fff', borderRadius: '999px', letterSpacing: '1px', fontWeight: 700 }}>{post.tag}</span>
                     </div>
                     <div style={{ padding: '24px' }}>

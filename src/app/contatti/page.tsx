@@ -48,7 +48,7 @@ export default function ContattiPage() {
         {/* SINISTRA */}
         <div style={{ padding: '64px 5%', borderRight: '1px solid #E0D8CC', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '16px' }}>// contatti · off32.com/contatti</div>
+            <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '16px' }}>// contatti · off32.it/contatti</div>
             <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(36px, 4vw, 52px)', fontWeight: 300, color: '#0D0D0D', lineHeight: 1.05, letterSpacing: '-1.5px', marginBottom: '24px' }}>
               Parliamo.<br />Siamo persone{' '}
               <span style={{ position: 'relative', display: 'inline-block' }}>
@@ -63,8 +63,8 @@ export default function ContattiPage() {
             {/* canali diretti */}
             <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '12px', marginBottom: '48px' }}>
               {[
-                { icon: '✉', label: 'Email', value: 'connect@off32.com', href: 'mailto:connect@off32.com' },
-                { icon: '📸', label: 'Instagram', value: '@off32.studio', href: 'https://instagram.com/off32.studio' },
+                { icon: '✉', label: 'Email', value: 'connect@off32.it', href: 'mailto:connect@off32.it' },
+                { icon: '📸', label: 'Instagram', value: '@off32channel', href: 'https://instagram.com/off32channel' },
                 { icon: '💼', label: 'LinkedIn', value: 'OFF32 — Officina Digitale', href: 'https://linkedin.com' },
               ].map(c => (
                 <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: '#fff', border: '1px solid #E0D8CC', borderRadius: '12px', textDecoration: 'none', cursor: 'pointer' }}>
@@ -178,7 +178,9 @@ export default function ContattiPage() {
             <div style={{ height: '1px', background: '#F0EBE4', marginBottom: '20px' }}></div>
 
             <p style={{ fontSize: '10px', color: '#CCC8C0', lineHeight: 1.65, marginBottom: '20px' }}>
-              I tuoi dati non vengono condivisi con terze parti. Leggi la nostra <span style={{ color: '#AAA098', cursor: 'pointer' }}>privacy policy</span>.
+              I tuoi dati non vengono condivisi con terze parti. Leggi la nostra <a href="/privacy-policy" style={{ color: "#AAA098", cursor: "pointer" }}>
+  privacy policy
+</a>.
             </p>
 
             <button onClick={handleSubmit} disabled={status === 'loading'} style={{ width: '100%', background: status === 'loading' ? '#888' : '#0D0D0D', color: '#fff', fontSize: '13px', fontWeight: 700, padding: '14px 24px', borderRadius: '999px', border: 'none', cursor: status === 'loading' ? 'not-allowed' : 'pointer', letterSpacing: '0.5px', transition: 'background 0.2s' }}>
@@ -189,22 +191,29 @@ export default function ContattiPage() {
 
       </div>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
-          <div style={{ display: 'flex', gap: '28px' }}>
-            {['DISCOVER', 'BLOG', 'PRIVACY POLICY'].map(l => (
-              <a key={l} href="#" style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', textDecoration: 'none', fontWeight: 600 }}>{l}</a>
+       {/* ── 11 FOOTER — come il vecchio 3 colonne ── */}
+       <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '28px' }}>
+            {[
+              { label: 'DISCOVER', href: '/discover' },
+              { label: 'BLOG', href: '/blog' },
+              { label: 'PRIVACY POLICY', href: '/privacy-policy' },
+              { label: 'COOKIE', href: '/cookie-policy' },
+              { label: 'TERMS & CONDITIONS', href: '/terms-and-conditions' },
+              { label: 'INFO', href: '/informativa-professionisti' },
+            ].map(l => (
+              <a key={l.label} href={l.href} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600, textDecoration: 'none' }}>{l.label}</a>
             ))}
+            </div>
+           
+            <div style={{ display: 'flex', gap: '28px' }}>
+              {['CONTACT', 'CONNECT@OFF32.IT', '© 2025 OFF32'].map(l => (
+                <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px', cursor: 'pointer' }}>{l}</span>
+              ))}
+            </div>
           </div>
-          <span style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', fontWeight: 700 }}>OFF32</span>
-          <div style={{ display: 'flex', gap: '28px' }}>
-            {['CONTACT', 'CONNECT@OFF32.COM', '© 2025 OFF32'].map(l => (
-              <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px' }}>{l}</span>
-            ))}
-          </div>
-        </div>
-      </footer>
+        </footer>
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }

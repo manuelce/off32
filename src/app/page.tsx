@@ -402,14 +402,17 @@ export default function Home() {
             {[
               { label: 'DISCOVER', href: '/discover' },
               { label: 'BLOG', href: '/blog' },
-              { label: 'PRIVACY POLICY', href: '/privacy' },
+              { label: 'PRIVACY POLICY', href: '/privacy-policy' },
+              { label: 'COOKIE', href: '/cookie-policy' },
+              { label: 'TERMS & CONDITIONS', href: '/terms-and-conditions' },
+              { label: 'INFO', href: '/informativa-professionisti' },
             ].map(l => (
               <a key={l.label} href={l.href} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600, textDecoration: 'none' }}>{l.label}</a>
             ))}
             </div>
-            <span style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', fontWeight: 700 }}>OFF32</span>
+           
             <div style={{ display: 'flex', gap: '28px' }}>
-              {['CONTACT', 'CONNECT@OFF32.COM', '© 2025 OFF32'].map(l => (
+              {['CONTACT', 'CONNECT@OFF32.IT', '© 2025 OFF32'].map(l => (
                 <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px', cursor: 'pointer' }}>{l}</span>
               ))}
             </div>
