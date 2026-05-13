@@ -221,22 +221,29 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
-          <div style={{ display: 'flex', gap: '28px' }}>
-            {['DISCOVER', 'BLOG', 'PRIVACY POLICY'].map(l => (
-              <a key={l} href="#" style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', textDecoration: 'none', fontWeight: 600 }}>{l}</a>
+       {/* ── 11 FOOTER — come il vecchio 3 colonne ── */}
+       <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '28px' }}>
+            {[
+              { label: 'DISCOVER', href: '/discover' },
+              { label: 'BLOG', href: '/blog' },
+              { label: 'PRIVACY POLICY', href: '/privacy-policy' },
+              { label: 'COOKIE', href: '/cookie-policy' },
+              { label: 'TERMS & CONDITIONS', href: '/terms-and-conditions' },
+              { label: 'INFO', href: '/informativa-professionisti' },
+            ].map(l => (
+              <a key={l.label} href={l.href} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600, textDecoration: 'none' }}>{l.label}</a>
             ))}
+            </div>
+           
+            <div style={{ display: 'flex', gap: '28px' }}>
+              {['CONTACT', 'CONNECT@OFF32.IT', '© 2025 OFF32'].map(l => (
+                <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px', cursor: 'pointer' }}>{l}</span>
+              ))}
+            </div>
           </div>
-          <span style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', fontWeight: 700 }}>OFF32</span>
-          <div style={{ display: 'flex', gap: '28px' }}>
-            {['CONTACT', 'CONNECT@OFF32.COM', '© 2025 OFF32'].map(l => (
-              <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px' }}>{l}</span>
-            ))}
-          </div>
-        </div>
-      </footer>
+        </footer>
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
