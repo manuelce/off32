@@ -81,6 +81,16 @@ export default function AdminPage() {
         }])
       if (error) alert('Errore creazione: ' + error.message)
     }
+      // Invia email di approvazione
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'approval',
+        name: app.full_name,
+        email: app.email,
+      }),
+    })
 
     setApplications(prev =>
       prev.map(a => a.id === app.id ? { ...a, status: 'approved' } : a)
