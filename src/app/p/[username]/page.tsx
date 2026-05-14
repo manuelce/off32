@@ -18,21 +18,27 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         .select('*')
         .eq('username', username)
         .single()
-
+  
       if (error || !data) {
         setNotFound(true)
         setLoading(false)
         return
       }
-
-      // Mappa i dati Supabase nel formato che usa il template
+  
+      // Carica portfolio
+      const { data: portfolioData } = await supabase
+        .from('portfolio_items')
+        .select('*')
+        .eq('professional_id', data.id)
+        .order('order_index', { ascending: true })
+  
       const initials = data.full_name
         ?.split(' ')
         .map((n: string) => n[0])
         .join('')
         .substring(0, 2)
         .toUpperCase() || 'XX'
-
+  
       setP({
         initials,
         name: data.full_name || 'Professionista',
@@ -43,7 +49,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         bg: '#EEF8F3',
         color: '#0F6E56',
         premium: data.plan === 'studio',
-        projects: data.experience_years ? data.experience_years * 5 : 0,
+        projects: portfolioData?.length || 0,
         rating: 5.0,
         available: data.available ?? true,
         experience: data.experience_years || 0,
@@ -53,14 +59,20 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         bio: data.bio || 'Professionista verificato e approvato da OFF32.',
         socials: { instagram: '#', linkedin: '#', website: '#' },
         skills: [],
-        portfolio: [],
+        portfolio: (portfolioData || []).map((item: any) => ({
+          title: item.title,
+          description: item.description,
+          url: item.project_url,
+          tags: item.tags || [],
+          bg: '#0A1510',
+        })),
         reviews: [],
         similar: [],
       })
-
+  
       setLoading(false)
     }
-
+  
     fetchProfile()
   }, [username])
 
