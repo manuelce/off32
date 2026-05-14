@@ -67,17 +67,18 @@ export default function AdminPage() {
       .eq('full_name', app.full_name)
       .maybeSingle()
 
-    if (!existing) {
-      const { error } = await supabase.from('professionals').insert([{
-        username,
-        full_name: app.full_name,
-        bio: app.motivation || '',
-        city: app.city || '',
-        status: 'approved',
-        plan: 'free',
-        available: true,
-        experience_years: 0,
-      }])
+      if (!existing) {
+        const { error } = await supabase.from('professionals').insert([{
+          username,
+          full_name: app.full_name,
+          email: app.email,
+          bio: app.motivation || '',
+          city: app.city || '',
+          status: 'approved',
+          plan: 'free',
+          available: true,
+          experience_years: 0,
+        }])
       if (error) alert('Errore creazione: ' + error.message)
     }
 

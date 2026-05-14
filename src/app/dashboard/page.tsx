@@ -44,10 +44,10 @@ export default function DashboardPage() {
       if (!email) return
 
       const { data } = await supabase
-        .from('professionals')
-        .select('*')
-        .eq('full_name', user.fullName || email)
-        .maybeSingle()
+          .from('professionals')
+          .select('*')
+          .eq('email', email)
+          .maybeSingle()
 
       if (data) {
         setProfessional(data)
