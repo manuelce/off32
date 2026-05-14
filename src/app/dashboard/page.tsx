@@ -284,55 +284,36 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              <div style={{ background: '#fff', border: '1px solid #EDE8DF', borderRadius: '12px', padding: '32px', maxWidth: '560px' }}>
-                {/* avatar */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '28px', paddingBottom: '28px', borderBottom: '1px solid #F0EBE4' }}>
-                  <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: '#EEF8F3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 800, color: '#0F6E56', flexShrink: 0 }}>
-                    {form.full_name?.[0]?.toUpperCase() || user?.firstName?.[0] || 'U'}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#0D0D0D', marginBottom: '4px' }}>Foto profilo</div>
-                    <div style={{ fontSize: '11px', color: '#AAA098', marginBottom: '10px' }}>JPG o PNG, max 2MB</div>
-                    <button style={{ fontSize: '11px', color: '#fe3812', border: '1px solid #fe381230', borderRadius: '999px', padding: '6px 16px', background: '#FDF5F2', cursor: 'pointer' }}>Carica foto</button>
-                  </div>
-                </div>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>nome completo</label>
-                  <input value={form.full_name} onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))} placeholder="Il tuo nome" style={inputStyle} />
-                </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>città</label>
-                  <input value={form.city} onChange={e => setForm(f => ({ ...f, city: e.target.value }))} placeholder="Milano" style={inputStyle} />
-                </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>ruolo</label>
-                  <input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} placeholder="Web Developer" style={inputStyle} disabled />
-                </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>sito web</label>
-                  <input value={form.website} onChange={e => setForm(f => ({ ...f, website: e.target.value }))} placeholder="https://tuosito.com" style={inputStyle} />
-                </div>
-                <div style={{ marginBottom: '24px' }}>
-                  <label style={labelStyle}>bio</label>
-                  <textarea value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} placeholder="Racconta chi sei e cosa fai in 2-3 righe…" rows={4} style={{ ...inputStyle, resize: 'none', lineHeight: 1.65 } as any} />
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', padding: '14px', background: '#F8F5F0', borderRadius: '8px', border: '1px solid #EDE8DF', cursor: 'pointer' }}
-                  onClick={() => setForm(f => ({ ...f, available: !f.available }))}>
-                  <span style={{ fontSize: '12px', color: '#555', flex: 1 }}>Disponibile per nuovi progetti</span>
-                  <div style={{ width: '36px', height: '20px', background: form.available ? '#9fff00' : '#DDD8CE', borderRadius: '10px', position: 'relative' as const, transition: 'background 0.2s' }}>
-                    <div style={{ position: 'absolute' as const, top: '3px', left: form.available ? '19px' : '3px', width: '14px', height: '14px', background: '#fff', borderRadius: '50%', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', transition: 'left 0.2s' }}></div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={saveProfile}
-                  disabled={saving || !professional}
-                  style={{ width: '100%', background: saving ? '#888' : saveSuccess ? '#0F6E56' : '#0D0D0D', color: '#fff', fontSize: '13px', fontWeight: 700, padding: '14px', borderRadius: '999px', border: 'none', cursor: saving || !professional ? 'not-allowed' : 'pointer', letterSpacing: '0.5px', transition: 'background 0.2s' }}>
-                  {saving ? 'Salvataggio...' : saveSuccess ? '✓ Salvato!' : 'salva modifiche →'}
-                </button>
-              </div>
+<div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '28px', paddingBottom: '28px', borderBottom: '1px solid #F0EBE4' }}>
+  {professional?.avatar_url ? (
+    <img src={professional.avatar_url} style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+  ) : (
+    <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: '#EEF8F3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 800, color: '#0F6E56', flexShrink: 0 }}>
+      {form.full_name?.[0]?.toUpperCase() || user?.firstName?.[0] || 'U'}
+    </div>
+  )}
+  <div>
+    <div style={{ fontSize: '13px', fontWeight: 700, color: '#0D0D0D', marginBottom: '4px' }}>Foto profilo</div>
+    <div style={{ fontSize: '11px', color: '#AAA098', marginBottom: '10px' }}>JPG o PNG, max 2MB</div>
+    <input type="file" id="avatar-upload" accept="image/jpeg,image/png" style={{ display: 'none' }}
+      onChange={async (e) => {
+        const file = e.target.files?.[0]
+        if (!file || !professional) return
+        const ext = file.name.split('.').pop()
+        const path = `${professional.id}.${ext}`
+        const { error } = await supabase.storage.from('avatars').upload(path, file, { upsert: true })
+        if (error) { alert('Errore upload: ' + error.message); return }
+        const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+        await supabase.from('professionals').update({ avatar_url: publicUrl }).eq('id', professional.id)
+        setProfessional((prev: any) => ({ ...prev, avatar_url: publicUrl }))
+      }}
+    />
+    <button onClick={() => document.getElementById('avatar-upload')?.click()}
+      style={{ fontSize: '11px', color: '#fe3812', border: '1px solid #fe381230', borderRadius: '999px', padding: '6px 16px', background: '#FDF5F2', cursor: 'pointer' }}>
+      Carica foto
+    </button>
+  </div>
+</div>
             </div>
           )}
 
