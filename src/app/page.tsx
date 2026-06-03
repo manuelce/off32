@@ -367,14 +367,16 @@ export default function Home() {
 
           {/* Card grande */}
           <Animate delay={100}>
-            <div style={{ marginBottom: '8px' }}>
-              <VideoCard
-                src={works[0].src}
-                title={works[0].title}
-                category={works[0].category}
-                size="large"
-              />
-            </div>
+          
+            <a href="/work/healing-earth" style={{ textDecoration: 'none', display: 'block', marginBottom: '8px' }}>
+  <VideoCard
+    src={works[0].src}
+    title={works[0].title}
+    category={works[0].category}
+    size="large"
+  />
+</a>
+            
           </Animate>
 
           {/* Riga 2 colonne */}
