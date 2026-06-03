@@ -369,13 +369,13 @@ export default function Home() {
           <Animate delay={100}>
           
             <a href="/work/healing-earth" style={{ textDecoration: 'none', display: 'block', marginBottom: '8px' }}>
-  <VideoCard
-    src={works[0].src}
-    title={works[0].title}
-    category={works[0].category}
-    size="large"
-  />
-</a>
+                <VideoCard
+                  src={works[0].src}
+                  title={works[0].title}
+                  category={works[0].category}
+                  size="large"
+                />
+             </a>
             
           </Animate>
 
