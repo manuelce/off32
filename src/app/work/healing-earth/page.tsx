@@ -138,7 +138,7 @@ export default function HealingEarthPage() {
       <section style={{ padding: '80px 5%', borderBottom: '1px solid #E0D8CC' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }} className="grid-2-col">
 
-          <FadeIn direction="left" y={24}>
+          <FadeIn y={24}>
             <p style={{
               fontFamily: "'Canela', Georgia, serif",
               fontSize: 'clamp(22px, 2.5vw, 30px)',
