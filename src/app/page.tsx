@@ -182,7 +182,7 @@ export default function Home() {
 
   // I video dei lavori — sostituisci i src con i tuoi file in /public/works/
   const works = [
-    { src: '/works/healing-earth.mp4', title: 'Healing Earth Italia', category: 'eCommerce · Brand', size: 'large' as const },
+    { src: '/works/healingheartoff32.mp4', title: 'Healing Earth Italia', category: 'eCommerce · Brand', size: 'large' as const },
     { src: '/works/scuppoz.mp4', title: 'Scuppoz', category: 'Web Design', size: 'normal' as const },
     { src: '/works/momento.mp4', title: 'Momento Catering', category: 'Brand · Social', size: 'normal' as const },
     { src: '/works/texture.mp4', title: 'Texture Studio', category: 'Digital Strategy', size: 'normal' as const },
