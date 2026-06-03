@@ -32,9 +32,7 @@ export default function Navbar() {
             </a>
           ) : (
             <>
-              <a href="/login" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', letterSpacing: '0.3px', padding: '9px 4px' }}>
-                Accedi
-              </a>
+              
               <a href="/apply" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
                 Unisciti all&apos;officina
               </a>
