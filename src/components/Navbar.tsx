@@ -17,7 +17,7 @@ export default function Navbar() {
         </a>
         <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
           {[
-            { label: 'Discover', href: '/discover' },
+            { label: 'Work', href: '/work' },
             { label: 'About', href: '/about' },
             { label: 'Blog', href: '/blog' },
             { label: 'Contatti', href: '/contatti' },
@@ -54,7 +54,7 @@ export default function Navbar() {
         </a>
         <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #222', borderRadius: '999px', padding: '4px 8px' }}>
           {[
-            { label: 'discover', href: '/discover' },
+            { label: 'Work', href: '/work' },
             { label: 'about', href: '/about' },
             { label: 'blog', href: '/blog' },
           ].map(link => (
