@@ -226,39 +226,115 @@ export default function Home() {
       }}>
 
         {/* NAVBAR DESKTOP */}
-        <nav className="nav-desktop" style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '14px 5%', background: '#fe3812',
-          position: 'sticky', top: 0, zIndex: 100,
-        }}>
-          <a href="/" style={{ textDecoration: 'none' }}>
-            <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
-          </a>
-          <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
-            {[
-              { label: 'Lavori', href: '#works' },
-              { label: 'Servizi', href: '#services' },
-              { label: 'Blog', href: '/blog' },
-              { label: 'Contatti', href: '/contatti' },
-            ].map(link => (
-              <a key={link.label} href={link.href} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            {isSignedIn ? (
-              <a href="/dashboard" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none' }}>
-                Dashboard →
-              </a>
-            ) : (
-              <>
-                <a href="/login" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', padding: '9px 4px' }}>Accedi</a>
-                <a href="/contatti" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none' }}>
-                  Inizia un progetto →
-                </a>
-              </>
-            )}
-          </div>
-        </nav>
+        {/* NAVBAR DESKTOP */}
+<nav
+  className="nav-desktop"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '14px 5%',
+    background: '#fe3812',
+    position: 'sticky',
+    top: 0,
+    zIndex: 100,
+  }}
+>
+  <a href="/" style={{ textDecoration: 'none' }}>
+    <img
+      src="/off32_green_cube.svg"
+      alt="OFF32"
+      style={{ height: '30px', width: 'auto' }}
+    />
+  </a>
+
+  <div
+    style={{
+      display: 'flex',
+      gap: '2px',
+      background: '#141414',
+      border: '1px solid #1C1C1C',
+      borderRadius: '999px',
+      padding: '4px 8px',
+    }}
+  >
+    {[
+      { label: 'Work', href: '/work' },
+      { label: 'About', href: '/about' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Contatti', href: '/contatti' },
+    ].map((link) => (
+      <a
+        key={link.label}
+        href={link.href}
+        style={{
+          fontSize: '11px',
+          color: '#666',
+          padding: '4px 14px',
+          borderRadius: '999px',
+          letterSpacing: '0.3px',
+          textDecoration: 'none',
+        }}
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+
+  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+    {isSignedIn ? (
+      <>
+        {/* 
+        <a
+          href="/dashboard"
+          style={{
+            background: '#0D0D0D',
+            color: '#fff',
+            fontSize: '11px',
+            fontWeight: 700,
+            padding: '9px 24px',
+            borderRadius: '999px',
+            textDecoration: 'none',
+          }}
+        >
+          Dashboard →
+        </a>
+        */}
+      </>
+    ) : (
+      <>
+        {/*
+        <a
+          href="/login"
+          style={{
+            fontSize: '11px',
+            color: 'rgba(255,255,255,0.7)',
+            textDecoration: 'none',
+            padding: '9px 4px',
+          }}
+        >
+          Accedi
+        </a>
+        */}
+        <a
+          href="/contatti"
+          style={{
+            background: '#0D0D0D',
+            color: '#fff',
+            fontSize: '11px',
+            fontWeight: 700,
+            padding: '9px 24px',
+            borderRadius: '999px',
+            textDecoration: 'none',
+          }}
+        >
+          Inizia un progetto →
+        </a>
+      </>
+    )}
+  </div>
+</nav>
+
 
         {/* HERO */}
         <section style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
@@ -367,7 +443,6 @@ export default function Home() {
 
           {/* Card grande */}
           <Animate delay={100}>
-          
             <a href="/work/healing-earth" style={{ textDecoration: 'none', display: 'block', marginBottom: '8px' }}>
                 <VideoCard
                   src={works[0].src}
