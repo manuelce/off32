@@ -18,7 +18,7 @@ const POSTS = [
 
   {
     slug: 'scegliere-clienti-giusti',
-    image: '/blog/img/prova.jpg',
+    image: '/blog/img/client_s.webp',
     category: 'community',
     tag: 'Community',
     title: 'La selezione dei professionisti e non solo: perché la qualità non si negozia',
