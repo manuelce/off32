@@ -226,7 +226,6 @@ export default function Home() {
       }}>
 
         {/* NAVBAR DESKTOP */}
-        {/* NAVBAR DESKTOP */}
 <nav
   className="nav-desktop"
   style={{
@@ -362,7 +361,8 @@ export default function Home() {
               </span>
             </h1>
             <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: '420px', fontWeight: 300 }}>
-              OFF32 — agenzia di comunicazione che usa l&apos;AI per creare brand, esperienze digitali e campagne che funzionano davvero.
+              OFF32 agenzia che integra l'intelligenza artificiale nella creazione di brand, esperienze digitali e campagne strategiche,
+              Una comunicazione orientata alla performance.
             </p>
           </div>
           <div style={{ position: 'absolute', bottom: '32px', right: '5%', zIndex: 2, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: '6px' }}>
