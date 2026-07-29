@@ -1,4 +1,3 @@
-
 'use client'
 import { useAuth } from '@clerk/nextjs'
 import { useEffect, useState, useRef } from 'react'
