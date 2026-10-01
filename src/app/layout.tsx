@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import CallDock from '@/components/CallDock'
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
         {children}
+        <CallDock />
       </body>
     </html>
   )

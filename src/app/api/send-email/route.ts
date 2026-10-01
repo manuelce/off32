@@ -8,6 +8,7 @@ const TYPES: Record<string, string> = {
   progetto: 'Progetto',
   workshop: 'Workshop',
   altro: 'Altro',
+  call: 'Call gratuita',
 }
 
 function escapeHtml(value: string) {
