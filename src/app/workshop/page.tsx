@@ -383,8 +383,48 @@ export default function WorkshopPage() {
           .workshop-title { padding-top: 64px; }
           .event-filters { flex-wrap: wrap; }
           .events-grid { grid-template-columns: 1fr; }
-          .event-dialog { grid-template-columns: 1fr; overflow: auto; }
-          .event-flyer { min-height: 420px; }
+          .event-modal { z-index: 10001; padding: 0; align-items: stretch; }
+          .event-dialog {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+          .event-flyer {
+            min-height: 0;
+            height: auto;
+            padding: 0;
+            display: block;
+            overflow: visible;
+          }
+          .event-flyer-title { display: none; }
+          .event-flyer-photo {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 4;
+            margin: 0;
+            flex: none;
+          }
+          .event-dialog-copy {
+            position: static;
+            overflow: visible;
+            height: auto;
+            padding: 28px 22px 64px;
+          }
+          .event-dialog-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2;
+            width: 36px;
+            height: 36px;
+            background: #F0EBE0;
+            border: 1px solid #0D0D0D;
+            line-height: 32px;
+          }
         }
       `}</style>
     </main>
