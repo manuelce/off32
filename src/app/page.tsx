@@ -369,7 +369,7 @@ export default function Home() {
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-grid > :first-child { display: none !important; }
-          .hero-copy { padding-bottom: 48px !important; }
+          .hero-copy { padding: 112px 28px 48px !important; }
           .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
           .meta-row, .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
           .meta-row > div, .grid-3 > div, .split > div, .split > a, .split > p, .works-grid > a { border-right: none !important; border-left: none !important; }
