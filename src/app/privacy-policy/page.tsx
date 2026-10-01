@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
 import ProjectStart from '@/components/ProjectStart'
+import { pageMeta } from '@/lib/seo'
+
+export const metadata: Metadata = pageMeta(
+  'Privacy Policy',
+  'Informativa sul trattamento dei dati personali di OFF32.',
+  '/privacy-policy',
+)
 
 export default function PrivacyPolicyPage() {
     return (

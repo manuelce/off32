@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
 import ProjectStart from '@/components/ProjectStart'
+import { pageMeta } from '@/lib/seo'
+
+export const metadata: Metadata = pageMeta(
+  'Cookie Policy',
+  'Come OFF32 usa i cookie su questo sito.',
+  '/cookie-policy',
+)
 
 export default function CookiePolicyPage() {
     return (

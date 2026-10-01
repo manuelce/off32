@@ -166,9 +166,9 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="meta-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderBottom: LINE }}>
+      <div className="meta-row">
         {['Est. 2025', '( Scroll )', 'AI Powered', 'Officina®'].map(item => (
-          <div key={item} style={{ ...meta, padding: '14px 24px' }}>{item}</div>
+          <div key={item}>{item}</div>
         ))}
       </div>
 
@@ -355,6 +355,23 @@ export default function Home() {
         @media (prefers-reduced-motion: reduce) {
           .street-underline { animation: none; clip-path: none; }
         }
+        .meta-row {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border-bottom: 1px solid #0D0D0D;
+          --meta-inset: 24px;
+        }
+        .meta-row > div {
+          font-size: 11px;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: #0D0D0D;
+          padding: 14px 0;
+          text-align: center;
+          white-space: nowrap;
+        }
+        .meta-row > div:first-child { text-align: left; padding-left: var(--meta-inset); }
+        .meta-row > div:last-child { text-align: right; padding-right: var(--meta-inset); }
         .ai-scan-card {
           width: 60%;
           margin: 0 auto;
@@ -371,8 +388,10 @@ export default function Home() {
           .hero-grid > :first-child { display: none !important; }
           .hero-copy { padding: 112px 28px 48px !important; }
           .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
-          .meta-row, .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
-          .meta-row > div, .grid-3 > div, .split > div, .split > a, .split > p, .works-grid > a { border-right: none !important; border-left: none !important; }
+          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
+          .grid-3 > div, .split > div, .split > a, .split > p, .works-grid > a { border-right: none !important; border-left: none !important; }
+          .meta-row { --meta-inset: 16px; }
+          .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
           .grid-3 > div, .grid-2 > a { border-bottom: 1px solid #0D0D0D; }
           .grid-3 > div:last-child, .grid-2 > a:last-child { border-bottom: none; }
           main { padding-bottom: 88px; }

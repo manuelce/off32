@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
 import ProjectStart from '@/components/ProjectStart'
+import { pageMeta } from '@/lib/seo'
+
+export const metadata: Metadata = pageMeta(
+  'Termini e Condizioni',
+  'Termini e condizioni di utilizzo del sito OFF32.',
+  '/terms-and-conditions',
+)
 
 export default function TermsAndConditionsPage() {
     return (
