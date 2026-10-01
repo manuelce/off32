@@ -28,8 +28,8 @@ function FadeIn({ children, delay = 0, y = 32 }: { children: React.ReactNode, de
 }
 
 const VIMEO = {
-  hero: '1169110852',
-  portraits: ['1169115143', '1169115118', '1169115133'],
+  hero: '1207764057',
+  portraits: ['1179375004', '1179377370', '1179377403'],
 }
 
 function vimeoSrc(id: string) {
@@ -37,54 +37,40 @@ function vimeoSrc(id: string) {
 }
 
 const PHOTOS = {
-  phoneStand: '/works/healing-earth/phone-stand.webp',
-  laptop: '/works/healing-earth/laptop.webp',
-  ipad: '/works/healing-earth/ipad.webp',
-  laptopSofa: '/works/healing-earth/laptop-sofa.webp',
-  phoneFloor: '/works/healing-earth/phone-floor.webp',
+  phoneOrange: '/works/conil-food-tour/phone-orange.webp',
+  phoneHand: '/works/conil-food-tour/phone-hand.webp',
+  phoneCheckout: '/works/conil-food-tour/phone-checkout.webp',
+  phoneMoss: '/works/conil-food-tour/phone-moss.webp',
+  laptop: '/works/conil-food-tour/laptop.webp',
+  logo: '/works/conil-food-tour/logo.png',
+  cards: '/works/conil-food-tour/cards.webp',
+  app: '/works/conil-food-tour/app-icon.webp',
+  food: '/works/conil-food-tour/hero-food.webp',
 }
 
-function MediaBlock({ src, type = 'image', aspect = '16/9', bg = '#111', alt = 'Healing Earth' }: {
-  src?: string, type?: 'video' | 'image' | 'vimeo', aspect?: string, bg?: string, alt?: string
+function MediaBlock({ src, type = 'image', aspect = '16/9', bg = '#111', alt = 'Conil Food Tour', fit = 'cover' }: {
+  src?: string, type?: 'image' | 'vimeo', aspect?: string, bg?: string, alt?: string, fit?: 'cover' | 'contain'
 }) {
   if (type === 'vimeo' && src) {
     return (
       <div style={{ position: 'relative', aspectRatio: aspect, borderRadius: '8px', overflow: 'hidden', background: bg }}>
         <iframe
           src={src}
-          title="Healing Earth"
+          title="Conil Food Tour"
           allow="autoplay; fullscreen; picture-in-picture"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, pointerEvents: 'none' }}
         />
       </div>
     )
   }
-  if (type === 'video' && src) {
-    return (
-      <div style={{ position: 'relative', aspectRatio: aspect, borderRadius: '8px', overflow: 'hidden', background: bg }}>
-        <video autoPlay muted loop playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
-          <source src={src} type="video/mp4" />
-        </video>
-      </div>
-    )
-  }
   return (
-    <div style={{
-      aspectRatio: aspect, borderRadius: '8px', overflow: 'hidden',
-      background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>
-      {src ? (
-        <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
-      ) : (
-        <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#333', textTransform: 'uppercase', fontFamily: 'monospace' }}>
-          media placeholder
-        </span>
-      )}
+    <div style={{ aspectRatio: aspect, borderRadius: '8px', overflow: 'hidden', background: bg }}>
+      <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: fit, objectPosition: 'center', display: 'block' }} />
     </div>
   )
 }
 
-export default function HealingEarthPage() {
+export default function ConilFoodTourPage() {
   const [scrollY, setScrollY] = useState(0)
   useEffect(() => {
     const h = () => setScrollY(window.scrollY)
@@ -100,12 +86,11 @@ export default function HealingEarthPage() {
     }}>
       <Navbar />
 
-      {/* ── HERO ── */}
       <section style={{ background: '#0D0D0D', padding: '80px 5% 64px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, opacity: 0.35, pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, opacity: 0.4, pointerEvents: 'none' }}>
           <iframe
             src={vimeoSrc(VIMEO.hero)}
-            title="Healing Earth"
+            title="Conil Food Tour"
             allow="autoplay; fullscreen; picture-in-picture"
             style={{
               position: 'absolute',
@@ -126,7 +111,7 @@ export default function HealingEarthPage() {
             <div style={{ fontSize: '10px', letterSpacing: '3px', color: '#555', textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: '32px' }}>
               <a href="/work" style={{ color: '#555', textDecoration: 'none' }}>← Work</a>
               <span style={{ margin: '0 12px' }}>/</span>
-              <span>eCommerce · Brand</span>
+              <span>Events · eCommerce</span>
             </div>
           </FadeIn>
 
@@ -138,8 +123,8 @@ export default function HealingEarthPage() {
               lineHeight: 0.95, letterSpacing: '-3px',
               marginBottom: '40px', textTransform: 'uppercase',
             }}>
-              HEALING<br />EARTH<br />
-              <span style={{ color: '#9fff00' }}>ITALIA</span>
+              CONIL<br />FOOD<br />
+              <span style={{ color: '#3ec6ea' }}>TOUR</span>
             </h1>
           </FadeIn>
 
@@ -148,22 +133,21 @@ export default function HealingEarthPage() {
               fontSize: 'clamp(16px, 2vw, 20px)', color: 'rgba(255,255,255,0.55)',
               lineHeight: 1.6, maxWidth: '560px', fontWeight: 300, marginBottom: '48px',
             }}>
-              Un eCommerce di wellness italiano trasformato in una macchina da conversioni, con un&apos;identità visiva coerente e campagne AI-driven che funzionano davvero.
+              Un food tour a Conil de la Frontera, raccontato con un&apos;identità visiva e un sito dove si prenota davvero.
             </p>
           </FadeIn>
 
-          {/* meta info */}
           <FadeIn delay={300}>
             <div style={{
               display: 'grid', gridTemplateColumns: 'repeat(3, auto)', gap: '0',
               borderTop: '1px solid #1C1C1C', paddingTop: '32px', width: 'fit-content',
             }} className="meta-grid">
               {[
-                { label: 'Location', value: 'Italia' },
-                { label: 'Settore', value: 'Wellness · eCommerce' },
-                { label: 'Cosa abbiamo fatto', value: 'Brand, Web, Marketing AI' },
+                { label: 'Location', value: 'Conil de la Frontera' },
+                { label: 'Settore', value: 'Food tour · Events' },
+                { label: 'Cosa abbiamo fatto', value: 'Brand, UX, WooCommerce' },
               ].map((m, i) => (
-                <div key={i} style={{ paddingRight: '48px', marginRight: '48px', borderRight: i < 2 ? '1px solid #1C1C1C' : 'none' }}>
+                <div key={m.label} style={{ paddingRight: '48px', marginRight: '48px', borderRight: i < 2 ? '1px solid #1C1C1C' : 'none' }}>
                   <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#444', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'monospace' }}>{m.label}</div>
                   <div style={{ fontSize: '14px', color: '#ccc', fontWeight: 500 }}>{m.value}</div>
                 </div>
@@ -173,10 +157,8 @@ export default function HealingEarthPage() {
         </div>
       </section>
 
-      {/* ── INTRO TESTO ── */}
       <section style={{ padding: '80px 5%', borderBottom: '1px solid #E0D8CC' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }} className="grid-2-col">
-
           <FadeIn y={24}>
             <p style={{
               fontFamily: "'Canela', Georgia, serif",
@@ -184,24 +166,24 @@ export default function HealingEarthPage() {
               fontWeight: 300, color: '#0D0D0D',
               lineHeight: 1.4, letterSpacing: '-0.5px',
             }}>
-              Abbiamo aiutato Healing Earth Italia a trasformare il proprio eCommerce da vetrina statica a piattaforma di vendita performante, ridisegnando l&apos;esperienza utente e potenziando ogni touchpoint con l&apos;AI.
+              Conil Food Tour nasce per raccontare il territorio attraverso i suoi sapori: un percorso tra tradizione, cucina e convivialità.
             </p>
           </FadeIn>
-
           <FadeIn delay={150}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {[
-                { title: 'La Sfida', text: 'Il brand aveva un prodotto eccellente ma un eCommerce che non convertiva. Layout confuso, nessuna strategia di acquisizione, identità visiva debole sui social. Il tasso di abbandono del carrello era oltre il 78%.' },
-                { title: 'La Strategia', text: 'Partire dal brand — ridefinire il visual language e il tono di voce. Poi ricostruire l\'eCommerce con focus su conversione e performance. Infine, attivare campagne Meta Ads con creativi generati e ottimizzati con AI.' },
-                { title: 'La Soluzione', text: 'Nuovo sito Shopify custom con UX ottimizzata, sistema di brand completo, campagne Meta con ROAS 4.2x, email automation e contenuti AI-assisted. Risultato: +40% conversioni in 30 giorni.' },
-              ].map((block, i) => (
-                <FadeIn key={i} delay={i * 100}>
-                  <div>
-                    <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', color: '#fe3812', textTransform: 'uppercase', marginBottom: '10px' }}>{block.title}</div>
-                    <p style={{ fontSize: '14px', color: '#666', lineHeight: 1.8 }}>{block.text}</p>
-                  </div>
-                </FadeIn>
+                { title: 'Il concept', text: 'Logo, palette e linguaggio visivo costruiti insieme. Arancio, menta e blu tengono insieme sito, biglietti da visita e icona, così il brand si riconosce prima ancora di leggere il nome.' },
+                { title: 'Il progetto', text: 'Il sito è vetrina e prenotazione. I tour — gourmet, tonno, vegetariano e privato — si scelgono, si datano e si pagano online, su WordPress e WooCommerce.' },
+                { title: 'Il lancio', text: 'Dopo l’uscita abbiamo raccolto i feedback di chi ha partecipato e tenuto vivo il rapporto con aggiornamenti sui nuovi tour e supporto alle prenotazioni.' },
+              ].map(block => (
+                <div key={block.title}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', color: '#fe3812', textTransform: 'uppercase', marginBottom: '10px' }}>{block.title}</div>
+                  <p style={{ fontSize: '14px', color: '#666', lineHeight: 1.8 }}>{block.text}</p>
+                </div>
               ))}
+              <a href="https://www.conilfoodtour.com/" target="_blank" rel="noreferrer" style={{ fontSize: '12px', letterSpacing: '1.2px', textTransform: 'uppercase', color: '#0D0D0D', textDecoration: 'none' }}>
+                conilfoodtour.com →
+              </a>
             </div>
           </FadeIn>
         </div>
@@ -221,116 +203,93 @@ export default function HealingEarthPage() {
         </section>
       </FadeIn>
 
-      {/* ── SEZIONE 1: BRAND IDENTITY ── */}
       <section style={{ padding: '80px 5%', borderTop: '1px solid #E0D8CC', borderBottom: '1px solid #E0D8CC' }}>
         <FadeIn>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', marginBottom: '48px', alignItems: 'end' }} className="grid-2-col">
             <h2 style={{
               fontFamily: "'Canela', Georgia, serif",
               fontSize: 'clamp(32px, 4vw, 52px)',
-              fontWeight: 300, color: '#0D0D0D',
-              lineHeight: 1.1, letterSpacing: '-1px',
-              textTransform: 'uppercase',
+              fontWeight: 300, lineHeight: 1.1, letterSpacing: '-1px', textTransform: 'uppercase',
             }}>
               BRAND<br />IDENTITY
             </h2>
             <p style={{ fontSize: '15px', color: '#666', lineHeight: 1.8, maxWidth: '480px' }}>
-              Abbiamo ridefinito l&apos;identità visiva del brand partendo dal concept di purezza e connessione con la natura. Palette cromatica, tipografia, iconografia e tono di voce coerenti su tutti i canali — dal packaging alle campagne digitali.
+              Un marchio rotondo, da applicare sul sito, sul biglietto e sull&apos;icona. First-class flavor expeditions, detto con un segno che si ricorda.
             </p>
           </div>
         </FadeIn>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }} className="grid-3-col">
-          {[PHOTOS.phoneStand, PHOTOS.ipad, PHOTOS.phoneFloor].map((src, i) => (
-            <FadeIn key={src} delay={i * 100}>
-              <MediaBlock src={src} aspect="1 / 1" bg="#d5d5d5" alt="Mockup" />
+          {[
+            { src: PHOTOS.logo, alt: 'Logo Conil Food Tour' },
+            { src: PHOTOS.cards, alt: 'Biglietti da visita Conil Food Tour' },
+            { src: PHOTOS.app, alt: 'Icona Conil Food Tour' },
+          ].map((photo, i) => (
+            <FadeIn key={photo.src} delay={i * 100}>
+              <MediaBlock src={photo.src} aspect="4 / 3" fit={photo.src === PHOTOS.logo ? 'contain' : 'cover'} bg="#f3f0ea" alt={photo.alt} />
             </FadeIn>
           ))}
         </div>
+        <FadeIn>
+          <div style={{ marginTop: '8px' }}>
+            <MediaBlock src={PHOTOS.food} aspect="16 / 9" bg="#1a1a1a" alt="Conil Food Tour, first-class flavor expeditions" />
+          </div>
+        </FadeIn>
       </section>
 
-      {/* ── SEZIONE 2: ECOMMERCE ── */}
-      <section style={{ padding: '80px 5%', borderBottom: '1px solid #E0D8CC', background: '#0D0D0D' }}>
+      <section style={{ padding: '80px 5%', background: '#0D0D0D' }}>
         <FadeIn>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', marginBottom: '48px', alignItems: 'end' }} className="grid-2-col">
             <h2 style={{
               fontFamily: "'Canela', Georgia, serif",
               fontSize: 'clamp(32px, 4vw, 52px)',
               fontWeight: 300, color: '#fff',
-              lineHeight: 1.1, letterSpacing: '-1px',
-              textTransform: 'uppercase',
+              lineHeight: 1.1, letterSpacing: '-1px', textTransform: 'uppercase',
             }}>
-              eCOMMERCE<br />& UX
+              SITO &<br />PRENOTAZIONE
             </h2>
-            <p style={{ fontSize: '15px', color: '#555', lineHeight: 1.8, maxWidth: '480px' }}>
-              Il nuovo Shopify è stato progettato per convertire. Ogni elemento — dalla hero alla scheda prodotto al checkout — è stato ottimizzato per ridurre l&apos;attrito e aumentare la fiducia dell&apos;utente. Mobile-first, veloce, misurabile.
+            <p style={{ fontSize: '15px', color: '#888', lineHeight: 1.8, maxWidth: '480px' }}>
+              Dal telefono si sceglie il tour, le persone e la data, e si chiude il pagamento. Il desktop tiene il menu, i piatti e la prenotazione nello stesso sguardo.
             </p>
           </div>
         </FadeIn>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }} className="grid-2-col">
-          <FadeIn>
-            <MediaBlock src={PHOTOS.laptop} aspect="4 / 3" bg="#cfcfcf" alt="Mockup" />
-          </FadeIn>
-          <FadeIn delay={100}>
-            <MediaBlock src={PHOTOS.laptopSofa} aspect="4 / 3" bg="#cfcfcf" alt="Mockup" />
-          </FadeIn>
+        <FadeIn>
+          <MediaBlock src={PHOTOS.laptop} aspect="3 / 2" bg="#111" alt="Sito Conil Food Tour su laptop" />
+        </FadeIn>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '8px' }} className="grid-2-col">
+          {[PHOTOS.phoneOrange, PHOTOS.phoneHand, PHOTOS.phoneCheckout, PHOTOS.phoneMoss].map((src, i) => (
+            <FadeIn key={src} delay={i * 80}>
+              <MediaBlock src={src} aspect="1 / 1" bg="#c4552a" alt="Conil Food Tour su telefono" />
+            </FadeIn>
+          ))}
         </div>
       </section>
 
-      {/* ── SEZIONE 3: MARKETING AI ── */}
-      <section style={{ padding: '80px 5%', borderBottom: '1px solid #E0D8CC' }}>
-        <FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end' }} className="grid-2-col">
-            <h2 style={{
-              fontFamily: "'Canela', Georgia, serif",
-              fontSize: 'clamp(32px, 4vw, 52px)',
-              fontWeight: 300, color: '#0D0D0D',
-              lineHeight: 1.1, letterSpacing: '-1px',
-              textTransform: 'uppercase',
-            }}>
-              MARKETING<br />AI-DRIVEN
-            </h2>
-            <p style={{ fontSize: '15px', color: '#666', lineHeight: 1.8, maxWidth: '480px' }}>
-              Creativi generati e testati con AI, campagne Meta ottimizzate in tempo reale, email automation personalizzata. Ogni euro speso in advertising è tracciato e ottimizzato. ROAS 4.2x nel primo mese di attività.
-            </p>
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* ── RISULTATI ── */}
-      <section style={{ padding: '80px 5%', background: '#0D0D0D', borderBottom: '1px solid #1C1C1C' }}>
-        <FadeIn>
-          <div style={{ fontSize: '10px', letterSpacing: '3px', color: '#444', textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: '48px' }}>
-            // Risultati
-          </div>
-        </FadeIn>
+      <section style={{ padding: '80px 5%', background: '#0D0D0D', borderTop: '1px solid #1C1C1C' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2px' }} className="grid-4-col">
           {[
-            { num: '+40%', label: 'Conversioni', sub: 'nei primi 30 giorni' },
-            { num: '4.2x', label: 'ROAS', sub: 'campagne Meta Ads' },
-            { num: '-62%', label: 'Abbandono carrello', sub: 'rispetto al sito precedente' },
-            { num: '30gg', label: 'Time to market', sub: 'dalla brief al lancio' },
-          ].map((s, i) => (
-            <FadeIn key={i} delay={i * 80}>
-              <div style={{ padding: '32px', background: '#111', borderRadius: '8px' }}>
-                <div style={{
-                  fontFamily: "'Canela', Georgia, serif",
-                  fontSize: 'clamp(36px, 4vw, 56px)',
-                  fontWeight: 300, color: '#9fff00',
-                  letterSpacing: '-2px', lineHeight: 1, marginBottom: '12px',
-                }}>
-                  {s.num}
-                </div>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: '#ddd', marginBottom: '4px' }}>{s.label}</div>
-                <div style={{ fontSize: '11px', color: '#444' }}>{s.sub}</div>
+            { num: '3h', label: 'Durata', sub: 'una camminata tra i locali' },
+            { num: '8', label: 'Ospiti', sub: 'gruppi piccoli, privati su richiesta' },
+            { num: '4', label: 'Tour', sub: 'gourmet, tonno, vegetariano, privato' },
+            { num: 'WP', label: 'Piattaforma', sub: 'WordPress e WooCommerce' },
+          ].map(item => (
+            <div key={item.label} style={{ padding: '32px', background: '#111', borderRadius: '8px' }}>
+              <div style={{
+                fontFamily: "'Canela', Georgia, serif",
+                fontSize: 'clamp(36px, 4vw, 56px)',
+                fontWeight: 300, color: '#3ec6ea',
+                letterSpacing: '-2px', lineHeight: 1, marginBottom: '12px',
+              }}>
+                {item.num}
               </div>
-            </FadeIn>
+              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ddd', marginBottom: '4px' }}>{item.label}</div>
+              <div style={{ fontSize: '11px', color: '#444' }}>{item.sub}</div>
+            </div>
           ))}
         </div>
       </section>
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />
-
         <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D', background: '#F0EBE0' }}>
           <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
             {[
@@ -349,13 +308,11 @@ export default function HealingEarthPage() {
       </div>
 
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         @media (max-width: 768px) {
           .grid-2-col { grid-template-columns: 1fr !important; gap: 32px !important; }
           .grid-3-col { grid-template-columns: 1fr !important; }
           .grid-4-col { grid-template-columns: 1fr 1fr !important; }
           .meta-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-          main { padding-bottom: 0 !important; }
         }
       `}</style>
     </main>

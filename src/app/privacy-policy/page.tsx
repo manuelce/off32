@@ -1,13 +1,15 @@
+import ProjectStart from '@/components/ProjectStart'
+
 export default function PrivacyPolicyPage() {
     return (
-      <main style={{ background: "#F8F5F0", minHeight: "100vh", padding: "80px 24px", color: "#0D0D0D", fontFamily: '"Axiforma", "Helvetica Neue", sans-serif' }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+      <main style={{ background: "#F8F5F0", minHeight: "100vh", color: "#0D0D0D", fontFamily: '"Axiforma", "Helvetica Neue", sans-serif' }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto", padding: "80px 24px" }}>
           <h1 style={{ fontSize: "clamp(36px, 5vw, 58px)", marginBottom: "24px", fontFamily: '"Canela", Georgia, serif', fontWeight: 300 }}>
             Privacy Policy
           </h1>
   
           <p>La presente informativa descrive le modalità con cui OFF32 raccoglie,
-          utilizza e protegge i dati personali degli utenti che visitano il sito e utilizzano i servizi della piattaforma.
+          utilizza e protegge i dati personali degli utenti che visitano il sito e richiedono i servizi dell&apos;agenzia.
           </p>
   <br></br><br></br>
           <h2><b>Titolare del trattamento</b></h2>
@@ -18,15 +20,15 @@ export default function PrivacyPolicyPage() {
 <br></br><br></br>
           <h2><b>Tipologie di dati raccolti</b></h2>
           <p>OFF32 può raccogliere dati identificativi e di contatto,
-          dati professionali, dati inviati tramite moduli di contatto o candidatura,
+          dati inviati tramite moduli di contatto o richieste di workshop,
           dati tecnici di navigazione e, se necessario, dati amministrativi e di fatturazione.
           </p>
 <br></br><br></br>
   
           <h2><b>Finalità del trattamento</b></h2>
-          <p>I dati personali sono trattati per consentire la registrazione e l’utilizzo della piattaforma,
-          gestire i profili, mettere in contatto clienti e professionisti,
-          rispondere alle richieste, adempiere ad obblighi di legge, inviare comunicazioni di servizio e,
+          <p>I dati personali sono trattati per rispondere alle richieste di contatto,
+          gestire progetti, preventivi e iscrizioni ai workshop,
+          adempiere ad obblighi di legge, inviare comunicazioni di servizio e,
           previo consenso, inviare comunicazioni promozionali o di marketing.
           </p>
 <br></br><br></br>
@@ -57,7 +59,7 @@ export default function PrivacyPolicyPage() {
           <h2><b>Comunicazione dei dati</b></h2>
           <p>I dati possono essere comunicati a fornitori tecnici,
           consulenti, collaboratori e soggetti che supportano il funzionamento
-          della piattaforma, nonché alle autorità competenti nei casi
+          del sito, nonché alle autorità competenti nei casi
           previsti dalla legge.
           </p>
 <br></br><br></br>
@@ -98,6 +100,7 @@ export default function PrivacyPolicyPage() {
           </p>
 
         </div>
+        <ProjectStart />
       </main>
     );
   }

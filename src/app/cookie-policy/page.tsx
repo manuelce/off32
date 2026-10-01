@@ -1,7 +1,9 @@
+import ProjectStart from '@/components/ProjectStart'
+
 export default function CookiePolicyPage() {
     return (
-      <main style={{ background: "#F8F5F0", minHeight: "100vh", padding: "80px 24px", color: "#0D0D0D", fontFamily: '"Axiforma", "Helvetica Neue", sans-serif' }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+      <main style={{ background: "#F8F5F0", minHeight: "100vh", color: "#0D0D0D", fontFamily: '"Axiforma", "Helvetica Neue", sans-serif' }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto", padding: "80px 24px" }}>
           <h1 style={{ fontSize: "clamp(36px, 5vw, 58px)", marginBottom: "24px", fontFamily: '"Canela", Georgia, serif', fontWeight: 300 }}>
             Cookie Policy
           </h1>
@@ -20,7 +22,7 @@ export default function CookiePolicyPage() {
           <h2><b>Cookie tecnici</b></h2>
           <p>I cookie tecnici sono necessari per il funzionamento del sito e non richiedono
           il consenso dell’utente. Servono, ad esempio, a garantire la navigazione,
-          la sicurezza e l’accesso alle eventuali aree riservate.
+          la sicurezza e il corretto caricamento delle pagine.
           </p>
 <br></br><br></br>
           <h2><b>Cookie analitici</b></h2>
@@ -62,6 +64,7 @@ export default function CookiePolicyPage() {
           Le modifiche saranno pubblicate su questa pagina.
           </p>
         </div>
+        <ProjectStart />
       </main>
     );
   }

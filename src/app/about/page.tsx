@@ -1,219 +1,155 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import type { CSSProperties } from 'react'
 import Navbar from '@/components/Navbar'
+import ProjectStart from '@/components/ProjectStart'
+
+const LINE = '1px solid #0D0D0D'
+
+type Social = 'web' | 'instagram' | 'behance' | 'linkedin'
+
+const team: {
+  src: string
+  name: string
+  role: string
+  tone?: boolean
+  links: { kind: Social; href: string; label: string }[]
+}[] = [
+  {
+    src: '/team/team-01.jpg',
+    name: 'Manuel Cerasuolo',
+    role: 'Founder',
+    tone: true,
+    links: [
+      { kind: 'web', href: 'https://www.manuelcerasuolo.com/', label: 'Sito' },
+      { kind: 'instagram', href: 'https://www.instagram.com/off32channel/', label: 'Instagram' },
+    ],
+  },
+  {
+    src: '/team/team-02.jpg',
+    name: 'Sara Zeppieri',
+    role: 'Graphic Designer',
+    tone: true,
+    links: [
+      { kind: 'instagram', href: 'https://www.instagram.com/sz.visuals_/', label: 'Instagram' },
+      { kind: 'behance', href: 'https://www.behance.net/sarazeppieri', label: 'Behance' },
+    ],
+  },
+  { src: '/team/team-03.jpg', name: 'Lorenzo Salvatori', role: 'Full Stack Developer', tone: true, links: [] },
+  { src: '/team/team-04.jpg?v=5', name: 'Sara Villani', role: 'Social Media Manager', tone: true, links: [] },
+]
+
+function SocialIcon({ kind }: { kind: Social }) {
+  const box = { width: 18, height: 18, viewBox: '0 0 24 24', 'aria-hidden': true as const }
+  if (kind === 'instagram') {
+    return (
+      <svg {...box} fill="none" stroke="currentColor" strokeWidth="1.7">
+        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none" />
+      </svg>
+    )
+  }
+  if (kind === 'behance') {
+    return (
+      <svg {...box} fill="currentColor">
+        <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z" />
+      </svg>
+    )
+  }
+  if (kind === 'linkedin') {
+    return (
+      <svg {...box} fill="currentColor">
+        <path d="M4.7 3.4a2.2 2.2 0 1 0 .02 4.4 2.2 2.2 0 0 0-.02-4.4zM3 9h3.4v12H3V9zm6.2 0h3.3v1.6h.05c.46-.87 1.58-1.8 3.25-1.8 3.48 0 4.12 2.29 4.12 5.27V21h-3.4v-5.25c0-1.25-.02-2.86-1.74-2.86-1.74 0-2.01 1.36-2.01 2.76V21H9.2V9z" />
+      </svg>
+    )
+  }
+  return (
+    <svg {...box} fill="none" stroke="currentColor" strokeWidth="1.7">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.4 2.7 3.6 5.7 3.6 9s-1.2 6.3-3.6 9c-2.4-2.7-3.6-5.7-3.6-9s1.2-6.3 3.6-9z" />
+    </svg>
+  )
+}
+
+const meta: CSSProperties = {
+  fontSize: 11,
+  letterSpacing: '1.8px',
+  textTransform: 'uppercase',
+  color: '#0D0D0D',
+}
+
+const title: CSSProperties = {
+  fontFamily: "'Canela', Georgia, serif",
+  fontWeight: 300,
+  fontSize: 'clamp(72px, 12vw, 168px)',
+  lineHeight: 0.88,
+  letterSpacing: '-3px',
+  color: '#0D0D0D',
+}
 
 export default function AboutPage() {
-  const [scrollY, setScrollY] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const values = [
-    { num: '01', title: 'Qualità sopra tutto', desc: 'Non siamo un marketplace di massa. Ogni candidatura viene letta da una persona reale. Preferiamo avere 50 profili eccellenti che 5000 mediocri.' },
-    { num: '02', title: 'Trasparenza totale', desc: 'Chi viene rifiutato sa perché. Chi paga sa cosa ottiene. Nessun algoritmo nascosto, nessuna logica oscura. Solo persone che parlano con persone.' },
-    { num: '03', title: 'Community prima di tutto', desc: 'OFF32 non è un\'agenzia che vende servizi. È una community dove i professionisti si aiutano, collaborano e crescono insieme.' },
-    { num: '04', title: 'Il lavoro parla per te', desc: 'Non conta quanti follower hai, dove hai studiato o come ti presenti. Conta quello che hai fatto. Il portfolio è l\'unico curriculum che accettiamo.' },
-  ]
-
-  const team = [
-    { initials: 'MR', name: 'Marco Rossi', role: 'Founder · Web Developer', city: 'Milano', bg: '#EEF8F3', color: '#0F6E56', bio: '10 anni di progetti digitali. Ha fondato OFF32 perché non trovava colleghi all\'altezza nei posti giusti.' },
-    { initials: 'SB', name: 'Sara Belli', role: 'Co-founder · Design', city: 'Roma', bg: '#EEEDFE', color: '#534AB7', bio: 'Designer con ossessione per i dettagli. Cura ogni pixel di OFF32 e seleziona i profili in ingresso.' },
-    { initials: 'AF', name: 'Andrea Ferri', role: 'Community Manager', city: 'Bologna', bg: '#FDF0EB', color: '#993C1D', bio: 'Tiene insieme la community, legge ogni candidatura e si assicura che OFF32 resti un posto di qualità.' },
-  ]
-
   return (
-    <main style={{ background: '#0D0D0D', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#fff' }}>
-
-      {/* NAVBAR */}
+    <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
       <Navbar />
 
-      {/* HERO MANIFESTO */}
-      <section style={{ padding: '96px 5% 80px', borderBottom: '1px solid #1C1C1C', maxWidth: '900px' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '24px' }}>// chi siamo · off32.com/about</div>
-        <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(52px, 8vw, 96px)', fontWeight: 300, lineHeight: 1.0, letterSpacing: '-3px', color: '#fff', marginBottom: '32px' }}>
-          L&apos;
-          <span style={{ position: 'relative', display: 'inline-block' }}>
-            officina
-            <span style={{ position: 'absolute', left: '-4px', bottom: '10px', width: 'calc(100% + 8px)', height: '12px', background: '#9fff00', zIndex: -1, borderRadius: '2px', opacity: 0.9 }}></span>
-          </span>
-          <br />dei professionisti<br />digitali italiani.
-        </h1>
-        <p style={{ fontSize: '18px', color: '#444', lineHeight: 1.8, maxWidth: '640px', fontWeight: 300 }}>
-          Siamo nati da una convinzione semplice: il mondo digitale italiano è pieno di talento. Ma è disperso, invisibile, mal rappresentato. <span style={{ color: '#888' }}>OFF32 esiste per cambiarlo.</span>
-        </p>
-      </section>
+      <h1 className="about-title" style={{ margin: 0 }}>
+        <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
+          il nostro
+        </span>
+        <span style={{ ...title, display: 'block', textAlign: 'left', borderBottom: LINE, padding: '18px 40px 22px' }}>
+          team
+        </span>
+      </h1>
 
-      {/* BARRA EST. */}
-      <div style={{ background: '#0D0D0D', padding: '14px 5%', borderBottom: '1px solid #1C1C1C', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#fe3812' }}></div>
-          <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#333', textTransform: 'uppercase' as const }}>Est. 2025</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#9fff00' }}></div>
-          <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#333', textTransform: 'uppercase' as const }}>Officina Digitale</span>
-        </div>
-        <span style={{ fontSize: '10px', letterSpacing: '2px', color: '#333', textTransform: 'uppercase' as const }}>Italia</span>
-      </div>
-
-      {/* 3 BLOCCHI MANIFESTO */}
-      <section style={{ padding: '80px 5%', borderBottom: '1px solid #1C1C1C' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '72px', maxWidth: '760px' }}>
-
-          {/* 01 */}
-          <div>
-            <div style={{ fontSize: '9px', letterSpacing: '3px', color: '#fe3812', fontFamily: 'monospace', marginBottom: '16px' }}>01 ——</div>
-            <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', lineHeight: 1.2, marginBottom: '16px' }}>
-              Il problema che<br />volevamo <span style={{ color: '#fe3812' }}>risolvere.</span>
-            </h2>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85, marginBottom: '16px' }}>
-              Se sei un web developer italiano bravo davvero, dove vai per farti trovare? LinkedIn è rumore. Behance è una galleria anonima. Upwork ti mette in gara con il mondo intero sul prezzo.
-            </p>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85, marginBottom: '24px' }}>
-              <span style={{ color: '#666' }}>Non esisteva un posto pensato per i professionisti digitali italiani di qualità.</span> Un posto dove il lavoro parlasse per te, non il profilo. Dove i clienti cercassero davvero, non sfogliassero a caso.
-            </p>
-            <div style={{ borderLeft: '2px solid #1D9E75', paddingLeft: '20px', background: '#080A09', padding: '16px 20px', borderRadius: '0 8px 8px 0' }}>
-              <p style={{ fontSize: '15px', color: '#555', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '10px' }}>
-                "Avevo un portfolio forte. Ma nessuno che cercasse quello che facevo io riusciva a trovarmi. I clienti giusti non sapevano dove cercare."
-              </p>
-              <span style={{ fontSize: '10px', color: '#2a2a2a', letterSpacing: '1.5px', fontFamily: 'monospace' }}>— un web developer italiano, 2024</span>
-            </div>
-          </div>
-
-          {/* 02 */}
-          <div>
-            <div style={{ fontSize: '9px', letterSpacing: '3px', color: '#fe3812', fontFamily: 'monospace', marginBottom: '16px' }}>02 ——</div>
-            <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', lineHeight: 1.2, marginBottom: '16px' }}>
-              La nostra<br />risposta.
-            </h2>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85, marginBottom: '16px' }}>
-              Abbiamo costruito OFF32 con un&apos;idea precisa: <span style={{ color: '#666' }}>la qualità si seleziona, non si aspetta.</span> Non è una directory aperta dove chiunque si iscrive. È una community dove si entra solo se il lavoro lo merita.
-            </p>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85 }}>
-              Ogni professionista che vedi su OFF32 è stato valutato dal team. Guardiamo il portfolio, non il curriculum. Guardiamo i progetti, non i follower. Guardiamo il lavoro vero.
-            </p>
-          </div>
-
-          {/* 03 */}
-          <div>
-            <div style={{ fontSize: '9px', letterSpacing: '3px', color: '#fe3812', fontFamily: 'monospace', marginBottom: '16px' }}>03 ——</div>
-            <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', lineHeight: 1.2, marginBottom: '16px' }}>
-              Il nome.<br /><span style={{ color: '#fe3812' }}>OFF32.</span>
-            </h2>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85, marginBottom: '16px' }}>
-              Un&apos;officina non è una fabbrica. Non produce in serie. In un&apos;officina ogni pezzo è fatto con le mani, con attenzione, con mestiere.
-            </p>
-            <p style={{ fontSize: '15px', color: '#444', lineHeight: 1.85 }}>
-              <span style={{ color: '#666' }}>32 è la temperatura a cui l&apos;acqua cambia stato</span> — il punto in cui qualcosa di solido diventa qualcosa di nuovo. È quello che facciamo: prendiamo professionisti già bravi e li portiamo dove meritano di stare.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* VALORI — griglia 2x2 */}
-      <section style={{ background: '#111', padding: '80px 5%', borderTop: '1px solid #1A1A1A', borderBottom: '1px solid #1A1A1A' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '12px' }}>// i nostri valori</div>
-        <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 3.5vw, 42px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', marginBottom: '48px' }}>Cosa ci muove ogni giorno.</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: '#1A1A1A', border: '1px solid #1A1A1A', borderRadius: '12px', overflow: 'hidden' }} className="values-grid">
-          {values.map(v => (
-            <div key={v.num} style={{ background: '#0D0D0D', padding: '32px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-              <div style={{ fontSize: '9px', letterSpacing: '2px', color: '#fe3812', fontFamily: 'monospace', paddingTop: '3px', flexShrink: 0 }}>{v.num}</div>
-              <div>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: '#888', marginBottom: '8px' }}>{v.title}</div>
-                <div style={{ fontSize: '12px', color: '#333', lineHeight: 1.75 }}>{v.desc}</div>
+      <section style={{ paddingTop: '15%', paddingBottom: '15%' }}>
+        <div className="team-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4, width: '80%', margin: '0 auto' }}>
+          {team.map(person => (
+            <article key={person.src} style={{ border: LINE, background: '#f0ebe0' }}>
+              <div style={{ aspectRatio: '3 / 4', overflow: 'hidden', borderBottom: LINE }}>
+                <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
               </div>
-            </div>
+              <div style={{ padding: '16px 16px 18px' }}>
+                <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.3 }}>{person.name}</div>
+                <div style={{ marginTop: 4, fontSize: 14, color: '#3a3a3a' }}>{person.role}</div>
+                <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
+                  {person.links.map(link => (
+                    <a key={link.kind} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label} style={{ color: '#0D0D0D', display: 'inline-flex' }}>
+                      <SocialIcon kind={link.kind} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* TEAM */}
-      <section style={{ padding: '80px 5%', borderBottom: '1px solid #1C1C1C' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '2.5px', color: '#fe3812', textTransform: 'uppercase' as const, marginBottom: '12px' }}>// chi c&apos;è dietro</div>
-        <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 3.5vw, 42px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', marginBottom: '48px' }}>Il team OFF32.</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }} className="team-grid">
-          {team.map(m => (
-            <div key={m.initials} style={{ background: '#111', border: '1px solid #1A1A1A', borderRadius: '12px', padding: '28px', textAlign: 'center' as const }}>
-              <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: m.bg, border: `1px solid ${m.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: m.color, margin: '0 auto 16px' }}>{m.initials}</div>
-              <div style={{ fontSize: '16px', fontWeight: 700, color: '#ddd', marginBottom: '4px' }}>{m.name}</div>
-              <div style={{ fontSize: '11px', color: '#333', letterSpacing: '0.5px', marginBottom: '12px' }}>{m.role}</div>
-              <div style={{ fontSize: '12px', color: '#2a2a2a', lineHeight: 1.65, marginBottom: '14px' }}>{m.bio}</div>
-              <span style={{ fontSize: '9px', padding: '4px 12px', border: '1px solid #1C1C1C', borderRadius: '999px', color: '#333', letterSpacing: '1px' }}>{m.city}</span>
-            </div>
+      <ProjectStart />
+
+      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
+        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
+          {[
+            { label: 'Work', href: '/work' },
+            { label: 'Events', href: '/workshop' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Privacy', href: '/privacy-policy' },
+            { label: 'Cookie', href: '/cookie-policy' },
+            { label: 'Terms', href: '/terms-and-conditions' },
+          ].map(link => (
+            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
           ))}
         </div>
-      </section>
-
-      {/* NUMERI */}
-      <div style={{ background: '#111', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderTop: '1px solid #1A1A1A', borderBottom: '1px solid #1A1A1A' }}>
-        {[
-          { num: '48+', label: 'professionisti', green: false },
-          { num: '230+', label: 'progetti realizzati', green: false },
-          { num: '100%', label: 'profili verificati', green: true },
-          { num: '0', label: 'profili mediocri', green: false },
-        ].map((s, i) => (
-          <div key={i} style={{ textAlign: 'center' as const, padding: '40px 20px', borderRight: i < 3 ? '1px solid #1A1A1A' : 'none' }}>
-            <div style={{ fontSize: '38px', fontWeight: 800, color: s.green ? '#9fff00' : '#fff', letterSpacing: '-1.5px', lineHeight: 1 }}>{s.num}</div>
-            <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#222', textTransform: 'uppercase' as const, marginTop: '8px' }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* CTA FINALE */}
-      <section style={{ background: '#fe3812', padding: '96px 5%', textAlign: 'center' as const }}>
-        <div style={{ fontSize: '10px', letterSpacing: '3px', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' as const, marginBottom: '20px' }}>// entra nell&apos;officina</div>
-        <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 300, color: '#fff', letterSpacing: '-1px', lineHeight: 1.05, marginBottom: '16px' }}>
-          Sei il tipo di<br />professionista che<br />cerchiamo?
-        </h2>
-        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginBottom: '40px', lineHeight: 1.7 }}>
-          Se il tuo lavoro parla per te, c&apos;è posto per te in OFF32. Fai domanda — ci vuole 5 minuti.
-        </p>
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' as const }}>
-          <a href="/apply" style={{ background: '#0D0D0D', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '14px 36px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-            candidati adesso →
-          </a>
-          <a href="/discover" style={{ background: 'transparent', color: 'rgba(255,255,255,0.7)', fontSize: '12px', padding: '14px 36px', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-            scopri i professionisti
-          </a>
-        </div>
-      </section>
-
-      {/* ── 11 FOOTER — come il vecchio 3 colonne ── */}
-      <footer style={{ background: '#9fff00', padding: '24px 5%', borderTop: '1px solid #8aee00' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
-            <div style={{ display: 'flex', gap: '28px' }}>
-            {[
-              { label: 'DISCOVER', href: '/discover' },
-              { label: 'BLOG', href: '/blog' },
-              { label: 'PRIVACY POLICY', href: '/privacy-policy' },
-              { label: 'COOKIE', href: '/cookie-policy' },
-              { label: 'TERMS & CONDITIONS', href: '/terms-and-conditions' },
-              { label: 'INFO', href: '/informativa-professionisti' },
-            ].map(l => (
-              <a key={l.label} href={l.href} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1.5px', cursor: 'pointer', fontWeight: 600, textDecoration: 'none' }}>{l.label}</a>
-            ))}
-            </div>
-           
-            <div style={{ display: 'flex', gap: '28px' }}>
-              {['CONTACT', 'CONNECT@OFF32.IT', '© 2025 OFF32'].map(l => (
-                <span key={l} style={{ fontSize: '10px', color: '#1a1a1a', letterSpacing: '1px', cursor: 'pointer' }}>{l}</span>
-              ))}
-            </div>
-          </div>
-        </footer>
+        <span style={meta}>connect@off32.it · © 2025 OFF32</span>
+      </footer>
 
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        @media (max-width: 768px) {
-          .values-grid { grid-template-columns: 1fr !important; }
+        .team-photo { filter: grayscale(1); transition: filter 0.45s ease; }
+        article:hover .team-photo { filter: grayscale(0); }
+        @media (max-width: 860px) {
+          .about-title { padding-top: 64px; }
           .team-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-
     </main>
   )
 }

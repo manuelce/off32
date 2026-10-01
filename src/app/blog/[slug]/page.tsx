@@ -1,16 +1,116 @@
 'use client'
-import { use } from 'react'
+import { use, type CSSProperties } from 'react'
 import Navbar from '@/components/Navbar'
+import ProjectStart from '@/components/ProjectStart'
 
-const ARTICLES: Record<string, any> = {
+const LINE = '1px solid #0D0D0D'
+
+const meta: CSSProperties = {
+  fontSize: 11,
+  letterSpacing: '1.8px',
+  textTransform: 'uppercase',
+  color: '#0D0D0D',
+}
+
+type Block = { type: 'intro' | 'paragraph' | 'heading' | 'quote'; text: string }
+
+type Article = {
+  title: string
+  tag: string
+  date: string
+  readTime: string
+  author: { name: string; role: string }
+  excerpt: string
+  image?: string
+  content: Block[]
+}
+
+const ARTICLES: Record<string, Article> = {
+  'come-costruire-brand-digitale': {
+    title: 'Come costruire un brand digitale che dura nel tempo',
+    tag: 'Design',
+    date: 'Mar 2025',
+    readTime: '6 min',
+    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
+    excerpt: 'Il brand non è un logo. È la promessa che fai ogni giorno a chi ti sceglie. Il segno grafico la rende visibile. Se la promessa è confusa, un marchio nuovo non la sistema.',
+    image: '/blog/img/brand-digitale.jpg?v=2',
+    content: [
+      {
+        type: 'intro',
+        text: 'Un brand digitale che dura non si riconosce dal restyling dell’anno. Si riconosce perché, a distanza di tempo, dice ancora la stessa cosa, con la stessa voce, anche quando cambiano il sito, le campagne e le persone che lo raccontano.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il brand non è un logo. È la promessa che fai ogni giorno a chi ti sceglie. Il segno grafico la rende visibile. Se la promessa è confusa, un marchio nuovo non la sistema: la sposta soltanto su un altro file.',
+      },
+      {
+        type: 'heading',
+        text: 'Partire da quello che non cambia',
+      },
+      {
+        type: 'paragraph',
+        text: 'Prima di scegliere un colore o un carattere serve capire cosa il brand deve continuare a essere tra due anni. Non lo slogan di stagione: la posizione. A chi parli, quale problema risolvi, perché qualcuno dovrebbe ricordarti invece di un altro.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In OFF32 questa parte viene prima del visual. È ricerca e conversazione, non un moodboard chiuso in una cartella. Quando la posizione è chiara, le scelte grafiche diventano poche e difendibili. Quando non lo è, ogni proposta sembra valida e nessuna resta.',
+      },
+      {
+        type: 'heading',
+        text: 'Poche regole, usate sempre',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un’identità che dura è più stretta di quanto si pensi. Pochi colori, un modo di scrivere, un modo di fotografare, una gerarchia. Il problema non è avere troppe poche regole. È averne tante e usarle a caso. Quando ogni touchpoint reinventa il tono, il brand non cresce: si dimentica.',
+      },
+      {
+        type: 'paragraph',
+        text: 'La direzione visiva e quella verbale vanno insieme. Un sito curato con testi generici non tiene. Un messaggio chiaro dentro un’immagine qualunque, nemmeno. Chi legge deve riconoscere la stessa mano nel sito, in una storia, in una landing, in una mail.',
+      },
+      {
+        type: 'quote',
+        text: 'Un brand dura quando lo riconosci anche senza il logo.',
+      },
+      {
+        type: 'heading',
+        text: 'L’AI accelera i materiali, non la decisione',
+      },
+      {
+        type: 'paragraph',
+        text: 'Oggi è facile produrre varianti. È anche il modo più rapido per diluire un’identità. L’intelligenza artificiale, da noi, entra dopo che la direzione è stata scelta: aiuta a esplorare, a scrivere bozze, a preparare materiali. Quello che resta in circolazione lo decide una persona.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un prompt non sa cosa tenere. Sa produrre. Se gli si chiede un brand, restituisce una media di brand già visti. La differenza sta nel taglio: cosa scartare, cosa ripetere, cosa non dire. Quella parte non si delega.',
+      },
+      {
+        type: 'heading',
+        text: 'Cosa deve resistere',
+      },
+      {
+        type: 'paragraph',
+        text: 'Tra un anno il sito sarà stato aggiornato, una campagna sarà finita, qualcuno nel team sarà cambiato. Quello che deve restare è corto: la frase di posizionamento, le regole visive, il tono. Se una persona nuova riesce a produrre un pezzo riconoscibile senza riscrivere il brand da zero, l’identità sta funzionando.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il resto può muoversi. I formati cambiano, i canali anche. Un brand che dura non è un brand fermo. È un brand che sa cosa non tradire mentre tutto il resto si aggiorna.',
+      },
+      {
+        type: 'heading',
+        text: 'In chiusura',
+      },
+      {
+        type: 'paragraph',
+        text: 'Costruire un brand che dura è un lavoro di sottrazione. Togliere quello che non serve, tenere la promessa, ripeterla con disciplina. Il logo arriva quando questa parte è già chiara. Prima è decorazione. Dopo è un segno che le persone imparano a riconoscere.',
+      },
+    ],
+  },
   'scegliere-clienti-giusti': {
     title: 'Imparare a dire no: l\'arte di scegliere i clienti giusti',
     tag: 'Community',
-    tagColor: '#534AB7',
-    tagBg: '#EEEDFE',
     date: 'Feb 2025',
     readTime: '5 min',
-    author: { initials: 'MC', name: 'Manuel Cerasuolo', role: 'Founder · OFF32', bg: '#FDF0EB', color: '#993C1D' },
+    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
     excerpt: 'Non tutti i clienti sono giusti per noi. Dire no — ai progetti sbagliati o ai clienti difficili — è una delle decisioni più professionali che possiamo prendere.',
     content: [
       {
@@ -82,19 +182,17 @@ const ARTICLES: Record<string, any> = {
 }
 
 export default function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = use(params)
-    const article = ARTICLES[slug]
+  const { slug } = use(params)
+  const article = ARTICLES[slug]
 
   if (!article) {
     return (
-      <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
         <Navbar />
-        <div style={{ textAlign: 'center' as const }}>
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>404</div>
-          <div style={{ fontSize: '20px', fontWeight: 800, color: '#0D0D0D', marginBottom: '8px' }}>Articolo non trovato</div>
-          <a href="/blog" style={{ background: '#fe3812', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '12px 28px', borderRadius: '999px', textDecoration: 'none' }}>
-            Torna al blog →
-          </a>
+        <div style={{ padding: '18vh 8% 20vh' }}>
+          <div style={{ ...meta, marginBottom: 16 }}>Blog</div>
+          <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(40px, 5vw, 64px)', letterSpacing: '-1px', margin: '0 0 20px' }}>Articolo non trovato</h1>
+          <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Tutti gli articoli</a>
         </div>
       </main>
     )
@@ -104,112 +202,86 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
     <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
       <Navbar />
 
-      {/* HERO ARTICOLO */}
-      <div style={{ background: '#0D0D0D', padding: '64px 5% 56px' }}>
-        <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-          <a href="/blog" style={{ fontSize: '11px', color: '#444', textDecoration: 'none', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '32px' }}>
-            ← blog
-          </a>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px' }}>
-            <span style={{ fontSize: '10px', padding: '4px 12px', background: article.tagBg, color: article.tagColor, borderRadius: '999px', fontWeight: 700, letterSpacing: '0.5px' }}>{article.tag}</span>
-            <span style={{ fontSize: '10px', color: '#444', letterSpacing: '1px' }}>{article.date} · {article.readTime} lettura</span>
-          </div>
-          <h1 style={{
-            fontFamily: "'Canela', Georgia, serif",
-            fontSize: 'clamp(32px, 5vw, 56px)',
-            fontWeight: 300, color: '#fff',
-            lineHeight: 1.1, letterSpacing: '-1.5px',
-            marginBottom: '24px'
-          }}>{article.title}</h1>
-          <p style={{ fontSize: '16px', color: '#555', lineHeight: 1.7, marginBottom: '32px' }}>{article.excerpt}</p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '24px', borderTop: '1px solid #1C1C1C' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: article.author.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, color: article.author.color, flexShrink: 0 }}>
-              {article.author.initials}
-            </div>
-            <div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ddd' }}>{article.author.name}</div>
-              <div style={{ fontSize: '11px', color: '#444' }}>{article.author.role}</div>
-            </div>
-          </div>
+      <article>
+        <div style={{ padding: '28px 40px 0' }}>
+          <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Blog</a>
         </div>
-      </div>
-
-      {/* CONTENUTO */}
-      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '56px 5% 80px' }}>
-        {article.content.map((block: any, i: number) => {
-          if (block.type === 'intro') {
-            return (
-              <p key={i} style={{ fontSize: '20px', color: '#0D0D0D', lineHeight: 1.7, fontWeight: 500, marginBottom: '32px', letterSpacing: '-0.2px' }}>
-                {block.text}
-              </p>
-            )
-          }
-          if (block.type === 'paragraph') {
-            return (
-              <p key={i} style={{ fontSize: '16px', color: '#444', lineHeight: 1.85, marginBottom: '24px' }}>
-                {block.text}
-              </p>
-            )
-          }
-          if (block.type === 'heading') {
-            return (
-              <h2 key={i} style={{
-                fontFamily: "'Canela', Georgia, serif",
-                fontSize: '28px', fontWeight: 300,
-                color: '#0D0D0D', letterSpacing: '-0.5px',
-                lineHeight: 1.2, marginTop: '48px', marginBottom: '20px'
-              }}>
-                {block.text}
-              </h2>
-            )
-          }
-          if (block.type === 'quote') {
-            return (
-              <div key={i} style={{ borderLeft: '3px solid #fe3812', paddingLeft: '24px', margin: '36px 0', background: '#fff', borderRadius: '0 8px 8px 0', padding: '20px 24px' }}>
-                <p style={{ fontSize: '18px', color: '#0D0D0D', lineHeight: 1.6, fontStyle: 'italic', fontWeight: 500 }}>
-                  &ldquo;{block.text}&rdquo;
+        <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(42px, 5.4vw, 76px)', lineHeight: 0.95, letterSpacing: '-1.5px', margin: '18px 0 0', borderTop: LINE, borderBottom: LINE, padding: '22px 40px' }}>
+          {article.title}
+        </h1>
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', padding: '16px 40px', ...meta }}>
+          <span style={{ color: '#fe3812' }}>{article.tag}</span>
+          <span>{article.date}</span>
+          <span>{article.readTime}</span>
+          <span>{article.author.name}</span>
+        </div>
+        {article.image && (
+          <figure style={{ margin: 0, borderTop: LINE, borderBottom: LINE }}>
+            <img src={article.image} alt="" style={{ width: '100%', height: 'auto', maxHeight: 560, objectFit: 'cover', display: 'block' }} />
+          </figure>
+        )}
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 80px' }}>
+          {article.content.map((block, i) => {
+            if (block.type === 'intro') {
+              return (
+                <p key={i} style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(26px, 3vw, 34px)', lineHeight: 1.25, letterSpacing: '-0.4px', margin: '0 0 28px' }}>
+                  {block.text}
                 </p>
-              </div>
-            )
-          }
-          return null
-        })}
-
-        {/* FOOTER ARTICOLO */}
-        <div style={{ marginTop: '64px', paddingTop: '32px', borderTop: '1px solid #E0D8CC', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: article.author.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, color: article.author.color }}>
-              {article.author.initials}
-            </div>
-            <div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#0D0D0D' }}>{article.author.name}</div>
-              <div style={{ fontSize: '11px', color: '#AAA098' }}>{article.author.role}</div>
-            </div>
+              )
+            }
+            if (block.type === 'paragraph') {
+              return (
+                <p key={i} style={{ fontSize: 16, lineHeight: 1.75, margin: '0 0 22px' }}>
+                  {block.text}
+                </p>
+              )
+            }
+            if (block.type === 'heading') {
+              return (
+                <h2 key={i} style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 3vw, 36px)', letterSpacing: '-0.6px', lineHeight: 1.15, margin: '40px 0 16px' }}>
+                  {block.text}
+                </h2>
+              )
+            }
+            if (block.type === 'quote') {
+              return (
+                <blockquote key={i} style={{ margin: '36px 0', padding: '4px 0 4px 20px', borderLeft: '2px solid #fe3812' }}>
+                  <p style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.25, letterSpacing: '-0.4px', margin: 0 }}>
+                    {block.text}
+                  </p>
+                </blockquote>
+              )
+            }
+            return null
+          })}
+          <div style={{ marginTop: 48, paddingTop: 20, borderTop: LINE, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+            <span style={meta}>{article.author.name} · {article.author.role}</span>
+            <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Tutti gli articoli</a>
           </div>
-          <a href="/blog" style={{ fontSize: '12px', color: '#fe3812', textDecoration: 'none', fontWeight: 700, border: '1px solid #fe381230', padding: '10px 20px', borderRadius: '999px', background: '#FDF5F2' }}>
-            ← tutti gli articoli
-          </a>
         </div>
+      </article>
 
-        {/* CTA */}
-        <div style={{ marginTop: '48px', background: '#0D0D0D', borderRadius: '16px', padding: '40px', textAlign: 'center' as const }}>
-          <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#444', textTransform: 'uppercase' as const, marginBottom: '12px' }}>// unisciti all&apos;officina</div>
-          <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: '28px', fontWeight: 300, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.2, marginBottom: '16px' }}>
-            Sei un professionista di qualità?
-          </h3>
-          <p style={{ fontSize: '13px', color: '#555', marginBottom: '28px', lineHeight: 1.7 }}>
-            Entra nel network OFF32 — solo chi ha dimostrato di saper fare.
-          </p>
-          <a href="/apply" style={{ background: '#fe3812', color: '#fff', fontSize: '12px', fontWeight: 700, padding: '13px 32px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-            Candidati ora →
-          </a>
+      <ProjectStart />
+
+      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
+        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
+          {[
+            { label: 'Work', href: '/work' },
+            { label: 'Events', href: '/workshop' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Privacy', href: '/privacy-policy' },
+            { label: 'Cookie', href: '/cookie-policy' },
+            { label: 'Terms', href: '/terms-and-conditions' },
+          ].map(link => (
+            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
+          ))}
         </div>
-      </div>
+        <span style={meta}>connect@off32.it · © 2025 OFF32</span>
+      </footer>
 
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        @media (max-width: 768px) {
-          main { padding-bottom: 72px; }
+        @media (max-width: 860px) {
+          article { padding-bottom: 72px; }
         }
       `}</style>
     </main>

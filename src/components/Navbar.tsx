@@ -1,9 +1,13 @@
-'use client'
-import { useAuth } from '@clerk/nextjs'
+const NAV_LINKS = [
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
+  { label: 'Events', href: '/workshop' },
+  { label: 'Blog', href: '/blog' },
+]
+
+const CTA_LABEL = 'Contattaci →'
 
 export default function Navbar() {
-  const { isSignedIn } = useAuth()
-
   return (
     <>
       {/* NAVBAR DESKTOP */}
@@ -15,59 +19,66 @@ export default function Navbar() {
         <a href="/" style={{ textDecoration: 'none' }}>
           <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
         </a>
-        <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
-          {[
-            { label: 'Work', href: '/work' },
-            { label: 'About', href: '/about' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Contatti', href: '/contatti' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ fontSize: '11px', color: '#666', padding: '4px 14px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+        <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
+          {NAV_LINKS.map(link => (
+            <a key={link.label} href={link.href} style={{ fontSize: '15px', color: '#fe3812', padding: '6px 16px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
           ))}
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          {isSignedIn ? (
-            <a href="/dashboard" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-              Dashboard →
-            </a>
-          ) : (
-            <>
-              
-              <a href="/apply" style={{ background: '#0D0D0D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '9px 24px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.5px' }}>
-                Unisciti all&apos;officina
-              </a>
-            </>
-          )}
+          <a href="/contatti" className="nav-cta" style={{ display: 'inline-flex', alignItems: 'center', boxSizing: 'border-box', background: '#0D0D0D', color: '#fff', fontSize: '15px', fontWeight: 400, padding: '10px 24px', border: '1px solid #0D0D0D', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.3px' }}>
+            {CTA_LABEL}
+          </a>
         </div>
       </nav>
 
-      {/* NAVBAR MOBILE */}
-      <nav className="nav-mobile" style={{
-        display: 'none', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 200,
-        background: '#0D0D0D', borderTop: '1px solid #1C1C1C',
-        padding: '12px 5%', justifyContent: 'space-between', alignItems: 'center'
+      {/* NAVBAR MOBILE — TOP: logo + CTA */}
+      <nav className="nav-mobile-top" style={{
+        display: 'none', alignItems: 'center', justifyContent: 'space-between',
+        padding: '18px 20px',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'transparent',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
+        border: 'none',
+        boxShadow: 'none',
+        zIndex: 9999,
       }}>
         <a href="/" style={{ textDecoration: 'none' }}>
           <img src="/off32_green_cube.svg" alt="OFF32" style={{ height: '24px', width: 'auto' }} />
         </a>
-        <div style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #222', borderRadius: '999px', padding: '4px 8px' }}>
-          {[
-            { label: 'Work', href: '/work' },
-            { label: 'about', href: '/about' },
-            { label: 'blog', href: '/blog' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ fontSize: '10px', color: '#666', padding: '3px 10px', borderRadius: '999px', cursor: 'pointer', textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <a href={isSignedIn ? '/dashboard' : '/login'} style={{ background: '#fe3812', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '7px 16px', borderRadius: '999px', textDecoration: 'none' }}>
-          {isSignedIn ? 'dashboard' : 'entra'}
+        <a href="/contatti" style={{ background: '#0D0D0D', color: '#fff', fontSize: '14px', fontWeight: 400, padding: '8px 18px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.3px' }}>
+          {CTA_LABEL}
         </a>
       </nav>
+
+      {/* NAVBAR MOBILE — BOTTOM: pillola con i link */}
+      <div className="nav-mobile-bottom" style={{
+        display: 'none', justifyContent: 'center',
+        position: 'fixed', bottom: '16px', left: 0, right: 0, zIndex: 200,
+        pointerEvents: 'none',
+      }}>
+        <div style={{
+          display: 'flex', gap: '2px', alignItems: 'center',
+          background: '#141414', border: '1px solid #1C1C1C',
+          borderRadius: '999px', padding: '6px 10px',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+          pointerEvents: 'auto',
+        }}>
+          {NAV_LINKS.map(link => (
+            <a key={link.label} href={link.href} style={{ fontSize: '14px', color: '#fe3812', padding: '6px 12px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+          ))}
+        </div>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
-          .nav-mobile { display: flex !important; }
+          .nav-mobile-top { display: flex !important; }
+          .nav-mobile-bottom { display: flex !important; }
+          main { padding-bottom: 88px; }
         }
       `}</style>
     </>
