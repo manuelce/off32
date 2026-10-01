@@ -105,6 +105,85 @@ const ARTICLES: Record<string, Article> = {
       },
     ],
   },
+  'ecommerce-performante-2025': {
+    title: 'eCommerce performante nel 2025: cosa funziona davvero',
+    tag: 'Sviluppo',
+    date: 'Feb 2025',
+    readTime: '6 min',
+    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
+    excerpt: 'Un negozio converte quando l\'offerta è chiara, la pagina è veloce e il checkout non chiede sforzo. Il resto è rumore.',
+    image: '/blog/img/ecommerce-2025.jpg',
+    content: [
+      {
+        type: 'intro',
+        text: 'Nel 2025 si parla di stack, di edge, di intelligenza artificiale nel carrello. Quello che muove un ordine è più semplice, e più difficile: una persona capisce subito cosa compra, si fida, e arriva a pagare senza fermarsi.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il resto è contorno. Un tema nuovo, un\'app, una funzione in più non riparano un\'offerta confusa. Un e-commerce performante è un negozio in cui comprare non richiede di pensarci due volte.',
+      },
+      {
+        type: 'heading',
+        text: 'La pagina prodotto decide',
+      },
+      {
+        type: 'paragraph',
+        text: 'Non la home. La pagina dove ci sono il prezzo, la foto, la variante, la spedizione. Se lì manca una risposta, il resto del sito è scenografia. Chi arriva da una ricerca o da un annuncio atterra quasi sempre lì, non sul manifesto del brand.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Una buona pagina prodotto dice tre cose senza farle cercare: cos\'è, per chi è, cosa succede dopo il pagamento. Foto che mostrano l\'oggetto vero, non solo l\'atmosfera. Testo corto. Varianti leggibili. Il prezzo visibile prima dello scroll infinito.',
+      },
+      {
+        type: 'heading',
+        text: 'La velocità si sente',
+      },
+      {
+        type: 'paragraph',
+        text: 'Sul telefono l\'attesa si sente, non si legge in una dashboard. Immagini pesanti, script di troppo, un tema che carica tutto anche quando non serve. Togliere pesa più che aggiungere. Una pagina che compare subito vale più di una animazione che arriva tardi.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Core Web Vitals contano per questo, non come voto da esibire. Se la pagina prodotto è lenta, il resto del lavoro di comunicazione arriva a una porta chiusa.',
+      },
+      {
+        type: 'heading',
+        text: 'Il checkout è un corridoio',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ogni campo in più è una porta. Account obbligatorio prima di pagare, spese che compaiono all\'ultimo, un bottone che non dice il totale. Il checkout che funziona è corto e dice la verità subito: quanto costa, quando arriva, come si paga.',
+      },
+      {
+        type: 'quote',
+        text: 'Un e-commerce performante non è quello con più funzioni. È quello in cui comprare non richiede di pensarci due volte.',
+      },
+      {
+        type: 'heading',
+        text: 'L\'AI nel negozio',
+      },
+      {
+        type: 'paragraph',
+        text: 'Descrizioni, varianti di copy, foto di contesto: l\'AI accelera i materiali. Non sostituisce l\'offerta. Se il prodotto non è chiaro, nessuna automazione lo rende desiderabile. Da noi entra dopo che sappiamo cosa vendere e a chi, non prima.',
+      },
+      {
+        type: 'heading',
+        text: 'Cosa guardare dopo il lancio',
+      },
+      {
+        type: 'paragraph',
+        text: 'Poche cose. Dove le persone abbandonano. Quali prodotti arrivano al carrello e non si chiudono. Quanto tempo passa prima che la pagina sia usabile. Non una dashboard infinita. Tre segnali, guardati spesso, bastano per capire se il negozio sta lavorando.',
+      },
+      {
+        type: 'heading',
+        text: 'In chiusura',
+      },
+      {
+        type: 'paragraph',
+        text: 'Costruire un negozio che vende è togliere attrito. Offerta chiara, pagina veloce, checkout onesto. Il resto si aggiunge dopo, se serve. Prima di una funzione nuova, vale la pena chiedere se qualcuno si è fermato perché quella funzione mancava, o perché non ha capito cosa stava comprando.',
+      },
+    ],
+  },
   'scegliere-clienti-giusti': {
     title: 'Imparare a dire no: l\'arte di scegliere i clienti giusti',
     tag: 'Community',
@@ -266,7 +345,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
       <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
         <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
           {[
-            { label: 'Work', href: '/work' },
+            { label: 'Works', href: '/work' },
             { label: 'Events', href: '/workshop' },
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },

@@ -1,5 +1,5 @@
 const NAV_LINKS = [
-  { label: 'Work', href: '/work' },
+  { label: 'Works', href: '/work' },
   { label: 'About', href: '/about' },
   { label: 'Events', href: '/workshop' },
   { label: 'Blog', href: '/blog' },

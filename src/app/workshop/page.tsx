@@ -204,7 +204,7 @@ export default function WorkshopPage() {
       <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D' }}>
         <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
           {[
-            { label: 'Work', href: '/work' },
+            { label: 'Works', href: '/work' },
             { label: 'Events', href: '/workshop' },
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },

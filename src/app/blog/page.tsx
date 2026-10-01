@@ -32,12 +32,13 @@ const POSTS = [
   },
   {
     slug: 'ecommerce-performante-2025',
+    image: '/blog/img/ecommerce-2025.jpg',
     category: 'sviluppo',
     tag: 'Sviluppo',
     title: 'eCommerce performante nel 2025: cosa funziona davvero',
-    excerpt: 'Core Web Vitals, lazy loading, edge computing. Dopo 30+ eCommerce sviluppati, ecco cosa fa davvero la differenza nelle conversioni.',
-    author: { initials: 'DC', name: 'Dario Conti', role: 'Full Stack', bg: '#EEF8F3', color: '#0F6E56' },
-    date: 'Feb 2025', readTime: '8 min', featured: false,
+    excerpt: 'Un negozio converte quando l\'offerta è chiara, la pagina è veloce e il checkout non chiede sforzo. Il resto è rumore.',
+    author: { initials: 'MC', name: 'Manuel Cerasuolo', role: 'Founder · OFF32', bg: '#FDF0EB', color: '#993C1D' },
+    date: 'Feb 2025', readTime: '6 min', featured: false,
     bg: '#0A0A14',
   },
 ]
@@ -115,7 +116,7 @@ export default function BlogPage() {
       <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
         <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
           {[
-            { label: 'Work', href: '/work' },
+            { label: 'Works', href: '/work' },
             { label: 'Events', href: '/workshop' },
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },

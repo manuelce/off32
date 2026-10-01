@@ -91,14 +91,38 @@ export default function Home() {
   ]
 
   const faqs = [
-    'Come funziona l\'AI nella vostra agenzia?',
-    'Quali servizi offrite?',
-    'Quanto costano i vostri servizi?',
-    'Lavorate con aziende di qualsiasi dimensione?',
-    'Come inizia una collaborazione?',
-    'Quanto tempo richiede un progetto?',
-    'Offrite supporto dopo il lancio?',
-    'Posso vedere esempi di lavori precedenti?',
+    {
+      q: 'Come funziona l\'AI nella vostra agenzia?',
+      a: 'L\'AI entra nel lavoro, non al posto del lavoro. La usiamo per esplorare, scrivere bozze, produrre varianti e togliere i passaggi ripetitivi. La direzione — cosa tenere, cosa dire, cosa pubblicare — resta del team.',
+    },
+    {
+      q: 'Quali servizi offrite?',
+      a: 'Tre aree. Brand e creatività: identità, strategia, direzione visiva, copy e contenuti. Web e digitale: siti in React e Next.js, e-commerce Shopify, landing, UX/UI, performance e SEO. Sistemi AI: strategia, automazioni, agenti, assistenti e integrazione nei flussi che usate già.',
+    },
+    {
+      q: 'Quanto costano i vostri servizi?',
+      a: 'Non c\'è un listino unico. Il costo dipende da cosa va fatto e da quanto è largo il perimetro. Dopo una prima conversazione prepariamo una proposta chiara, prima di iniziare.',
+    },
+    {
+      q: 'Lavorate con aziende di qualsiasi dimensione?',
+      a: 'Lavoriamo con chi ha una storia da mettere in ordine: studi, brand e aziende. La dimensione conta meno della chiarezza del progetto. Se il lavoro ha senso, lo prendiamo in carico.',
+    },
+    {
+      q: 'Come inizia una collaborazione?',
+      a: 'Ci scrivi dalla pagina Contatti e ci racconti il progetto. Ascoltiamo, capiamo cosa serve davvero e ti rispondiamo con una direzione e i passi successivi.',
+    },
+    {
+      q: 'Quanto tempo richiede un progetto?',
+      a: 'Dipende da cosa costruiamo. Una landing è una cosa, un\'identità con sito ed e-commerce un\'altra. Nella proposta indichiamo tempi realistici, non una data di comodo.',
+    },
+    {
+      q: 'Offrite supporto dopo il lancio?',
+      a: 'Sì. Un sito o un brand non finiscono il giorno della pubblicazione. Restiamo per aggiornamenti e per tenere in piedi quello che abbiamo costruito, con un accordo definito insieme.',
+    },
+    {
+      q: 'Posso vedere esempi di lavori precedenti?',
+      a: 'Sì. In Work trovi una selezione: Healing Earth, Scuppoz, Conil Food Tour e The Duel. Se vuoi vedere qualcosa vicino al tuo settore, scrivici.',
+    },
   ]
 
   return (
@@ -110,7 +134,7 @@ export default function Home() {
           <span style={meta}>01</span>
           <span style={{ ...meta, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Est. 2025</span>
         </div>
-        <div style={{ padding: '48px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+        <div className="hero-copy" style={{ padding: '48px 40px 14vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
           <div style={{ ...meta, color: '#fe3812', marginBottom: 20 }}>Officina digitale</div>
           <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(48px, 6.4vw, 92px)', fontWeight: 300, lineHeight: 0.92, letterSpacing: '-2px', maxWidth: 760, marginBottom: 28 }}>
             <span className="street-word">
@@ -128,6 +152,10 @@ export default function Home() {
           <p style={{ fontSize: 15, lineHeight: 1.7, maxWidth: 460, color: '#3a3a3a' }}>
             OFF32 integra l&apos;intelligenza artificiale nella creazione di brand, esperienze digitali e campagne. Una comunicazione orientata alla performance.
           </p>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
+            <a href="/work" style={button}>Works</a>
+            <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Events</a>
+          </div>
         </div>
         <div style={{ borderLeft: LINE, position: 'relative', minHeight: 420, background: '#E7E0D4' }}>
           <video autoPlay muted loop playsInline preload="metadata" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}>
@@ -267,18 +295,18 @@ export default function Home() {
           <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)' }}>Domande frequenti</h2>
         </div>
         <div style={{ width: '80%', margin: '0 auto' }}>
-          {faqs.map((question, i) => (
-            <div key={question} style={{ borderTop: LINE, borderBottom: i === faqs.length - 1 ? LINE : 'none' }}>
+          {faqs.map((faq, i) => (
+            <div key={faq.q} style={{ borderTop: LINE, borderBottom: i === faqs.length - 1 ? LINE : 'none' }}>
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', color: '#0D0D0D', fontFamily: 'inherit', padding: '18px 0', fontSize: 15 }}
               >
-                <span>{question}</span>
+                <span>{faq.q}</span>
                 <span style={{ fontSize: 20, color: '#8a8378' }}>{openFaq === i ? '–' : '+'}</span>
               </button>
               {openFaq === i && (
-                <p style={{ ...body, maxWidth: 'none', paddingBottom: 18 }}>
-                  Puoi trovare tutte le informazioni nella pagina dedicata o contattarci direttamente a connect@off32.it.
+                <p style={{ ...body, maxWidth: 680, padding: '0 0 18px' }}>
+                  {faq.a}
                 </p>
               )}
             </div>
@@ -291,7 +319,7 @@ export default function Home() {
       <footer className="footer-row" style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
         <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
           {[
-            { label: 'Work', href: '/work' },
+            { label: 'Works', href: '/work' },
             { label: 'Events', href: '/workshop' },
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },
@@ -341,6 +369,7 @@ export default function Home() {
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-grid > :first-child { display: none !important; }
+          .hero-copy { padding-bottom: 48px !important; }
           .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
           .meta-row, .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
           .meta-row > div, .grid-3 > div, .split > div, .split > a, .split > p, .works-grid > a { border-right: none !important; border-left: none !important; }
