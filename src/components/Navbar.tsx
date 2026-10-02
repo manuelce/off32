@@ -85,18 +85,48 @@ export default function Navbar() {
           {NAV_LINKS.map(link => {
             const current = isCurrent(pathname, link.href)
             return (
-              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#fe3812', padding: '6px 12px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#fe3812', padding: '6px 8px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
             )
           })}
+          <button
+            type="button"
+            className="nav-call"
+            aria-label="Call gratuita di 20 minuti"
+            onClick={() => window.dispatchEvent(new Event('off32-toggle-call'))}
+          />
         </div>
       </div>
 
       <style>{`
+        .nav-call {
+          width: 28px;
+          height: 28px;
+          margin-left: 6px;
+          padding: 0;
+          border: 0;
+          border-radius: 50%;
+          flex-shrink: 0;
+          cursor: pointer;
+          background: conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812);
+          box-shadow: 0 0 8px rgba(254, 56, 18, 0.45);
+          animation: nav-call-spin 2.8s linear infinite;
+        }
+        @property --call-angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: true;
+        }
+        @keyframes nav-call-spin {
+          to { --call-angle: 360deg; }
+        }
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
           .nav-mobile-top { display: flex !important; }
           .nav-mobile-bottom { display: flex !important; }
           main { padding-bottom: 88px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .nav-call { animation: none; }
         }
       `}</style>
     </>

@@ -11,6 +11,12 @@ export default function CallDock() {
   const [email, setEmail] = useState('')
 
   useEffect(() => {
+    const toggle = () => setOpen(value => !value)
+    window.addEventListener('off32-toggle-call', toggle)
+    return () => window.removeEventListener('off32-toggle-call', toggle)
+  }, [])
+
+  useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setOpen(false)
@@ -196,6 +202,7 @@ export default function CallDock() {
         }
         @media (max-width: 768px) {
           .call-dock { right: 16px; bottom: 88px; }
+          .call-fab { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .call-fab { animation: none; }
