@@ -10,12 +10,11 @@ const LINE = `1px solid ${CREAM}`
 const PHONE = '+39 375 563 9110'
 const PHONE_TEL = '+393755639110'
 
-const FILTERS = ['All', 'Workshop', 'Corsi', 'Talk']
+const FILTERS = ['All', 'Full-stack', 'AI applicata', 'Design', 'E-commerce', 'Gratuito']
 
-const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string }> = {
+const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }> = {
   'brand-identity-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/brand.jpg', focus: 'center 42%' },
-  'design-system': { bg: '#F0EBE0', fg: '#F0EBE0', image: '/events/design.jpg', focus: 'center center' },
-  'campagne-ai': { bg: '#fe3812', fg: '#F0EBE0', image: '/events/campaign.jpg', focus: 'center 45%' },
+  'videocorso-fullstack-ai': { bg: '#F0EBE0', fg: '#F0EBE0', image: '/events/corso-fullstack.jpg?v=3', focus: 'center center', clean: true },
   'comunicazione-performance': { bg: '#694aff', fg: '#F0EBE0', image: '/events/talk.jpg', focus: '68% center' },
 }
 
@@ -31,16 +30,16 @@ const title: CSSProperties = {
 function EventFlyer({ workshop }: { workshop: Workshop }) {
   const poster = posters[workshop.slug]
   return (
-    <div className="event-flyer" style={{ background: poster.bg, color: poster.fg }}>
-      <div className="event-flyer-title">{workshop.title}</div>
+    <div className={poster.clean ? 'event-flyer is-clean' : 'event-flyer'} style={{ background: poster.bg, color: poster.fg }}>
+      {!poster.clean && <div className="event-flyer-title">{workshop.title}</div>}
       <div className="event-flyer-photo">
         {poster.image ? (
           <img src={poster.image} alt="" style={{ objectPosition: poster.focus }} />
         ) : (
           <div className="event-flyer-fallback" style={{ background: poster.fg, color: poster.bg }}>{workshop.index}</div>
         )}
-        <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Events</span>
-        <span className="event-flyer-bar" />
+        {!poster.clean && <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Events</span>}
+        {!poster.clean && <span className="event-flyer-bar" />}
       </div>
     </div>
   )
@@ -52,7 +51,11 @@ export default function WorkshopPage() {
   const [selected, setSelected] = useState<Workshop | null>(null)
   const underlinePlayed = useRef(false)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const visible = workshops.filter(workshop => filter === 'All' || workshop.kind === filter)
+  const visible = workshops.filter(workshop => {
+    if (filter === 'All') return true
+    if (filter === 'Gratuito') return workshop.free === true
+    return workshop.topic === filter
+  })
 
   useEffect(() => {
     if (underlinePlayed.current) return
@@ -112,7 +115,8 @@ export default function WorkshopPage() {
             <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: 560, margin: 0 }}>
               Prossimi eventi, workshop, talk sia gratuiti che a pagamento, Prenota il tuo biglietto online.
             </p>
-            <div className="event-filters" role="tablist" aria-label="Filtra le sessioni">
+          </div>
+          <div className="event-filters" role="tablist" aria-label="Filtra le sessioni">
               {FILTERS.map(item => (
                 <button
                   key={item}
@@ -126,34 +130,32 @@ export default function WorkshopPage() {
                 </button>
               ))}
             </div>
-          </div>
         </div>
 
         <div className="events-grid">
           {visible.map(workshop => {
             const poster = posters[workshop.slug]
             return (
-              <article key={workshop.slug} id={workshop.slug} className="event-card">
+              <article key={workshop.slug} id={workshop.slug} className={poster.clean ? 'event-card is-clean' : 'event-card'}>
                 <div className="event-poster" style={{ background: poster.bg, color: poster.fg }}>
                   {poster.image && (
                     <img src={poster.image} alt="" className="event-poster-img" style={{ objectPosition: poster.focus }} />
                   )}
-                  <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{workshop.kind}</span>
+                  <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{workshop.topic}</span>
                 </div>
                 <div className="event-body">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 11, letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 700 }}>
-                    <span>{workshop.kind}</span>
-                    <span>{workshop.duration}</span>
+                  <div style={{ fontSize: 11, letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 700 }}>
+                    {workshop.duration}
                   </div>
                   <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 28, letterSpacing: '-0.4px', lineHeight: 1.1, margin: '12px 0' }}>{workshop.title}</h3>
                   <p style={{ fontSize: 14, lineHeight: 1.6, color: '#3a3a3a', margin: '0 0 16px' }}>{workshop.desc}</p>
                   <div style={{ borderTop: '1px solid #0D0D0D', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13 }}>
-                    <span>Durata · {workshop.duration}</span>
-                    <span>Formato · {workshop.format}</span>
-                    <span>Per · {workshop.audience}</span>
+                    <span>Formato: {workshop.format}</span>
+                    <span>Per: {workshop.audience}</span>
+                    {workshop.when && <span>Date: {workshop.when}</span>}
                   </div>
                   <div className="event-foot">
-                    <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.3px' }}>Su richiesta</span>
+                    <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
                     <button type="button" className="event-buy" onClick={() => setSelected(workshop)}>Prenota</button>
                   </div>
                 </div>
@@ -185,7 +187,7 @@ export default function WorkshopPage() {
               ))}
               <div className="event-hours-label">Orari</div>
               <div className="event-hours-box">
-                <strong>Su richiesta · {selected.audience}</strong>
+                <strong>{selected.when ?? `Su richiesta · ${selected.audience}`}</strong>
               </div>
               <div className="event-contact-box">
                 <div>Contatto</div>
@@ -251,12 +253,13 @@ export default function WorkshopPage() {
           font-weight: 700;
           letter-spacing: 0.8px;
           text-transform: uppercase;
+          white-space: nowrap;
           cursor: pointer;
         }
         .event-filter.is-on { background: #694aff; border-color: #694aff; color: #fff; }
         .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
         .event-card { background: #fff; border: 1px solid #0D0D0D; box-shadow: 7px 7px 0 #0D0D0D; display: flex; flex-direction: column; min-width: 0; }
-        .event-poster { position: relative; overflow: hidden; height: 210px; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; border-bottom: 1px solid #0D0D0D; }
+        .event-poster { position: relative; overflow: hidden; height: 268px; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; border-bottom: 1px solid #0D0D0D; }
         .event-poster-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .event-poster:has(.event-poster-img)::before {
           content: '';
@@ -318,6 +321,9 @@ export default function WorkshopPage() {
           text-transform: uppercase;
         }
         .event-flyer-photo { position: relative; flex: 1; min-height: 180px; margin-top: 16px; overflow: hidden; }
+        .event-flyer.is-clean { padding: 0; }
+        .event-flyer.is-clean .event-flyer-photo { margin-top: 0; background: #F0EBE0; }
+        .event-flyer.is-clean .event-flyer-photo img { object-fit: contain; object-position: center center; }
         .event-flyer-photo img, .event-flyer-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .event-flyer-fallback { display: flex; align-items: flex-end; justify-content: flex-end; padding: 16px; font-weight: 800; font-size: 64px; letter-spacing: -2px; }
         .event-flyer-side {
@@ -379,9 +385,12 @@ export default function WorkshopPage() {
         .event-contact-box div { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
         .event-contact-box p { margin: 0; color: #fe3812; font-weight: 700; }
         .event-contact-box a { color: #fe3812; }
+        @media (max-width: 768px) {
+          .event-filters { flex-wrap: wrap; }
+        }
         @media (max-width: 860px) {
           .workshop-title { padding-top: 64px; }
-          .event-filters { flex-wrap: wrap; }
+          .event-poster { height: 210px; }
           .events-grid { grid-template-columns: 1fr; }
           .event-modal { z-index: 10001; padding: 0; align-items: stretch; }
           .event-dialog {
@@ -407,6 +416,25 @@ export default function WorkshopPage() {
             aspect-ratio: 3 / 4;
             margin: 0;
             flex: none;
+          }
+          .event-flyer.is-clean .event-flyer-photo {
+            aspect-ratio: 1 / 1;
+            background: #F0EBE0;
+          }
+          .event-flyer.is-clean .event-flyer-photo img {
+            object-fit: contain;
+            object-position: center;
+          }
+          .event-card.is-clean .event-poster {
+            height: auto;
+            aspect-ratio: 1 / 1;
+          }
+          .event-card.is-clean .event-poster-img {
+            object-fit: contain;
+            object-position: center;
+          }
+          .event-card.is-clean .event-poster::before {
+            background: linear-gradient(to top, rgba(13, 13, 13, 0.55) 0%, rgba(13, 13, 13, 0) 36%);
           }
           .event-dialog-copy {
             position: static;

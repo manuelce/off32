@@ -101,7 +101,19 @@ export default function AboutPage() {
         </span>
       </h1>
 
-      <section style={{ paddingTop: '15%', paddingBottom: '15%' }}>
+      <section className="about-lead">
+        <p>OFF32 è un&apos;agenzia di comunicazione digitale, multidisciplinare e indipendente.</p>
+        <p>
+          Il nostro lavoro comprende grafica e identità, strategia e posizionamento, siti ed esperienze digitali, comunicazione e campagne.
+          Lavoriamo in team o in autonomia.
+        </p>
+        <p>
+          La struttura è diretta. Chi fa il lavoro è anche il riferimento per ogni cliente.
+          Per noi un buon progetto non nasce senza passione, intelligenza e, soprattutto, un impegno personale.
+        </p>
+      </section>
+
+      <section style={{ paddingTop: 72, paddingBottom: '15%' }}>
         <div className="team-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4, width: '80%', margin: '0 auto' }}>
           {team.map(person => (
             <article key={person.src} style={{ border: LINE, background: '#f0ebe0' }}>
@@ -145,8 +157,12 @@ export default function AboutPage() {
       <style>{`
         .team-photo { filter: grayscale(1); transition: filter 0.45s ease; }
         article:hover .team-photo { filter: grayscale(0); }
+        .about-lead { width: 80%; margin: 56px auto 0; }
+        .about-lead p { width: 100%; margin: 0 0 18px; font-size: 17px; line-height: 1.65; color: #0D0D0D; }
+        .about-lead p:last-child { margin-bottom: 0; }
         @media (max-width: 860px) {
           .about-title { padding-top: 64px; }
+          .about-lead { margin-top: 40px; }
           .team-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>

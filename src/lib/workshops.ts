@@ -3,6 +3,7 @@ export type Workshop = {
   index: string
   tag: string
   kind: 'Workshop' | 'Corsi' | 'Talk'
+  topic: 'Full-stack' | 'AI applicata' | 'Design' | 'E-commerce'
   title: string
   desc: string
   duration: string
@@ -10,6 +11,9 @@ export type Workshop = {
   level: string
   audience: string
   outcomes: string[]
+  price?: string
+  when?: string
+  free?: boolean
 }
 
 export const workshops: Workshop[] = [
@@ -18,6 +22,7 @@ export const workshops: Workshop[] = [
     index: '01',
     tag: 'Brand',
     kind: 'Workshop',
+    topic: 'Design',
     title: 'Brand identity con intelligenza artificiale',
     desc: 'Ricerca, posizionamento e direzione visiva in una sessione. L\'AI accelera i materiali. La decisione su cosa tenere resta del team.',
     duration: '4 ore',
@@ -31,44 +36,31 @@ export const workshops: Workshop[] = [
     ],
   },
   {
-    slug: 'design-system',
+    slug: 'videocorso-fullstack-ai',
     index: '02',
     tag: 'Web',
     kind: 'Corsi',
-    title: 'Design system e prototipazione rapida',
-    desc: 'Dalla moodboard a un prototipo cliccabile. Costruiamo componenti, regole e un modo di lavorare che il team riesce a ripetere da solo.',
-    duration: 'Giornata intera',
-    format: 'In studio',
-    level: 'Base / intermedio',
-    audience: 'Designer e team di prodotto',
+    topic: 'Full-stack',
+    title: 'Videocorso full stack Web Development con AI',
+    desc: 'Percorso pratico e individuale, da 0 a sviluppatore full stack. Videolezioni live su Meet, esercitazioni e un progetto finale.',
+    duration: '35 ore',
+    format: 'Videolezioni live su Meet + esercitazioni + progetto finale',
+    level: 'Junior / Intermediate',
+    audience: 'Junior / Intermediate',
+    price: '690€',
+    when: 'Dalla seconda settimana di gennaio 2027 · 5 settimane',
     outcomes: [
-      'Una libreria minima di componenti riutilizzabili',
-      'Un prototipo da mostrare a clienti o stakeholder',
-      'Checklist di handoff tra design e sviluppo',
-    ],
-  },
-  {
-    slug: 'campagne-ai',
-    index: '03',
-    tag: 'Marketing',
-    kind: 'Corsi',
-    title: 'Campagne performanti con AI creative',
-    desc: 'Come produrre varianti, testarle e tenere solo quelle che convertono. Meta e Google, con l\'AI nel flusso creativo e non al posto della strategia.',
-    duration: '3 ore',
-    format: 'Online',
-    level: 'Avanzato',
-    audience: 'Marketing manager e media buyer',
-    outcomes: [
-      'Una struttura di test creativi per le prossime due settimane',
-      'Copy e formati da mettere in campagna il giorno dopo',
-      'Criteri per fermare ciò che non funziona',
+      'Corso individuale.',
+      'Stack: HTML, CSS, JavaScript, React, Node.js, Supabase.',
+      'Prezzo del corso: 690€.',
     ],
   },
   {
     slug: 'comunicazione-performance',
-    index: '04',
+    index: '03',
     tag: 'Strategy',
     kind: 'Talk',
+    topic: 'AI applicata',
     title: 'Comunicazione orientata alla performance',
     desc: 'Allineare offerta, messaggio e numeri. Un framework breve per chi deve decidere cosa dire, dove dirlo e come capire se ha funzionato.',
     duration: '2 ore',

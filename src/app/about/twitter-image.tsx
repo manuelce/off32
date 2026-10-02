@@ -1,1 +1,1 @@
-export { default, alt, size, contentType } from '@/lib/og-card'
+export { default, alt, size, contentType } from './opengraph-image'
