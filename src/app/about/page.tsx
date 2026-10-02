@@ -25,7 +25,7 @@ const team: {
     ],
   },
   {
-    src: '/team/team-02.jpg',
+    src: '/team/team-02.jpg?v=2',
     name: 'Sara Zeppieri',
     role: 'Graphic Designer',
     tone: true,

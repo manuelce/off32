@@ -77,7 +77,7 @@ export default function CallDock() {
         aria-expanded={open}
         onClick={() => setOpen(value => !value)}
       >
-        Prenota una call gratuita di 20&apos;
+        Call gratuita di 20&apos;
       </button>
       <style>{`
         .call-dock {
@@ -92,9 +92,12 @@ export default function CallDock() {
           max-width: calc(100vw - 32px);
         }
         .call-fab {
-          background: #F0EBE0;
+          position: relative;
+          background:
+            linear-gradient(#F0EBE0, #F0EBE0) padding-box,
+            conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812) border-box;
           color: #0D0D0D;
-          border: 2px solid #0D0D0D;
+          border: 2px solid transparent;
           font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
           font-size: 12px;
           font-weight: 700;
@@ -103,7 +106,17 @@ export default function CallDock() {
           padding: 14px 16px;
           cursor: pointer;
           text-align: left;
-          animation: call-border 8s linear infinite;
+          animation: call-spin 2.8s linear infinite;
+        }
+        .call-fab::after {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          z-index: -1;
+          background: conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812);
+          filter: blur(7px);
+          opacity: 0.55;
+          pointer-events: none;
         }
         .call-panel {
           width: min(320px, calc(100vw - 32px));
@@ -173,18 +186,20 @@ export default function CallDock() {
         }
         .call-send:disabled { opacity: 0.6; cursor: default; }
         .call-error { margin: 0 0 10px; font-size: 13px; color: #fe3812; }
-        @keyframes call-border {
-          0%, 20% { border-color: #0D0D0D; }
-          25%, 45% { border-color: #9fff00; }
-          50%, 70% { border-color: #694aff; }
-          75%, 95% { border-color: #fe3812; }
-          100% { border-color: #0D0D0D; }
+        @property --call-angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: true;
+        }
+        @keyframes call-spin {
+          to { --call-angle: 360deg; }
         }
         @media (max-width: 768px) {
           .call-dock { right: 16px; bottom: 88px; }
         }
         @media (prefers-reduced-motion: reduce) {
           .call-fab { animation: none; }
+          .call-fab::after { opacity: 0.35; }
         }
       `}</style>
     </div>
