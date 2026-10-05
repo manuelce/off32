@@ -47,7 +47,8 @@ const paths = [
 export default function ContattiPage() {
   const [status, setStatus] = useState<Status>('idle')
   const [contactType, setContactType] = useState<ContactType>(null)
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm] = useState({ name: '', company: '', email: '', subject: '', message: '' })
+  const [consent, setConsent] = useState(false)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -83,7 +84,7 @@ export default function ContattiPage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
   const handleSubmit = async () => {
-    if (!form.name || !form.email || !form.message || status === 'loading') return
+    if (!form.name || !form.email || !form.message || !consent || status === 'loading') return
     setStatus('loading')
     try {
       const res = await fetch('/api/send-email', {
@@ -170,15 +171,19 @@ export default function ContattiPage() {
                   ))}
                 </div>
 
-                <div className="contact-fields" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
-                  <div>
-                    <label style={labelStyle} htmlFor="name">Nome e cognome</label>
-                    <input id="name" name="name" value={form.name} onChange={handleChange} placeholder="Mario Rossi" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label style={labelStyle} htmlFor="email">Email</label>
-                    <input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="mario@email.com" style={inputStyle} />
-                  </div>
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle} htmlFor="name">Nome e cognome</label>
+                  <input id="name" name="name" value={form.name} onChange={handleChange} placeholder="Mario Rossi" required style={inputStyle} />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle} htmlFor="company">Azienda</label>
+                  <input id="company" name="company" value={form.company} onChange={handleChange} placeholder="Nome dell'azienda" style={inputStyle} />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle} htmlFor="email">Email</label>
+                  <input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="mario@email.com" required style={inputStyle} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
@@ -202,9 +207,20 @@ export default function ContattiPage() {
                   </p>
                 )}
 
-                <p style={{ fontSize: 12, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                  I tuoi dati non vengono condivisi con terze parti. Leggi la <a href="/privacy-policy" style={{ color: INK }}>privacy policy</a>.
-                </p>
+                <label htmlFor="consent" style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13, lineHeight: 1.5, margin: '0 0 18px', cursor: 'pointer' }}>
+                  <input
+                    id="consent"
+                    name="consent"
+                    type="checkbox"
+                    checked={consent}
+                    onChange={event => setConsent(event.target.checked)}
+                    required
+                    style={{ width: 16, height: 16, marginTop: 2, flexShrink: 0, accentColor: '#f0ebe0' }}
+                  />
+                  <span>
+                    Accetto il trattamento dei dati personali e ho letto la <a href="/privacy-policy" style={{ color: INK }}>privacy policy</a>.
+                  </span>
+                </label>
 
                 {status === 'error' && (
                   <p style={{ fontSize: 13, color: '#fe3812', lineHeight: 1.6, margin: '0 0 16px' }}>

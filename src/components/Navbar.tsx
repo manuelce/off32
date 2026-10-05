@@ -6,9 +6,14 @@ const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'Events', href: '/workshop' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Contatti', href: '/contatti' },
 ]
 
-const CTA_LABEL = 'Contattaci →'
+const CALL_LABEL = "Call '20"
+
+function openCall() {
+  window.dispatchEvent(new Event('off32-toggle-call'))
+}
 
 function isCurrent(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`)
@@ -37,9 +42,9 @@ export default function Navbar() {
           })}
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <a href="/contatti" className="nav-cta" style={{ display: 'inline-flex', alignItems: 'center', boxSizing: 'border-box', background: '#0D0D0D', color: '#fff', fontSize: '15px', fontWeight: 400, padding: '10px 24px', border: '1px solid #0D0D0D', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.3px' }}>
-            {CTA_LABEL}
-          </a>
+          <button type="button" className="nav-cta" onClick={openCall}>
+            {CALL_LABEL}
+          </button>
         </div>
       </nav>
 
@@ -64,9 +69,9 @@ export default function Navbar() {
             <img className="logo-green" src="/off32_green_cube.svg" alt="" style={{ height: '24px', width: 'auto', display: 'none' }} />
           )}
         </a>
-        <a href="/contatti" style={{ background: '#0D0D0D', color: '#fff', fontSize: '14px', fontWeight: 400, padding: '8px 18px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.3px' }}>
-          {CTA_LABEL}
-        </a>
+        <button type="button" className="nav-cta" onClick={openCall}>
+          {CALL_LABEL}
+        </button>
       </nav>
 
       {/* NAVBAR MOBILE — BOTTOM: pillola con i link */}
@@ -78,38 +83,52 @@ export default function Navbar() {
         <div style={{
           display: 'flex', gap: '2px', alignItems: 'center',
           background: '#141414', border: '1px solid #1C1C1C',
-          borderRadius: '999px', padding: '6px 10px',
+          borderRadius: '999px', padding: '6px 8px',
           boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
           pointerEvents: 'auto',
         }}>
           {NAV_LINKS.map(link => {
             const current = isCurrent(pathname, link.href)
             return (
-              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#fe3812', padding: '6px 8px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#fe3812', padding: '6px 5px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.2px', textDecoration: 'none', whiteSpace: 'nowrap' }}>{link.label}</a>
             )
           })}
-          <button
-            type="button"
-            className="nav-call"
-            aria-label="Call gratuita di 20 minuti"
-            onClick={() => window.dispatchEvent(new Event('off32-toggle-call'))}
-          />
         </div>
       </div>
 
       <style>{`
-        .nav-call {
-          width: 28px;
-          height: 28px;
-          margin-left: 6px;
-          padding: 0;
-          border: 0;
-          border-radius: 50%;
-          flex-shrink: 0;
+        .nav-cta {
+          position: relative;
+          z-index: 1;
+          isolation: isolate;
+          display: inline-flex;
+          align-items: center;
+          box-sizing: border-box;
+          background:
+            linear-gradient(#F0EBE0, #F0EBE0) padding-box,
+            conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812) border-box;
+          color: #0D0D0D;
+          border: 2px solid transparent;
+          border-radius: 0;
+          font-family: inherit;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.4px;
+          text-transform: uppercase;
+          padding: 14px 16px;
           cursor: pointer;
-          background: conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812);
-          box-shadow: 0 0 8px rgba(254, 56, 18, 0.45);
+          white-space: nowrap;
           animation: nav-call-spin 2.8s linear infinite;
+        }
+        .nav-cta::after {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          z-index: -1;
+          background: conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812);
+          filter: blur(7px);
+          opacity: 0.55;
+          pointer-events: none;
         }
         @property --call-angle {
           syntax: '<angle>';
@@ -119,14 +138,15 @@ export default function Navbar() {
         @keyframes nav-call-spin {
           to { --call-angle: 360deg; }
         }
+        @media (prefers-reduced-motion: reduce) {
+          .nav-cta { animation: none; }
+          .nav-cta::after { opacity: 0.35; }
+        }
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
           .nav-mobile-top { display: flex !important; }
           .nav-mobile-bottom { display: flex !important; }
           main { padding-bottom: 88px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .nav-call { animation: none; }
         }
       `}</style>
     </>
