@@ -7,46 +7,21 @@ import SkillTag from '@/components/SkillTag'
 const LINE = '1px solid #0D0D0D'
 const CREAM = '#F0EBE0'
 
-function VideoCard({ src, image, title, category, tall = false }: { src: string, image?: string, title: string, category: string, tall?: boolean }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [hovered, setHovered] = useState(false)
-
+function ProjectRow({ title, category, href, image }: { title: string, category: string, href: string, image: string }) {
   return (
-    <div
-      onMouseEnter={() => { setHovered(true); videoRef.current?.play() }}
-      onMouseLeave={() => {
-        setHovered(false)
-        if (videoRef.current) {
-          videoRef.current.pause()
-          videoRef.current.currentTime = 0
-        }
-      }}
-      style={{
-        position: 'relative', overflow: 'hidden', cursor: 'pointer',
-        background: '#E7E0D4', height: tall ? '520px' : '100%', minHeight: tall ? undefined : 240,
-      }}
-    >
-      {image ? (
-        <img src={image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 46%', opacity: hovered ? 1 : 0.92, transition: 'opacity 0.4s ease' }} />
-      ) : (
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="none"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: hovered ? 1 : 0.85, transition: 'opacity 0.4s ease' }}
-        >
-          <source src={src} type="video/mp4" />
-        </video>
-      )}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,13,13,0.55), transparent 55%)' }} />
-      <div style={{ position: 'absolute', top: image ? 10 : 16, left: 16, fontSize: '10px', letterSpacing: '1.6px', textTransform: 'uppercase', color: '#fff' }}>{category}</div>
-      <div style={{ position: 'absolute', left: 16, right: 16, bottom: image ? 36 : 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16 }}>
-        <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: tall ? 32 : 22, fontWeight: 300, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.1 }}>{title}</div>
-        <span style={{ color: '#fff', fontSize: 18 }}>↗</span>
-      </div>
-    </div>
+    <a className="project-row" href={href}>
+      <span className="project-meta">{category}</span>
+      <span className="project-title">{title}</span>
+      <span className="project-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7">
+          <path d="M8 6h10v10" />
+          <path d="M18 6L6 18" />
+        </svg>
+      </span>
+      <span className="project-preview">
+        <img src={image} alt="" />
+      </span>
+    </a>
   )
 }
 
@@ -84,10 +59,10 @@ export default function Home() {
   ]
 
   const works = [
-    { src: '/works/healingheartoff32.mp4', title: 'Healing Earth Italia', category: 'eCommerce · Brand', href: '/work/healing-earth', tall: true },
-    { src: '/works/scuppoz.mp4', image: '/works/scuppoz/pecore.webp', title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz' },
-    { src: '/works/momento.mp4', image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour' },
-    { src: '/works/duel.mp4', image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
+    { title: 'Healing Earth Italia', category: 'eCommerce · Brand', href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg' },
+    { title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp' },
+    { title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour', image: '/works/conil-food-tour/laptop.webp' },
+    { title: 'The Duel', category: 'Editorial', href: '/work/duel', image: '/works/duel/cover.jpg' },
   ]
 
   const faqs = [
@@ -223,32 +198,12 @@ export default function Home() {
       </section>
 
       <section id="works">
-        <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Lavori selezionati</div>
-        <div className="works-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', borderBottom: LINE }}>
-          <a href={works[0].href} style={{ display: 'block', borderRight: LINE, textDecoration: 'none' }}>
-            <VideoCard src={works[0].src} title={works[0].title} category={works[0].category} tall />
-          </a>
-          <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
-            {works.slice(1, 3).map((work, i) => (
-              <a key={work.title} href={work.href} style={{ display: 'block', borderBottom: i === 0 ? LINE : 'none', textDecoration: 'none' }}>
-                <VideoCard src={work.src} image={'image' in work ? work.image : undefined} title={work.title} category={work.category} />
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className="split" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', borderBottom: LINE }}>
-          <a href={works[3].href} style={{ display: 'block', borderRight: LINE, textDecoration: 'none' }}>
-            <VideoCard src={works[3].src} image={works[3].image} title={works[3].title} category={works[3].category} />
-          </a>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '36px 32px', minHeight: 320 }}>
-            <div style={meta}>04</div>
-            <div>
-              <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 300, letterSpacing: '-0.6px', lineHeight: 1.05, marginBottom: 24 }}>
-                Vuoi vedere tutti i progetti?
-              </div>
-              <a href="/work" style={button}>Tutti i lavori →</a>
-            </div>
-          </div>
+        <div className="project-head">Lavori selezionati</div>
+        <div className="project-list">
+          {works.map(work => (
+            <ProjectRow key={work.href} {...work} />
+          ))}
+          <a className="project-all" href="/work">Tutti i lavori →</a>
         </div>
       </section>
 
@@ -381,6 +336,113 @@ export default function Home() {
           box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
         }
+        .project-head {
+          padding: 22px 28px;
+          border-top: 1px solid #0D0D0D;
+          border-bottom: 1px solid #0D0D0D;
+          font-size: 11px;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: #0D0D0D;
+        }
+        .project-list {
+          border-bottom: 1px solid #0D0D0D;
+        }
+        .project-row {
+          position: relative;
+          display: grid;
+          grid-template-columns: 132px minmax(0, 1fr) 22px;
+          align-items: center;
+          column-gap: 28px;
+          min-height: 92px;
+          padding: 20px 28px;
+          color: #111;
+          text-decoration: none;
+          border-bottom: 1px solid #0D0D0D;
+          transition: background 0.2s ease, color 0.2s ease, border-radius 0.2s ease, min-height 0.22s ease;
+        }
+        .project-meta {
+          font-size: 12px;
+          line-height: 1.35;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #6b6b6b;
+        }
+        .project-title {
+          font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
+          font-weight: 800;
+          font-size: clamp(28px, 4.4vw, 56px);
+          line-height: 1.15;
+          letter-spacing: -0.045em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          transition: padding-left 0.22s ease;
+        }
+        .project-icon {
+          display: grid;
+          place-items: center;
+          color: #6b6b6b;
+        }
+        .project-preview {
+          position: absolute;
+          left: 156px;
+          top: 50%;
+          width: 168px;
+          height: 104px;
+          transform: translateY(-50%);
+          border-radius: 8px;
+          overflow: hidden;
+          opacity: 0;
+          pointer-events: none;
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+          transition: opacity 0.18s ease;
+          z-index: 2;
+        }
+        .project-preview img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .project-row:hover,
+        .project-row.is-on {
+          background: #111;
+          color: #f4f1ea;
+          border-radius: 0;
+          border-bottom-color: transparent;
+          min-height: 132px;
+          z-index: 1;
+        }
+        .project-row:hover .project-meta,
+        .project-row.is-on .project-meta,
+        .project-row:hover .project-icon,
+        .project-row.is-on .project-icon {
+          color: #cfcfcf;
+        }
+        .project-row:hover .project-title,
+        .project-row.is-on .project-title {
+          padding-left: 184px;
+        }
+        .project-row:hover .project-preview,
+        .project-row.is-on .project-preview {
+          opacity: 1;
+        }
+        .project-all {
+          display: flex;
+          align-items: center;
+          box-sizing: border-box;
+          min-height: 64px;
+          margin: 0;
+          padding: 0 28px;
+          color: #0D0D0D;
+          text-decoration: none;
+          font-size: 12px;
+          line-height: 1;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+        }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
@@ -388,8 +450,32 @@ export default function Home() {
           .hero-grid > :first-child { display: none !important; }
           .hero-copy { padding: 112px 28px 48px !important; }
           .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
-          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
-          .grid-3 > div, .split > div, .split > a, .split > p, .works-grid > a { border-right: none !important; border-left: none !important; }
+          .grid-3, .grid-2 { grid-template-columns: 1fr !important; }
+          .grid-3 > div { border-right: none !important; border-left: none !important; }
+          .project-head { padding-left: 16px; padding-right: 16px; }
+          .project-row {
+            grid-template-columns: minmax(0, 1fr) 22px;
+            column-gap: 12px;
+            min-height: 0;
+            padding: 16px;
+          }
+          .project-meta { grid-column: 1; }
+          .project-title { grid-column: 1; font-size: 30px; }
+          .project-icon { grid-column: 2; grid-row: 1 / span 2; }
+          .project-preview { display: none; }
+          .project-all { padding-left: 16px; padding-right: 16px; }
+          .project-row:hover,
+          .project-row.is-on {
+            background: transparent;
+            color: #111;
+            border-radius: 0;
+            border-bottom-color: #0D0D0D;
+            min-height: 0;
+          }
+          .project-row:hover .project-meta,
+          .project-row.is-on .project-meta,
+          .project-row:hover .project-icon,
+          .project-row.is-on .project-icon { color: #6b6b6b; }
           .meta-row { --meta-inset: 16px; }
           .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
           .grid-3 > div, .grid-2 > a { border-bottom: 1px solid #0D0D0D; }

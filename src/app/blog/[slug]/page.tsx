@@ -282,7 +282,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
       <Navbar />
 
       <article>
-        <div style={{ padding: '28px 40px 0' }}>
+        <div className="article-back" style={{ padding: '28px 40px 0' }}>
           <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Blog</a>
         </div>
         <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(42px, 5.4vw, 76px)', lineHeight: 0.95, letterSpacing: '-1.5px', margin: '18px 0 0', borderTop: LINE, borderBottom: LINE, padding: '22px 40px' }}>
@@ -359,6 +359,9 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
       </footer>
 
       <style>{`
+        @media (max-width: 768px) {
+          .article-back { padding-top: 96px !important; }
+        }
         @media (max-width: 860px) {
           article { padding-bottom: 72px; }
         }
