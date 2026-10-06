@@ -13,16 +13,18 @@ const team: {
   role: string
   tone?: boolean
   links: { kind: Social; href: string; label: string }[]
+  href?: string
 }[] = [
   {
     src: '/team/team-01.jpg',
     name: 'Manuel Cerasuolo',
-    role: 'Founder',
+    role: 'Project Manager',
     tone: true,
     links: [
       { kind: 'web', href: 'https://www.manuelcerasuolo.com/', label: 'Sito' },
       { kind: 'instagram', href: 'https://www.instagram.com/off32channel/', label: 'Instagram' },
     ],
+    href: '/about/manuel-cerasuolo',
   },
   {
     src: '/team/team-02.jpg?v=2',
@@ -33,9 +35,28 @@ const team: {
       { kind: 'instagram', href: 'https://www.instagram.com/sz.visuals_/', label: 'Instagram' },
       { kind: 'behance', href: 'https://www.behance.net/sarazeppieri', label: 'Behance' },
     ],
+    href: '/about/sara-zeppieri',
   },
-  { src: '/team/team-03.jpg', name: 'Lorenzo Salvatori', role: 'Full Stack Developer', tone: true, links: [] },
-  { src: '/team/team-04.jpg?v=5', name: 'Sara Villani', role: 'Social Media Manager', tone: true, links: [] },
+  {
+    src: '/team/team-03.jpg',
+    name: 'Lorenzo Salvatori',
+    role: 'Full Stack Developer',
+    tone: true,
+    links: [
+      { kind: 'linkedin', href: 'https://www.linkedin.com/in/lorenzo-salvatori-094bab12b/', label: 'LinkedIn' },
+    ],
+    href: '/about/lorenzo-salvatori',
+  },
+  {
+    src: '/team/team-04.jpg?v=5',
+    name: 'Sara Villani',
+    role: 'Social Media Manager',
+    tone: true,
+    links: [
+      { kind: 'linkedin', href: 'https://www.linkedin.com/in/saravillanii/', label: 'LinkedIn' },
+    ],
+    href: '/about/sara-villani',
+  },
 ]
 
 function SocialIcon({ kind }: { kind: Social }) {
@@ -118,10 +139,20 @@ export default function AboutPage() {
           {team.map(person => (
             <article key={person.src} style={{ border: LINE, background: '#f0ebe0' }}>
               <div style={{ aspectRatio: '3 / 4', overflow: 'hidden', borderBottom: LINE }}>
-                <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+                {person.href ? (
+                  <a href={person.href} style={{ display: 'block', height: '100%' }}>
+                    <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+                  </a>
+                ) : (
+                  <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+                )}
               </div>
               <div style={{ padding: '16px 16px 18px' }}>
-                <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.3 }}>{person.name}</div>
+                {person.href ? (
+                  <a href={person.href} style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.3, color: 'inherit', textDecoration: 'none' }}>{person.name}</a>
+                ) : (
+                  <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.3 }}>{person.name}</div>
+                )}
                 <div style={{ marginTop: 4, fontSize: 14, color: '#3a3a3a' }}>{person.role}</div>
                 <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
                   {person.links.map(link => (

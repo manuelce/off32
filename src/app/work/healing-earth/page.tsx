@@ -328,6 +328,36 @@ export default function HealingEarthPage() {
         </div>
       </section>
 
+      <section aria-label="Altri lavori" style={{ padding: '48px 0 0' }}>
+        <div className="work-switch" style={{
+          width: '95%',
+          margin: '0 auto',
+          padding: '2%',
+          border: '1px solid #0D0D0D',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          {[
+            { href: '/work/duel', image: '/works/duel/cover.jpg', label: '← Precedente', title: 'The Duel', align: 'left' as const },
+            { href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp', label: 'Prossimo →', title: 'Scuppoz', align: 'right' as const },
+          ].map(work => (
+            <a key={work.href} href={work.href} style={{ position: 'relative', display: 'block', width: '18%', textDecoration: 'none', color: '#0D0D0D' }}>
+              <img src={work.image} alt={work.title} style={{ width: '100%', height: 88, objectFit: 'cover', display: 'block' }} />
+              <span className="work-switch-label" style={{
+                position: 'absolute', bottom: 6,
+                left: work.align === 'left' ? 6 : 'auto',
+                right: work.align === 'right' ? 6 : 'auto',
+                background: '#F0EBE0', padding: '3px 6px',
+                fontSize: 10, letterSpacing: '0.6px', textTransform: 'uppercase',
+              }}>
+                {work.label}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />
 
@@ -350,10 +380,18 @@ export default function HealingEarthPage() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        .work-switch-label { opacity: 0; transition: opacity 0.18s ease; }
+        .work-switch a:hover .work-switch-label,
+        .work-switch a:focus-visible .work-switch-label { opacity: 1; }
+        @media (max-width: 1024px) {
+          .work-switch-label { opacity: 1; }
+        }
         @media (max-width: 768px) {
           .grid-2-col { grid-template-columns: 1fr !important; gap: 32px !important; }
           .grid-3-col { grid-template-columns: 1fr !important; }
           .grid-4-col { grid-template-columns: 1fr 1fr !important; }
+          .work-switch a { width: 20% !important; }
+          .work-switch img { height: 64px !important; }
           .meta-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           main { padding-bottom: 0 !important; }
         }

@@ -31,7 +31,7 @@ const ARTICLES: Record<string, Article> = {
     tag: 'Design',
     date: 'Mar 2025',
     readTime: '6 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
+    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
     excerpt: 'Il brand non è un logo. È la promessa che fai ogni giorno a chi ti sceglie. Il segno grafico la rende visibile. Se la promessa è confusa, un marchio nuovo non la sistema.',
     image: '/blog/img/brand-digitale.jpg?v=2',
     content: [
@@ -110,7 +110,7 @@ const ARTICLES: Record<string, Article> = {
     tag: 'Sviluppo',
     date: 'Feb 2025',
     readTime: '6 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
+    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
     excerpt: 'Un negozio converte quando l\'offerta è chiara, la pagina è veloce e il checkout non chiede sforzo. Il resto è rumore.',
     image: '/blog/img/ecommerce-2025.jpg',
     content: [
@@ -189,7 +189,7 @@ const ARTICLES: Record<string, Article> = {
     tag: 'Community',
     date: 'Feb 2025',
     readTime: '5 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Founder · OFF32' },
+    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
     excerpt: 'Non tutti i clienti sono giusti per noi. Dire no — ai progetti sbagliati o ai clienti difficili — è una delle decisioni più professionali che possiamo prendere.',
     content: [
       {
