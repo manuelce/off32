@@ -86,7 +86,7 @@ export async function POST(req: Request) {
       await transport.sendMail({
         from: FROM,
         to: email,
-        subject: 'Messaggio ricevuto — OFF32',
+        subject: 'Messaggio ricevuto, OFF32',
         html: `
           <div style="font-family: helvetica, sans-serif; max-width: 520px; margin: 0 auto; color: #0D0D0D;">
             <div style="background: #fe3812; padding: 24px 32px;">

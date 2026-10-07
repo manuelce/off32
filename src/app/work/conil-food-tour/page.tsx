@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
@@ -173,7 +174,7 @@ export default function ConilFoodTourPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {[
                 { title: 'Il concept', text: 'Logo, palette e linguaggio visivo costruiti insieme. Arancio, menta e blu tengono insieme sito, biglietti da visita e icona, così il brand si riconosce prima ancora di leggere il nome.' },
-                { title: 'Il progetto', text: 'Il sito è vetrina e prenotazione. I tour — gourmet, tonno, vegetariano e privato — si scelgono, si datano e si pagano online, su WordPress e WooCommerce.' },
+                { title: 'Il progetto', text: 'Il sito è vetrina e prenotazione. I tour gourmet, del tonno, vegetariano e privato si scelgono, si datano e si pagano online, su WordPress e WooCommerce.' },
                 { title: 'Il lancio', text: 'Dopo l’uscita abbiamo raccolto i feedback di chi ha partecipato e tenuto vivo il rapporto con aggiornamenti sui nuovi tour e supporto alle prenotazioni.' },
               ].map(block => (
                 <div key={block.title}>
@@ -287,6 +288,11 @@ export default function ConilFoodTourPage() {
           ))}
         </div>
       </section>
+
+      <WorkSwitch
+        previous={{ href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp', title: 'Scuppoz' }}
+        next={{ href: '/work/duel', image: '/works/duel/cover.jpg', title: 'The Duel' }}
+      />
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />

@@ -6,8 +6,8 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'OFF32 — Agenzia di comunicazione digitale',
-    template: '%s — OFF32',
+    default: 'OFF32 · Agenzia di comunicazione digitale',
+    template: '%s · OFF32',
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     locale: 'it_IT',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'OFF32 — Agenzia di comunicazione digitale',
+    title: 'OFF32 · Agenzia di comunicazione digitale',
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'OFF32 — Agenzia di comunicazione digitale',
+    title: 'OFF32 · Agenzia di comunicazione digitale',
     description: SITE_DESCRIPTION,
   },
   icons: {

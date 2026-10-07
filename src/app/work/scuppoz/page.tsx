@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
@@ -197,6 +198,11 @@ export default function ScuppozPage() {
           </FadeIn>
         </div>
       </section>
+
+      <WorkSwitch
+        previous={{ href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg', title: 'Healing Earth Italia' }}
+        next={{ href: '/work/conil-food-tour', image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour' }}
+      />
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />

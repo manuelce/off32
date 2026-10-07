@@ -25,7 +25,7 @@ export const BLOG_POSTS = [
 
 export function pageMeta(title: string, description: string, path: string, type: 'website' | 'article' = 'website'): Metadata {
   const url = `${SITE_URL}${path}`
-  const fullTitle = `${title} — OFF32`
+  const fullTitle = `${title} · OFF32`
   return {
     title: { absolute: fullTitle },
     description,

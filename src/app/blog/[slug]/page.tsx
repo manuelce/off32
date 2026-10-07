@@ -190,7 +190,7 @@ const ARTICLES: Record<string, Article> = {
     date: 'Feb 2025',
     readTime: '5 min',
     author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
-    excerpt: 'Non tutti i clienti sono giusti per noi. Dire no — ai progetti sbagliati o ai clienti difficili — è una delle decisioni più professionali che possiamo prendere.',
+    excerpt: 'Non tutti i clienti sono giusti per noi. Dire no, ai progetti sbagliati o ai clienti difficili, è una delle decisioni più professionali che possiamo prendere.',
     content: [
       {
         type: 'intro',
@@ -198,7 +198,7 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'All\'inizio della carriera si tende a dire sempre "sì", a lavorare con chiunque capiti, convinti che ogni progetto sia un\'occasione. Ma col tempo si capisce che dire "no" — ai progetti sbagliati o ai clienti difficili — è una delle decisioni più professionali ed evolute che possiamo prendere.',
+        text: 'All\'inizio della carriera si tende a dire sempre "sì", a lavorare con chiunque capiti, convinti che ogni progetto sia un\'occasione. Ma col tempo si capisce che dire "no", ai progetti sbagliati o ai clienti difficili, è una delle decisioni più professionali ed evolute che possiamo prendere.',
       },
       {
         type: 'heading',
@@ -226,7 +226,7 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Ricordo un incontro con un imprenditore del Teramano, a capo di un\'azienda di famiglia. Durante la nostra conversazione notai un atteggiamento poco rispettoso verso i suoi collaboratori. In particolare, si rivolse ad un giovane grafico con tono ironico ma umiliante, per una banalità — "la penna dimenticata" — un gesto che può sembrare piccolo, ma che racconta molto. Da quel momento, avevo già intuito che quel contesto non avrebbe facilitato una collaborazione serena.',
+        text: 'Ricordo un incontro con un imprenditore del Teramano, a capo di un\'azienda di famiglia. Durante la nostra conversazione notai un atteggiamento poco rispettoso verso i suoi collaboratori. In particolare, si rivolse ad un giovane grafico con tono ironico ma umiliante, per una banalità, "la penna dimenticata", un gesto che può sembrare piccolo, ma che racconta molto. Da quel momento, avevo già intuito che quel contesto non avrebbe facilitato una collaborazione serena.',
       },
       {
         type: 'paragraph',
@@ -254,7 +254,7 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'In fondo, ogni collaborazione è un incontro tra persone. E come in ogni relazione, la differenza non la fa solo il risultato finale, ma il percorso per arrivarci. Capire quando dire "no", fidarsi dei propri segnali e scegliere partner che condividono la stessa etica è ciò che permette di crescere — come studio, come professionista e come persona.',
+        text: 'In fondo, ogni collaborazione è un incontro tra persone. E come in ogni relazione, la differenza non la fa solo il risultato finale, ma il percorso per arrivarci. Capire quando dire "no", fidarsi dei propri segnali e scegliere partner che condividono la stessa etica è ciò che permette di crescere: come studio, come professionista e come persona.',
       },
     ],
   },

@@ -8,7 +8,7 @@ const ROME = 'Europe/Rome'
 const SLOT_START = 10 * 60
 const SLOT_END = 18 * 60
 const SLOT = 20
-const HORIZON = 45
+const HORIZON = 180
 const WEEKDAYS = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
 
 function pad(value: number) {

@@ -17,7 +17,7 @@ const paragraphs = [
   'Dal 2023 è growth marketer, web designer e content creator in Atteggiamento Digitale, società benefit e agenzia di crescita, a Pollenza. Lì implementa la marketing automation, crea contenuti video e realizza siti web. Sono tre parti dello stesso incarico: il sito, ciò che lo alimenta, e il sistema che tiene i contatti in movimento.',
   'Dal 2022 collabora come growth marketer con Atelier Michele Schiavoni architetti, in provincia di Macerata. Per lo studio ha realizzato il sito, implementato il CRM e seguito l’ottimizzazione SEO, tecnica e semantica. Il progetto non si chiude quando la pagina è online: continua nel modo in cui viene trovata e nel modo in cui lo studio tiene le relazioni.',
   'È questo il filo. Un sito, da solo, non basta. Serve la struttura che lo fa trovare, il sistema che organizza i contatti, i contenuti che lo tengono vivo. Web, SEO, CRM e automazione, nel suo modo di lavorare, stanno nello stesso progetto e si correggono a vicenda.',
-  'In OFF32 questo diventa sviluppo. I siti e i prodotti digitali li segue per intero, dalla realizzazione alla parte che deve continuare a funzionare. L’intelligenza artificiale entra dove serve a sbloccare un passaggio — una bozza, una variante, un controllo — e la direzione resta di chi costruisce.',
+  'In OFF32 questo diventa sviluppo. I siti e i prodotti digitali li segue per intero, dalla realizzazione alla parte che deve continuare a funzionare. L’intelligenza artificiale entra dove serve a sbloccare un passaggio: una bozza, una variante, un controllo. La direzione resta di chi costruisce.',
 ]
 
 export default function LorenzoSalvatoriPage() {

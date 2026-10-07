@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
@@ -37,11 +38,12 @@ function vimeoSrc(id: string) {
 }
 
 const PHOTOS = {
-  phoneStand: '/works/healing-earth/phone-stand.webp',
-  laptop: '/works/healing-earth/laptop.webp',
-  ipad: '/works/healing-earth/ipad.webp',
-  laptopSofa: '/works/healing-earth/laptop-sofa.webp',
-  phoneFloor: '/works/healing-earth/phone-floor.webp',
+  billboard: '/works/healing-earth/billboard.jpg',
+  campagna: '/works/healing-earth/campagna.jpg',
+  essenza: '/works/healing-earth/essenza.jpg',
+  lusso: '/works/healing-earth/lusso.jpg',
+  selezione: '/works/healing-earth/selezione.jpg',
+  spa: '/works/healing-earth/spa.jpg',
 }
 
 function MediaBlock({ src, type = 'image', aspect = '16/9', bg = '#111', alt = 'Healing Earth' }: {
@@ -192,7 +194,7 @@ export default function HealingEarthPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {[
                 { title: 'La Sfida', text: 'Il brand aveva un prodotto eccellente ma un eCommerce che non convertiva. Layout confuso, nessuna strategia di acquisizione, identità visiva debole sui social. Il tasso di abbandono del carrello era oltre il 78%.' },
-                { title: 'La Strategia', text: 'Partire dal brand — ridefinire il visual language e il tono di voce. Poi ricostruire l\'eCommerce con focus su conversione e performance. Infine, attivare campagne Meta Ads con creativi generati e ottimizzati con AI.' },
+                { title: 'La Strategia', text: 'Partire dal brand: ridefinire il visual language e il tono di voce. Poi ricostruire l\'eCommerce con focus su conversione e performance. Infine, attivare campagne Meta Ads con creativi generati e ottimizzati con AI.' },
                 { title: 'La Soluzione', text: 'Nuovo sito Shopify custom con UX ottimizzata, sistema di brand completo, campagne Meta con ROAS 4.2x, email automation e contenuti AI-assisted. Risultato: +40% conversioni in 30 giorni.' },
               ].map((block, i) => (
                 <FadeIn key={i} delay={i * 100}>
@@ -235,16 +237,20 @@ export default function HealingEarthPage() {
               BRAND<br />IDENTITY
             </h2>
             <p style={{ fontSize: '15px', color: '#666', lineHeight: 1.8, maxWidth: '480px' }}>
-              Abbiamo ridefinito l&apos;identità visiva del brand partendo dal concept di purezza e connessione con la natura. Palette cromatica, tipografia, iconografia e tono di voce coerenti su tutti i canali — dal packaging alle campagne digitali.
+              Abbiamo ridefinito l&apos;identità visiva del brand partendo dal concept di purezza e connessione con la natura. Palette cromatica, tipografia, iconografia e tono di voce coerenti su tutti i canali, dal packaging alle campagne digitali.
             </p>
           </div>
         </FadeIn>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }} className="grid-3-col">
-          {[PHOTOS.phoneStand, PHOTOS.ipad, PHOTOS.phoneFloor].map((src, i) => (
-            <FadeIn key={src} delay={i * 100}>
-              <MediaBlock src={src} aspect="1 / 1" bg="#d5d5d5" alt="Mockup" />
-            </FadeIn>
-          ))}
+          <FadeIn>
+            <MediaBlock src={PHOTOS.billboard} aspect="16 / 9" bg="#d5d5d5" alt="Manifesto Healing Earth Italia in città" />
+          </FadeIn>
+          <FadeIn delay={80}>
+            <MediaBlock src={PHOTOS.spa} aspect="16 / 9" bg="#d5d5d5" alt="Pagina spa e hospitality di Healing Earth" />
+          </FadeIn>
+          <FadeIn delay={160}>
+            <MediaBlock src={PHOTOS.campagna} aspect="16 / 9" bg="#d5d5d5" alt="Campagna Healing Earth Italia su monitor" />
+          </FadeIn>
         </div>
       </section>
 
@@ -262,17 +268,24 @@ export default function HealingEarthPage() {
               eCOMMERCE<br />& UX
             </h2>
             <p style={{ fontSize: '15px', color: '#555', lineHeight: 1.8, maxWidth: '480px' }}>
-              Il nuovo Shopify è stato progettato per convertire. Ogni elemento — dalla hero alla scheda prodotto al checkout — è stato ottimizzato per ridurre l&apos;attrito e aumentare la fiducia dell&apos;utente. Mobile-first, veloce, misurabile.
+              Il nuovo Shopify è stato progettato per convertire. Ogni elemento, dalla hero alla scheda prodotto al checkout, è stato ottimizzato per ridurre l&apos;attrito e aumentare la fiducia dell&apos;utente. Mobile-first, veloce, misurabile.
             </p>
           </div>
         </FadeIn>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }} className="grid-2-col">
-          <FadeIn>
-            <MediaBlock src={PHOTOS.laptop} aspect="4 / 3" bg="#cfcfcf" alt="Mockup" />
-          </FadeIn>
-          <FadeIn delay={100}>
-            <MediaBlock src={PHOTOS.laptopSofa} aspect="4 / 3" bg="#cfcfcf" alt="Mockup" />
-          </FadeIn>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }} className="grid-2-col">
+            <FadeIn>
+              <MediaBlock src={PHOTOS.essenza} aspect="936 / 1024" bg="#cfcfcf" alt="Sito Healing Earth, La nostra essenza" />
+            </FadeIn>
+            <FadeIn delay={80}>
+              <MediaBlock src={PHOTOS.lusso} aspect="936 / 1024" bg="#cfcfcf" alt="Sito Healing Earth, il lusso di una spa" />
+            </FadeIn>
+          </div>
+          <div className="he-single">
+            <FadeIn delay={120}>
+              <MediaBlock src={PHOTOS.selezione} aspect="1 / 1" bg="#cfcfcf" alt="Selezione prodotti Healing Earth" />
+            </FadeIn>
+          </div>
         </div>
       </section>
 
@@ -328,35 +341,10 @@ export default function HealingEarthPage() {
         </div>
       </section>
 
-      <section aria-label="Altri lavori" style={{ padding: '48px 0 0' }}>
-        <div className="work-switch" style={{
-          width: '95%',
-          margin: '0 auto',
-          padding: '2%',
-          border: '1px solid #0D0D0D',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-          {[
-            { href: '/work/duel', image: '/works/duel/cover.jpg', label: '← Precedente', title: 'The Duel', align: 'left' as const },
-            { href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp', label: 'Prossimo →', title: 'Scuppoz', align: 'right' as const },
-          ].map(work => (
-            <a key={work.href} href={work.href} style={{ position: 'relative', display: 'block', width: '18%', textDecoration: 'none', color: '#0D0D0D' }}>
-              <img src={work.image} alt={work.title} style={{ width: '100%', height: 88, objectFit: 'cover', display: 'block' }} />
-              <span className="work-switch-label" style={{
-                position: 'absolute', bottom: 6,
-                left: work.align === 'left' ? 6 : 'auto',
-                right: work.align === 'right' ? 6 : 'auto',
-                background: '#F0EBE0', padding: '3px 6px',
-                fontSize: 10, letterSpacing: '0.6px', textTransform: 'uppercase',
-              }}>
-                {work.label}
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
+      <WorkSwitch
+        previous={{ href: '/work/duel', image: '/works/duel/cover.jpg', title: 'The Duel' }}
+        next={{ href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp', title: 'Scuppoz' }}
+      />
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />
@@ -380,18 +368,12 @@ export default function HealingEarthPage() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        .work-switch-label { opacity: 0; transition: opacity 0.18s ease; }
-        .work-switch a:hover .work-switch-label,
-        .work-switch a:focus-visible .work-switch-label { opacity: 1; }
-        @media (max-width: 1024px) {
-          .work-switch-label { opacity: 1; }
-        }
+        .he-single { width: calc(50% - 4px); margin: 0 auto; }
         @media (max-width: 768px) {
+          .he-single { width: 100% !important; }
           .grid-2-col { grid-template-columns: 1fr !important; gap: 32px !important; }
           .grid-3-col { grid-template-columns: 1fr !important; }
           .grid-4-col { grid-template-columns: 1fr 1fr !important; }
-          .work-switch a { width: 20% !important; }
-          .work-switch img { height: 64px !important; }
           .meta-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           main { padding-bottom: 0 !important; }
         }

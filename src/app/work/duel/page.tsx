@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null)
@@ -148,7 +149,7 @@ export default function DuelPage() {
       {chapters.map(chapter => (
         <section key={chapter.index}>
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, padding: '28px 5%', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D' }}>
-            <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase' }}>{chapter.index} — {chapter.title}</span>
+            <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase' }}>{chapter.index} · {chapter.title}</span>
             <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#7a746c' }}>Visual magazine 01</span>
           </div>
           {chapter.spreads.map(spread => (
@@ -161,6 +162,11 @@ export default function DuelPage() {
           ))}
         </section>
       ))}
+
+      <WorkSwitch
+        previous={{ href: '/work/conil-food-tour', image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour' }}
+        next={{ href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg', title: 'Healing Earth Italia' }}
+      />
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />

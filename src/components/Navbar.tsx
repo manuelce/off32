@@ -48,7 +48,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* NAVBAR MOBILE — TOP: logo + CTA */}
+      {/* NAVBAR MOBILE, TOP: logo + CTA */}
       <nav className="nav-mobile-top" style={{
         display: 'none', alignItems: 'center', justifyContent: 'space-between',
         padding: '18px 20px',
@@ -74,7 +74,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* NAVBAR MOBILE — BOTTOM: pillola con i link */}
+      {/* NAVBAR MOBILE, BOTTOM: pillola con i link */}
       <div className="nav-mobile-bottom" style={{
         display: 'none', justifyContent: 'center',
         position: 'fixed', bottom: '16px', left: 0, right: 0, zIndex: 200,

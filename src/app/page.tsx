@@ -7,21 +7,34 @@ import SkillTag from '@/components/SkillTag'
 const LINE = '1px solid #0D0D0D'
 const CREAM = '#F0EBE0'
 
-function ProjectRow({ title, category, href, image }: { title: string, category: string, href: string, image: string }) {
+function VideoCard({ src, image, poster, title, category, tall = false, priority = false, objectPosition = 'center 46%' }: { src?: string, image?: string, poster?: string, title: string, category: string, tall?: boolean, priority?: boolean, objectPosition?: string }) {
   return (
-    <a className="project-row" href={href}>
-      <span className="project-meta">{category}</span>
-      <span className="project-title">{title}</span>
-      <span className="project-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7">
-          <path d="M8 6h10v10" />
-          <path d="M18 6L6 18" />
-        </svg>
-      </span>
-      <span className="project-preview">
-        <img src={image} alt="" />
-      </span>
-    </a>
+    <div style={{
+      position: 'relative', overflow: 'hidden', cursor: 'pointer',
+      background: '#E7E0D4', height: tall ? '520px' : '100%', minHeight: tall ? undefined : 240,
+    }}>
+      {image ? (
+        <img src={image} alt="" loading="eager" fetchPriority={priority ? 'high' : 'auto'} decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition }} />
+      ) : (
+        <video
+          src={src}
+          poster={poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          fetchPriority={priority ? 'high' : 'auto'}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      )}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,13,13,0.55), transparent 55%)' }} />
+      <div style={{ position: 'absolute', top: image ? 10 : 16, left: 16, fontSize: '10px', letterSpacing: '1.6px', textTransform: 'uppercase', color: '#fff' }}>{category}</div>
+      <div style={{ position: 'absolute', left: 16, right: 16, bottom: image ? 36 : 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16 }}>
+        <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: tall ? 32 : 22, fontWeight: 300, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.1 }}>{title}</div>
+        <span style={{ color: '#fff', fontSize: 18 }}>↗</span>
+      </div>
+    </div>
   )
 }
 
@@ -59,16 +72,16 @@ export default function Home() {
   ]
 
   const works = [
-    { title: 'Healing Earth Italia', category: 'eCommerce · Brand', href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg' },
-    { title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp' },
-    { title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour', image: '/works/conil-food-tour/laptop.webp' },
-    { title: 'The Duel', category: 'Editorial', href: '/work/duel', image: '/works/duel/cover.jpg' },
+    { src: '/works/healingheart-card.mp4', poster: '/works/healing-earth/preview.jpg', title: 'Healing Earth Italia', category: 'eCommerce · Brand', href: '/work/healing-earth', tall: true },
+    { image: '/works/scuppoz/preview.jpg', title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz', objectPosition: 'center' },
+    { image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour' },
+    { image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
   ]
 
   const faqs = [
     {
       q: 'Come funziona l\'AI nella vostra agenzia?',
-      a: 'L\'AI entra nel lavoro, non al posto del lavoro. La usiamo per esplorare, scrivere bozze, produrre varianti e togliere i passaggi ripetitivi. La direzione — cosa tenere, cosa dire, cosa pubblicare — resta del team.',
+      a: 'L\'AI entra nel lavoro, non al posto del lavoro. La usiamo per esplorare, scrivere bozze, produrre varianti e togliere i passaggi ripetitivi. La direzione, cosa tenere, cosa dire e cosa pubblicare, resta del team.',
     },
     {
       q: 'Quali servizi offrite?',
@@ -102,6 +115,11 @@ export default function Home() {
 
   return (
     <main style={{ background: CREAM, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
+      <link rel="preload" as="video" href="/works/healingheart-card.mp4" fetchPriority="high" />
+      <link rel="preload" as="image" href="/works/healing-earth/preview.jpg" fetchPriority="high" />
+      <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
+      <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
+      <link rel="preload" as="image" href="/works/duel/cover.jpg" />
       <Navbar />
 
       <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '88px 1fr minmax(280px, 36%)', minHeight: 'calc(100vh - 58px)', borderBottom: LINE }}>
@@ -198,12 +216,32 @@ export default function Home() {
       </section>
 
       <section id="works">
-        <div className="project-head">Lavori selezionati</div>
-        <div className="project-list">
-          {works.map(work => (
-            <ProjectRow key={work.href} {...work} />
-          ))}
-          <a className="project-all" href="/work">Tutti i lavori →</a>
+        <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Lavori selezionati</div>
+        <div className="works-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 4, marginTop: 4 }}>
+          <a href={works[0].href} style={{ display: 'block', height: '100%', border: LINE, textDecoration: 'none' }}>
+            <VideoCard src={works[0].src} poster={works[0].poster} title={works[0].title} category={works[0].category} tall priority />
+          </a>
+          <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 4, height: '100%' }}>
+            {works.slice(1, 3).map(work => (
+              <a key={work.title} href={work.href} style={{ display: 'block', height: '100%', border: LINE, textDecoration: 'none' }}>
+                <VideoCard image={work.image} title={work.title} category={work.category} objectPosition={'objectPosition' in work ? work.objectPosition : undefined} priority={work.title === 'Scuppoz'} />
+              </a>
+            ))}
+          </div>
+        </div>
+        <div className="split" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 4, marginTop: 4 }}>
+          <a href={works[3].href} style={{ display: 'block', height: '100%', border: LINE, textDecoration: 'none' }}>
+            <VideoCard image={works[3].image} title={works[3].title} category={works[3].category} />
+          </a>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '36px 32px', minHeight: 320 }}>
+            <div style={meta}>04</div>
+            <div>
+              <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 300, letterSpacing: '-0.6px', lineHeight: 1.05, marginBottom: 24 }}>
+                Vuoi vedere tutti i progetti?
+              </div>
+              <a href="/work" style={button}>Tutti i lavori →</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -211,7 +249,7 @@ export default function Home() {
         <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Manifesto</div>
         <h2 style={{ ...heading, maxWidth: 640, margin: '0 auto 20px' }}>Amiamo i dettagli. L&apos;AI li amplifica.</h2>
         <p style={{ ...body, margin: '0 auto' }}>C&apos;è qualcosa di profondo nel rispetto al lavoro. È la spinta a costruire esperienze che durano nel tempo, a creare qualcosa che diventa indimenticabile.</p>
-        <p style={{ ...body, margin: '14px auto 28px' }}>In OFF32 — officina digitale di comunicazione AI — ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.</p>
+        <p style={{ ...body, margin: '14px auto 28px' }}>In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.</p>
         <a href="/about" style={button}>Scopri il manifesto →</a>
       </section>
 
@@ -260,7 +298,7 @@ export default function Home() {
                 <span style={{ fontSize: 20, color: '#8a8378' }}>{openFaq === i ? '–' : '+'}</span>
               </button>
               {openFaq === i && (
-                <p style={{ ...body, maxWidth: 680, padding: '0 0 18px' }}>
+                <p style={{ ...body, maxWidth: 'none', width: '100%', padding: '0 0 18px' }}>
                   {faq.a}
                 </p>
               )}
@@ -336,113 +374,6 @@ export default function Home() {
           box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
         }
-        .project-head {
-          padding: 22px 28px;
-          border-top: 1px solid #0D0D0D;
-          border-bottom: 1px solid #0D0D0D;
-          font-size: 11px;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
-          color: #0D0D0D;
-        }
-        .project-list {
-          border-bottom: 1px solid #0D0D0D;
-        }
-        .project-row {
-          position: relative;
-          display: grid;
-          grid-template-columns: 132px minmax(0, 1fr) 22px;
-          align-items: center;
-          column-gap: 28px;
-          min-height: 92px;
-          padding: 20px 28px;
-          color: #111;
-          text-decoration: none;
-          border-bottom: 1px solid #0D0D0D;
-          transition: background 0.2s ease, color 0.2s ease, border-radius 0.2s ease, min-height 0.22s ease;
-        }
-        .project-meta {
-          font-size: 12px;
-          line-height: 1.35;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          color: #6b6b6b;
-        }
-        .project-title {
-          font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
-          font-weight: 800;
-          font-size: clamp(28px, 4.4vw, 56px);
-          line-height: 1.15;
-          letter-spacing: -0.045em;
-          text-transform: uppercase;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          transition: padding-left 0.22s ease;
-        }
-        .project-icon {
-          display: grid;
-          place-items: center;
-          color: #6b6b6b;
-        }
-        .project-preview {
-          position: absolute;
-          left: 156px;
-          top: 50%;
-          width: 168px;
-          height: 104px;
-          transform: translateY(-50%);
-          border-radius: 8px;
-          overflow: hidden;
-          opacity: 0;
-          pointer-events: none;
-          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-          transition: opacity 0.18s ease;
-          z-index: 2;
-        }
-        .project-preview img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-        .project-row:hover,
-        .project-row.is-on {
-          background: #111;
-          color: #f4f1ea;
-          border-radius: 0;
-          border-bottom-color: transparent;
-          min-height: 132px;
-          z-index: 1;
-        }
-        .project-row:hover .project-meta,
-        .project-row.is-on .project-meta,
-        .project-row:hover .project-icon,
-        .project-row.is-on .project-icon {
-          color: #cfcfcf;
-        }
-        .project-row:hover .project-title,
-        .project-row.is-on .project-title {
-          padding-left: 184px;
-        }
-        .project-row:hover .project-preview,
-        .project-row.is-on .project-preview {
-          opacity: 1;
-        }
-        .project-all {
-          display: flex;
-          align-items: center;
-          box-sizing: border-box;
-          min-height: 64px;
-          margin: 0;
-          padding: 0 28px;
-          color: #0D0D0D;
-          text-decoration: none;
-          font-size: 12px;
-          line-height: 1;
-          letter-spacing: 0.8px;
-          text-transform: uppercase;
-        }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
@@ -450,32 +381,8 @@ export default function Home() {
           .hero-grid > :first-child { display: none !important; }
           .hero-copy { padding: 112px 28px 48px !important; }
           .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
-          .grid-3, .grid-2 { grid-template-columns: 1fr !important; }
-          .grid-3 > div { border-right: none !important; border-left: none !important; }
-          .project-head { padding-left: 16px; padding-right: 16px; }
-          .project-row {
-            grid-template-columns: minmax(0, 1fr) 22px;
-            column-gap: 12px;
-            min-height: 0;
-            padding: 16px;
-          }
-          .project-meta { grid-column: 1; }
-          .project-title { grid-column: 1; font-size: 30px; }
-          .project-icon { grid-column: 2; grid-row: 1 / span 2; }
-          .project-preview { display: none; }
-          .project-all { padding-left: 16px; padding-right: 16px; }
-          .project-row:hover,
-          .project-row.is-on {
-            background: transparent;
-            color: #111;
-            border-radius: 0;
-            border-bottom-color: #0D0D0D;
-            min-height: 0;
-          }
-          .project-row:hover .project-meta,
-          .project-row.is-on .project-meta,
-          .project-row:hover .project-icon,
-          .project-row.is-on .project-icon { color: #6b6b6b; }
+          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
+          .grid-3 > div, .split > div, .split > p { border-right: none !important; border-left: none !important; }
           .meta-row { --meta-inset: 16px; }
           .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
           .grid-3 > div, .grid-2 > a { border-bottom: 1px solid #0D0D0D; }
