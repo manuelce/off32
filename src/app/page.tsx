@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import SkillTag from '@/components/SkillTag'
@@ -39,7 +39,6 @@ function VideoCard({ src, image, poster, title, category, tall = false, priority
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [scanNote, setScanNote] = useState(false)
   const [underlineOn, setUnderlineOn] = useState(false)
   const underlinePlayed = useRef(false)
   const underlineRef = useRef<HTMLImageElement>(null)
@@ -176,43 +175,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
-        <div className="ai-scan-card">
-          <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Tool AI · in sviluppo</div>
-          <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
-            Analizza il tuo sito, gratis.
-          </h2>
-          <p style={{ margin: '0 auto', fontSize: 15, lineHeight: 1.7, color: '#3a3a3a', maxWidth: 460 }}>
-            Stiamo sviluppando un tool AI per i clienti. Inserisci la stringa del tuo sito web e analizzalo gratuitamente.
-          </p>
-          <form
-            onSubmit={event => {
-              event.preventDefault()
-              setScanNote(true)
-            }}
-            style={{ marginTop: 28 }}
-          >
-            <label htmlFor="site-url" style={{ ...meta, display: 'block', marginBottom: 10 }}>Il tuo sito</label>
-            <div style={{ display: 'flex', border: LINE, background: CREAM }}>
-              <input
-                id="site-url"
-                name="site"
-                type="text"
-                inputMode="url"
-                autoComplete="url"
-                placeholder="iltuosito.it"
-                style={{ flex: 1, minWidth: 0, border: 'none', background: 'transparent', padding: '16px 16px', fontFamily: 'inherit', fontSize: 15, color: '#0D0D0D', outline: 'none', textAlign: 'center' }}
-              />
-              <button type="submit" style={{ border: 'none', borderLeft: LINE, background: '#0D0D0D', color: CREAM, padding: '16px 18px', fontFamily: 'inherit', fontSize: 12, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                Analizza
-              </button>
-            </div>
-            <p style={{ margin: '12px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>
-              {scanNote ? 'Il tool è in sviluppo. L’analisi sarà gratuita per i clienti.' : 'Gratuito per i clienti · disponibile a breve.'}
-            </p>
-          </form>
-        </div>
-      </section>
+      <SiteScan />
 
       <section id="works">
         <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Lavori selezionati</div>
@@ -426,4 +389,188 @@ const button: CSSProperties = {
   textTransform: 'uppercase',
   padding: '14px 22px',
   background: 'transparent',
+}
+
+type ScanStatus = 'pass' | 'fail' | 'unavailable'
+type ScanCheck = { id: string; label: string; status: ScanStatus; detail?: string }
+
+function SiteScan() {
+  const [url, setUrl] = useState('')
+  const [email, setEmail] = useState('')
+  const [marketing, setMarketing] = useState(false)
+  const [phase, setPhase] = useState<'idle' | 'loading' | 'summary' | 'sending' | 'report'>('idle')
+  const [score, setScore] = useState<number | null>(null)
+  const [checks, setChecks] = useState<ScanCheck[]>([])
+  const [note, setNote] = useState('')
+  const [error, setError] = useState('')
+
+  async function analyze(event: FormEvent) {
+    event.preventDefault()
+    setError('')
+    setNote('')
+    setPhase('loading')
+    setScore(null)
+    setChecks([])
+    track('analisi_avvio')
+    try {
+      const response = await fetch('/api/analisi', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ url }),
+      })
+      const data = await response.json()
+      if (!response.ok || typeof data.score !== 'number' || !Array.isArray(data.checks)) {
+        setPhase('idle')
+        setError(typeof data.error === 'string' ? data.error : 'Analisi non disponibile. Riprova.')
+        return
+      }
+      setScore(data.score)
+      setChecks(data.checks)
+      setPhase('summary')
+      track('analisi_completata', { punteggio: data.score })
+    } catch {
+      setPhase('idle')
+      setError('Analisi non disponibile. Riprova.')
+    }
+  }
+
+  async function requestReport(event: FormEvent) {
+    event.preventDefault()
+    setError('')
+    setPhase('sending')
+    track('report_richiesto')
+    try {
+      const response = await fetch('/api/analisi/report', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ url, email, marketingConsent: marketing }),
+      })
+      const data = await response.json()
+      if (!response.ok || typeof data.score !== 'number' || !Array.isArray(data.checks)) {
+        setPhase('summary')
+        setError(typeof data.error === 'string' ? data.error : 'Non siamo riusciti a inviare il report. Riprova.')
+        return
+      }
+      setScore(data.score)
+      setChecks(data.checks)
+      setPhase('report')
+      setNote(data.copia === 'inviata'
+        ? 'Report inviato a te e a OFF32.'
+        : 'OFF32 ha ricevuto la richiesta. La copia sulla tua email non è partita.')
+    } catch {
+      setPhase('summary')
+      setError('Non siamo riusciti a inviare il report. Riprova.')
+    }
+  }
+
+  return (
+    <section className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
+      <div className="ai-scan-card">
+        <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Analisi gratuita</div>
+        <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
+          Analizza il tuo sito, gratis.
+        </h2>
+        <p style={{ margin: '0 auto', fontSize: 15, lineHeight: 1.7, color: '#3a3a3a', maxWidth: 460 }}>
+          Controlliamo la homepage pubblica: HTTPS, titolo, descrizione, H1, versione mobile, testi alternativi, canonical e Open Graph. È aperto a tutti.
+        </p>
+        <form onSubmit={analyze} style={{ marginTop: 28 }}>
+          <label htmlFor="site-url" style={{ ...meta, display: 'block', marginBottom: 10 }}>Il tuo sito</label>
+          <div style={{ display: 'flex', border: LINE, background: CREAM }}>
+            <input
+              id="site-url"
+              name="site"
+              type="text"
+              inputMode="url"
+              autoComplete="url"
+              placeholder="iltuosito.it"
+              value={url}
+              onChange={event => setUrl(event.target.value)}
+              style={{ flex: 1, minWidth: 0, border: 'none', background: 'transparent', padding: '16px 16px', fontFamily: 'inherit', fontSize: 15, color: '#0D0D0D', outline: 'none', textAlign: 'center' }}
+            />
+            <button type="submit" disabled={phase === 'loading' || phase === 'sending'} style={{ border: 'none', borderLeft: LINE, background: '#0D0D0D', color: CREAM, padding: '16px 18px', fontFamily: 'inherit', fontSize: 12, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              {phase === 'loading' ? 'Attendi' : 'Analizza'}
+            </button>
+          </div>
+        </form>
+
+        {error ? <p style={{ margin: '12px 0 0', fontSize: 13, lineHeight: 1.5, color: '#fe3812' }}>{error}</p> : null}
+
+        {score !== null ? (
+          <div style={{ marginTop: 28, textAlign: 'left' }}>
+            <div style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 64, lineHeight: 0.9 }}>{score}</div>
+            <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>su 100, solo sui controlli eseguiti. Un controllo non verificato non conta come errore.</p>
+            <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0 }}>
+              {checks.map(check => (
+                <li key={check.id} style={{ borderTop: LINE, padding: '12px 0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, fontSize: 14 }}>
+                    <span>{check.label}</span>
+                    <span style={{ color: check.status === 'fail' ? '#fe3812' : '#0D0D0D', whiteSpace: 'nowrap' }}>{statusWord(check.status)}</span>
+                  </div>
+                  {phase === 'report' && check.detail ? <p style={{ margin: '6px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>{check.detail}</p> : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {phase === 'summary' || phase === 'sending' ? (
+          <form onSubmit={requestReport} style={{ marginTop: 22, textAlign: 'left' }}>
+            <label htmlFor="report-email" style={{ ...meta, display: 'block', marginBottom: 10 }}>Email per il report</label>
+            <input
+              id="report-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+              placeholder="nome@email.it"
+              style={{ width: '100%', border: LINE, background: CREAM, padding: '16px', fontFamily: 'inherit', fontSize: 15, color: '#0D0D0D', outline: 'none' }}
+            />
+            <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginTop: 14, fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>
+              <input type="checkbox" checked={marketing} onChange={event => setMarketing(event.target.checked)} style={{ marginTop: 3 }} />
+              <span>Voglio ricevere aggiornamenti da OFF32. È facoltativo e non serve per il report.</span>
+            </label>
+            <p style={{ margin: '12px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>
+              L’email serve solo per mandarti questo report. <a href="/privacy-policy" style={{ color: '#0D0D0D' }}>Informativa privacy</a>
+            </p>
+            <button type="submit" disabled={phase === 'sending'} style={{ ...button, marginTop: 16, cursor: 'pointer', background: '#0D0D0D', color: CREAM }}>
+              {phase === 'sending' ? 'Invio' : 'Ricevi il report'}
+            </button>
+          </form>
+        ) : null}
+
+        {phase === 'report' ? (
+          <div style={{ marginTop: 22 }}>
+            <p style={{ margin: '0 0 16px', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>{note}</p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="/contatti" onClick={() => track('cta_contatto')} style={button}>Scrivici</a>
+              <button
+                type="button"
+                onClick={() => {
+                  track('cta_call')
+                  window.dispatchEvent(new Event('off32-toggle-call'))
+                }}
+                style={{ ...button, cursor: 'pointer' }}
+              >
+                Prenota una call
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </section>
+  )
+}
+
+function statusWord(status: ScanStatus) {
+  if (status === 'pass') return 'Ok'
+  if (status === 'fail') return 'Da sistemare'
+  return 'Non verificato'
+}
+
+function track(event: string, extra?: Record<string, string | number>) {
+  const view = window as Window & { dataLayer?: Array<Record<string, string | number>> }
+  view.dataLayer = view.dataLayer || []
+  view.dataLayer.push({ event, ...(extra ?? {}) })
 }
