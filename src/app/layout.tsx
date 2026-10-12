@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import CallDock from '@/components/CallDock'
+import Navbar from '@/components/Navbar'
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
@@ -84,6 +85,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
+        <Navbar />
         {children}
         <CallDock />
       </body>

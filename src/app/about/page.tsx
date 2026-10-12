@@ -1,6 +1,5 @@
 'use client'
 import type { CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 
 const LINE = '1px solid #0D0D0D'
@@ -111,8 +110,6 @@ const title: CSSProperties = {
 export default function AboutPage() {
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <Navbar />
-
       <h1 className="about-title" style={{ margin: 0 }}>
         <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
           il nostro

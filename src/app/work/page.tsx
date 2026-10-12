@@ -1,6 +1,5 @@
 'use client'
 import { type CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 
 const LINE = '1px solid #0D0D0D'
@@ -68,8 +67,6 @@ export default function Work() {
       <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
-      <Navbar />
-
       <h1 className="work-title" style={{ margin: 0 }}>
         <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
           i nostri

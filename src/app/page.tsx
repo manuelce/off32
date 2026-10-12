@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import SkillTag from '@/components/SkillTag'
 import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE } from '@/lib/seo'
@@ -119,8 +118,6 @@ export default function Home() {
       <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
-      <Navbar />
-
       <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '88px 1fr minmax(280px, 36%)', minHeight: 'calc(100vh - 58px)', borderBottom: LINE }}>
         <div style={{ borderRight: LINE, padding: '28px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <span style={meta}>01</span>

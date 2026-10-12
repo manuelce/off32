@@ -1,6 +1,5 @@
 'use client'
 import { use, type CSSProperties, type ReactNode } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
 
@@ -348,7 +347,6 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
   if (!article) {
     return (
       <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
-        <Navbar />
         <div style={{ padding: '18vh 8% 20vh' }}>
           <div style={{ ...meta, marginBottom: 16 }}>Blog</div>
           <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(40px, 5vw, 64px)', letterSpacing: '-1px', margin: '0 0 20px' }}>Articolo non trovato</h1>
@@ -360,8 +358,6 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
 
   return (
     <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
-      <Navbar />
-
       <article>
         <div className="article-back" style={{ padding: '28px 40px 0' }}>
           <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Blog</a>

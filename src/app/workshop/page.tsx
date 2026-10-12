@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import { workshops, type Workshop } from '@/lib/workshops'
 
@@ -80,8 +79,6 @@ export default function WorkshopPage() {
 
   return (
     <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
-      <Navbar />
-
       <h1 className="workshop-title" style={{ margin: 0, background: PURPLE }}>
         {['Cultura.', 'Inclusione.', 'Formazione.'].map((line, i) => (
           <span key={line} style={{ ...title, display: 'block', textAlign: i % 2 === 0 ? 'right' : 'left', borderTop: i === 0 ? LINE : undefined, borderBottom: LINE, padding: '18px 40px 22px' }}>

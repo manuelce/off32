@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import WorkSwitch from '@/components/WorkSwitch'
 
@@ -100,8 +99,6 @@ export default function HealingEarthPage() {
       fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif",
       color: '#0D0D0D',
     }}>
-      <Navbar />
-
       {/* ── HERO ── */}
       <section style={{ background: '#0D0D0D', padding: '80px 5% 64px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, opacity: 0.35, pointerEvents: 'none' }}>

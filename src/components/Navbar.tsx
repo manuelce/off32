@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 const NAV_LINKS = [
@@ -21,6 +22,18 @@ function isCurrent(pathname: string, href: string) {
 
 export default function Navbar() {
   const pathname = usePathname()
+
+  useEffect(() => {
+    const pin = () => {
+      if (!window.matchMedia('(max-width: 768px)').matches) return
+      document.querySelectorAll<HTMLElement>('.nav-mobile-top, .nav-mobile-bottom').forEach(el => {
+        el.style.setProperty('position', 'fixed', 'important')
+      })
+    }
+    pin()
+    window.addEventListener('pageshow', pin)
+    return () => window.removeEventListener('pageshow', pin)
+  }, [pathname])
 
   return (
     <>
@@ -50,15 +63,13 @@ export default function Navbar() {
 
       {/* NAVBAR MOBILE, TOP: logo + CTA */}
       <nav className="nav-mobile-top" style={{
-        display: 'none', alignItems: 'center', justifyContent: 'space-between',
+        alignItems: 'center', justifyContent: 'space-between',
         padding: '18px 20px',
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         background: 'transparent',
-        backdropFilter: 'none',
-        WebkitBackdropFilter: 'none',
         border: 'none',
         boxShadow: 'none',
         zIndex: 9999,
@@ -76,7 +87,7 @@ export default function Navbar() {
 
       {/* NAVBAR MOBILE, BOTTOM: pillola con i link */}
       <div className="nav-mobile-bottom" style={{
-        display: 'none', justifyContent: 'center',
+        justifyContent: 'center',
         position: 'fixed', bottom: '16px', left: 0, right: 0, zIndex: 200,
         pointerEvents: 'none',
       }}>
@@ -98,9 +109,6 @@ export default function Navbar() {
 
       <style>{`
         .nav-cta {
-          position: relative;
-          z-index: 1;
-          isolation: isolate;
           display: inline-flex;
           align-items: center;
           box-sizing: border-box;
@@ -118,17 +126,8 @@ export default function Navbar() {
           padding: 14px 16px;
           cursor: pointer;
           white-space: nowrap;
+          box-shadow: 0 0 14px rgba(254, 56, 18, 0.38);
           animation: nav-call-spin 2.8s linear infinite;
-        }
-        .nav-cta::after {
-          content: '';
-          position: absolute;
-          inset: -2px;
-          z-index: -1;
-          background: conic-gradient(from var(--call-angle), #fe3812, #9fff00, #fe3812);
-          filter: blur(7px);
-          opacity: 0.55;
-          pointer-events: none;
         }
         @property --call-angle {
           syntax: '<angle>';
@@ -138,14 +137,27 @@ export default function Navbar() {
         @keyframes nav-call-spin {
           to { --call-angle: 360deg; }
         }
+        .nav-mobile-top, .nav-mobile-bottom { display: none; }
         @media (prefers-reduced-motion: reduce) {
           .nav-cta { animation: none; }
-          .nav-cta::after { opacity: 0.35; }
         }
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
-          .nav-mobile-top { display: flex !important; }
-          .nav-mobile-bottom { display: flex !important; }
+          .nav-mobile-top {
+            display: flex !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+          }
+          .nav-mobile-bottom {
+            display: flex !important;
+            position: fixed !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 16px !important;
+          }
           main { padding-bottom: 88px; }
         }
       `}</style>

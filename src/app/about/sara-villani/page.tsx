@@ -1,6 +1,5 @@
 'use client'
 import type { CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 
 const LINE = '1px solid #0D0D0D'
@@ -24,8 +23,6 @@ const paragraphs = [
 export default function SaraVillaniPage() {
   return (
     <main style={{ background: '#F0EBE0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <Navbar />
-
       <div className="profile-back" style={{ padding: '28px 40px 0' }}>
         <a href="/about" style={{ ...meta, textDecoration: 'none' }}>← About</a>
       </div>

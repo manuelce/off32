@@ -1,6 +1,5 @@
 'use client'
 import { useState, type CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
 
@@ -69,8 +68,6 @@ export default function BlogPage() {
 
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <Navbar />
-
       <h1 className="blog-title" style={{ margin: 0 }}>
         <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
           il nostro

@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState, type ChangeEvent, type CSSProperties } from 'react'
-import Navbar from '@/components/Navbar'
 import { workshopBySlug } from '@/lib/workshops'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -101,8 +100,6 @@ export default function ContattiPage() {
 
   return (
     <main style={{ background: '#0D0D0D', minHeight: '100vh', color: INK, fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <Navbar />
-
       <section className="contact-page" style={{ paddingTop: '8%', paddingBottom: '15%' }}>
         {status === 'success' ? (
           <div style={{ width: '80%', margin: '0 auto', border: LINE, padding: '64px 40px', textAlign: 'center' }}>
