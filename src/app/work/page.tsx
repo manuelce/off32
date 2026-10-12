@@ -9,6 +9,8 @@ const works = [
   { image: '/works/scuppoz/preview.jpg', title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz', objectPosition: 'center' },
   { image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour' },
   { image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
+  { image: '/works/monochrome/preview.jpg', title: 'Monochrome', category: 'Web · WordPress', href: '/work/monochrome', objectPosition: 'center 72%' },
+  { image: '/works/momento/preview.webp', title: 'Momento Catering', category: 'Web · WordPress', href: '/work/momento', objectPosition: 'center 42%' },
 ]
 
 function VideoCard({ src, image, poster, title, category, tall = false, priority = false, objectPosition = 'center' }: { src?: string, image?: string, poster?: string, title: string, category: string, tall?: boolean, priority?: boolean, objectPosition?: string }) {
@@ -37,7 +39,11 @@ function VideoCard({ src, image, poster, title, category, tall = false, priority
       <div style={{ position: 'absolute', top: 16, left: 16, fontSize: '10px', letterSpacing: '1.6px', textTransform: 'uppercase', color: '#fff' }}>{category}</div>
       <div style={{ position: 'absolute', left: 16, right: 16, bottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16 }}>
         <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: tall ? 32 : 22, fontWeight: 300, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.1 }}>{title}</div>
-        <span style={{ color: '#fff', fontSize: 18 }}>↗</span>
+        <span aria-hidden="true" style={{ color: '#fff', display: 'flex', flex: 'none' }}>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M3 12L12 3M12 3H6.2M12 3V8.8" stroke="currentColor" strokeWidth="1.4" />
+          </svg>
+        </span>
       </div>
     </div>
   )
@@ -90,8 +96,16 @@ export default function Work() {
             ))}
           </div>
         </div>
-        <a href={works[3].href} style={{ display: 'block', border: LINE, marginTop: 4, textDecoration: 'none' }}>
-          <VideoCard image={works[3].image} title={works[3].title} category={works[3].category} />
+        <div className="works-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4, marginTop: 4 }}>
+          <a href={works[3].href} style={{ display: 'block', height: 460, border: LINE, textDecoration: 'none' }}>
+            <VideoCard image={works[3].image} title={works[3].title} category={works[3].category} />
+          </a>
+          <a href={works[4].href} style={{ display: 'block', height: 460, border: LINE, textDecoration: 'none' }}>
+            <VideoCard image={'image' in works[4] ? works[4].image : undefined} title={works[4].title} category={works[4].category} objectPosition={'objectPosition' in works[4] ? works[4].objectPosition : undefined} />
+          </a>
+        </div>
+        <a href={works[5].href} className="works-wide" style={{ display: 'block', height: 420, border: LINE, marginTop: 4, textDecoration: 'none' }}>
+          <VideoCard image={'image' in works[5] ? works[5].image : undefined} title={works[5].title} category={works[5].category} objectPosition={'objectPosition' in works[5] ? works[5].objectPosition : undefined} />
         </a>
       </section>
 
@@ -116,7 +130,8 @@ export default function Work() {
       <style>{`
         @media (max-width: 860px) {
           .work-title { padding-top: 64px; }
-          .works-grid { grid-template-columns: 1fr !important; }
+          .works-grid, .works-pair { grid-template-columns: 1fr !important; }
+          .works-pair a, .works-wide { height: 280px !important; }
         }
       `}</style>
     </main>

@@ -162,7 +162,7 @@ export default function DuelPage() {
 
       <WorkSwitch
         previous={{ href: '/work/conil-food-tour', image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour' }}
-        next={{ href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg', title: 'Healing Earth Italia' }}
+        next={{ href: '/work/monochrome', image: '/works/monochrome/preview.jpg', title: 'Monochrome' }}
       />
 
       <div style={{ marginTop: '15%' }}>

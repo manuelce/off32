@@ -31,7 +31,11 @@ function VideoCard({ src, image, poster, title, category, tall = false, priority
       <div style={{ position: 'absolute', top: image ? 10 : 16, left: 16, fontSize: '10px', letterSpacing: '1.6px', textTransform: 'uppercase', color: '#fff' }}>{category}</div>
       <div style={{ position: 'absolute', left: 16, right: 16, bottom: image ? 36 : 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16 }}>
         <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: tall ? 32 : 22, fontWeight: 300, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.1 }}>{title}</div>
-        <span style={{ color: '#fff', fontSize: 18 }}>↗</span>
+        <span aria-hidden="true" style={{ color: '#fff', display: 'flex', flex: 'none' }}>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M3 12L12 3M12 3H6.2M12 3V8.8" stroke="currentColor" strokeWidth="1.4" />
+          </svg>
+        </span>
       </div>
     </div>
   )
@@ -74,6 +78,7 @@ export default function Home() {
     { image: '/works/scuppoz/preview.jpg', title: 'Scuppoz', category: 'Web Design', href: '/work/scuppoz', objectPosition: 'center' },
     { image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour' },
     { image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
+    { image: '/works/monochrome/preview.jpg', title: 'Monochrome', category: 'Web · WordPress', href: '/work/monochrome', objectPosition: 'center 72%' },
   ]
 
   const faqs = [
@@ -107,7 +112,7 @@ export default function Home() {
     },
     {
       q: 'Posso vedere esempi di lavori precedenti?',
-      a: 'Sì. In Work trovi una selezione: Healing Earth, Scuppoz, Conil Food Tour e The Duel. Se vuoi vedere qualcosa vicino al tuo settore, scrivici.',
+      a: 'Sì. In Work trovi una selezione: Healing Earth, Scuppoz, Conil Food Tour, The Duel e Monochrome. Se vuoi vedere qualcosa vicino al tuo settore, scrivici.',
     },
   ]
 
@@ -118,6 +123,7 @@ export default function Home() {
       <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
+      <link rel="preload" as="image" href="/works/monochrome/preview.jpg" />
       <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '88px 1fr minmax(280px, 36%)', minHeight: 'calc(100vh - 58px)', borderBottom: LINE }}>
         <div style={{ borderRight: LINE, padding: '28px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <span style={meta}>01</span>
@@ -198,6 +204,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <a href={works[4].href} style={{ display: 'block', border: LINE, marginTop: 4, textDecoration: 'none' }}>
+          <VideoCard image={'image' in works[4] ? works[4].image : undefined} title={works[4].title} category={works[4].category} objectPosition={'objectPosition' in works[4] ? works[4].objectPosition : undefined} />
+        </a>
         <div className="split" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 4, marginTop: 4 }}>
           <a href={works[3].href} style={{ display: 'block', height: '100%', border: LINE, textDecoration: 'none' }}>
             <VideoCard image={works[3].image} title={works[3].title} category={works[3].category} />

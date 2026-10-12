@@ -8,6 +8,8 @@ const paths = [
   '/work/scuppoz',
   '/work/conil-food-tour',
   '/work/duel',
+  '/work/monochrome',
+  '/work/momento',
   '/about',
   '/about/manuel-cerasuolo',
   '/about/sara-zeppieri',
