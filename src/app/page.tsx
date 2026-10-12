@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
 import SkillTag from '@/components/SkillTag'
+import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
 const CREAM = '#F0EBE0'
@@ -163,19 +164,28 @@ export default function Home() {
         ))}
       </div>
 
-      <section id="services" className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: LINE }}>
-        {services.map((service, i) => (
-          <div key={service.tag} style={{ padding: '36px 28px 28px', borderRight: i < 2 ? LINE : 'none' }}>
-            <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
-            <SkillTag label={service.tag} />
-            {service.items.map(item => (
-              <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
-            ))}
-          </div>
-        ))}
+      <SiteScan />
+
+      <section id="services">
+        <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Servizi</div>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: LINE }}>
+          {services.map((service, i) => (
+            <div key={service.tag} style={{ padding: '36px 28px 28px', borderRight: i < 2 ? LINE : 'none' }}>
+              <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
+              <SkillTag label={service.tag} />
+              {service.items.map(item => (
+                <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
+              ))}
+            </div>
+          ))}
+        </div>
       </section>
 
-      <SiteScan />
+      <section style={{ padding: '12% 8%', textAlign: 'center' }}>
+        <p style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 3.2vw, 42px)', lineHeight: 1.25, letterSpacing: '-0.6px', maxWidth: 720, margin: '0 auto', color: '#0D0D0D' }}>
+          L&apos;intelligenza artificiale assorbe il lavoro ripetitivo. Il tempo che resta lo dedichiamo alla creatività e allo sviluppo.
+        </p>
+      </section>
 
       <section id="works">
         <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Lavori selezionati</div>
@@ -220,12 +230,12 @@ export default function Home() {
           <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)', padding: '28px', borderBottom: LINE }}>Blog</h2>
         <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, padding: 28 }}>
           {[
-            { tag: 'Design', title: 'Come costruire un brand digitale che dura nel tempo', slug: 'come-costruire-brand-digitale', image: '/blog/img/brand-digitale.jpg?v=2', bg: '#0A1510' },
-            { tag: 'Community', title: 'Imparare a dire no: l\'arte di scegliere i clienti giusti', slug: 'scegliere-clienti-giusti', image: '/blog/img/client_s.webp', bg: '#12102A' },
+            { tag: 'Design', title: 'Come costruire un brand digitale che dura nel tempo', slug: 'come-costruire-brand-digitale', image: BRAND_ARTICLE_IMAGE.url, alt: BRAND_ARTICLE_IMAGE.alt, bg: '#0A1510' },
+            { tag: 'Community', title: 'Quando una collaborazione funziona', slug: 'scegliere-clienti-giusti', image: CLIENT_ARTICLE_IMAGE.url, alt: CLIENT_ARTICLE_IMAGE.alt, bg: '#12102A' },
           ].map(post => (
             <a key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
               <div style={{ height: 210, background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>
-                {post.image && <img src={post.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                {post.image && <img src={post.image} alt={post.alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
               </div>
               <div style={{ padding: '16px 16px 14px', borderBottom: LINE }}>
                 <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.3, textDecoration: 'underline', textUnderlineOffset: 3 }}>{post.title}</div>

@@ -1,9 +1,35 @@
 'use client'
-import { use, type CSSProperties } from 'react'
+import { use, type CSSProperties, type ReactNode } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
+
+function withLinks(text: string, links?: { href: string; label: string }[]): ReactNode {
+  if (!links?.length) return text
+  const parts: ReactNode[] = []
+  let cursor = 0
+  links.forEach((link, index) => {
+    const at = text.indexOf(link.label, cursor)
+    if (at < 0) return
+    if (at > cursor) parts.push(text.slice(cursor, at))
+    const external = link.href.startsWith('http')
+    parts.push(
+      <a
+        key={`${link.href}-${index}`}
+        href={link.href}
+        {...(external ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {})}
+        style={{ color: '#0D0D0D' }}
+      >
+        {link.label}
+      </a>,
+    )
+    cursor = at + link.label.length
+  })
+  if (cursor < text.length) parts.push(text.slice(cursor))
+  return parts.length ? <>{parts}</> : text
+}
 
 const meta: CSSProperties = {
   fontSize: 11,
@@ -12,16 +38,23 @@ const meta: CSSProperties = {
   color: '#0D0D0D',
 }
 
-type Block = { type: 'intro' | 'paragraph' | 'heading' | 'quote'; text: string }
+type Block = {
+  type: 'intro' | 'paragraph' | 'heading' | 'quote'
+  text: string
+  links?: { href: string; label: string }[]
+}
 
 type Article = {
   title: string
   tag: string
   date: string
   readTime: string
-  author: { name: string; role: string }
+  author: { name: string; role: string; href: string }
   excerpt: string
   image?: string
+  imageAlt?: string
+  imageWidth?: number
+  imageHeight?: number
   content: Block[]
 }
 
@@ -30,10 +63,11 @@ const ARTICLES: Record<string, Article> = {
     title: 'Come costruire un brand digitale che dura nel tempo',
     tag: 'Design',
     date: 'Mar 2025',
-    readTime: '6 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
+    readTime: '7 min',
+    author: { name: 'Sara Villani', role: 'Social Media Manager · OFF32', href: '/about/sara-villani' },
     excerpt: 'Il brand non è un logo. È la promessa che fai ogni giorno a chi ti sceglie. Il segno grafico la rende visibile. Se la promessa è confusa, un marchio nuovo non la sistema.',
-    image: '/blog/img/brand-digitale.jpg?v=2',
+    image: BRAND_ARTICLE_IMAGE.url,
+    imageAlt: BRAND_ARTICLE_IMAGE.alt,
     content: [
       {
         type: 'intro',
@@ -97,6 +131,28 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'heading',
+        text: 'Riconoscerlo non basta a proteggerlo',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il segno che le persone riconoscono e il marchio che la legge tutela non coincidono. Il primo vive nell’uso: nel sito, nelle foto, nel modo di scrivere. Il secondo esiste quando lo depositi. L’Ufficio Italiano Brevetti e Marchi lo descrive come il segno che distingue i prodotti o i servizi di un’impresa da quelli delle altre. Senza un uso costante, la registrazione copre un nome che nessuno ricorda. Con l’uso e senza registrazione, qualcuno può avvicinarsi al segno che hai costruito. Le due cose si tengono: la promessa lo rende riconoscibile, il deposito gli dà un confine. In Europa le due tutele stanno in uffici diversi. Il marchio dell’Unione si deposita all’Ufficio dell’Unione europea per la proprietà intellettuale. Il brevetto europeo, che protegge un’invenzione e non il nome, si chiede all’Ufficio europeo dei brevetti.',
+        links: [
+          {
+            href: 'https://uibm.mise.gov.it/index.php/it/marchi',
+            label: 'Ufficio Italiano Brevetti e Marchi',
+          },
+          {
+            href: 'https://www.euipo.europa.eu/it/trade-marks',
+            label: 'Ufficio dell’Unione europea per la proprietà intellettuale',
+          },
+          {
+            href: 'https://www.epo.org/en',
+            label: 'Ufficio europeo dei brevetti',
+          },
+        ],
+      },
+      {
+        type: 'heading',
         text: 'In chiusura',
       },
       {
@@ -109,18 +165,34 @@ const ARTICLES: Record<string, Article> = {
     title: 'eCommerce performante nel 2025: cosa funziona davvero',
     tag: 'Sviluppo',
     date: 'Feb 2025',
-    readTime: '6 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
-    excerpt: 'Un negozio converte quando l\'offerta è chiara, la pagina è veloce e il checkout non chiede sforzo. Il resto è rumore.',
-    image: '/blog/img/ecommerce-2025.jpg',
+    readTime: '8 min',
+    author: { name: 'Lorenzo Salvatori', role: 'Full Stack Developer · OFF32', href: '/about/lorenzo-salvatori' },
+    excerpt: 'Un e-commerce performante si decide sulla scheda prodotto, sulla velocità del telefono e su un checkout che mostra subito prezzo, spedizione e reso.',
+    image: ECOMMERCE_ARTICLE_IMAGE.url,
+    imageAlt: ECOMMERCE_ARTICLE_IMAGE.alt,
+    imageWidth: ECOMMERCE_ARTICLE_IMAGE.width,
+    imageHeight: ECOMMERCE_ARTICLE_IMAGE.height,
     content: [
       {
         type: 'intro',
-        text: 'Nel 2025 si parla di stack, di edge, di intelligenza artificiale nel carrello. Quello che muove un ordine è più semplice, e più difficile: una persona capisce subito cosa compra, si fida, e arriva a pagare senza fermarsi.',
+        text: 'Si parla di stack, di edge, di intelligenza artificiale nel carrello. Quello che muove un ordine è più semplice, e più difficile: una persona capisce subito cosa compra, si fida, e arriva a pagare senza fermarsi.',
       },
       {
         type: 'paragraph',
-        text: 'Il resto è contorno. Un tema nuovo, un\'app, una funzione in più non riparano un\'offerta confusa. Un e-commerce performante è un negozio in cui comprare non richiede di pensarci due volte.',
+        text: 'Un tema nuovo, un’app, una funzione in più non riparano un’offerta confusa. Un e-commerce performante è un negozio in cui comprare non richiede di pensarci due volte. Vale per chi apre il primo catalogo e per chi ha già ordini, resi e un pannello pieno di numeri.',
+      },
+      {
+        type: 'heading',
+        text: 'Le quattro stanze del negozio',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un negozio, anche piccolo, ha sempre le stesse stanze. Il catalogo, dove si cerca. La scheda, dove si decide. Il carrello, dove si controlla. Il checkout, dove si paga. Intorno servono poche pagine ferme: chi vende, come si spedisce, come si rende, come si viene ricontattati. Chi parte da zero può costruire solo questo. Chi ha già un negozio può usare la stessa lista per vedere in quale stanza le persone si fermano.',
+      },
+      {
+        type: 'paragraph',
+        text: 'È lo stesso ordine che abbiamo seguito sul negozio di Healing Earth: prima la scheda, poi la velocità sul telefono, poi il checkout.',
+        links: [{ href: '/work/healing-earth', label: 'negozio di Healing Earth' }],
       },
       {
         type: 'heading',
@@ -132,7 +204,12 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Una buona pagina prodotto dice tre cose senza farle cercare: cos\'è, per chi è, cosa succede dopo il pagamento. Foto che mostrano l\'oggetto vero, non solo l\'atmosfera. Testo corto. Varianti leggibili. Il prezzo visibile prima dello scroll infinito.',
+        text: 'Una buona scheda dice tre cose senza farle cercare: cos’è, per chi è, cosa succede dopo il pagamento. Il nome è quello che una persona scriverebbe per trovarlo, non il codice di magazzino. Il prezzo si vede subito, varianti comprese. Taglia, colore, quantità: si capisce cosa è disponibile. Spedizione e reso stanno sulla scheda. Le foto mostrano l’oggetto, il dettaglio, la scala. L’atmosfera da sola non dice se è quello giusto.',
+      },
+      {
+        type: 'paragraph',
+        text: 'La stessa scheda deve essere chiara anche per Google. Nome, prezzo, disponibilità e foto sono i dati strutturati del prodotto: descrivono l’oggetto in modo leggibile, così la ricerca non deve indovinare.',
+        links: [{ href: 'https://developers.google.com/search/docs/appearance/structured-data/product?hl=it', label: 'dati strutturati del prodotto' }],
       },
       {
         type: 'heading',
@@ -140,11 +217,12 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Sul telefono l\'attesa si sente, non si legge in una dashboard. Immagini pesanti, script di troppo, un tema che carica tutto anche quando non serve. Togliere pesa più che aggiungere. Una pagina che compare subito vale più di una animazione che arriva tardi.',
+        text: 'Sul telefono l’attesa si sente, non si legge in una dashboard. Di solito il peso sta nelle foto troppo grandi e negli script aggiunti uno dopo l’altro: chat, pixel, recensioni, pop-up. Ogni pezzo in più ritarda la scheda. Una pagina che compare subito vale più di un’animazione che arriva tardi.',
       },
       {
         type: 'paragraph',
-        text: 'Core Web Vitals contano per questo, non come voto da esibire. Se la pagina prodotto è lenta, il resto del lavoro di comunicazione arriva a una porta chiusa.',
+        text: 'I Core Web Vitals misurano tre cose concrete: quanto ci mette il contenuto principale a comparire, se la pagina risponde al tocco, se il layout salta mentre carica. Non sono un voto da esibire. Se la scheda è lenta, il resto del lavoro di comunicazione arriva a una porta chiusa. La prova più semplice, anche senza un tecnico, è aprire quella pagina dal proprio telefono, su una rete normale.',
+        links: [{ href: 'https://web.dev/articles/vitals?hl=it', label: 'Core Web Vitals' }],
       },
       {
         type: 'heading',
@@ -152,7 +230,12 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Ogni campo in più è una porta. Account obbligatorio prima di pagare, spese che compaiono all\'ultimo, un bottone che non dice il totale. Il checkout che funziona è corto e dice la verità subito: quanto costa, quando arriva, come si paga.',
+        text: 'Ogni campo in più è una porta. Un account obbligatorio prima di pagare ferma chi compra la prima volta: meglio pagare come ospite e creare l’account dopo, se serve. Le spese di spedizione si vedono prima dell’ultimo passo. Il bottone dice il totale. Vicino al pagamento stanno i tempi di consegna e come funziona il reso.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il checkout dice la verità subito: quanto costa, quando arriva, come si paga. Nell’Unione europea chi compra a distanza ha un diritto di recesso. Il negozio lo spiega prima dell’ordine, insieme al prezzo pieno, non in una mail che arriva dopo.',
+        links: [{ href: 'https://europa.eu/youreurope/citizens/consumers/shopping/shopping-consumer-rights/index_it.htm', label: 'diritto di recesso' }],
       },
       {
         type: 'quote',
@@ -160,11 +243,11 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'heading',
-        text: 'L\'AI nel negozio',
+        text: 'L’AI nel negozio',
       },
       {
         type: 'paragraph',
-        text: 'Descrizioni, varianti di copy, foto di contesto: l\'AI accelera i materiali. Non sostituisce l\'offerta. Se il prodotto non è chiaro, nessuna automazione lo rende desiderabile. Da noi entra dopo che sappiamo cosa vendere e a chi, non prima.',
+        text: 'Descrizioni, varianti di testo, foto di contesto: l’intelligenza artificiale accelera i materiali. Il prodotto resta quello vero. Misure, materiali, cosa c’è nella scatola: se il testo inventa, la scheda tradisce chi compra e chi poi gestisce il reso. Da noi entra dopo che sappiamo cosa vendere e a chi, non prima.',
       },
       {
         type: 'heading',
@@ -172,7 +255,11 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Poche cose. Dove le persone abbandonano. Quali prodotti arrivano al carrello e non si chiudono. Quanto tempo passa prima che la pagina sia usabile. Non una dashboard infinita. Tre segnali, guardati spesso, bastano per capire se il negozio sta lavorando.',
+        text: 'Tre segnali, guardati spesso, bastano. Se le persone escono dalla scheda, di solito non hanno capito l’oggetto o non si fidano. Se lo mettono nel carrello e non pagano, il fermo è quasi sempre la spedizione, l’account o il pagamento. Il terzo segnale è il tempo che passa prima che la scheda sia usabile sul telefono.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Non serve una dashboard infinita. Chi ha già un negozio parte da questi tre, prima di comprare un’app nuova. Chi lo apre adesso può usare la stessa lista come prova, con dieci persone vere, prima di aggiungere funzioni.',
       },
       {
         type: 'heading',
@@ -185,68 +272,62 @@ const ARTICLES: Record<string, Article> = {
     ],
   },
   'scegliere-clienti-giusti': {
-    title: 'Imparare a dire no: l\'arte di scegliere i clienti giusti',
+    title: 'Quando una collaborazione funziona',
     tag: 'Community',
     date: 'Feb 2025',
     readTime: '5 min',
-    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32' },
-    excerpt: 'Non tutti i clienti sono giusti per noi. Dire no, ai progetti sbagliati o ai clienti difficili, è una delle decisioni più professionali che possiamo prendere.',
+    author: { name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32', href: '/about/manuel-cerasuolo' },
+    excerpt: 'Una collaborazione funziona quando tempi, materiali e decisioni sono chiari per entrambi. Ecco come in OFF32 capiamo se un progetto è quello giusto.',
+    image: CLIENT_ARTICLE_IMAGE.url,
+    imageAlt: CLIENT_ARTICLE_IMAGE.alt,
     content: [
       {
         type: 'intro',
-        text: 'Nel mondo del design, dello sviluppo web e della comunicazione si parla tanto di clienti, ma raramente si affronta un tema cruciale: non tutti i clienti sono giusti per noi.',
+        text: 'Nel design, nello sviluppo e nella comunicazione si parla molto di clienti. Meno spesso si dice una cosa semplice: non ogni progetto è quello giusto, per chi lo commissiona e per chi lo fa.',
       },
       {
         type: 'paragraph',
-        text: 'All\'inizio della carriera si tende a dire sempre "sì", a lavorare con chiunque capiti, convinti che ogni progetto sia un\'occasione. Ma col tempo si capisce che dire "no", ai progetti sbagliati o ai clienti difficili, è una delle decisioni più professionali ed evolute che possiamo prendere.',
+        text: 'All’inizio si tende a dire sempre sì. Ogni richiesta sembra un’occasione. Col tempo si impara che un sì dato quando tempi, materiali o decisioni non coincidono pesa sul risultato. In quei casi dire no protegge il progetto, e protegge anche chi lo ha chiesto.',
       },
       {
         type: 'heading',
-        text: 'Quando la collaborazione diventa un percorso a ostacoli',
+        text: 'Quando il lavoro si inceppa',
       },
       {
         type: 'paragraph',
-        text: 'Ogni professionista prima o poi si trova davanti a situazioni che mettono alla prova la pazienza e la visione del proprio lavoro. Ho incontrato clienti che hanno consegnato testi e fotografie con mesi di ritardo, pretendendo poi che il sito fosse online "subito". Oppure che, nonostante gli accordi chiari, abbiano messo in dubbio l\'impegno e la qualità del lavoro fatto.',
+        text: 'Capita che testi e fotografie arrivino molto dopo il previsto, e che poi si chieda il sito online in pochi giorni. Capita anche che, con gli accordi già scritti, resti un dubbio sul tempo che ci è voluto. Il punto è la comunicazione. Manca un passaggio condiviso: cosa arriva, quando, e cosa si può consegnare di conseguenza.',
       },
       {
         type: 'paragraph',
-        text: 'Questi episodi accadono spesso quando manca chiarezza e rispetto reciproco. E non è una questione di "colpa", ma di comunicazione. Un progetto di successo nasce sempre da collaborazione, fiducia e responsabilità condivisa.',
+        text: 'Questi passaggi si sistemano parlando prima. Un progetto tiene quando collaborazione, fiducia e responsabilità stanno da entrambe le parti.',
       },
       {
         type: 'heading',
-        text: 'Riconoscere i segnali (e fidarsi del proprio istinto)',
+        text: 'I segnali si vedono presto',
       },
       {
         type: 'paragraph',
-        text: 'Nel tempo ho imparato che i segnali di un cliente difficile si notano quasi sempre già nelle prime fasi di un rapporto di lavoro.',
+        text: 'I segnali di un lavoro che farà fatica si vedono spesso già nei primi incontri.',
       },
       {
         type: 'quote',
-        text: 'I segnali sono sempre lì. Ignorarli significa compromettere non solo la serenità del lavoro, ma anche la qualità del risultato.',
-      },
-      {
-        type: 'paragraph',
-        text: 'Ricordo un incontro con un imprenditore del Teramano, a capo di un\'azienda di famiglia. Durante la nostra conversazione notai un atteggiamento poco rispettoso verso i suoi collaboratori. In particolare, si rivolse ad un giovane grafico con tono ironico ma umiliante, per una banalità, "la penna dimenticata", un gesto che può sembrare piccolo, ma che racconta molto. Da quel momento, avevo già intuito che quel contesto non avrebbe facilitato una collaborazione serena.',
-      },
-      {
-        type: 'paragraph',
-        text: 'In un\'altra esperienza, un cliente di un oleificio, sempre in Abruzzo, amava scherzare dicendo di aver "fatto il bonifico", quando in realtà non era vero. All\'inizio ci ridi sopra, poi capisci che quel modo di fare, reiterato per mesi, nasconde mancanza di rispetto e trasparenza.',
+        text: 'I segnali sono lì. Tenerne conto serve al risultato, e anche a chi dovrà conviverci per mesi.',
       },
       {
         type: 'heading',
-        text: 'Selezionare i progetti è una forma di rispetto',
+        text: 'Scegliere è una forma di rispetto',
       },
       {
         type: 'paragraph',
-        text: 'Dire "no" non è arroganza: è professionalità. È rispetto per il proprio tempo, per il team e per la qualità del lavoro che si vuole offrire.',
+        text: 'Dire no, quando il progetto non è allineato, è rispetto per il tempo, per il team e per la qualità che si può davvero garantire.',
       },
       {
         type: 'paragraph',
-        text: 'Noi in OFF32 abbiamo imparato che scegliere i clienti giusti è parte integrante del processo creativo. Collaborare con persone che condividono visione, rispetto e fiducia genera progetti migliori, relazioni più durature e un ambiente di lavoro sereno e motivante.',
+        text: 'In OFF32 scegliere con chi lavorare fa parte del progetto. Se visione, ascolto e fiducia stanno dalle due parti, il lavoro dura di più e si sta meglio mentre lo si fa.',
       },
       {
         type: 'paragraph',
-        text: 'Un buon cliente sa ascoltare, sa aspettare e soprattutto riconosce il valore del lavoro che c\'è dietro ogni idea. Gli altri, spesso, ci insegnano qualcosa di ancora più prezioso: dove non vogliamo più tornare.',
+        text: 'Un buon rapporto è fatto di tempi realistici e del riconoscimento di quello che c’è dietro un’idea. I progetti che partono storti insegnano dove serviva più chiarezza, prima di cominciare.',
       },
       {
         type: 'heading',
@@ -254,7 +335,7 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'In fondo, ogni collaborazione è un incontro tra persone. E come in ogni relazione, la differenza non la fa solo il risultato finale, ma il percorso per arrivarci. Capire quando dire "no", fidarsi dei propri segnali e scegliere partner che condividono la stessa etica è ciò che permette di crescere: come studio, come professionista e come persona.',
+        text: 'Ogni collaborazione è un incontro tra persone. Conta il risultato, e conta come ci si arriva. Capire presto quando un progetto non è allineato, e dirlo, fa crescere il lavoro: per lo studio e per chi lo commissiona.',
       },
     ],
   },
@@ -292,11 +373,11 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
           <span style={{ color: '#fe3812' }}>{article.tag}</span>
           <span>{article.date}</span>
           <span>{article.readTime}</span>
-          <span>{article.author.name}</span>
+          <a href={article.author.href} style={{ color: 'inherit' }}>{article.author.name}</a>
         </div>
         {article.image && (
           <figure style={{ margin: 0, borderTop: LINE, borderBottom: LINE }}>
-            <img src={article.image} alt="" style={{ width: '100%', height: 'auto', maxHeight: 560, objectFit: 'cover', display: 'block' }} />
+            <img src={article.image} alt={article.imageAlt ?? ''} width={article.imageWidth} height={article.imageHeight} style={{ width: '100%', height: 'auto', maxHeight: 560, objectFit: 'cover', display: 'block' }} />
           </figure>
         )}
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 80px' }}>
@@ -311,7 +392,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
             if (block.type === 'paragraph') {
               return (
                 <p key={i} style={{ fontSize: 16, lineHeight: 1.75, margin: '0 0 22px' }}>
-                  {block.text}
+                  {withLinks(block.text, block.links)}
                 </p>
               )
             }
@@ -334,7 +415,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
             return null
           })}
           <div style={{ marginTop: 48, paddingTop: 20, borderTop: LINE, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <span style={meta}>{article.author.name} · {article.author.role}</span>
+            <span style={meta}><a href={article.author.href} style={{ color: 'inherit' }}>{article.author.name}</a> · {article.author.role}</span>
             <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Tutti gli articoli</a>
           </div>
         </div>

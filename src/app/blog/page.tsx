@@ -2,6 +2,7 @@
 import { useState, type CSSProperties } from 'react'
 import Navbar from '@/components/Navbar'
 import ProjectStart from '@/components/ProjectStart'
+import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -10,35 +11,38 @@ const CATEGORIES = ['tutti', 'design', 'sviluppo', 'community', 'marketing', 'ca
 const POSTS = [
   {
     slug: 'come-costruire-brand-digitale',
-    image: '/blog/img/brand-digitale.jpg?v=2',
+    image: BRAND_ARTICLE_IMAGE.url,
+    imageAlt: BRAND_ARTICLE_IMAGE.alt,
     category: 'design',
     tag: 'Design',
     title: 'Come costruire un brand digitale che dura nel tempo',
-    excerpt: 'Il brand non è un logo. È la promessa che fai ogni giorno ai tuoi clienti. Ecco come in OFF32 affrontiamo l\'identità visiva.',
-    author: { initials: 'MC', name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32', bg: '#FDF0EB', color: '#993C1D' },
-    date: 'Mar 2025', readTime: '6 min', featured: true,
+    excerpt: 'Come si costruisce un brand digitale che dura: posizione chiara, poche regole visive e un tono che resta riconoscibile quando cambiano sito e campagne.',
+    author: { initials: 'SV', name: 'Sara Villani', role: 'Social Media Manager · OFF32', bg: '#FDF0EB', color: '#993C1D' },
+    date: 'Mar 2025', readTime: '7 min', featured: true,
     bg: '#0A1510',
   },
   {
     slug: 'scegliere-clienti-giusti',
-    image: '/blog/img/client_s.webp',
+    image: CLIENT_ARTICLE_IMAGE.url,
+    imageAlt: CLIENT_ARTICLE_IMAGE.alt,
     category: 'community',
     tag: 'Community',
-    title: 'Imparare a dire no: l\'arte di scegliere i clienti giusti',
-    excerpt: 'Non tutti i progetti sono quelli giusti. Ecco come decidiamo con chi lavorare, e perché la qualità di un\'agenzia dipende dalle scelte che fa.',
+    title: 'Quando una collaborazione funziona',
+    excerpt: 'Una collaborazione funziona quando tempi, materiali e decisioni sono chiari per entrambi. Ecco come in OFF32 capiamo se un progetto è quello giusto.',
     author: { initials: 'MR', name: 'Marco Ricci', role: 'Web Developer', bg: '#EEF8F3', color: '#0F6E56' },
     date: 'Feb 2025', readTime: '4 min', featured: true,
     bg: '#12102A',
   },
   {
     slug: 'ecommerce-performante-2025',
-    image: '/blog/img/ecommerce-2025.jpg',
+    image: ECOMMERCE_ARTICLE_IMAGE.url,
+    imageAlt: ECOMMERCE_ARTICLE_IMAGE.alt,
     category: 'sviluppo',
     tag: 'Sviluppo',
     title: 'eCommerce performante nel 2025: cosa funziona davvero',
-    excerpt: 'Un negozio converte quando l\'offerta è chiara, la pagina è veloce e il checkout non chiede sforzo. Il resto è rumore.',
-    author: { initials: 'MC', name: 'Manuel Cerasuolo', role: 'Project Manager · OFF32', bg: '#FDF0EB', color: '#993C1D' },
-    date: 'Feb 2025', readTime: '6 min', featured: false,
+    excerpt: 'Un e-commerce performante si decide sulla scheda prodotto, sulla velocità del telefono e su un checkout che mostra subito prezzo, spedizione e reso.',
+    author: { initials: 'LS', name: 'Lorenzo Salvatori', role: 'Full Stack Developer · OFF32', bg: '#FDF0EB', color: '#993C1D' },
+    date: 'Feb 2025', readTime: '8 min', featured: false,
     bg: '#0A0A14',
   },
 ]
@@ -90,7 +94,7 @@ export default function BlogPage() {
             {filtered.map((post, i) => (
               <a key={post.slug} href={`/blog/${post.slug}`} style={{ gridColumn: i === 0 ? '1 / -1' : undefined, textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ height: 210, background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>
-                  {post.image && <img src={post.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                  {post.image && <img src={post.image} alt={'imageAlt' in post ? post.imageAlt : ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
                 </div>
                 <div style={{ padding: '16px 16px 14px', borderBottom: LINE }}>
                   <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.3, textDecoration: 'underline', textUnderlineOffset: 3 }}>{post.title}</div>
