@@ -440,6 +440,7 @@ function SiteScan() {
   const [phase, setPhase] = useState<'idle' | 'loading' | 'summary' | 'sending' | 'report'>('idle')
   const [score, setScore] = useState<number | null>(null)
   const [checks, setChecks] = useState<ScanCheck[]>([])
+  const [openCheck, setOpenCheck] = useState<string | null>(null)
   const [note, setNote] = useState('')
   const [error, setError] = useState('')
 
@@ -450,6 +451,7 @@ function SiteScan() {
     setPhase('loading')
     setScore(null)
     setChecks([])
+    setOpenCheck(null)
     track('analisi_avvio')
     try {
       const response = await fetch('/api/analisi', {
@@ -509,8 +511,8 @@ function SiteScan() {
         <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
           Analizza il tuo sito, gratis.
         </h2>
-        <p style={{ margin: '0 auto', fontSize: 15, lineHeight: 1.7, color: '#3a3a3a', maxWidth: 460 }}>
-          Controlliamo la homepage pubblica: HTTPS, titolo, descrizione, H1, versione mobile, testi alternativi, canonical e Open Graph. È aperto a tutti.
+        <p style={{ margin: '0 auto', fontSize: 15, lineHeight: 1.7, color: '#3a3a3a', maxWidth: 520 }}>
+          Aperto a tutti. Controlliamo la SEO (search engine optimization): se i motori possono indicizzare il sito e se ha le basi per il traffico. HTTPS, titolo, descrizione, H1, versione mobile, testi alternativi, canonical e Open Graph.
         </p>
         <form onSubmit={analyze} style={{ marginTop: 28 }}>
           <label htmlFor="site-url" style={{ ...meta, display: 'block', marginBottom: 10 }}>Il tuo sito</label>
@@ -539,13 +541,25 @@ function SiteScan() {
             <div style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 64, lineHeight: 0.9 }}>{score}</div>
             <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>su 100, solo sui controlli eseguiti. Un controllo non verificato non conta come errore.</p>
             <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0 }}>
-              {checks.map(check => (
-                <li key={check.id} style={{ borderTop: LINE, padding: '12px 0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, fontSize: 14 }}>
+              {checks.map((check, i) => (
+                <li key={check.id} style={{ borderTop: LINE, borderBottom: i === checks.length - 1 ? LINE : 'none' }}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenCheck(openCheck === check.id ? null : check.id)}
+                    style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', color: '#0D0D0D', fontFamily: 'inherit', padding: '14px 0', fontSize: 14 }}
+                  >
                     <span>{check.label}</span>
-                    <span style={{ color: check.status === 'fail' ? '#fe3812' : '#0D0D0D', whiteSpace: 'nowrap' }}>{statusWord(check.status)}</span>
-                  </div>
-                  {phase === 'report' && check.detail ? <p style={{ margin: '6px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>{check.detail}</p> : null}
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 'none' }}>
+                      <span style={{ color: check.status === 'fail' ? '#fe3812' : '#0D0D0D', whiteSpace: 'nowrap' }}>{statusWord(check.status)}</span>
+                      <span style={{ fontSize: 20, color: '#8a8378', lineHeight: 1 }}>{openCheck === check.id ? '–' : '+'}</span>
+                    </span>
+                  </button>
+                  {openCheck === check.id ? (
+                    <div style={{ padding: '0 0 14px' }}>
+                      <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: '#3a3a3a' }}>{checkAbout(check.id)}</p>
+                      {check.detail ? <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>{check.detail}</p> : null}
+                    </div>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -674,6 +688,22 @@ function BrandRoulette() {
       </span>
     </span>
   )
+}
+
+const CHECK_ABOUT: Record<string, string> = {
+  https: 'HTTPS è la connessione sicura del sito, il lucchetto nel browser. Protegge chi visita la pagina. Senza, il sito viene segnalato come non sicuro e perde terreno in indicizzazione e traffico.',
+  reachable: 'Vuol dire che la homepage risponde quando qualcuno la apre. Se la pagina non si carica, i motori non possono indicizzarla e il traffico non arriva.',
+  title: 'È la riga che compare nei risultati di Google. Dice di cosa parla la pagina. È uno dei segnali principali della SEO e decide se una persona clicca.',
+  description: 'È il testo sotto il titolo, nei risultati di ricerca. Non sposta da sola la posizione, ma è quello che si legge prima del clic. Una descrizione chiara porta più traffico.',
+  h1: 'È il titolo principale dentro la pagina. Dice a chi legge, e ai motori, qual è il tema. Ne basta uno, preciso.',
+  viewport: 'Dice al telefono come adattare la pagina. Senza, il sito resta stretto o illeggibile. Google guarda prima la versione da telefono, e da lì passa gran parte del traffico.',
+  alt: 'È la descrizione di un\'immagine per chi non la vede e per i motori, che non leggono la foto. Serve all\'accessibilità e fa entrare le immagini nella ricerca.',
+  canonical: 'È l\'indirizzo ufficiale della pagina. Se lo stesso contenuto esiste su più URL, indica quale va indicizzato. Così il traffico non si divide tra copie della stessa pagina.',
+  opengraph: 'È il titolo e il testo che compaiono quando il link viene condiviso, su WhatsApp, Instagram o LinkedIn. È la prima impressione fuori da Google e porta visite da lì.',
+}
+
+function checkAbout(id: string) {
+  return CHECK_ABOUT[id] ?? 'È un controllo sulla homepage pubblica. Dice se quel punto aiuta la SEO, l\'indicizzazione e il traffico.'
 }
 
 function statusWord(status: ScanStatus) {
