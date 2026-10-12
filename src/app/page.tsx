@@ -123,7 +123,7 @@ export default function Home() {
       <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '88px 1fr minmax(280px, 36%)', minHeight: 'calc(100vh - 58px)', borderBottom: LINE }}>
         <div style={{ borderRight: LINE, padding: '28px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <span style={meta}>01</span>
-          <span style={{ ...meta, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Est. 2025</span>
+          <BrandRoulette />
         </div>
         <div className="hero-copy" style={{ padding: '48px 40px 14vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
           <div style={{ ...meta, color: '#fe3812', marginBottom: 20 }}>Officina digitale</div>
@@ -335,6 +335,29 @@ export default function Home() {
           border: 1px solid #0D0D0D;
           box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
+        }
+        .brand-roulette {
+          position: relative;
+          display: inline-block;
+          font-size: 11px;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: #0D0D0D;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          white-space: nowrap;
+          line-height: 1;
+          overflow-anchor: none;
+        }
+        .brand-sizer { visibility: hidden; }
+        .brand-live {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          overflow: hidden;
+          white-space: nowrap;
         }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
@@ -560,6 +583,80 @@ function SiteScan() {
         ) : null}
       </div>
     </section>
+  )
+}
+
+const ROULETTE_GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*'
+const ROULETTE_INSERT = 'ICINA'
+const ROULETTE_PAUSE = 5000
+
+function BrandRoulette() {
+  const [insert, setInsert] = useState('')
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+
+    const chars = ROULETTE_INSERT.split('')
+    const spinHold = 16
+    const total = spinHold + Math.max(24, chars.length + 18)
+    let interval = 0
+    let pause = 0
+    let cancelled = false
+
+    function glyph() {
+      return ROULETTE_GLYPHS[Math.floor(Math.random() * ROULETTE_GLYPHS.length)]
+    }
+
+    function spin(opening: boolean, done: () => void) {
+      let tick = 0
+      interval = window.setInterval(() => {
+        tick += 1
+        if (tick >= total) {
+          window.clearInterval(interval)
+          setInsert(opening ? ROULETTE_INSERT : '')
+          done()
+          return
+        }
+        if (!opening) {
+          setInsert(chars.map(() => glyph()).join(''))
+          return
+        }
+        const step = tick <= spinHold ? 0 : Math.floor(((tick - spinHold) / (total - spinHold)) * chars.length)
+        let out = ''
+        for (let i = 0; i < chars.length; i += 1) {
+          out += i < step ? chars[i] : glyph()
+        }
+        setInsert(out)
+      }, 28)
+    }
+
+    function cycle(opening: boolean) {
+      pause = window.setTimeout(() => {
+        if (cancelled) return
+        spin(opening, () => {
+          if (!cancelled) cycle(!opening)
+        })
+      }, ROULETTE_PAUSE)
+    }
+
+    cycle(true)
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+      window.clearTimeout(pause)
+    }
+  }, [])
+
+  return (
+    <span className="brand-roulette" aria-hidden="true">
+      <span className="brand-sizer">officina32</span>
+      <span className="brand-live">
+        <span className="brand-stem">off</span>
+        {insert ? <span>{insert}</span> : null}
+        <span>32</span>
+      </span>
+    </span>
   )
 }
 
