@@ -10,7 +10,7 @@ const works = [
   { image: '/works/conil-food-tour/laptop.webp', title: 'Conil Food Tour', category: 'Brand · eCommerce', href: '/work/conil-food-tour' },
   { image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
   { image: '/works/monochrome/preview.jpg', title: 'Monochrome', category: 'Web · WordPress', href: '/work/monochrome', objectPosition: 'center 72%' },
-  { image: '/works/momento/preview.webp', title: 'Momento Catering', category: 'Web · WordPress', href: '/work/momento', objectPosition: 'center 42%' },
+  { src: '/works/momento/film.mp4', poster: '/works/momento/poster.jpg', title: 'Momento Catering', category: 'Web · WordPress', href: '/work/momento' },
 ]
 
 function VideoCard({ src, image, poster, title, category, tall = false, priority = false, objectPosition = 'center' }: { src?: string, image?: string, poster?: string, title: string, category: string, tall?: boolean, priority?: boolean, objectPosition?: string }) {
@@ -73,6 +73,7 @@ export default function Work() {
       <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
+      <link rel="preload" as="image" href="/works/momento/poster.jpg" />
       <h1 className="work-title" style={{ margin: 0 }}>
         <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
           i nostri
@@ -105,7 +106,7 @@ export default function Work() {
           </a>
         </div>
         <a href={works[5].href} className="works-wide" style={{ display: 'block', height: 420, border: LINE, marginTop: 4, textDecoration: 'none' }}>
-          <VideoCard image={'image' in works[5] ? works[5].image : undefined} title={works[5].title} category={works[5].category} objectPosition={'objectPosition' in works[5] ? works[5].objectPosition : undefined} />
+          <VideoCard src={'src' in works[5] ? works[5].src : undefined} poster={'poster' in works[5] ? works[5].poster : undefined} title={works[5].title} category={works[5].category} />
         </a>
       </section>
 
