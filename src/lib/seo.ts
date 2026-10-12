@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 
 export const SITE_URL = 'https://www.off32.it'
 export const SITE_NAME = 'OFF32'
+export const SITE_TITLE = 'OFF32 · Officina di design, AI e web app'
 export const SITE_DESCRIPTION =
-  'Agenzia di comunicazione digitale potenziata dall\'intelligenza artificiale. Brand, web, marketing e strategia.'
+  'Prototipiamo, progettiamo e sviluppiamo web app e tool di intelligenza artificiale, con cura del design e analisi SEO per ottimizzare il traffico.'
 
 export const BRAND_ARTICLE_IMAGE = {
   url: '/blog/img/brand-digitale.jpg?v=2',

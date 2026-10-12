@@ -2,12 +2,12 @@ import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
-export const alt = 'OFF32 · Healing Earth'
+export const alt = 'OFF32 · Officina di design, AI e web app'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function OpenGraphImage() {
-  const photo = await readFile(join(process.cwd(), 'public/og/healing-earth.jpg'))
+  const photo = await readFile(join(process.cwd(), 'public/og/home.jpg'))
 
   return new ImageResponse(
     (

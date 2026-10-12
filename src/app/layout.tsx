@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import CallDock from '@/components/CallDock'
 import Navbar from '@/components/Navbar'
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/seo'
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'OFF32 · Agenzia di comunicazione digitale',
+    default: SITE_TITLE,
     template: '%s · OFF32',
   },
   description: SITE_DESCRIPTION,
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     locale: 'it_IT',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'OFF32 · Agenzia di comunicazione digitale',
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'OFF32 · Agenzia di comunicazione digitale',
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
   icons: {
