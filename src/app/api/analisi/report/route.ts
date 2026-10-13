@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import nodemailer, { type Transporter } from 'nodemailer'
 import { allowRequest, clientKey } from '@/lib/rate-limit'
 import { analyzeSite } from '@/lib/site-check'
 
@@ -18,10 +18,25 @@ export async function POST(request: Request) {
   if (!input) return NextResponse.json({ error: 'Controlla indirizzo e email.' }, { status: 400 })
 
   try {
-    const result = await analyzeSite(input.url)
-    if (!result.ok) return NextResponse.json({ error: result.error }, { status: result.status })
-
     const transport = mailer()
+    const ready = transport.verify()
+    const result = await analyzeSite(input.url)
+    if (!result.ok) {
+      await ready.catch(() => undefined)
+      return NextResponse.json({ error: result.error }, { status: result.status })
+    }
+    await ready
+
+    const copiaPromise = transport.sendMail({
+      from: FROM,
+      to: input.email,
+      subject: 'Il report del tuo sito, OFF32',
+      html: userHtml(result.report),
+    }).then(() => 'inviata' as const).catch((error: unknown) => {
+      console.error(error instanceof Error ? error.message : 'copia report')
+      return 'non_inviata' as const
+    })
+
     await transport.sendMail({
       from: FROM,
       to: TO,
@@ -29,19 +44,7 @@ export async function POST(request: Request) {
       subject: 'Richiesta report analisi sito',
       html: officeHtml(input, result.report),
     })
-
-    let copia: 'inviata' | 'non_inviata' = 'inviata'
-    try {
-      await transport.sendMail({
-        from: FROM,
-        to: input.email,
-        subject: 'Il report del tuo sito, OFF32',
-        html: userHtml(result.report),
-      })
-    } catch (error) {
-      copia = 'non_inviata'
-      console.error(error instanceof Error ? error.message : 'copia report')
-    }
+    const copia = await copiaPromise
 
     return NextResponse.json({
       score: result.report.score,
@@ -55,18 +58,25 @@ export async function POST(request: Request) {
   }
 }
 
+let pooled: Transporter | undefined
+
 function mailer() {
   const pass = process.env.SMTP_PASSWORD
   if (!pass) throw new Error('SMTP non configurato')
-  return nodemailer.createTransport({
-    host: 'smtp.hostinger.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.SMTP_USER || TO,
-      pass,
-    },
-  })
+  if (!pooled) {
+    pooled = nodemailer.createTransport({
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true,
+      pool: true,
+      maxConnections: 2,
+      auth: {
+        user: process.env.SMTP_USER || TO,
+        pass,
+      },
+    })
+  }
+  return pooled
 }
 
 function officeHtml(

@@ -441,13 +441,13 @@ function SiteScan() {
   const [score, setScore] = useState<number | null>(null)
   const [checks, setChecks] = useState<ScanCheck[]>([])
   const [openCheck, setOpenCheck] = useState<string | null>(null)
-  const [note, setNote] = useState('')
+  const [copySent, setCopySent] = useState(false)
   const [error, setError] = useState('')
 
   async function analyze(event: FormEvent) {
     event.preventDefault()
     setError('')
-    setNote('')
+    setCopySent(false)
     setPhase('loading')
     setScore(null)
     setChecks([])
@@ -494,10 +494,8 @@ function SiteScan() {
       }
       setScore(data.score)
       setChecks(data.checks)
+      setCopySent(data.copia === 'inviata')
       setPhase('report')
-      setNote(data.copia === 'inviata'
-        ? 'Report inviato a te e a OFF32.'
-        : 'OFF32 ha ricevuto la richiesta. La copia sulla tua email non è partita.')
     } catch {
       setPhase('summary')
       setError('Non siamo riusciti a inviare il report. Riprova.')
@@ -595,7 +593,12 @@ function SiteScan() {
 
         {phase === 'report' ? (
           <div style={{ marginTop: 22 }}>
-            <p style={{ margin: '0 0 16px', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>{note}</p>
+            <p style={{ margin: '0 0 16px', fontSize: 13, lineHeight: 1.5, color: '#3a3a3a' }}>
+              {copySent
+                ? <>Report inviato a <span style={{ color: '#0D0D0D' }}>{email.trim()}</span>.</>
+                : <>La richiesta è arrivata a OFF32. La copia su <span style={{ color: '#0D0D0D' }}>{email.trim()}</span> non è partita.</>}
+              {' '}Come preferisci continuare?
+            </p>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/contatti" onClick={() => track('cta_contatto')} style={button}>Scrivici</a>
               <button
@@ -604,7 +607,7 @@ function SiteScan() {
                   track('cta_call')
                   window.dispatchEvent(new Event('off32-toggle-call'))
                 }}
-                style={{ ...button, cursor: 'pointer' }}
+                style={{ ...button, cursor: 'pointer', background: '#0D0D0D', color: CREAM }}
               >
                 Prenota una call
               </button>
