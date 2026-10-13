@@ -10,6 +10,7 @@ const paths = [
   '/work/duel',
   '/work/monochrome',
   '/work/momento',
+  '/work/vecere',
   '/about',
   '/about/manuel-cerasuolo',
   '/about/sara-zeppieri',

@@ -339,7 +339,7 @@ export default function HealingEarthPage() {
       </section>
 
       <WorkSwitch
-        previous={{ href: '/work/momento', image: '/works/momento/preview.webp', title: 'Momento Catering' }}
+        previous={{ href: '/work/vecere', image: '/works/vecere/preview.jpg', title: 'Olio Vecere' }}
         next={{ href: '/work/scuppoz', image: '/works/scuppoz/pecore.webp', title: 'Scuppoz' }}
       />
 

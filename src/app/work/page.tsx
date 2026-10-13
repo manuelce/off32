@@ -11,6 +11,7 @@ const works = [
   { image: '/works/duel/cover.jpg', title: 'The Duel', category: 'Editorial', href: '/work/duel' },
   { image: '/works/monochrome/preview.jpg', title: 'Monochrome', category: 'Web · WordPress', href: '/work/monochrome', objectPosition: 'center 72%' },
   { src: '/works/momento/film.mp4', poster: '/works/momento/poster.jpg', title: 'Momento Catering', category: 'Web · WordPress', href: '/work/momento' },
+  { src: '/works/vecere/film.mp4', poster: '/works/vecere/poster.jpg', title: 'Olio Vecere', category: 'eCommerce · WordPress', href: '/work/vecere' },
 ]
 
 function VideoCard({ src, image, poster, title, category, tall = false, priority = false, objectPosition = 'center' }: { src?: string, image?: string, poster?: string, title: string, category: string, tall?: boolean, priority?: boolean, objectPosition?: string }) {
@@ -105,9 +106,14 @@ export default function Work() {
             <VideoCard image={'image' in works[4] ? works[4].image : undefined} title={works[4].title} category={works[4].category} objectPosition={'objectPosition' in works[4] ? works[4].objectPosition : undefined} />
           </a>
         </div>
-        <a href={works[5].href} className="works-wide" style={{ display: 'block', height: 420, border: LINE, marginTop: 4, textDecoration: 'none' }}>
-          <VideoCard src={'src' in works[5] ? works[5].src : undefined} poster={'poster' in works[5] ? works[5].poster : undefined} title={works[5].title} category={works[5].category} />
-        </a>
+        <div className="works-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4, marginTop: 4 }}>
+          <a href={works[5].href} style={{ display: 'block', height: 420, border: LINE, textDecoration: 'none' }}>
+            <VideoCard src={'src' in works[5] ? works[5].src : undefined} poster={'poster' in works[5] ? works[5].poster : undefined} title={works[5].title} category={works[5].category} />
+          </a>
+          <a href={works[6].href} style={{ display: 'block', height: 420, border: LINE, textDecoration: 'none' }}>
+            <VideoCard src={'src' in works[6] ? works[6].src : undefined} poster={'poster' in works[6] ? works[6].poster : undefined} title={works[6].title} category={works[6].category} />
+          </a>
+        </div>
       </section>
 
       <ProjectStart />
@@ -132,7 +138,7 @@ export default function Work() {
         @media (max-width: 860px) {
           .work-title { padding-top: 64px; }
           .works-grid, .works-pair { grid-template-columns: 1fr !important; }
-          .works-pair a, .works-wide { height: 280px !important; }
+          .works-pair a { height: 280px !important; }
         }
       `}</style>
     </main>

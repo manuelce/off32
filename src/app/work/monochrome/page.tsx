@@ -155,6 +155,17 @@ export default function MonochromePage() {
             </figure>
           </FadeIn>
         </div>
+        <div className="mono-phone-show">
+          <FadeIn delay={80}>
+            <figure style={{ margin: 0 }}>
+              <img src="/works/monochrome/mobile-mostra.jpg" alt="Telefono su una sedia di filo metallico, con la pagina Notes on Becoming di Monochrome." style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <figcaption className="mono-cap mono-cap-light">
+                <span>Mostra</span>
+                Notes on Becoming. Il titolo occupa la larghezza e la fotografia arancione chiude la pagina.
+              </figcaption>
+            </figure>
+          </FadeIn>
+        </div>
       </section>
 
       <section style={{ background: '#F0EBE0' }}>
@@ -257,7 +268,8 @@ export default function MonochromePage() {
           padding: 64px 6% 28px;
         }
         .mono-phone-shift { margin: 12% 0 0; }
-        .mono-phone-article { width: min(52%, 760px); margin: 28px auto 0; padding-bottom: 80px; }
+        .mono-phone-article { width: min(52%, 760px); margin: 28px auto 0; }
+        .mono-phone-show { width: min(86%, 1024px); margin: 56px auto 0; padding-bottom: 80px; }
         .mono-tablet {
           display: grid;
           grid-template-columns: 0.72fr 1.28fr;
@@ -280,7 +292,8 @@ export default function MonochromePage() {
           .meta-grid > div { border-right: none !important; margin-right: 0 !important; padding-right: 0 !important; }
           .mono-phones, .mono-tablet { grid-template-columns: 1fr !important; gap: 40px !important; }
           .mono-phone-shift { margin: 0; }
-          .mono-phone-article { width: auto; margin: 0; padding: 0 6% 72px; }
+          .mono-phone-article { width: auto; margin: 0; padding: 0 6%; }
+          .mono-phone-show { width: auto; margin: 0; padding: 40px 6% 72px; }
           .mono-desk-second { width: auto; margin-left: 0 !important; padding: 0 6%; }
           .mono-desk-home { width: auto; margin: 0 6%; }
         }

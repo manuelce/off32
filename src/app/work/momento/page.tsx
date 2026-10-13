@@ -232,7 +232,7 @@ export default function MomentoPage() {
 
       <WorkSwitch
         previous={{ href: '/work/monochrome', image: '/works/monochrome/preview.jpg', title: 'Monochrome' }}
-        next={{ href: '/work/healing-earth', image: '/works/healing-earth/preview.jpg', title: 'Healing Earth Italia' }}
+        next={{ href: '/work/vecere', image: '/works/vecere/preview.jpg', title: 'Olio Vecere' }}
       />
 
       <div style={{ marginTop: '15%' }}>
