@@ -9,12 +9,11 @@ const LINE = `1px solid ${CREAM}`
 const PHONE = '+39 375 563 9110'
 const PHONE_TEL = '+393755639110'
 
-const FILTERS = ['All', 'Full-stack', 'AI applicata', 'Design', 'E-commerce', 'Gratuito']
+const FILTERS = ['All', 'Full-stack', 'Design', 'E-commerce', 'Gratuito']
 
 const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }> = {
   'brand-identity-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/brand.jpg', focus: 'center 42%' },
-  'videocorso-fullstack-ai': { bg: '#F0EBE0', fg: '#F0EBE0', image: '/events/corso-fullstack.jpg?v=3', focus: 'center center', clean: true },
-  'comunicazione-performance': { bg: '#694aff', fg: '#F0EBE0', image: '/events/talk.jpg', focus: '68% center' },
+  'videocorso-fullstack-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/campaign.jpg', focus: 'center 40%' },
 }
 
 const title: CSSProperties = {
@@ -44,17 +43,55 @@ function EventFlyer({ workshop }: { workshop: Workshop }) {
   )
 }
 
+function matchesFilter(workshop: Workshop, filter: string) {
+  if (filter === 'All') return true
+  if (filter === 'Gratuito') return workshop.free === true
+  return workshop.topic === filter
+}
+
+function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop; onBook: () => void; featured?: boolean }) {
+  const poster = posters[workshop.slug]
+  const bookable = workshop.status === 'upcoming'
+  return (
+    <article id={workshop.slug} className={[poster.clean ? 'event-card is-clean' : 'event-card', featured ? 'is-featured' : ''].filter(Boolean).join(' ')}>
+      <div className="event-poster" style={{ background: poster.bg, color: poster.fg }}>
+        {poster.image && (
+          <img src={poster.image} alt="" className="event-poster-img" style={{ objectPosition: poster.focus }} />
+        )}
+        <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: featured ? 'clamp(32px, 3vw, 48px)' : 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{workshop.topic}</span>
+      </div>
+      <div className="event-body">
+        <div style={{ fontSize: 11, letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 700 }}>
+          {workshop.duration}
+        </div>
+        <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: featured ? 'clamp(32px, 3.2vw, 44px)' : 28, letterSpacing: '-0.4px', lineHeight: 1.1, margin: '12px 0' }}>{workshop.title}</h3>
+        <p style={{ fontSize: featured ? 16 : 14, lineHeight: 1.6, color: '#3a3a3a', margin: bookable ? '0 0 16px' : '0' }}>{workshop.desc}</p>
+        <div style={{ borderTop: '1px solid #0D0D0D', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13 }}>
+          <span>Formato: {workshop.format}</span>
+          <span>Per: {workshop.audience}</span>
+          {workshop.when && <span>Date: {workshop.when}</span>}
+        </div>
+        {bookable ? (
+          <div className="event-foot">
+            <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
+            <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
+          </div>
+        ) : null}
+      </div>
+    </article>
+  )
+}
+
 export default function WorkshopPage() {
   const [filter, setFilter] = useState('All')
   const [underlineOn, setUnderlineOn] = useState(false)
   const [selected, setSelected] = useState<Workshop | null>(null)
   const underlinePlayed = useRef(false)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const visible = workshops.filter(workshop => {
-    if (filter === 'All') return true
-    if (filter === 'Gratuito') return workshop.free === true
-    return workshop.topic === filter
-  })
+  const visible = workshops.filter(workshop => matchesFilter(workshop, filter))
+  const upcoming = visible.filter(workshop => workshop.status === 'upcoming')
+  const past = visible.filter(workshop => workshop.status === 'past')
+  const featured = upcoming[0] ?? null
 
   useEffect(() => {
     if (underlinePlayed.current) return
@@ -110,7 +147,7 @@ export default function WorkshopPage() {
               </span>
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: 560, margin: 0 }}>
-              Prossimi eventi, workshop, talk sia gratuiti che a pagamento, Prenota il tuo biglietto online.
+              Prossimi eventi, workshop e talk, gratuiti o a pagamento. Prenota il tuo biglietto online.
             </p>
           </div>
           <div className="event-filters" role="tablist" aria-label="Filtra le sessioni">
@@ -129,37 +166,24 @@ export default function WorkshopPage() {
             </div>
         </div>
 
-        <div className="events-grid">
-          {visible.map(workshop => {
-            const poster = posters[workshop.slug]
-            return (
-              <article key={workshop.slug} id={workshop.slug} className={poster.clean ? 'event-card is-clean' : 'event-card'}>
-                <div className="event-poster" style={{ background: poster.bg, color: poster.fg }}>
-                  {poster.image && (
-                    <img src={poster.image} alt="" className="event-poster-img" style={{ objectPosition: poster.focus }} />
-                  )}
-                  <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{workshop.topic}</span>
-                </div>
-                <div className="event-body">
-                  <div style={{ fontSize: 11, letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 700 }}>
-                    {workshop.duration}
-                  </div>
-                  <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 28, letterSpacing: '-0.4px', lineHeight: 1.1, margin: '12px 0' }}>{workshop.title}</h3>
-                  <p style={{ fontSize: 14, lineHeight: 1.6, color: '#3a3a3a', margin: '0 0 16px' }}>{workshop.desc}</p>
-                  <div style={{ borderTop: '1px solid #0D0D0D', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13 }}>
-                    <span>Formato: {workshop.format}</span>
-                    <span>Per: {workshop.audience}</span>
-                    {workshop.when && <span>Date: {workshop.when}</span>}
-                  </div>
-                  <div className="event-foot">
-                    <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
-                    <button type="button" className="event-buy" onClick={() => setSelected(workshop)}>Prenota</button>
-                  </div>
-                </div>
-              </article>
-            )
-          })}
-        </div>
+        {featured ? (
+          <div className="events-upcoming">
+            <div className="events-label">Prossimo</div>
+            <EventCard workshop={featured} featured onBook={() => setSelected(featured)} />
+          </div>
+        ) : null}
+
+        {past.length > 0 ? (
+          <div className="events-past">
+            <div className="events-label">Passati</div>
+            <div className="events-grid">
+              {past.map(workshop => (
+                <EventCard key={workshop.slug} workshop={workshop} onBook={() => setSelected(workshop)} />
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         {visible.length === 0 && (
           <p style={{ marginTop: 28, fontSize: 15 }}>Nessuna sessione in questa categoria.</p>
         )}
@@ -254,8 +278,40 @@ export default function WorkshopPage() {
           cursor: pointer;
         }
         .event-filter.is-on { background: #694aff; border-color: #694aff; color: #fff; }
-        .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
+        .events-label {
+          margin: 40px 0 18px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: #0D0D0D;
+        }
+        .events-upcoming { width: 100%; }
+        .events-upcoming .events-label { margin-top: 40px; }
+        .events-past .events-label { margin-top: 56px; }
+        .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
         .event-card { background: #fff; border: 1px solid #0D0D0D; box-shadow: 7px 7px 0 #0D0D0D; display: flex; flex-direction: column; min-width: 0; }
+        .event-card.is-featured {
+          display: grid;
+          grid-template-columns: 1.05fr 1fr;
+          width: 100%;
+          box-shadow: 10px 10px 0 #694aff;
+        }
+        .event-card.is-featured .event-buy {
+          box-shadow: 3px 3px 0 #694aff;
+        }
+        .event-card.is-featured .event-poster {
+          height: 100%;
+          min-height: 420px;
+          border-bottom: none;
+          border-right: 1px solid #0D0D0D;
+        }
+        .event-card.is-featured .event-body { padding: 28px 28px 24px; }
+        .event-card.is-clean .event-poster { padding: 0; background: #F0EBE0; }
+        .event-card.is-clean .event-poster-img { object-fit: contain; object-position: center; }
+        .event-card.is-clean .event-poster::before { display: none; }
+        .event-card.is-clean .event-poster > span { display: none; }
+        .event-card.is-featured.is-clean .event-poster { min-height: 480px; }
         .event-poster { position: relative; overflow: hidden; height: 268px; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; border-bottom: 1px solid #0D0D0D; }
         .event-poster-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .event-poster:has(.event-poster-img)::before {
@@ -389,6 +445,19 @@ export default function WorkshopPage() {
           .workshop-title { padding-top: 64px; }
           .event-poster { height: 210px; }
           .events-grid { grid-template-columns: 1fr; }
+          .event-card.is-featured {
+            grid-template-columns: 1fr;
+            box-shadow: 7px 7px 0 #694aff;
+          }
+          .event-card.is-featured .event-poster {
+            min-height: 0;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            border-right: none;
+            border-bottom: 1px solid #0D0D0D;
+          }
+          .event-card.is-featured .event-body { padding: 18px 18px 16px; }
+          .events-past .events-label { margin-top: 40px; }
           .event-modal { z-index: 10001; padding: 0; align-items: stretch; }
           .event-dialog {
             position: relative;

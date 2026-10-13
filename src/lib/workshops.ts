@@ -3,7 +3,7 @@ export type Workshop = {
   index: string
   tag: string
   kind: 'Workshop' | 'Corsi' | 'Talk'
-  topic: 'Full-stack' | 'AI applicata' | 'Design' | 'E-commerce'
+  topic: 'Full-stack' | 'Design' | 'E-commerce'
   title: string
   desc: string
   duration: string
@@ -11,6 +11,7 @@ export type Workshop = {
   level: string
   audience: string
   outcomes: string[]
+  status: 'upcoming' | 'past'
   price?: string
   when?: string
   free?: boolean
@@ -29,6 +30,7 @@ export const workshops: Workshop[] = [
     format: 'Studio o online',
     level: 'Intermedio',
     audience: 'Founder e brand manager',
+    status: 'past',
     outcomes: [
       'Una frase di posizionamento che il team può usare subito',
       'Direzione visiva e verbale, non un logo isolato',
@@ -49,28 +51,11 @@ export const workshops: Workshop[] = [
     audience: 'Junior / Intermediate',
     price: '690€',
     when: 'Dalla seconda settimana di gennaio 2027 · 5 settimane',
+    status: 'upcoming',
     outcomes: [
       'Corso individuale.',
       'Stack: HTML, CSS, JavaScript, React, Node.js, Supabase.',
       'Prezzo del corso: 690€.',
-    ],
-  },
-  {
-    slug: 'comunicazione-performance',
-    index: '03',
-    tag: 'Strategy',
-    kind: 'Talk',
-    topic: 'AI applicata',
-    title: 'Comunicazione orientata alla performance',
-    desc: 'Allineare offerta, messaggio e numeri. Un framework breve per chi deve decidere cosa dire, dove dirlo e come capire se ha funzionato.',
-    duration: '2 ore',
-    format: 'Online o in azienda',
-    level: 'Tutti i livelli',
-    audience: 'Imprenditori e team interni',
-    outcomes: [
-      'Mappa di messaggi per i canali che usate già',
-      'Tre metriche da guardare, non una dashboard infinita',
-      'Piano delle prossime quattro settimane',
     ],
   },
 ]
