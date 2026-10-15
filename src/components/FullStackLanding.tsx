@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import ProjectStart from '@/components/ProjectStart'
 import FullStackFaq from '@/components/FullStackFaq'
 import { fullstackCourse } from '@/lib/fullstack-course'
 import { track } from '@/lib/track'
@@ -160,8 +159,6 @@ export default function FullStackLanding() {
           <p className="fs-apply-note">Call gratuita, senza impegno.</p>
         </div>
       </section>
-
-      <ProjectStart />
 
       <footer className="fs-footer">
         <div className="fs-footer-links">
@@ -774,7 +771,7 @@ export default function FullStackLanding() {
           color: #3a3a3a;
         }
         .fs-apply {
-          background: #fff;
+          background: ${CREAM};
           text-align: center;
         }
         .fs-apply-inner {

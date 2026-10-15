@@ -174,7 +174,7 @@ export const fullstackCourse = {
     finalTitle: 'Partiamo da una call.',
     finalBody: 'Una chiacchierata per conoscerci e capire se questo percorso fa per te.',
     primary: 'Candidati al corso',
-    call: 'Prenota una call',
+    call: 'Candidati al corso',
   },
   form: {
     levels: ['Principiante assoluto', 'Ho provato un po\' da solo', 'Ho già qualche base'] as const,

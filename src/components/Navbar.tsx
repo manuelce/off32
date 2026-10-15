@@ -22,6 +22,7 @@ function isCurrent(pathname: string, href: string) {
 
 export default function Navbar() {
   const pathname = usePathname()
+  const isFullStack = pathname === '/full-stack' || pathname.startsWith('/full-stack/')
 
   useEffect(() => {
     const pin = () => {
@@ -39,11 +40,14 @@ export default function Navbar() {
     <>
       {/* NAVBAR DESKTOP */}
       <nav className="nav-desktop" style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 5%', background: '#fe3812',
+        display: 'grid',
+        gridTemplateColumns: '1fr auto 1fr',
+        alignItems: 'center',
+        padding: '14px 5%',
+        background: isFullStack ? '#f0ebe0' : '#fe3812',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
-        <a href="/" style={{ textDecoration: 'none' }}>
+        <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
           <img src="/off32_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
         </a>
         <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
@@ -54,16 +58,18 @@ export default function Navbar() {
             )
           })}
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <button type="button" className="nav-cta" onClick={openCall}>
-            {CALL_LABEL}
-          </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifySelf: 'end' }}>
+          {!isFullStack && (
+            <button type="button" className="nav-cta" onClick={openCall}>
+              {CALL_LABEL}
+            </button>
+          )}
         </div>
       </nav>
 
       {/* NAVBAR MOBILE, TOP: logo + CTA */}
       <nav className="nav-mobile-top" style={{
-        alignItems: 'center', justifyContent: 'space-between',
+        alignItems: 'center', justifyContent: isFullStack ? 'flex-start' : 'space-between',
         padding: '18px 20px',
         position: 'fixed',
         top: 0,
@@ -80,9 +86,11 @@ export default function Navbar() {
             <img className="logo-green" src="/off32_green_cube.svg" alt="" style={{ height: '24px', width: 'auto', display: 'none' }} />
           )}
         </a>
-        <button type="button" className="nav-cta" onClick={openCall}>
-          {CALL_LABEL}
-        </button>
+        {!isFullStack && (
+          <button type="button" className="nav-cta" onClick={openCall}>
+            {CALL_LABEL}
+          </button>
+        )}
       </nav>
 
       {/* NAVBAR MOBILE, BOTTOM: pillola con i link */}
