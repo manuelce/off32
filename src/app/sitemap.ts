@@ -17,6 +17,8 @@ const paths = [
   '/about/lorenzo-salvatori',
   '/about/sara-villani',
   '/workshop',
+  '/full-stack',
+  '/developmentconai',
   '/blog',
   '/contatti',
   '/privacy-policy',

@@ -74,7 +74,11 @@ function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop;
         {bookable ? (
           <div className="event-foot">
             <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
-            <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
+            {workshop.landingHref ? (
+              <a href={workshop.landingHref} className="event-buy">Prenota</a>
+            ) : (
+              <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
+            )}
           </div>
         ) : null}
       </div>

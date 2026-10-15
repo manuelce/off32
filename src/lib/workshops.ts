@@ -1,3 +1,5 @@
+import { fullstackCourse, FULLSTACK_PATH, FULLSTACK_SLUG } from '@/lib/fullstack-course'
+
 export type Workshop = {
   slug: string
   index: string
@@ -15,6 +17,8 @@ export type Workshop = {
   price?: string
   when?: string
   free?: boolean
+  /** Se presente, la CTA apre questa route invece del dialog. */
+  landingHref?: string
 }
 
 export const workshops: Workshop[] = [
@@ -38,24 +42,25 @@ export const workshops: Workshop[] = [
     ],
   },
   {
-    slug: 'videocorso-fullstack-ai',
+    slug: FULLSTACK_SLUG,
     index: '02',
     tag: 'Web',
     kind: 'Corsi',
     topic: 'Full-stack',
-    title: 'Videocorso full stack Web Development con AI',
-    desc: 'Percorso pratico e individuale, da 0 a sviluppatore full stack. Videolezioni live su Meet, esercitazioni e un progetto finale.',
-    duration: '35 ore',
-    format: 'Videolezioni live su Meet + esercitazioni + progetto finale',
-    level: 'Junior / Intermediate',
-    audience: 'Junior / Intermediate',
+    title: fullstackCourse.name,
+    desc: 'Percorso pratico per principianti assoluti. Videolezioni live su Meet, esercitazioni e un progetto finale: una piattaforma di prenotazioni.',
+    duration: fullstackCourse.hoursLabel,
+    format: fullstackCourse.modality,
+    level: 'Principianti assoluti',
+    audience: fullstackCourse.audience,
     price: '690€',
-    when: 'Dalla seconda settimana di gennaio 2027 · 5 settimane',
+    when: fullstackCourse.when,
     status: 'upcoming',
+    landingHref: FULLSTACK_PATH,
     outcomes: [
-      'Corso individuale.',
-      'Stack: HTML, CSS, JavaScript, React, Node.js, Supabase.',
-      'Prezzo del corso: 690€.',
+      'Progetto: piattaforma di prenotazioni per professionisti locali.',
+      `Stack: ${fullstackCourse.stack.join(', ')}.`,
+      `Prezzo del corso: ${fullstackCourse.price}.`,
     ],
   },
 ]

@@ -42,6 +42,16 @@ export async function POST(req: Request) {
   const contactType = TYPES[String(body.contactType ?? '')] ?? 'Messaggio'
   const when = String(body.when ?? '').trim()
   const company = String(body.company ?? '').trim()
+  const courseSlug = String(body.courseSlug ?? '').trim()
+  const level = String(body.level ?? '').trim()
+  const goal = String(body.goal ?? '').trim()
+  const schedulePreference = String(body.schedulePreference ?? '').trim()
+  const utmEntries = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .map(key => {
+      const value = String(body[key] ?? '').trim()
+      return value ? `${key}=${escapeHtml(value)}` : ''
+    })
+    .filter(Boolean)
 
   if (!name || !email || !message || !email.includes('@')) {
     return NextResponse.json({ error: 'Dati mancanti' }, { status: 400 })
@@ -53,9 +63,15 @@ export async function POST(req: Request) {
   const safeMessage = escapeHtml(message).replace(/\n/g, '<br/>')
   const safeWhen = escapeHtml(when)
   const safeCompany = escapeHtml(company)
+  const safeCourseSlug = escapeHtml(courseSlug)
+  const safeLevel = escapeHtml(level)
+  const safeGoal = escapeHtml(goal)
+  const safeSchedule = escapeHtml(schedulePreference)
   const reply = safeWhen
     ? `Abbiamo ricevuto la richiesta per la call gratuita di 20 minuti: <strong>${safeWhen}</strong>. Ti confermiamo l'orario a breve.`
-    : 'Abbiamo ricevuto il tuo messaggio. Ti rispondiamo entro <strong>24 ore lavorative</strong>.'
+    : courseSlug
+      ? 'Abbiamo ricevuto la tua candidatura al corso. Ti rispondiamo entro <strong>24 ore lavorative</strong>.'
+      : 'Abbiamo ricevuto il tuo messaggio. Ti rispondiamo entro <strong>24 ore lavorative</strong>.'
 
   try {
     const transport = mailer()
@@ -74,8 +90,13 @@ export async function POST(req: Request) {
             <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 16px;">${safeSubject}</h2>
             <p style="margin: 0 0 8px;"><strong>Nome:</strong> ${safeName}</p>
             ${safeCompany ? `<p style="margin: 0 0 8px;"><strong>Azienda:</strong> ${safeCompany}</p>` : ''}
-            <p style="margin: 0 0 24px;"><strong>Email:</strong> ${safeEmail}</p>
-            ${safeWhen ? `<p style="margin: 0 0 24px;"><strong>Quando:</strong> ${safeWhen}</p>` : ''}
+            <p style="margin: 0 0 8px;"><strong>Email:</strong> ${safeEmail}</p>
+            ${safeCourseSlug ? `<p style="margin: 0 0 8px;"><strong>Corso:</strong> ${safeCourseSlug}</p>` : ''}
+            ${safeLevel ? `<p style="margin: 0 0 8px;"><strong>Livello:</strong> ${safeLevel}</p>` : ''}
+            ${safeSchedule ? `<p style="margin: 0 0 8px;"><strong>Preferenza oraria:</strong> ${safeSchedule}</p>` : ''}
+            ${safeGoal ? `<p style="margin: 0 0 8px;"><strong>Obiettivo:</strong> ${safeGoal}</p>` : ''}
+            ${utmEntries.length ? `<p style="margin: 0 0 8px;"><strong>UTM:</strong> ${utmEntries.join(' · ')}</p>` : ''}
+            ${safeWhen ? `<p style="margin: 0 0 24px;"><strong>Quando:</strong> ${safeWhen}</p>` : '<div style="height:16px"></div>'}
             <p style="color: #555; line-height: 1.7; margin: 0;">${safeMessage}</p>
           </div>
         </div>
