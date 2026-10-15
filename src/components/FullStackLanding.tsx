@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 import FullStackFaq from '@/components/FullStackFaq'
-import { fullstackCourse } from '@/lib/fullstack-course'
+import { fullstackCourse, isConfirmed } from '@/lib/fullstack-course'
 import { track } from '@/lib/track'
 
 const INK = '#0D0D0D'
 const CREAM = '#F0EBE0'
 const PURPLE = '#694aff'
+const RED = '#fe3812'
 
 function scrollToApply() {
   track('fullstack_cta_click')
@@ -131,6 +132,7 @@ export default function FullStackLanding() {
               >
                 <h3>{step.title}</h3>
                 <p>{step.body}</p>
+                <p className="fs-orbit-outcome">{step.outcome}</p>
               </article>
             ))}
           </div>
@@ -146,18 +148,71 @@ export default function FullStackLanding() {
         </div>
       </section>
 
+      {(isConfirmed(fullstackCourse.instructor) || (isConfirmed(fullstackCourse.inclusions) && fullstackCourse.inclusions.items.length > 0)) && (
+        <section className="fs-section fs-info-split" aria-label="Docente e prezzo">
+          <div className="fs-info-grid">
+            {isConfirmed(fullstackCourse.instructor) && (
+              <div className="fs-instructor" aria-labelledby="fs-instructor-title">
+                <div className="fs-kicker">Docente</div>
+                <h2 id="fs-instructor-title">Chi tiene il corso</h2>
+                <div className="fs-instructor-card">
+                  <img
+                    src={fullstackCourse.instructor.image}
+                    alt={fullstackCourse.instructor.name}
+                    width={160}
+                    height={160}
+                  />
+                  <div>
+                    <p className="fs-instructor-role">{fullstackCourse.instructor.role}</p>
+                    <h3>{fullstackCourse.instructor.name}</h3>
+                    <p className="fs-instructor-bio">{fullstackCourse.instructor.bio}</p>
+                    <a href={fullstackCourse.instructor.href}>Scopri di più</a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {isConfirmed(fullstackCourse.inclusions) && fullstackCourse.inclusions.items.length > 0 && (
+              <div className="fs-includes" aria-labelledby="fs-includes-title">
+                <div className="fs-includes-head">
+                  <h2 id="fs-includes-title">Cosa include il corso</h2>
+                </div>
+                <ul className="fs-includes-list">
+                  {fullstackCourse.inclusions.items.map(item => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       <FullStackFaq />
 
-      <section id="candidati" className="fs-section fs-apply" aria-labelledby="fs-apply-title">
-        <div className="fs-apply-inner">
-          <div className="fs-kicker">Prossimo passo</div>
-          <h2 id="fs-apply-title">{fullstackCourse.cta.finalTitle}</h2>
+      <section id="candidati" className="fs-apply" aria-labelledby="fs-apply-title">
+        <div className="fs-apply-center">
+          <h2 id="fs-apply-title">
+            Entra nel corso <span className="fs-apply-accent">{fullstackCourse.cta.finalAccent}</span> e costruisci Agenda32.
+          </h2>
           <p className="fs-apply-lead">{fullstackCourse.cta.finalBody}</p>
-          <button type="button" className="fs-cta" onClick={openCall}>
-            {fullstackCourse.cta.call}
-          </button>
-          <p className="fs-apply-note">Call gratuita, senza impegno.</p>
+          <div className="fs-apply-actions">
+            <button type="button" className="fs-cta" onClick={openCall}>
+              {fullstackCourse.cta.call}
+            </button>
+            <a className="fs-cta" href={`mailto:${fullstackCourse.cta.email}`}>
+              {fullstackCourse.cta.emailLabel}
+            </a>
+          </div>
         </div>
+        <ul className="fs-apply-points">
+          {fullstackCourse.cta.finalPoints.map(point => (
+            <li key={point}>
+              <span aria-hidden="true">✓</span>
+              {point}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer className="fs-footer">
@@ -188,10 +243,10 @@ export default function FullStackLanding() {
         .fs-hero {
           min-height: 90vh;
           min-height: 90dvh;
-          padding: 96px 5% 56px;
+          padding: 0 0 56px;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
           gap: 40px;
           border-bottom: none;
           box-sizing: border-box;
@@ -201,17 +256,23 @@ export default function FullStackLanding() {
           grid-template-columns: 1fr;
           gap: 36px;
           align-items: center;
+          padding: 0 5%;
         }
         .fs-hero-project {
           text-align: center;
-          max-width: 72ch;
-          margin: 24px auto 40px;
-          padding: 8px 0 32px;
-          width: 100%;
+          width: 100vw;
+          margin: 0 calc(50% - 50vw) 40px;
+          padding: 140px 5% 96px;
+          box-sizing: border-box;
+          background: ${PURPLE};
+          color: ${CREAM};
+          border-bottom: 1px solid #141414;
         }
         .fs-hero-project .fs-badge {
           align-self: center;
           margin: 0 auto 22px;
+          background: ${CREAM};
+          box-shadow: 3px 3px 0 ${INK};
         }
         .fs-hero-project h2 {
           font-family: 'Canela', Georgia, serif;
@@ -219,15 +280,21 @@ export default function FullStackLanding() {
           font-size: clamp(36px, 5.5vw, 64px);
           letter-spacing: -1.4px;
           line-height: 1.02;
-          margin: 0 0 14px;
+          margin: 0 auto 14px;
+          max-width: 72ch;
+          color: ${CREAM};
         }
         .fs-project-name {
           font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
           font-size: clamp(28px, 4vw, 44px);
           font-weight: 800;
           letter-spacing: -0.8px;
-          margin: 0 0 16px;
-          color: ${INK};
+          margin: 0 auto 16px;
+          max-width: 72ch;
+          color: ${CREAM};
+        }
+        .fs-hero-project .fs-project-summary {
+          color: rgba(240, 235, 224, 0.88);
         }
         .street-word { position: relative; display: inline-block; }
         .events-underline {
@@ -236,7 +303,7 @@ export default function FullStackLanding() {
           bottom: 0.02em;
           width: 104%;
           height: 0.22em;
-          background: ${PURPLE};
+          background: ${RED};
           -webkit-mask: url(/underline-street.png) center / 100% 100% no-repeat;
           mask: url(/underline-street.png) center / 100% 100% no-repeat;
           pointer-events: none;
@@ -394,9 +461,9 @@ export default function FullStackLanding() {
         }
         .fs-cta, .fs-submit {
           display: inline-block;
-          background: ${INK};
+          background: ${RED};
           color: ${CREAM};
-          border: 1px solid ${INK};
+          border: 1px solid ${RED};
           box-shadow: 4px 4px 0 ${PURPLE};
           font-family: inherit;
           font-size: 12px;
@@ -412,10 +479,14 @@ export default function FullStackLanding() {
         @media (min-width: 900px) {
           .fs-hero {
             gap: 48px;
-            padding-top: 110px;
+            padding-top: 0;
             padding-bottom: 64px;
             min-height: 90vh;
             min-height: 90dvh;
+          }
+          .fs-hero-project {
+            padding-top: 156px;
+            padding-bottom: 108px;
           }
           .fs-hero-main {
             grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
@@ -433,8 +504,12 @@ export default function FullStackLanding() {
           .fs-hero {
             min-height: 90vh;
             min-height: 90dvh;
-            padding-top: 88px;
+            padding-top: 0;
             padding-bottom: 48px;
+          }
+          .fs-hero-project {
+            padding-top: 124px;
+            padding-bottom: 80px;
           }
           .fs-hero h1 {
             max-width: none;
@@ -634,11 +709,11 @@ export default function FullStackLanding() {
         .fs-orbit-item {
           position: absolute;
           z-index: 3;
-          width: min(200px, 34%);
+          width: min(220px, 36%);
           transform: translate(-50%, -50%);
           text-align: left;
         }
-        .fs-orbit-item-1 { left: 50%; top: 9%; text-align: center; width: min(240px, 42%); }
+        .fs-orbit-item-1 { left: 50%; top: 8%; text-align: center; width: min(260px, 44%); }
         .fs-orbit-item-2 { left: 90%; top: 30%; }
         .fs-orbit-item-3 { left: 86%; top: 76%; }
         .fs-orbit-item-4 { left: 14%; top: 76%; text-align: right; }
@@ -657,6 +732,104 @@ export default function FullStackLanding() {
           font-size: clamp(13px, 1.35vw, 15px);
           line-height: 1.5;
           color: rgba(240, 235, 224, 0.72);
+        }
+        .fs-orbit-item .fs-orbit-outcome {
+          margin-top: 8px;
+          font-size: clamp(12px, 1.25vw, 14px);
+          line-height: 1.45;
+          color: ${CREAM};
+          font-weight: 600;
+        }
+        .fs-info-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 40px;
+          align-items: start;
+        }
+        .fs-info-split h2 {
+          max-width: 16ch;
+        }
+        .fs-includes h2 {
+          max-width: 18ch;
+        }
+        .fs-instructor-card {
+          display: grid;
+          grid-template-columns: 112px minmax(0, 1fr);
+          gap: 20px;
+          align-items: center;
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 6px 6px 0 ${PURPLE};
+          padding: 20px;
+        }
+        .fs-instructor-card img {
+          width: 112px;
+          height: 112px;
+          object-fit: cover;
+          object-position: center 20%;
+          display: block;
+          border: 1px solid ${INK};
+        }
+        .fs-instructor-role {
+          margin: 0 0 6px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+        }
+        .fs-instructor-card h3 {
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(24px, 2.8vw, 32px);
+          letter-spacing: -0.8px;
+          margin: 0 0 10px;
+        }
+        .fs-instructor-bio {
+          margin: 0 0 14px;
+          font-size: 14px;
+          line-height: 1.55;
+          color: #3a3a3a;
+        }
+        .fs-instructor-card a {
+          color: ${INK};
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.4px;
+        }
+        .fs-includes-head {
+          margin-bottom: 20px;
+        }
+        .fs-includes-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .fs-includes-list li {
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 14px 16px;
+          font-size: 14px;
+          line-height: 1.45;
+        }
+        @media (min-width: 960px) {
+          .fs-info-grid {
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 48px;
+          }
+        }
+        @media (max-width: 640px) {
+          .fs-instructor-card {
+            grid-template-columns: 1fr;
+            justify-items: start;
+          }
+          .fs-instructor-card img {
+            width: 112px;
+            height: 112px;
+          }
         }
         @keyframes fs-orbit-spin {
           from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -771,37 +944,111 @@ export default function FullStackLanding() {
           color: #3a3a3a;
         }
         .fs-apply {
-          background: ${CREAM};
+          background: ${PURPLE};
+          color: ${CREAM};
           text-align: center;
-        }
-        .fs-apply-inner {
-          max-width: 420px;
-          margin: 0 auto;
+          border-bottom: none;
+          min-height: 100vh;
+          min-height: 100dvh;
+          padding: 96px 5% 48px;
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: space-between;
+          gap: 48px;
+          box-sizing: border-box;
         }
-        .fs-apply .fs-kicker {
-          margin-bottom: 12px;
+        .fs-apply-center {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 920px;
+          margin: 0 auto;
         }
         .fs-apply h2 {
-          max-width: 12ch;
-          margin-left: auto;
-          margin-right: auto;
-          margin-bottom: 12px;
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(36px, 6.2vw, 72px);
+          letter-spacing: -1.6px;
+          line-height: 1.05;
+          max-width: 16ch;
+          margin: 0 auto 22px;
+          color: ${CREAM};
+        }
+        .fs-apply-accent {
+          color: rgba(240, 235, 224, 0.72);
         }
         .fs-apply-lead {
-          font-size: 16px;
+          font-size: clamp(16px, 2vw, 20px);
           line-height: 1.55;
-          color: #3a3a3a;
-          margin: 0 0 24px;
+          color: rgba(240, 235, 224, 0.88);
+          margin: 0 0 36px;
+          max-width: 36ch;
+        }
+        .fs-apply-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+        }
+        .fs-apply .fs-cta {
+          background: ${RED};
+          color: ${CREAM};
+          border-color: ${RED};
+          box-shadow: 4px 4px 0 ${CREAM};
+          text-decoration: none;
+        }
+        .fs-apply .fs-cta:hover {
+          box-shadow: 3px 3px 0 ${CREAM};
+        }
+        .fs-apply-points {
+          list-style: none;
+          margin: 0;
+          padding: 0 0 8px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 18px 32px;
+          width: 100%;
+          max-width: 980px;
+        }
+        .fs-apply-points li {
+          display: inline-flex;
+          align-items: flex-start;
+          gap: 8px;
+          font-size: 13px;
+          line-height: 1.4;
+          color: rgba(240, 235, 224, 0.9);
+          text-align: left;
           max-width: 28ch;
         }
-        .fs-apply-note {
-          margin: 14px 0 0;
-          font-size: 12px;
-          letter-spacing: 0.4px;
-          color: #3a3a3a;
+        .fs-apply-points li span {
+          color: ${CREAM};
+          font-weight: 700;
+          flex: none;
+        }
+        @media (max-width: 720px) {
+          .fs-apply {
+            min-height: 100svh;
+            padding: 88px 5% 36px;
+            gap: 36px;
+          }
+          .fs-apply h2 {
+            max-width: 14ch;
+          }
+          .fs-apply-points {
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+          }
+          .fs-apply-points li {
+            max-width: 34ch;
+            text-align: left;
+          }
         }
         .fs-footer {
           display: flex;
@@ -809,15 +1056,16 @@ export default function FullStackLanding() {
           gap: 24px;
           flex-wrap: wrap;
           padding: 22px 28px;
-          border-top: 1px solid ${INK};
-          border-bottom: 1px solid ${INK};
+          background: ${PURPLE};
+          border-top: 1px solid rgba(240, 235, 224, 0.28);
+          border-bottom: none;
         }
         .fs-footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
         .fs-footer a, .fs-footer span {
           font-size: 11px;
           letter-spacing: 1.8px;
           text-transform: uppercase;
-          color: ${INK};
+          color: ${CREAM};
           text-decoration: none;
         }
         @media (min-width: 720px) {

@@ -20,8 +20,8 @@ export const fullstackCourse = {
     techLine: '',
     /** Screenshot reale. Sostituisci con la UI del progetto corso quando disponibile. */
     visual: {
-      src: '/works/conil-food-tour/laptop.webp',
-      alt: 'Interfaccia di prenotazione su laptop: homepage con tour, menu e pulsante Book now.',
+      src: '/events/agenda32.jpg',
+      alt: 'Smartphone su tavolo con interfaccia mobile: menu e pulsante di prenotazione.',
     },
   },
   startLabel: 'Gennaio 2027',
@@ -57,24 +57,43 @@ export const fullstackCourse = {
     {
       title: 'Fondamenti web e logica',
       body: 'HTML, CSS e le basi del linguaggio. Capisci come è fatta una pagina e come ragiona il codice.',
+      outcome: 'Alla fine hai una pagina scritta da te e sai leggere struttura e stile.',
     },
     {
       title: 'Interfaccia con React e Next.js',
       body: 'Costruisci le schermate dell\'app: layout, componenti e navigazione.',
+      outcome: 'Alla fine hai le schermate di Agenda32 collegate tra loro.',
     },
     {
       title: 'Logica applicativa e API',
       body: 'Colleghi il frontend al backend. Le richieste, le risposte e il flusso dei dati.',
+      outcome: 'Alla fine hai API che fanno parlare frontend e backend.',
     },
     {
       title: 'Dati e login con Supabase',
       body: 'Database, autenticazione e salvataggio delle informazioni reali.',
+      outcome: 'Alla fine hai login e prenotazioni salvate nel database.',
     },
     {
       title: 'AI, deploy su Vercel e progetto finale',
       body: 'Integri l\'AI nel prodotto, pubblichi online e chiudi il progetto.',
+      outcome: 'Alla fine hai Agenda32 online su Vercel, con una feature AI.',
     },
   ] as const,
+  instructor: {
+    name: 'Manuel Cerasuolo',
+    role: 'Digital project manager · full stack',
+    bio: 'In OFF32 coordina prodotti digitali dall’idea al rilascio. Lavora su design, Next.js, React e AI nel flusso di lavoro.',
+    href: '/about/manuel-cerasuolo',
+    image: '/team/team-01.jpg',
+    confirmed: true,
+  } satisfies Confirmable<{
+    name: string
+    role: string
+    bio: string
+    href: string
+    image: string
+  }>,
   valuePoints: [
     {
       title: 'Per principianti assoluti',
@@ -107,7 +126,19 @@ export const fullstackCourse = {
     confirmed: false,
   } satisfies Confirmable<{ value: string }>,
   prerequisites: { items: [] as string[], confirmed: false },
-  inclusions: { items: [] as string[], confirmed: false },
+  inclusions: {
+    items: [
+      '40 ore di lezioni live',
+      'PDF a fine di ogni lezione',
+      'Esercizi da fare ogni giorno',
+      '1 ora di call personale a settimana per dubbi e chiarimenti',
+      'Follow-up di 2 mesi dopo il corso',
+      'Progetto Agenda32 costruito passo dopo passo',
+      'Stack Next.js, React, TypeScript, Supabase, Vercel e AI',
+      'Gruppo ristretto, max 4 partecipanti',
+    ] as string[],
+    confirmed: true,
+  },
   vat: { label: '', confirmed: false },
   tools: { items: [] as string[], confirmed: false },
   payment: { label: '', confirmed: false },
@@ -156,8 +187,8 @@ export const fullstackCourse = {
     },
     {
       q: 'Cosa è incluso?',
-      a: '',
-      confirmed: false,
+      a: '40 ore live, PDF a fine lezione, esercizi quotidiani, 1 ora di call personale a settimana, follow-up di 2 mesi dopo il corso, progetto Agenda32 e stack completo. Gruppo max 4.',
+      confirmed: true,
     },
     {
       q: 'Posso adattare il progetto a una mia idea?',
@@ -171,10 +202,18 @@ export const fullstackCourse = {
       'Corso Full Stack per principianti: costruisci una piattaforma di prenotazioni con Next.js, React, TypeScript, Supabase e AI. Partenza gennaio 2027, 40 ore, 690 €. Max 4 partecipanti.',
   },
   cta: {
-    finalTitle: 'Partiamo da una call.',
-    finalBody: 'Una chiacchierata per conoscerci e capire se questo percorso fa per te.',
+    finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
+    finalAccent: 'Full Stack',
+    finalBody: 'Prenota una call conoscitiva o inviaci una email.',
     primary: 'Candidati al corso',
-    call: 'Candidati al corso',
+    call: 'Prenota una call',
+    email: 'connect@off32.it',
+    emailLabel: 'Inviaci una email',
+    finalPoints: [
+      'Max 4 partecipanti',
+      'PDF, esercizi e 1 ora di call personale a settimana',
+      'Follow-up di 2 mesi dopo il corso',
+    ] as const,
   },
   form: {
     levels: ['Principiante assoluto', 'Ho provato un po\' da solo', 'Ho già qualche base'] as const,

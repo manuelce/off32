@@ -9,5 +9,10 @@ export const metadata: Metadata = pageMeta(
 )
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <style>{`html, body { background: #694aff; }`}</style>
+      {children}
+    </>
+  )
 }

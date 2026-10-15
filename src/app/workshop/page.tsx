@@ -13,7 +13,7 @@ const FILTERS = ['All', 'Full-stack', 'Design', 'E-commerce', 'Gratuito']
 
 const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }> = {
   'brand-identity-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/brand.jpg', focus: 'center 42%' },
-  'videocorso-fullstack-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/campaign.jpg', focus: 'center 40%' },
+  'videocorso-fullstack-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/agenda32.jpg', focus: 'center center' },
 }
 
 const title: CSSProperties = {
@@ -69,13 +69,13 @@ function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop;
         <div style={{ borderTop: '1px solid #0D0D0D', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13 }}>
           <span>Formato: {workshop.format}</span>
           <span>Per: {workshop.audience}</span>
-          {workshop.when && <span>Date: {workshop.when}</span>}
+          {workshop.when && <span>Partenza: {workshop.when}</span>}
         </div>
         {bookable ? (
           <div className="event-foot">
             <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
             {workshop.landingHref ? (
-              <a href={workshop.landingHref} className="event-buy">Prenota</a>
+              <a href={workshop.landingHref} className="event-buy">Programma corso</a>
             ) : (
               <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
             )}
