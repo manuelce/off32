@@ -16,6 +16,7 @@ const paths = [
   '/about/sara-zeppieri',
   '/about/lorenzo-salvatori',
   '/about/sara-villani',
+  '/about/elisabetta-caria',
   '/workshop',
   '/full-stack',
   '/developmentconai',

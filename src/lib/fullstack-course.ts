@@ -182,7 +182,7 @@ export const fullstackCourse = {
     },
     {
       q: 'Come mi iscrivo?',
-      a: 'Prenota una call gratuita. Ci conosciamo e vediamo insieme se il percorso ha senso per te.',
+      a: 'Compila la candidatura in fondo alla pagina. Ti ricontattiamo noi.',
       confirmed: true,
     },
     {
@@ -204,11 +204,9 @@ export const fullstackCourse = {
   cta: {
     finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
     finalAccent: 'Full Stack',
-    finalBody: 'Prenota una call conoscitiva o inviaci una email.',
+    finalBody: 'Una email, un messaggio, una call. Ci conosciamo e partiamo.',
     primary: 'Candidati al corso',
-    call: 'Prenota una call',
-    email: 'connect@off32.it',
-    emailLabel: 'Inviaci una email',
+    call: 'Candidati al corso',
     finalPoints: [
       'Max 4 partecipanti',
       'PDF, esercizi e 1 ora di call personale a settimana',

@@ -11,6 +11,8 @@ const team: {
   name: string
   role: string
   tone?: boolean
+  focus?: string
+  scale?: number
   links: { kind: Social; href: string; label: string }[]
   href?: string
 }[] = [
@@ -55,6 +57,20 @@ const team: {
       { kind: 'linkedin', href: 'https://www.linkedin.com/in/saravillanii/', label: 'LinkedIn' },
     ],
     href: '/about/sara-villani',
+  },
+  {
+    src: '/team/team-07.jpg',
+    name: 'Elisabetta Carìa',
+    role: 'Web Designer & UX/UI Designer',
+    tone: true,
+    focus: 'center 18%',
+    scale: 1.28,
+    links: [
+      { kind: 'web', href: 'https://elisabettacaria.it/', label: 'Portfolio' },
+      { kind: 'instagram', href: 'https://www.instagram.com/elisabettacaria_uiux/', label: 'Instagram' },
+      { kind: 'linkedin', href: 'https://www.linkedin.com/in/elisabetta-car%C3%ACa-3b8bba111/', label: 'LinkedIn' },
+    ],
+    href: '/about/elisabetta-caria',
   },
 ]
 
@@ -138,10 +154,36 @@ export default function AboutPage() {
               <div style={{ aspectRatio: '3 / 4', overflow: 'hidden', borderBottom: LINE }}>
                 {person.href ? (
                   <a href={person.href} style={{ display: 'block', height: '100%' }}>
-                    <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+                    <img
+                      className={person.tone ? 'team-photo' : undefined}
+                      src={person.src}
+                      alt={person.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: person.focus ?? 'center 20%',
+                        transform: person.scale ? `scale(${person.scale})` : undefined,
+                        transformOrigin: 'center top',
+                        display: 'block',
+                      }}
+                    />
                   </a>
                 ) : (
-                  <img className={person.tone ? 'team-photo' : undefined} src={person.src} alt={person.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+                  <img
+                    className={person.tone ? 'team-photo' : undefined}
+                    src={person.src}
+                    alt={person.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: person.focus ?? 'center 20%',
+                      transform: person.scale ? `scale(${person.scale})` : undefined,
+                      transformOrigin: 'center top',
+                      display: 'block',
+                    }}
+                  />
                 )}
               </div>
               <div style={{ padding: '16px 16px 18px' }}>
@@ -151,13 +193,15 @@ export default function AboutPage() {
                   <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.3 }}>{person.name}</div>
                 )}
                 <div style={{ marginTop: 4, fontSize: 14, color: '#3a3a3a' }}>{person.role}</div>
-                <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
-                  {person.links.map(link => (
-                    <a key={link.kind} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label} style={{ color: '#0D0D0D', display: 'inline-flex' }}>
-                      <SocialIcon kind={link.kind} />
-                    </a>
-                  ))}
-                </div>
+                {person.links.length > 0 && (
+                  <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
+                    {person.links.map(link => (
+                      <a key={link.kind} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label} style={{ color: '#0D0D0D', display: 'inline-flex' }}>
+                        <SocialIcon kind={link.kind} />
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             </article>
           ))}

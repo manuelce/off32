@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import FullStackApplyForm from '@/components/FullStackApplyForm'
 import FullStackFaq from '@/components/FullStackFaq'
 import { fullstackCourse, isConfirmed } from '@/lib/fullstack-course'
 import { track } from '@/lib/track'
@@ -13,11 +14,6 @@ const RED = '#fe3812'
 function scrollToApply() {
   track('fullstack_cta_click')
   document.getElementById('candidati')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
-function openCall() {
-  track('fullstack_cta_click', { action: 'call20' })
-  window.dispatchEvent(new Event('off32-toggle-call'))
 }
 
 export default function FullStackLanding() {
@@ -192,18 +188,7 @@ export default function FullStackLanding() {
 
       <section id="candidati" className="fs-apply" aria-labelledby="fs-apply-title">
         <div className="fs-apply-center">
-          <h2 id="fs-apply-title">
-            Entra nel corso <span className="fs-apply-accent">{fullstackCourse.cta.finalAccent}</span> e costruisci Agenda32.
-          </h2>
-          <p className="fs-apply-lead">{fullstackCourse.cta.finalBody}</p>
-          <div className="fs-apply-actions">
-            <button type="button" className="fs-cta" onClick={openCall}>
-              {fullstackCourse.cta.call}
-            </button>
-            <a className="fs-cta" href={`mailto:${fullstackCourse.cta.email}`}>
-              {fullstackCourse.cta.emailLabel}
-            </a>
-          </div>
+          <FullStackApplyForm />
         </div>
         <ul className="fs-apply-points">
           {fullstackCourse.cta.finalPoints.map(point => (
@@ -954,18 +939,17 @@ export default function FullStackLanding() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-between;
-          gap: 48px;
+          justify-content: center;
+          gap: 28px;
           box-sizing: border-box;
         }
         .fs-apply-center {
-          flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           width: 100%;
-          max-width: 920px;
+          max-width: 720px;
           margin: 0 auto;
         }
         .fs-apply h2 {
@@ -1008,11 +992,11 @@ export default function FullStackLanding() {
         .fs-apply-points {
           list-style: none;
           margin: 0;
-          padding: 0 0 8px;
+          padding: 0;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 18px 32px;
+          gap: 14px 28px;
           width: 100%;
           max-width: 980px;
         }
@@ -1027,7 +1011,7 @@ export default function FullStackLanding() {
           max-width: 28ch;
         }
         .fs-apply-points li span {
-          color: ${CREAM};
+          color: ${RED};
           font-weight: 700;
           flex: none;
         }
@@ -1035,7 +1019,7 @@ export default function FullStackLanding() {
           .fs-apply {
             min-height: 100svh;
             padding: 88px 5% 36px;
-            gap: 36px;
+            gap: 22px;
           }
           .fs-apply h2 {
             max-width: 14ch;

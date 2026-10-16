@@ -3,7 +3,7 @@ import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
   'About',
-  'Il team OFF32: Manuel Cerasuolo, Sara Zeppieri, Lorenzo Salvatori e Sara Villani.',
+  'Il team OFF32: Manuel Cerasuolo, Sara Zeppieri, Lorenzo Salvatori, Sara Villani e Elisabetta Carìa.',
   '/about',
 )
 
