@@ -16,7 +16,7 @@ const paragraphs = [
   'Il lavoro parte dall’analisi. Progetto, pubblico, competitor. Prima dell’aspetto visivo arriva la struttura: contenuti, priorità, percorsi di navigazione. L’interfaccia deve rendere semplici le azioni che contano. Da lì nascono wireframe, prototipi e le schermate finali.',
   'Progetta in Figma. Realizza su WordPress ed Elementor, con esperienza anche su WooCommerce. Accanto all’UX/UI c’è il visual design: gerarchia, tipografia, colori e immagini. L’obiettivo è un’esperienza riconoscibile, non solo una pagina ordinata.',
   'Per lei il design non è solo estetica. È un processo che tiene insieme forma, funzione e comunicazione. Ogni scelta ha uno scopo: rendere un contenuto più chiaro, un percorso più intuitivo, un’identità più leggibile. È in questo equilibrio che un progetto digitale tiene.',
-  'In OFF32 questo è il design dei siti e dei prodotti digitali. Dalla struttura all’interfaccia, fino a ciò che il brand deve farsi capire online.',
+  'In OFF32 questo è il design dei siti e dei prodotti digitali. Dalla struttura all’interfaccia, fino a ciò che il brand deve fare per farsi capire online.',
 ]
 
 export default function ElisabettaCariaPage() {
@@ -56,7 +56,7 @@ export default function ElisabettaCariaPage() {
           </div>
         </div>
         <div className="profile-photo">
-          <img src="/team/team-07.jpg" alt="Elisabetta Carìa" style={{ objectPosition: 'center 18%', transform: 'scale(1.12)', transformOrigin: 'center top' }} />
+          <img src="/team/team-07.jpg" alt="Elisabetta Carìa" />
         </div>
         <div className="profile-body">
           {paragraphs.map(text => (
