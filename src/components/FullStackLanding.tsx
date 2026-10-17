@@ -571,7 +571,7 @@ export default function FullStackLanding() {
           width: 100%;
           margin: 0;
           padding: 72px 0;
-          border-bottom: 1px solid ${INK};
+          border-bottom: none;
           background: #fff;
         }
         .fs-for-who-inner {
@@ -719,6 +719,9 @@ export default function FullStackLanding() {
         .fs-section {
           padding: 72px 5%;
           border-bottom: 1px solid ${INK};
+        }
+        .fs-section.fs-why {
+          border-bottom: none;
         }
         .fs-section h2 {
           font-family: 'Canela', Georgia, serif;

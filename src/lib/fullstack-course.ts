@@ -203,7 +203,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Sofia',
-      role: 'Allieva · Sito web',
+      role: 'Allieva · HTML & CSS',
       avatar: '#c9a227',
       image: '/feedback/sofia-gonzalez.jpg',
       source: 'google' as const,
@@ -222,8 +222,25 @@ export const fullstackCourse = {
       name: 'Chiara',
       role: 'Allieva · Coding AI',
       avatar: '#fe3812',
+      image: '/feedback/feedbackchiara.jpg',
       source: 'google' as const,
       quote: 'Paziente, attento e preciso. Ottimo insegnante. Super raccomandato.',
+    },
+    {
+      name: 'Annamaria',
+      role: 'Allieva · Formazione',
+      avatar: '#e85d9a',
+      image: '/feedback/feedbackannamaria.jpg',
+      source: 'superprof' as const,
+      quote: 'Professionista molto disponibile e competente.',
+    },
+    {
+      name: 'Raffaela',
+      role: 'Allieva · AI · React · JavaScript',
+      avatar: '#c45c8a',
+      source: 'superprof' as const,
+      quote:
+        'Ottimo insegnante: chiaro e semplice nello spiegare i concetti, sempre ben organizzato. Consigliatissimo per chi vuole imparare o approfondire.',
     },
     {
       name: 'Paolo',
