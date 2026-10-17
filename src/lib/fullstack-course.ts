@@ -373,23 +373,14 @@ export const fullstackCourse = {
       'Corso Full Stack per principianti: Agenda32 con Next.js, React, TypeScript, Supabase e AI. Partenza 11 gennaio 2027, 40 ore, 690 € anche in 3 rate. Lezione gratuita di 1 ora prima dell’iscrizione. Max 4 partecipanti.',
   },
   offer: {
-    kicker: 'Come funziona',
-    title: 'Prima la lezione gratis. Poi decidi.',
-    lead: 'Niente salto nel buio: ti spieghiamo il percorso, vedi se fa per te, e solo dopo ti iscrivi.',
-    steps: [
-      {
-        title: 'Lezione gratuita di 1 ora',
-        body: 'Ti mostriamo il corso, lo stack e Agenda32. Fai domande. Zero impegno.',
-      },
-      {
-        title: 'Partenza 11 gennaio 2027',
-        body: '5 settimane, 40 ore live, gruppo max 4. Orari concordati con te.',
-      },
-      {
-        title: '690 € anche in 3 rate',
-        body: 'Paghi in tre tranche senza costi extra, se preferisci non saldare tutto subito.',
-      },
-    ] as const,
+    kicker: 'Il risultato',
+    title: 'A fine corso hai un’app online sul tuo dominio che puoi usare con i tuoi clienti.',
+    lead: 'In 5 settimane e 40 ore: un prodotto pubblicato, pronto da mostrare e da usare — non un esercizio da cartella.',
+    visual: {
+      src: '/events/agenda32.jpg',
+      alt: 'Agenda32 online: interfaccia di prenotazione pronta da usare con i clienti.',
+      url: 'agenda32.off32.it',
+    },
   },
   cta: {
     finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
@@ -398,9 +389,9 @@ export const fullstackCourse = {
     primary: 'Candidati',
     call: 'Candidati',
     finalPoints: [
+      '5 settimane / 40 ore live',
       'Lezione gratuita di 1 ora prima di iscriverti',
-      'Partenza 11 gennaio 2027 · max 4 posti',
-      '690 € pagabili anche in 3 rate',
+      'Partenza 11 gennaio 2027 · max 4 posti · anche in 3 rate',
     ] as const,
   },
   form: {

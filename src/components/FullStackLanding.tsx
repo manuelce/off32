@@ -72,9 +72,9 @@ export default function FullStackLanding() {
 
   const facts = [
     { label: 'Partenza', value: fullstackCourse.startLabel },
+    { label: 'Durata', value: `${fullstackCourse.weeks} settimane / ${fullstackCourse.hoursLabel}` },
     { label: 'Prezzo', value: fullstackCourse.priceLabel },
     { label: 'Lezione gratis', value: '1 ora prima di iscriverti' },
-    { label: 'Posti', value: `Max ${fullstackCourse.maxParticipants.value}` },
   ]
   return (
     <main className="fs-page" style={{ background: CREAM, color: INK, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -104,7 +104,7 @@ export default function FullStackLanding() {
                 {fullstackCourse.cta.primary}
               </button>
               <p className="fs-urgency">
-                Parte l’{fullstackCourse.startLabel} · max {fullstackCourse.maxParticipants.value} posti · anche in 3 rate
+                {fullstackCourse.weeks} settimane / {fullstackCourse.hoursLabel} · parte l’{fullstackCourse.startLabel} · max {fullstackCourse.maxParticipants.value} posti
               </p>
             </div>
           </div>
@@ -330,25 +330,34 @@ export default function FullStackLanding() {
         </div>
       </section>
 
-      {/* 06 · Offerta conversione */}
+      {/* 06 · Risultato dichiarato */}
       <section className="fs-section fs-offer" aria-labelledby="fs-offer-title">
-        <div className="fs-kicker">{fullstackCourse.offer.kicker}</div>
-        <h2 id="fs-offer-title">{fullstackCourse.offer.title}</h2>
-        <p className="fs-section-lead">{fullstackCourse.offer.lead}</p>
-        <div className="fs-offer-grid">
-          {fullstackCourse.offer.steps.map((step, index) => (
-            <article key={step.title} className="fs-offer-card">
-              <span className="fs-offer-step">0{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-            </article>
-          ))}
-        </div>
-        <div className="fs-offer-cta">
-          <button type="button" className="fs-cta" onClick={scrollToApply}>
-            {fullstackCourse.cta.primary}
-          </button>
-          <p className="fs-offer-note">{fullstackCourse.freeLesson.body}</p>
+        <div className="fs-offer-main">
+          <div className="fs-offer-copy">
+            <div className="fs-kicker">{fullstackCourse.offer.kicker}</div>
+            <h2 id="fs-offer-title">{fullstackCourse.offer.title}</h2>
+            <p className="fs-section-lead">{fullstackCourse.offer.lead}</p>
+            <div className="fs-offer-cta">
+              <button type="button" className="fs-cta" onClick={scrollToApply}>
+                {fullstackCourse.cta.primary}
+              </button>
+              <p className="fs-offer-note">{fullstackCourse.freeLesson.body}</p>
+            </div>
+          </div>
+          <div className="fs-offer-visual">
+            <div className="fs-browser">
+              <div className="fs-browser-bar" aria-hidden="true">
+                <span /><span /><span />
+                <div className="fs-browser-url">{fullstackCourse.offer.visual.url}</div>
+              </div>
+              <div className="fs-browser-screen">
+                <img
+                  src={fullstackCourse.offer.visual.src}
+                  alt={fullstackCourse.offer.visual.alt}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1166,42 +1175,27 @@ export default function FullStackLanding() {
           line-height: 1.55;
           color: #3a3a3a;
         }
-        .fs-offer-grid {
+        .fs-offer-main {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 14px;
-          margin-top: 28px;
+          gap: 36px;
+          align-items: center;
         }
-        .fs-offer-card {
-          border: 1px solid ${INK};
-          background: #fff;
-          box-shadow: 4px 4px 0 ${PURPLE};
-          padding: 20px 22px;
+        .fs-offer-copy {
+          min-width: 0;
         }
-        .fs-offer-step {
-          display: block;
-          margin-bottom: 10px;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 1.4px;
-          text-transform: uppercase;
-          color: ${PURPLE};
+        .fs-offer h2 {
+          max-width: 18ch;
         }
-        .fs-offer-card h3 {
-          font-family: 'Canela', Georgia, serif;
-          font-weight: 300;
-          font-size: clamp(22px, 2.6vw, 28px);
-          letter-spacing: -0.5px;
-          margin: 0 0 8px;
+        .fs-offer .fs-section-lead {
+          margin-bottom: 0;
         }
-        .fs-offer-card p {
-          margin: 0;
-          font-size: 15px;
-          line-height: 1.55;
-          color: #3a3a3a;
+        .fs-offer-visual {
+          width: 100%;
+          min-width: 0;
         }
         .fs-offer-cta {
-          margin-top: 32px;
+          margin-top: 28px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -1213,6 +1207,12 @@ export default function FullStackLanding() {
           font-size: 14px;
           line-height: 1.55;
           color: #3a3a3a;
+        }
+        @media (min-width: 900px) {
+          .fs-offer-main {
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: 48px;
+          }
         }
         .fs-testimonials-grid {
           display: grid;
@@ -1350,9 +1350,6 @@ export default function FullStackLanding() {
           }
           .fs-testimonials-grid {
             grid-template-columns: 1fr 1fr;
-          }
-          .fs-offer-grid {
-            grid-template-columns: 1fr 1fr 1fr;
           }
         }
         @media (min-width: 960px) {
