@@ -51,8 +51,23 @@ export const fullstackCourse = {
     title: 'La piattaforma che costruirai',
     name: 'Agenda32',
     summary:
-      'Agenda32 è una piattaforma di prenotazione per professionisti locali: chef, parrucchieri, personal trainer. Profilo, servizi, calendario e prenotazioni online.',
+      'Con Agenda32 gestisci profilo, servizi, calendario e prenotazioni online. Serve a freelancer e attività locali, e il progetto si adatta a qualsiasi settore: dalla consulenza alla cucina, dal salone allo studio.',
   },
+  /** Video introduttivo. confirmed:false = sezione nascosta. Riattiva quando hai il video. */
+  projectVideo: {
+    src: '/agenda32.mp4',
+    poster: '/events/agenda32.jpg',
+    kicker: 'Il progetto',
+    title: 'Ti mostriamo Agenda32',
+    lead: 'Guarda come funziona la piattaforma che costruirai durante il corso.',
+    confirmed: false,
+  } satisfies Confirmable<{
+    src: string
+    poster: string
+    kicker: string
+    title: string
+    lead: string
+  }>,
   learningSteps: [
     {
       title: 'Fondamenti web e logica',
@@ -96,28 +111,39 @@ export const fullstackCourse = {
   }>,
   valuePoints: [
     {
-      title: 'Per principianti assoluti',
-      body: 'Parti da zero. Non serve aver già scritto codice.',
+      title: 'Parti da zero',
+      body: 'Non serve aver già scritto codice. Ti accompagniamo dalla prima riga.',
     },
     {
-      title: 'Pratico',
-      body: 'Ogni concetto diventa una parte dell\'applicazione che stai costruendo.',
+      title: 'Logica end-to-end',
+      body: 'Capisci come parlano frontend, backend e database, non pezzi isolati.',
     },
     {
-      title: 'Progressione guidata',
-      body: 'Cinque tappe chiare, dalla prima riga al deploy.',
+      title: 'Un progetto da mostrare',
+      body: 'Alla fine hai Agenda32 online: utile in portfolio e nei colloqui.',
     },
     {
-      title: 'Piccolo gruppo',
-      body: 'Spazio per domande e revisione del tuo lavoro.',
+      title: 'Metodo di lavoro',
+      body: 'Git, deploy e AI nel flusso quotidiano: gli stessi gesti del lavoro reale.',
     },
   ] as const,
   whyOff32: [
-    'Gruppo ristretto e attenzione sul progetto di ciascuno.',
-    'Pratica continua: non solo teoria.',
-    'Progressione da zero fino a un\'app online.',
-    'Stack professionale reale: Next.js, React, TypeScript, Supabase, Vercel, AI.',
-    'Lo stesso tipo di stack con cui è costruita la piattaforma OFF32.',
+    {
+      title: 'Gruppo di 4',
+      body: 'Posti limitati. Tempo reale per domande e revisione del tuo lavoro.',
+    },
+    {
+      title: 'Supporto individuale',
+      body: '1 ora di call personale a settimana per dubbi e chiarimenti.',
+    },
+    {
+      title: 'Follow-up di 2 mesi',
+      body: 'Dopo il corso restiamo disponibili mentre continui a costruire.',
+    },
+    {
+      title: 'Pratica continua',
+      body: 'PDF a fine lezione, esercizi ogni giorno, progetto passo dopo passo.',
+    },
   ] as const,
   /** Non pubblicati finché confirmed resta false. */
   maxParticipants: { value: 4, confirmed: true } satisfies Confirmable<{ value: number }>,
@@ -147,12 +173,12 @@ export const fullstackCourse = {
     confirmed: false,
   },
   projectFeatures: [
-    { label: 'Pagina del professionista (profilo, servizi, prezzi)', confirmed: false },
-    { label: 'Calendario con scelta di data e orario', confirmed: false },
-    { label: 'Form di prenotazione salvato su Supabase', confirmed: false },
-    { label: 'Registrazione e login utente (Supabase Auth)', confirmed: false },
-    { label: 'Area Le mie prenotazioni', confirmed: false },
-    { label: 'Pubblicazione online su Vercel', confirmed: false },
+    { label: 'Pagina del professionista (profilo, servizi, prezzi)', confirmed: true },
+    { label: 'Calendario con scelta di data e orario', confirmed: true },
+    { label: 'Form di prenotazione salvato su Supabase', confirmed: true },
+    { label: 'Registrazione e login utente (Supabase Auth)', confirmed: true },
+    { label: 'Area Le mie prenotazioni', confirmed: true },
+    { label: 'Pubblicazione online su Vercel', confirmed: true },
   ] satisfies Confirmable<{ label: string }>[],
   faqs: [
     {
@@ -162,7 +188,7 @@ export const fullstackCourse = {
     },
     {
       q: 'Cosa sviluppiamo?',
-      a: 'Una piattaforma di prenotazione per professionisti locali, costruita passo dopo passo durante il corso.',
+      a: 'Agenda32: profilo, servizi, calendario e prenotazioni online. Il progetto si adatta a qualsiasi settore: freelancer, consulenza, food, beauty e oltre.',
       confirmed: true,
     },
     {

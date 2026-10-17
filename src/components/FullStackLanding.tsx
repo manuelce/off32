@@ -16,6 +16,46 @@ function scrollToApply() {
   document.getElementById('candidati')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
+function ProjectVideoPlayer({ src, poster }: { src: string; poster?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+
+  const handlePlay = () => {
+    const video = videoRef.current
+    if (!video) return
+    void video.play()
+    setPlaying(true)
+  }
+
+  return (
+    <div className={`fs-video-frame${playing ? ' is-playing' : ''}`}>
+      <video
+        ref={videoRef}
+        playsInline
+        preload="metadata"
+        poster={poster || undefined}
+        src={src}
+        controls={playing}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      >
+        Il tuo browser non supporta il video.
+      </video>
+      {!playing && (
+        <button
+          type="button"
+          className="fs-video-play"
+          onClick={handlePlay}
+          aria-label="Riproduci video"
+        >
+          <span className="fs-video-play-icon" aria-hidden="true" />
+        </button>
+      )}
+    </div>
+  )
+}
+
 export default function FullStackLanding() {
   const [underlineOn, setUnderlineOn] = useState(false)
   const underlinePlayed = useRef(false)
@@ -31,17 +71,17 @@ export default function FullStackLanding() {
   }, [])
 
   const facts = [
-    { label: 'Posti', value: `Max ${fullstackCourse.maxParticipants.value} partecipanti` },
+    { label: 'Pubblico', value: fullstackCourse.audience },
     { label: 'Prezzo', value: fullstackCourse.priceLabel },
     { label: 'Partenza', value: fullstackCourse.startLabel },
     { label: 'Durata', value: fullstackCourse.hoursLabel },
   ]
-
   return (
     <main className="fs-page" style={{ background: CREAM, color: INK, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <section className="fs-hero">
+      {/* 01 · Hero */}
+      <section className="fs-hero" aria-labelledby="fs-hero-title">
         <div className="fs-hero-project">
-          <span className="fs-badge">Per chi parte da zero</span>
+          <span className="fs-badge">{fullstackCourse.hero.badge}</span>
           <h2 id="fs-project">{fullstackCourse.project.title}</h2>
           <p className="fs-project-name">
             <span className="street-word">
@@ -53,7 +93,7 @@ export default function FullStackLanding() {
         </div>
         <div className="fs-hero-main">
           <div className="fs-hero-copy">
-            <h1>{fullstackCourse.hero.title}</h1>
+            <h1 id="fs-hero-title">{fullstackCourse.hero.title}</h1>
             <div className="fs-intro">
               {fullstackCourse.hero.lines.map(line => (
                 <p key={line}>{line}</p>
@@ -94,9 +134,31 @@ export default function FullStackLanding() {
         </div>
       </section>
 
+      {/* 02 · Video progetto — riattiva con projectVideo.confirmed: true */}
+      {isConfirmed(fullstackCourse.projectVideo) && (
+        <section className="fs-section fs-project-video" aria-labelledby="fs-project-video-title">
+          <div className="fs-kicker">{fullstackCourse.projectVideo.kicker}</div>
+          <h2 id="fs-project-video-title">{fullstackCourse.projectVideo.title}</h2>
+          <p className="fs-section-lead">{fullstackCourse.projectVideo.lead}</p>
+          {fullstackCourse.projectVideo.src ? (
+            <ProjectVideoPlayer
+              src={fullstackCourse.projectVideo.src}
+              poster={fullstackCourse.projectVideo.poster || undefined}
+            />
+          ) : (
+            <div className="fs-video-frame">
+              <div className="fs-video-placeholder" aria-hidden="true">
+                <span>Video in arrivo</span>
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* 03 · Percorso in 5 tappe + stack */}
       <section className="fs-section fs-learn" aria-labelledby="fs-learn">
         <div className="fs-learn-head">
-          <div className="fs-kicker">Cosa imparerai</div>
+          <div className="fs-kicker">Il percorso</div>
           <h2 id="fs-learn">
             Cinque tappe <span className="fs-learn-accent">progressive</span>
           </h2>
@@ -144,48 +206,43 @@ export default function FullStackLanding() {
         </div>
       </section>
 
-      {(isConfirmed(fullstackCourse.instructor) || (isConfirmed(fullstackCourse.inclusions) && fullstackCourse.inclusions.items.length > 0)) && (
-        <section className="fs-section fs-info-split" aria-label="Docente e prezzo">
-          <div className="fs-info-grid">
-            {isConfirmed(fullstackCourse.instructor) && (
-              <div className="fs-instructor" aria-labelledby="fs-instructor-title">
-                <div className="fs-kicker">Docente</div>
-                <h2 id="fs-instructor-title">Chi tiene il corso</h2>
-                <div className="fs-instructor-card">
-                  <img
-                    src={fullstackCourse.instructor.image}
-                    alt={fullstackCourse.instructor.name}
-                    width={160}
-                    height={160}
-                  />
-                  <div>
-                    <p className="fs-instructor-role">{fullstackCourse.instructor.role}</p>
-                    <h3>{fullstackCourse.instructor.name}</h3>
-                    <p className="fs-instructor-bio">{fullstackCourse.instructor.bio}</p>
-                    <a href={fullstackCourse.instructor.href}>Scopri di più</a>
-                  </div>
-                </div>
+      {/* 04 · Perché questo corso (+ chi ti guiderà) */}
+      <section className="fs-section fs-why" aria-labelledby="fs-why-title">
+        <div className="fs-kicker">Perché questo corso</div>
+        <h2 id="fs-why-title">Gruppo piccolo, supporto reale</h2>
+        <div className="fs-value-grid">
+          {fullstackCourse.whyOff32.map(point => (
+            <article key={point.title} className="fs-value-card">
+              <h3>{point.title}</h3>
+              <p>{point.body}</p>
+            </article>
+          ))}
+        </div>
+        {isConfirmed(fullstackCourse.instructor) && (
+          <div className="fs-why-guide" aria-labelledby="fs-instructor-title">
+            <div className="fs-kicker" id="fs-instructor-title">Chi ti guiderà</div>
+            <div className="fs-instructor-card">
+              <img
+                src={fullstackCourse.instructor.image}
+                alt={fullstackCourse.instructor.name}
+                width={160}
+                height={160}
+              />
+              <div>
+                <p className="fs-instructor-role">{fullstackCourse.instructor.role}</p>
+                <h3>{fullstackCourse.instructor.name}</h3>
+                <p className="fs-instructor-bio">{fullstackCourse.instructor.bio}</p>
+                <a href={fullstackCourse.instructor.href}>Scopri di più</a>
               </div>
-            )}
-
-            {isConfirmed(fullstackCourse.inclusions) && fullstackCourse.inclusions.items.length > 0 && (
-              <div className="fs-includes" aria-labelledby="fs-includes-title">
-                <div className="fs-includes-head">
-                  <h2 id="fs-includes-title">Cosa include il corso</h2>
-                </div>
-                <ul className="fs-includes-list">
-                  {fullstackCourse.inclusions.items.map(item => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            </div>
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
+      {/* 05 · FAQ */}
       <FullStackFaq />
 
+      {/* 06 · CTA finale */}
       <section id="candidati" className="fs-apply" aria-labelledby="fs-apply-title">
         <div className="fs-apply-center">
           <FullStackApplyForm />
@@ -521,6 +578,79 @@ export default function FullStackLanding() {
           max-width: 52ch;
           margin: 0 0 28px;
         }
+        .fs-project-video .fs-video-frame {
+          position: relative;
+          width: 100%;
+          margin: 0;
+          background: #fff;
+          border: 1px solid ${INK};
+          box-shadow: 10px 10px 0 ${PURPLE};
+          overflow: hidden;
+          aspect-ratio: 16 / 9;
+        }
+        .fs-project-video .fs-video-frame video,
+        .fs-project-video .fs-video-placeholder {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background: ${INK};
+        }
+        .fs-project-video .fs-video-placeholder {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: ${CREAM};
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+        }
+        .fs-video-play {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          cursor: pointer;
+          display: grid;
+          place-items: center;
+          padding: 0;
+          z-index: 2;
+        }
+        .fs-video-play:hover {
+          translate: calc(-50% + 1px) calc(-50% + 1px);
+          box-shadow: 3px 3px 0 ${PURPLE};
+        }
+        .fs-video-play-icon {
+          display: block;
+          width: 0;
+          height: 0;
+          margin-left: 4px;
+          border-style: solid;
+          border-width: 11px 0 11px 18px;
+          border-color: transparent transparent transparent ${PURPLE};
+        }
+        @media (min-width: 900px) {
+          .fs-project-video {
+            text-align: center;
+          }
+          .fs-project-video h2,
+          .fs-project-video .fs-section-lead {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .fs-project-video .fs-video-frame {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
         .fs-grid-4, .fs-grid-2 {
           display: grid;
           gap: 16px;
@@ -739,21 +869,27 @@ export default function FullStackLanding() {
         }
         .fs-instructor-card {
           display: grid;
-          grid-template-columns: 112px minmax(0, 1fr);
-          gap: 20px;
-          align-items: center;
+          grid-template-columns: minmax(148px, 42%) minmax(0, 1fr);
+          gap: 18px;
+          align-items: stretch;
           border: 1px solid ${INK};
           background: #fff;
           box-shadow: 6px 6px 0 ${PURPLE};
-          padding: 20px;
+          padding: 16px;
         }
         .fs-instructor-card img {
-          width: 112px;
-          height: 112px;
+          width: 100%;
+          height: 100%;
+          min-height: 168px;
           object-fit: cover;
-          object-position: center 20%;
+          object-position: center 18%;
           display: block;
           border: 1px solid ${INK};
+          align-self: stretch;
+        }
+        .fs-instructor-card > div {
+          align-self: center;
+          min-width: 0;
         }
         .fs-instructor-role {
           margin: 0 0 6px;
@@ -781,8 +917,71 @@ export default function FullStackLanding() {
           font-weight: 700;
           letter-spacing: 0.4px;
         }
+        .fs-feature-list {
+          list-style: none;
+          margin: 28px 0 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+          max-width: 760px;
+        }
+        .fs-feature-list li {
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 14px 16px;
+          font-size: 15px;
+          line-height: 1.45;
+        }
+        .fs-value-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 14px;
+          margin-top: 28px;
+        }
+        .fs-value-card {
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 20px 22px;
+        }
+        .fs-value-card h3 {
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(22px, 2.6vw, 28px);
+          letter-spacing: -0.5px;
+          margin: 0 0 8px;
+        }
+        .fs-value-card p {
+          margin: 0;
+          font-size: 15px;
+          line-height: 1.55;
+          color: #3a3a3a;
+        }
+        .fs-why-guide {
+          margin-top: 48px;
+        }
+        .fs-why-guide .fs-kicker {
+          margin-bottom: 14px;
+        }
+        .fs-why-guide .fs-instructor-card {
+          max-width: none;
+          width: 100%;
+        }
+        @media (min-width: 720px) {
+          .fs-why-guide .fs-instructor-card {
+            width: calc(50% - 7px);
+          }
+        }
         .fs-includes-head {
           margin-bottom: 20px;
+        }
+        .fs-includes-price {
+          margin: 10px 0 0;
+          font-size: clamp(28px, 4vw, 40px);
+          font-weight: 800;
+          letter-spacing: -0.8px;
         }
         .fs-includes-list {
           list-style: none;
@@ -792,6 +991,9 @@ export default function FullStackLanding() {
           grid-template-columns: 1fr;
           gap: 10px;
         }
+        .fs-includes-list-wide {
+          max-width: 960px;
+        }
         .fs-includes-list li {
           border: 1px solid ${INK};
           background: #fff;
@@ -799,6 +1001,16 @@ export default function FullStackLanding() {
           padding: 14px 16px;
           font-size: 14px;
           line-height: 1.45;
+        }
+        .fs-includes-cta {
+          margin-top: 28px;
+        }
+        @media (min-width: 720px) {
+          .fs-feature-list,
+          .fs-value-grid,
+          .fs-includes-list-wide {
+            grid-template-columns: 1fr 1fr;
+          }
         }
         @media (min-width: 960px) {
           .fs-info-grid {
@@ -809,11 +1021,12 @@ export default function FullStackLanding() {
         @media (max-width: 640px) {
           .fs-instructor-card {
             grid-template-columns: 1fr;
-            justify-items: start;
           }
           .fs-instructor-card img {
-            width: 112px;
-            height: 112px;
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            aspect-ratio: 1 / 1;
           }
         }
         @keyframes fs-orbit-spin {
@@ -881,8 +1094,10 @@ export default function FullStackLanding() {
           50% { transform: scale(1.04); }
         }
         .fs-stack-block { margin-top: 48px; }
-        .fs-learn .fs-stack-block .fs-kicker {
+        .fs-learn .fs-stack-block {
           text-align: center;
+        }
+        .fs-learn .fs-stack-block .fs-kicker {
           margin-bottom: 14px;
         }
         .fs-learn .fs-stack-list {

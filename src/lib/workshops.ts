@@ -58,7 +58,7 @@ export const workshops: Workshop[] = [
     status: 'upcoming',
     landingHref: FULLSTACK_PATH,
     outcomes: [
-      'Progetto: Agenda32, piattaforma di prenotazioni per professionisti locali.',
+      'Progetto: Agenda32, prenotazioni online adattabile a qualsiasi settore.',
       `Stack: ${fullstackCourse.stack.join(', ')}.`,
       `Prezzo del corso: ${fullstackCourse.price}.`,
     ],
