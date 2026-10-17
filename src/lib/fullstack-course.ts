@@ -42,8 +42,9 @@ export const fullstackCourse = {
   },
   forWho: {
     kicker: 'Per chi è',
-    title: 'Se parti da zero e vuoi costruire qualcosa di reale',
-    lead: 'Il corso è pensato per chi non ha ancora scritto codice e vuole arrivare a un’app online, non a una raccolta di esercizi.',
+    title: 'Da zero al risultato',
+    lead: 'Il corso è pensato per chi non ha ancora scritto codice. Alla fine non hai solo esercizi: hai una trasformazione spendibile.',
+    audienceTitle: 'Questo corso è per te se',
     points: [
       {
         title: 'Principianti assoluti',
@@ -61,6 +62,13 @@ export const fullstackCourse = {
         title: 'Chi vuole lavorare con lo stack reale',
         body: 'Next.js, React, TypeScript, Node.js, Supabase, Git e AI: gli stessi strumenti del lavoro.',
       },
+    ] as const,
+    outcomesTitle: 'Cosa sai fare dopo',
+    outcomes: [
+      'Costruire e pubblicare una web app per un tuo cliente o progetto',
+      'Essere pronto a lavorare come junior o freelance sul web',
+      'Gestire frontend, backend, database e deploy in un unico flusso',
+      'Usare Git, Vercel e AI nel lavoro quotidiano sullo stack reale',
     ] as const,
   },
   stack: [
@@ -125,7 +133,7 @@ export const fullstackCourse = {
   ] as const,
   instructor: {
     name: 'Manuel Cerasuolo',
-    role: 'Digital project manager · full stack',
+    role: 'Digital project manager / full stack',
     bio: 'In OFF32 coordina prodotti digitali dall’idea al rilascio. Lavora su design, Next.js, React e AI nel flusso di lavoro.',
     href: '/about/manuel-cerasuolo',
     image: '/team/team-01.jpg',
@@ -177,7 +185,7 @@ export const fullstackCourse = {
   testimonials: [
     {
       name: 'Sara',
-      role: 'Allieva · React · Node',
+      role: 'Allieva / React / Node',
       avatar: '#e85d9a',
       source: 'superprof' as const,
       quote:
@@ -185,7 +193,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Giovanni',
-      role: 'Allievo · Sviluppo web',
+      role: 'Allievo / Sviluppo web/app',
       avatar: '#0D0D0D',
       image: '/feedback/feedbackGiovanni.jpg',
       source: 'superprof' as const,
@@ -194,7 +202,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Victoria',
-      role: 'Allieva · WordPress',
+      role: 'Allieva / WordPress',
       avatar: '#e85d9a',
       image: '/feedback/feedbackVictoria.jpg',
       source: 'google' as const,
@@ -203,7 +211,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Sofia',
-      role: 'Allieva · HTML & CSS',
+      role: 'Allieva / HTML & CSS',
       avatar: '#c9a227',
       image: '/feedback/sofia-gonzalez.jpg',
       source: 'google' as const,
@@ -212,7 +220,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Emanuele',
-      role: 'Allievo · HTML & JavaScript',
+      role: 'Allievo / HTML & JavaScript',
       avatar: '#694aff',
       source: 'google' as const,
       quote:
@@ -220,7 +228,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Chiara',
-      role: 'Allieva · Coding AI',
+      role: 'Allieva / Coding AI',
       avatar: '#fe3812',
       image: '/feedback/feedbackchiara.jpg',
       source: 'google' as const,
@@ -228,15 +236,15 @@ export const fullstackCourse = {
     },
     {
       name: 'Annamaria',
-      role: 'Allieva · Formazione',
+      role: 'Allieva / Formazione',
       avatar: '#e85d9a',
       image: '/feedback/feedbackannamaria.jpg',
       source: 'superprof' as const,
       quote: 'Professionista molto disponibile e competente.',
     },
     {
-      name: 'Raffaela',
-      role: 'Allieva · AI · React · JavaScript',
+      name: 'Raffaella',
+      role: 'Allieva / AI / React / JavaScript',
       avatar: '#c45c8a',
       source: 'superprof' as const,
       quote:
@@ -244,7 +252,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Paolo',
-      role: 'Allievo · Formazione',
+      role: 'Allievo / Formazione',
       avatar: '#2f6fed',
       source: 'superprof' as const,
       quote:
@@ -252,7 +260,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Domenico',
-      role: 'Allievo · Sviluppo web',
+      role: 'Allievo / Sviluppo web',
       avatar: '#1a9f5c',
       source: 'superprof' as const,
       quote:
@@ -260,7 +268,7 @@ export const fullstackCourse = {
     },
     {
       name: 'Ilaria',
-      role: 'Allieva · WordPress',
+      role: 'Allieva / WordPress',
       avatar: '#fe3812',
       image: '/feedback/feedbackIlaria.jpg',
       source: 'google' as const,

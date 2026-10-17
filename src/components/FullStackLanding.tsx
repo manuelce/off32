@@ -157,19 +157,40 @@ export default function FullStackLanding() {
         </section>
       )}
 
-      {/* 03 · Per chi è */}
+      {/* 03 · Per chi è + outcome */}
       <section className="fs-for-who" aria-labelledby="fs-for-who-title">
         <div className="fs-for-who-inner">
           <div className="fs-kicker">{fullstackCourse.forWho.kicker}</div>
           <h2 id="fs-for-who-title">{fullstackCourse.forWho.title}</h2>
           <p className="fs-for-who-lead">{fullstackCourse.forWho.lead}</p>
-          <div className="fs-for-who-grid">
-            {fullstackCourse.forWho.points.map(point => (
-              <article key={point.title} className="fs-for-who-card">
-                <h3>{point.title}</h3>
-                <p>{point.body}</p>
-              </article>
-            ))}
+          <div className="fs-for-who-cols">
+            <article className="fs-for-who-panel">
+              <h3>{fullstackCourse.forWho.audienceTitle}</h3>
+              <ul className="fs-for-who-checks">
+                {fullstackCourse.forWho.points.map(point => (
+                  <li key={point.title}>
+                    <span className="fs-for-who-check" aria-hidden="true">√</span>
+                    <div>
+                      <strong>{point.title}</strong>
+                      <p>{point.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article className="fs-for-who-panel">
+              <h3>{fullstackCourse.forWho.outcomesTitle}</h3>
+              <ul className="fs-for-who-checks">
+                {fullstackCourse.forWho.outcomes.map(item => (
+                  <li key={item}>
+                    <span className="fs-for-who-check" aria-hidden="true">√</span>
+                    <div>
+                      <strong>{item}</strong>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </article>
           </div>
         </div>
       </section>
@@ -595,42 +616,67 @@ export default function FullStackLanding() {
           max-width: 52ch;
           margin: 0 0 32px;
         }
-        .fs-for-who-grid {
+        .fs-for-who-cols {
           display: grid;
           grid-template-columns: 1fr;
           gap: 14px;
           width: 100%;
         }
-        .fs-for-who-card {
+        .fs-for-who-panel {
           border: 1px solid ${INK};
           background: ${CREAM};
           box-shadow: 4px 4px 0 ${PURPLE};
-          padding: 20px 22px;
+          padding: 22px 22px 20px;
         }
-        .fs-for-who-card h3 {
+        .fs-for-who-panel h3 {
           font-family: 'Canela', Georgia, serif;
           font-weight: 300;
-          font-size: clamp(22px, 2.6vw, 28px);
-          letter-spacing: -0.5px;
-          margin: 0 0 8px;
+          font-size: clamp(24px, 3vw, 32px);
+          letter-spacing: -0.6px;
+          margin: 0 0 18px;
+          max-width: 16ch;
         }
-        .fs-for-who-card p {
+        .fs-for-who-checks {
+          list-style: none;
           margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .fs-for-who-checks li {
+          display: grid;
+          grid-template-columns: 22px minmax(0, 1fr);
+          gap: 10px;
+          align-items: start;
+        }
+        .fs-for-who-check {
+          color: ${PURPLE};
+          font-size: 16px;
+          font-weight: 800;
+          line-height: 1.35;
+        }
+        .fs-for-who-checks strong {
+          display: block;
           font-size: 15px;
-          line-height: 1.55;
+          font-weight: 800;
+          letter-spacing: -0.2px;
+          line-height: 1.35;
+        }
+        .fs-for-who-checks p {
+          margin: 4px 0 0;
+          font-size: 14px;
+          line-height: 1.5;
           color: #3a3a3a;
+          font-weight: 400;
         }
-        @media (min-width: 720px) {
-          .fs-for-who-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-        @media (min-width: 960px) {
+        @media (min-width: 900px) {
           .fs-for-who {
             padding: 88px 0;
           }
-          .fs-for-who-grid {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+          .fs-for-who-cols {
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
           }
         }
         .fs-facts {
