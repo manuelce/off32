@@ -71,10 +71,10 @@ export default function FullStackLanding() {
   }, [])
 
   const facts = [
-    { label: 'Pubblico', value: fullstackCourse.audience },
-    { label: 'Prezzo', value: fullstackCourse.priceLabel },
     { label: 'Partenza', value: fullstackCourse.startLabel },
-    { label: 'Durata', value: fullstackCourse.hoursLabel },
+    { label: 'Prezzo', value: fullstackCourse.priceLabel },
+    { label: 'Lezione gratis', value: '1 ora prima di iscriverti' },
+    { label: 'Posti', value: `Max ${fullstackCourse.maxParticipants.value}` },
   ]
   return (
     <main className="fs-page" style={{ background: CREAM, color: INK, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -103,7 +103,9 @@ export default function FullStackLanding() {
               <button type="button" className="fs-cta" onClick={scrollToApply}>
                 {fullstackCourse.cta.primary}
               </button>
-              <p className="fs-urgency">Max {fullstackCourse.maxParticipants.value} posti</p>
+              <p className="fs-urgency">
+                Parte l’{fullstackCourse.startLabel} · max {fullstackCourse.maxParticipants.value} posti · anche in 3 rate
+              </p>
             </div>
           </div>
           <div className="fs-hero-visual">
@@ -155,7 +157,24 @@ export default function FullStackLanding() {
         </section>
       )}
 
-      {/* 03 · Percorso in 5 tappe + stack */}
+      {/* 03 · Per chi è */}
+      <section className="fs-for-who" aria-labelledby="fs-for-who-title">
+        <div className="fs-for-who-inner">
+          <div className="fs-kicker">{fullstackCourse.forWho.kicker}</div>
+          <h2 id="fs-for-who-title">{fullstackCourse.forWho.title}</h2>
+          <p className="fs-for-who-lead">{fullstackCourse.forWho.lead}</p>
+          <div className="fs-for-who-grid">
+            {fullstackCourse.forWho.points.map(point => (
+              <article key={point.title} className="fs-for-who-card">
+                <h3>{point.title}</h3>
+                <p>{point.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 04 · Percorso in 5 tappe + stack */}
       <section className="fs-section fs-learn" aria-labelledby="fs-learn">
         <div className="fs-learn-head">
           <div className="fs-kicker">Il percorso</div>
@@ -239,10 +258,83 @@ export default function FullStackLanding() {
         )}
       </section>
 
-      {/* 05 · FAQ */}
+      {/* 05 · Feedback alunni */}
+      <section className="fs-section fs-testimonials" aria-labelledby="fs-testimonials-title">
+        <div className="fs-kicker">Feedback</div>
+        <h2 id="fs-testimonials-title">Cosa dicono gli allievi</h2>
+        <div className="fs-testimonials-grid">
+          {fullstackCourse.testimonials.map(item => (
+            <blockquote key={`${item.name}-${item.role}`} className="fs-testimonial-card">
+              <header className="fs-testimonial-head">
+                {'image' in item && item.image ? (
+                  <img
+                    className="fs-testimonial-avatar"
+                    src={item.image}
+                    alt=""
+                    width={44}
+                    height={44}
+                  />
+                ) : (
+                  <span
+                    className="fs-testimonial-avatar"
+                    style={{ background: item.avatar }}
+                    aria-hidden="true"
+                  >
+                    {item.name.trim().charAt(0).toUpperCase()}
+                  </span>
+                )}
+                <div>
+                  <cite>{item.name}</cite>
+                  <span className="fs-testimonial-role">{item.role}</span>
+                </div>
+              </header>
+              <p className="fs-testimonial-quote">{item.quote}</p>
+              <footer className="fs-testimonial-source">
+                {item.source === 'google' ? (
+                  <span className="fs-source-google">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    </svg>
+                    Google
+                  </span>
+                ) : (
+                  <span className="fs-source-superprof">Superprof</span>
+                )}
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </section>
+
+      {/* 06 · Offerta conversione */}
+      <section className="fs-section fs-offer" aria-labelledby="fs-offer-title">
+        <div className="fs-kicker">{fullstackCourse.offer.kicker}</div>
+        <h2 id="fs-offer-title">{fullstackCourse.offer.title}</h2>
+        <p className="fs-section-lead">{fullstackCourse.offer.lead}</p>
+        <div className="fs-offer-grid">
+          {fullstackCourse.offer.steps.map((step, index) => (
+            <article key={step.title} className="fs-offer-card">
+              <span className="fs-offer-step">0{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))}
+        </div>
+        <div className="fs-offer-cta">
+          <button type="button" className="fs-cta" onClick={scrollToApply}>
+            {fullstackCourse.cta.primary}
+          </button>
+          <p className="fs-offer-note">{fullstackCourse.freeLesson.body}</p>
+        </div>
+      </section>
+
+      {/* 07 · FAQ */}
       <FullStackFaq />
 
-      {/* 06 · CTA finale */}
+      {/* 08 · CTA finale */}
       <section id="candidati" className="fs-apply" aria-labelledby="fs-apply-title">
         <div className="fs-apply-center">
           <FullStackApplyForm />
@@ -474,6 +566,72 @@ export default function FullStackLanding() {
         .fs-facts-strip {
           padding: 0 5% 56px;
           border-bottom: 1px solid ${INK};
+        }
+        .fs-for-who {
+          width: 100%;
+          margin: 0;
+          padding: 72px 0;
+          border-bottom: 1px solid ${INK};
+          background: #fff;
+        }
+        .fs-for-who-inner {
+          width: 100%;
+          padding: 0 5%;
+          box-sizing: border-box;
+        }
+        .fs-for-who h2 {
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(32px, 5vw, 52px);
+          letter-spacing: -1.2px;
+          line-height: 1.05;
+          margin: 0 0 16px;
+          max-width: 22ch;
+        }
+        .fs-for-who-lead {
+          font-size: 16px;
+          line-height: 1.65;
+          color: #3a3a3a;
+          max-width: 52ch;
+          margin: 0 0 32px;
+        }
+        .fs-for-who-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 14px;
+          width: 100%;
+        }
+        .fs-for-who-card {
+          border: 1px solid ${INK};
+          background: ${CREAM};
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 20px 22px;
+        }
+        .fs-for-who-card h3 {
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(22px, 2.6vw, 28px);
+          letter-spacing: -0.5px;
+          margin: 0 0 8px;
+        }
+        .fs-for-who-card p {
+          margin: 0;
+          font-size: 15px;
+          line-height: 1.55;
+          color: #3a3a3a;
+        }
+        @media (min-width: 720px) {
+          .fs-for-who-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+        @media (min-width: 960px) {
+          .fs-for-who {
+            padding: 88px 0;
+          }
+          .fs-for-who-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+          }
         }
         .fs-facts {
           display: grid;
@@ -959,6 +1117,136 @@ export default function FullStackLanding() {
           line-height: 1.55;
           color: #3a3a3a;
         }
+        .fs-offer-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 14px;
+          margin-top: 28px;
+        }
+        .fs-offer-card {
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 20px 22px;
+        }
+        .fs-offer-step {
+          display: block;
+          margin-bottom: 10px;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 1.4px;
+          text-transform: uppercase;
+          color: ${PURPLE};
+        }
+        .fs-offer-card h3 {
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(22px, 2.6vw, 28px);
+          letter-spacing: -0.5px;
+          margin: 0 0 8px;
+        }
+        .fs-offer-card p {
+          margin: 0;
+          font-size: 15px;
+          line-height: 1.55;
+          color: #3a3a3a;
+        }
+        .fs-offer-cta {
+          margin-top: 32px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .fs-offer-note {
+          margin: 0;
+          max-width: 48ch;
+          font-size: 14px;
+          line-height: 1.55;
+          color: #3a3a3a;
+        }
+        .fs-testimonials-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 14px;
+          margin-top: 28px;
+        }
+        .fs-testimonial-card {
+          margin: 0;
+          border: 1px solid ${INK};
+          background: #fff;
+          box-shadow: 4px 4px 0 ${PURPLE};
+          padding: 20px 18px 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .fs-testimonial-head {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .fs-testimonial-avatar {
+          flex-shrink: 0;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 1px solid ${INK};
+          color: #fff;
+          display: grid;
+          place-items: center;
+          font-size: 16px;
+          font-weight: 800;
+          letter-spacing: 0;
+          object-fit: cover;
+          object-position: center top;
+        }
+        .fs-testimonial-head cite {
+          display: block;
+          font-style: normal;
+          font-size: 15px;
+          font-weight: 800;
+          letter-spacing: -0.2px;
+        }
+        .fs-testimonial-role {
+          display: block;
+          margin-top: 2px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          color: #3a3a3a;
+        }
+        .fs-testimonial-quote {
+          margin: 0;
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(16px, 1.8vw, 19px);
+          letter-spacing: -0.25px;
+          line-height: 1.4;
+          color: ${INK};
+          flex: 1;
+        }
+        .fs-testimonial-source {
+          margin-top: auto;
+          display: flex;
+          align-items: center;
+        }
+        .fs-source-google,
+        .fs-source-superprof {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 1.1px;
+          text-transform: uppercase;
+          color: #6a6a6a;
+        }
+        .fs-source-google svg {
+          display: block;
+          flex-shrink: 0;
+        }
         .fs-why-guide {
           margin-top: 48px;
         }
@@ -1010,6 +1298,17 @@ export default function FullStackLanding() {
           .fs-value-grid,
           .fs-includes-list-wide {
             grid-template-columns: 1fr 1fr;
+          }
+          .fs-testimonials-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+          .fs-offer-grid {
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+        }
+        @media (min-width: 960px) {
+          .fs-testimonials-grid {
+            grid-template-columns: 1fr 1fr 1fr;
           }
         }
         @media (min-width: 960px) {

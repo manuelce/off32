@@ -24,17 +24,45 @@ export const fullstackCourse = {
       alt: 'Smartphone su tavolo con interfaccia mobile: menu e pulsante di prenotazione.',
     },
   },
-  startLabel: 'Gennaio 2027',
-  when: 'Dalla seconda settimana di gennaio 2027 · 5 settimane',
+  startLabel: '11 gennaio 2027',
+  when: 'Dal 11 gennaio 2027 · 5 settimane',
   weeks: 5,
   hours: 40,
   hoursLabel: '40 ore',
   price: '690 €',
-  priceLabel: '690 € a partecipante',
+  priceLabel: '690 € · anche in 3 rate',
+  paymentNote: 'Puoi pagare in 3 rate senza costi aggiuntivi.',
   modality: 'Videolezioni live su Meet + esercitazioni + progetto finale',
   scheduleNote:
     'Orari flessibili: li concordiamo con i partecipanti prima della partenza.',
   audience: 'Principianti assoluti',
+  freeLesson: {
+    title: 'Lezione gratuita di 1 ora',
+    body: 'Prima di iscriverti facciamo una lezione gratis: ti spieghiamo il corso, lo stack e se fa per te. Zero impegno.',
+  },
+  forWho: {
+    kicker: 'Per chi è',
+    title: 'Se parti da zero e vuoi costruire qualcosa di reale',
+    lead: 'Il corso è pensato per chi non ha ancora scritto codice e vuole arrivare a un’app online, non a una raccolta di esercizi.',
+    points: [
+      {
+        title: 'Principianti assoluti',
+        body: 'Non serve esperienza. Si parte dalle basi e si avanza passo dopo passo.',
+      },
+      {
+        title: 'Chi vuole un progetto concreto',
+        body: 'Costruisci Agenda32: profilo, prenotazioni, login e deploy su Vercel.',
+      },
+      {
+        title: 'Chi cerca un metodo, non solo teoria',
+        body: 'Lezioni live, esercizi ogni giorno, call individuali e follow-up dopo il corso.',
+      },
+      {
+        title: 'Chi vuole lavorare con lo stack reale',
+        body: 'Next.js, React, TypeScript, Node.js, Supabase, Git e AI: gli stessi strumenti del lavoro.',
+      },
+    ] as const,
+  },
   stack: [
     'Next.js',
     'React',
@@ -145,6 +173,84 @@ export const fullstackCourse = {
       body: 'PDF a fine lezione, esercizi ogni giorno, progetto passo dopo passo.',
     },
   ] as const,
+  /** Feedback alunni (fonte: manuelcerasuolo.com). Niente recensioni aziendali. image = /feedback/... se presente. */
+  testimonials: [
+    {
+      name: 'Sara',
+      role: 'Allieva · React · Node',
+      avatar: '#e85d9a',
+      source: 'superprof' as const,
+      quote:
+        'Mi sono trovata benissimo con Manuel. Disponibile, competente e sempre pronto ad aiutare. Risultato oltre le aspettative. Lo consiglio vivamente.',
+    },
+    {
+      name: 'Giovanni',
+      role: 'Allievo · Sviluppo web',
+      avatar: '#0D0D0D',
+      image: '/feedback/feedbackGiovanni.jpg',
+      source: 'superprof' as const,
+      quote:
+        'Mi ha aiutato a fissare obiettivi realistici, spiegandomi cosa posso raggiungere e in quanto tempo, senza vendere illusioni. Onestà e trasparenza nel metodo.',
+    },
+    {
+      name: 'Victoria',
+      role: 'Allieva · WordPress',
+      avatar: '#e85d9a',
+      image: '/feedback/feedbackVictoria.jpg',
+      source: 'google' as const,
+      quote:
+        'Esperienza super positiva. Ha capito le mie esigenze e ha trasformato le idee in un sito chiaro, professionale e ben strutturato. Lo consiglio assolutamente.',
+    },
+    {
+      name: 'Sofia',
+      role: 'Allieva · Sito web',
+      avatar: '#c9a227',
+      image: '/feedback/sofia-gonzalez.jpg',
+      source: 'google' as const,
+      quote:
+        'Manuel mi ha aiutato a creare un sito da zero: è stato efficace, disponibile e molto alla mano. Lo consiglio vivamente.',
+    },
+    {
+      name: 'Emanuele',
+      role: 'Allievo · HTML & JavaScript',
+      avatar: '#694aff',
+      source: 'google' as const,
+      quote:
+        'Insegnante super disponibile, paziente e preparato. Concetti e strutture di HTML e JavaScript spiegati in modo semplice e divertente. Super consigliato.',
+    },
+    {
+      name: 'Chiara',
+      role: 'Allieva · Coding AI',
+      avatar: '#fe3812',
+      source: 'google' as const,
+      quote: 'Paziente, attento e preciso. Ottimo insegnante. Super raccomandato.',
+    },
+    {
+      name: 'Paolo',
+      role: 'Allievo · Formazione',
+      avatar: '#2f6fed',
+      source: 'superprof' as const,
+      quote:
+        'Fin dalle prime lezioni colpisce la competenza maturata negli anni, trasmessa in modo chiaro e organizzato, in base al proprio livello di partenza.',
+    },
+    {
+      name: 'Domenico',
+      role: 'Allievo · Sviluppo web',
+      avatar: '#1a9f5c',
+      source: 'superprof' as const,
+      quote:
+        'Insegnante davvero molto empatico, paziente e preparato. Sto imparando molto sullo sviluppo di siti web. Consigliatissimo.',
+    },
+    {
+      name: 'Ilaria',
+      role: 'Allieva · WordPress',
+      avatar: '#fe3812',
+      image: '/feedback/feedbackIlaria.jpg',
+      source: 'google' as const,
+      quote:
+        'Manuel è molto preparato. Grazie alle sue spiegazioni chiare mi ha aiutata a capire meglio WordPress e a superare la paura della programmazione. Super consigliato.',
+    },
+  ] as const,
   /** Non pubblicati finché confirmed resta false. */
   maxParticipants: { value: 4, confirmed: true } satisfies Confirmable<{ value: number }>,
   formatDetail: {
@@ -167,7 +273,11 @@ export const fullstackCourse = {
   },
   vat: { label: '', confirmed: false },
   tools: { items: [] as string[], confirmed: false },
-  payment: { label: '', confirmed: false },
+  payment: {
+    label: '690 € · pagabile in 3 rate',
+    detail: 'Tre rate senza costi aggiuntivi. Più la lezione gratuita di 1 ora prima di iscriverti.',
+    confirmed: true,
+  } satisfies Confirmable<{ label: string; detail: string }>,
   aiFeature: {
     label: '',
     confirmed: false,
@@ -198,7 +308,7 @@ export const fullstackCourse = {
     },
     {
       q: 'Quanto dura?',
-      a: '40 ore in 5 settimane, a partire dalla seconda settimana di gennaio 2027.',
+      a: '40 ore in 5 settimane, a partire dall’11 gennaio 2027.',
       confirmed: true,
     },
     {
@@ -207,8 +317,18 @@ export const fullstackCourse = {
       confirmed: true,
     },
     {
+      q: 'Posso pagare a rate?',
+      a: 'Sì. Il corso costa 690 € e puoi pagarlo in 3 rate, senza costi aggiuntivi.',
+      confirmed: true,
+    },
+    {
+      q: 'C’è una lezione gratuita?',
+      a: 'Sì. Prima di iscriverti facciamo 1 ora gratis per spiegarti il corso e capire se fa per te. Nessun impegno.',
+      confirmed: true,
+    },
+    {
       q: 'Come mi iscrivo?',
-      a: 'Compila la candidatura in fondo alla pagina. Ti ricontattiamo noi.',
+      a: 'Compila la candidatura in fondo alla pagina. Ti ricontattiamo noi e, prima di iscriverti, facciamo la lezione gratuita di 1 ora.',
       confirmed: true,
     },
     {
@@ -225,18 +345,37 @@ export const fullstackCourse = {
   seo: {
     title: 'Corso Full Stack Next.js e AI',
     description:
-      'Corso Full Stack per principianti: costruisci una piattaforma di prenotazioni con Next.js, React, TypeScript, Supabase e AI. Partenza gennaio 2027, 40 ore, 690 €. Max 4 partecipanti.',
+      'Corso Full Stack per principianti: Agenda32 con Next.js, React, TypeScript, Supabase e AI. Partenza 11 gennaio 2027, 40 ore, 690 € anche in 3 rate. Lezione gratuita di 1 ora prima dell’iscrizione. Max 4 partecipanti.',
+  },
+  offer: {
+    kicker: 'Come funziona',
+    title: 'Prima la lezione gratis. Poi decidi.',
+    lead: 'Niente salto nel buio: ti spieghiamo il percorso, vedi se fa per te, e solo dopo ti iscrivi.',
+    steps: [
+      {
+        title: 'Lezione gratuita di 1 ora',
+        body: 'Ti mostriamo il corso, lo stack e Agenda32. Fai domande. Zero impegno.',
+      },
+      {
+        title: 'Partenza 11 gennaio 2027',
+        body: '5 settimane, 40 ore live, gruppo max 4. Orari concordati con te.',
+      },
+      {
+        title: '690 € anche in 3 rate',
+        body: 'Paghi in tre tranche senza costi extra, se preferisci non saldare tutto subito.',
+      },
+    ] as const,
   },
   cta: {
     finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
     finalAccent: 'Full Stack',
-    finalBody: 'Una email, un messaggio, una call. Ci conosciamo e partiamo.',
-    primary: 'Candidati al corso',
-    call: 'Candidati al corso',
+    finalBody: 'Candidati: prima facciamo 1 ora gratis per spiegarti il corso. Poi, se vuoi, parti l’11 gennaio — anche a rate.',
+    primary: 'Candidati',
+    call: 'Candidati',
     finalPoints: [
-      'Max 4 partecipanti',
-      'PDF, esercizi e 1 ora di call personale a settimana',
-      'Follow-up di 2 mesi dopo il corso',
+      'Lezione gratuita di 1 ora prima di iscriverti',
+      'Partenza 11 gennaio 2027 · max 4 posti',
+      '690 € pagabili anche in 3 rate',
     ] as const,
   },
   form: {
