@@ -74,7 +74,7 @@ export default function FullStackLanding() {
     { label: 'Partenza', value: fullstackCourse.startLabel },
     { label: 'Durata', value: `${fullstackCourse.weeks} settimane / ${fullstackCourse.hoursLabel}` },
     { label: 'Prezzo di lancio', value: fullstackCourse.price },
-    { label: 'Lezione gratis', value: '1 ora prima di iscriverti' },
+    { label: 'Iscrizioni', value: `Entro il ${fullstackCourse.enrollByLabel}` },
   ]
   return (
     <main className="fs-page" style={{ background: CREAM, color: INK, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -104,7 +104,7 @@ export default function FullStackLanding() {
                 {fullstackCourse.cta.primary}
               </button>
               <p className="fs-urgency">
-                {fullstackCourse.weeks} settimane / {fullstackCourse.hoursLabel} · parte l’{fullstackCourse.startLabel} · max {fullstackCourse.maxParticipants.value} posti
+                {fullstackCourse.enrollByNote} · max {fullstackCourse.maxParticipants.value} posti · parte l’{fullstackCourse.startLabel}
               </p>
             </div>
           </div>

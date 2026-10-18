@@ -25,6 +25,8 @@ export const fullstackCourse = {
     },
   },
   startLabel: '11 gennaio 2027',
+  enrollByLabel: '20 dicembre',
+  enrollByNote: 'Iscrizioni entro il 20 dicembre',
   when: 'Dal 11 gennaio 2027 · 5 settimane',
   weeks: 5,
   hours: 40,
@@ -393,7 +395,7 @@ export const fullstackCourse = {
     finalPoints: [
       '5 settimane / 40 ore live',
       '690 € prezzo di lancio · anche in 3 rate',
-      'Max 4 posti',
+      'Iscrizioni entro il 20 dicembre · max 4 posti',
     ] as const,
   },
   form: {
