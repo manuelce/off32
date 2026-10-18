@@ -1,0 +1,1 @@
+Corso Full Stack OFF32: Agenda32 con Next.js, React e AI.
