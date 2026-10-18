@@ -10,6 +10,11 @@ const NAV_LINKS = [
   { label: 'Contatti', href: '/contatti' },
 ]
 
+const FULL_STACK_NAV_LINKS = [
+  { label: 'Events', href: '/workshop' },
+  { label: 'Blog', href: '/blog' },
+]
+
 const CALL_LABEL = "Call '20"
 
 function openCall() {
@@ -49,7 +54,7 @@ export default function Navbar() {
               <img src="/off32_cube.png" alt="OFF32" />
             </a>
             <div className="nav-fs-links">
-              {NAV_LINKS.map(link => {
+              {FULL_STACK_NAV_LINKS.map(link => {
                 const current = isCurrent(pathname, link.href)
                 return (
                   <a
@@ -64,7 +69,7 @@ export default function Navbar() {
               })}
             </div>
             <button type="button" className="nav-fs-cta" onClick={scrollToCandidati}>
-              Candidati
+              Prenota la tua lezione gratuita
             </button>
           </div>
         </nav>
@@ -84,7 +89,7 @@ export default function Navbar() {
             boxShadow: '0 8px 24px rgba(0,0,0,0.28)',
             pointerEvents: 'auto',
           }}>
-            {NAV_LINKS.map(link => {
+            {FULL_STACK_NAV_LINKS.map(link => {
               const current = isCurrent(pathname, link.href)
               return (
                 <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#F0EBE0', padding: '6px 5px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.2px', textDecoration: 'none', whiteSpace: 'nowrap' }}>{link.label}</a>

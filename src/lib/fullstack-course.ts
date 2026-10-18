@@ -10,14 +10,11 @@ export const fullstackCourse = {
   path: FULLSTACK_PATH,
   name: 'Costruisci una piattaforma di prenotazioni con Next.js e AI',
   hero: {
-    title: 'Scrivi codice. Lancia online.',
-    badge: 'Pensato per chi parte da zero',
-    /** Due righe sotto il titolo. */
-    lines: [
-      'Dalla prima riga di codice alla tua prima applicazione web.',
-      'Costruisci una piattaforma di prenotazioni con Next.js e AI.',
-    ] as const,
-    techLine: '',
+    badge: 'Per chi parte da zero',
+    title: 'In 5 settimane, costruisci e pubblica la tua prima web app full stack con l’AI.',
+    lead:
+      'Un percorso live di 40 ore in cui sviluppi Agenda32 con Next.js, React e Supabase, con supporto individuale e un gruppo di massimo 4 persone.',
+    ctaNote: 'Scopri il metodo e verifica se il corso fa per te.',
     /** Screenshot reale. Sostituisci con la UI del progetto corso quando disponibile. */
     visual: {
       src: '/events/agenda32.jpg',
@@ -137,7 +134,7 @@ export const fullstackCourse = {
   instructor: {
     name: 'Manuel Cerasuolo',
     role: 'Digital project manager / full stack',
-    bio: 'In OFF32 coordina prodotti digitali dall’idea al rilascio. Lavora su design, Next.js, React e AI nel flusso di lavoro.',
+    bio: 'Da oltre 10 anni costruisce prodotti digitali tra design, sviluppo, e-commerce, piattaforme e web/app. In OFF32 coordina progetti web e digital product dall’idea al delivery, e lavora full stack su Next.js, React, JavaScript e AI nel flusso di lavoro quotidiano.',
     href: '/about/manuel-cerasuolo',
     image: '/team/team-01.jpg',
     confirmed: true,
@@ -393,9 +390,9 @@ export const fullstackCourse = {
     finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
     finalAccent: 'Full Stack',
     finalBody:
-      'Candidati: prima facciamo 1 ora gratis per spiegarti il corso. Poi, se vuoi, parti l’11 gennaio a 690 € (prezzo di lancio).',
-    primary: 'Candidati',
-    call: 'Candidati',
+      'Prenota la lezione gratuita di 1 ora: ti spieghiamo il corso. Poi, se vuoi, parti l’11 gennaio a 690 € (prezzo di lancio).',
+    primary: 'Prenota la tua lezione gratuita',
+    call: 'Prenota la tua lezione gratuita',
     finalPoints: [
       '5 settimane / 40 ore live',
       '690 € prezzo di lancio · anche in 3 rate',
