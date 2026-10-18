@@ -30,7 +30,8 @@ export const fullstackCourse = {
   hours: 40,
   hoursLabel: '40 ore',
   price: '690 €',
-  priceLabel: '690 € · anche in 3 rate',
+  priceLabel: '690 € prezzo di lancio',
+  priceNote: '690 € è il prezzo di lancio di questa edizione, anche in 3 rate.',
   paymentNote: 'Puoi pagare in 3 rate senza costi aggiuntivi.',
   modality: 'Videolezioni live su Meet + esercitazioni + progetto finale',
   scheduleNote:
@@ -299,8 +300,8 @@ export const fullstackCourse = {
   vat: { label: '', confirmed: false },
   tools: { items: [] as string[], confirmed: false },
   payment: {
-    label: '690 € · pagabile in 3 rate',
-    detail: 'Tre rate senza costi aggiuntivi. Più la lezione gratuita di 1 ora prima di iscriverti.',
+    label: '690 € prezzo di lancio · anche in 3 rate',
+    detail: 'Prezzo di lancio di questa edizione, pagabile in 3 rate senza costi aggiuntivi.',
     confirmed: true,
   } satisfies Confirmable<{ label: string; detail: string }>,
   aiFeature: {
@@ -343,7 +344,7 @@ export const fullstackCourse = {
     },
     {
       q: 'Posso pagare a rate?',
-      a: 'Sì. Il corso costa 690 € e puoi pagarlo in 3 rate, senza costi aggiuntivi.',
+      a: 'Sì. Il corso costa 690 € (prezzo di lancio di questa edizione) e puoi pagarlo in 3 rate, senza costi aggiuntivi.',
       confirmed: true,
     },
     {
@@ -370,7 +371,7 @@ export const fullstackCourse = {
   seo: {
     title: 'Corso Full Stack Next.js e AI',
     description:
-      'Corso Full Stack per principianti: Agenda32 con Next.js, React, TypeScript, Supabase e AI. Partenza 11 gennaio 2027, 40 ore, 690 € anche in 3 rate. Lezione gratuita di 1 ora prima dell’iscrizione. Max 4 partecipanti.',
+      'Corso Full Stack per principianti: Agenda32 con Next.js, React, TypeScript, Supabase e AI. Dal 11 gennaio 2027, 40 ore, 690 € prezzo di lancio anche in 3 rate. Lezione gratuita di 1 ora. Max 4 posti.',
   },
   offer: {
     kicker: 'Il risultato',
@@ -385,13 +386,14 @@ export const fullstackCourse = {
   cta: {
     finalTitle: 'Entra nel corso Full Stack e costruisci Agenda32.',
     finalAccent: 'Full Stack',
-    finalBody: 'Candidati: prima facciamo 1 ora gratis per spiegarti il corso. Poi, se vuoi, parti l’11 gennaio — anche a rate.',
+    finalBody:
+      'Candidati: prima facciamo 1 ora gratis per spiegarti il corso. Poi, se vuoi, parti l’11 gennaio a 690 € (prezzo di lancio).',
     primary: 'Candidati',
     call: 'Candidati',
     finalPoints: [
       '5 settimane / 40 ore live',
-      'Lezione gratuita di 1 ora prima di iscriverti',
-      'Partenza 11 gennaio 2027 · max 4 posti · anche in 3 rate',
+      '690 € prezzo di lancio · anche in 3 rate',
+      'Max 4 posti',
     ] as const,
   },
   form: {

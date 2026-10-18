@@ -73,7 +73,7 @@ export default function FullStackLanding() {
   const facts = [
     { label: 'Partenza', value: fullstackCourse.startLabel },
     { label: 'Durata', value: `${fullstackCourse.weeks} settimane / ${fullstackCourse.hoursLabel}` },
-    { label: 'Prezzo', value: fullstackCourse.priceLabel },
+    { label: 'Prezzo di lancio', value: fullstackCourse.price },
     { label: 'Lezione gratis', value: '1 ora prima di iscriverti' },
   ]
   return (
