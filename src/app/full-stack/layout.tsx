@@ -6,6 +6,8 @@ export const metadata: Metadata = pageMeta(
   fullstackCourse.seo.title,
   fullstackCourse.seo.description,
   fullstackCourse.path,
+  'website',
+  fullstackCourse.seo.image,
 )
 
 export default function Layout({ children }: { children: React.ReactNode }) {

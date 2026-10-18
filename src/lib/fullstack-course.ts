@@ -374,6 +374,10 @@ export const fullstackCourse = {
     title: 'Corso Full Stack Next.js e AI',
     description:
       'Corso Full Stack per principianti: Agenda32 con Next.js, React, TypeScript, Supabase e AI. Dal 11 gennaio 2027, 40 ore, 690 € prezzo di lancio anche in 3 rate. Lezione gratuita di 1 ora. Max 4 posti.',
+    image: {
+      url: '/workshop/corso.png',
+      alt: 'Corso Full Stack OFF32: Agenda32 con Next.js, React e AI.',
+    },
   },
   offer: {
     kicker: 'Il risultato',
