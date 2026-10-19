@@ -51,7 +51,7 @@ export default function Navbar() {
         <nav className="nav-fs" aria-label="Navigazione">
           <div className="nav-fs-pill">
             <a href="/" className="nav-fs-logo">
-              <img src="/off32_cube.png" alt="OFF32" />
+              <img src="/off32_cube_white.png" alt="OFF32" />
             </a>
             <div className="nav-fs-links">
               {FULL_STACK_NAV_LINKS.map(link => {
@@ -134,10 +134,9 @@ export default function Navbar() {
             z-index: 1;
           }
           .nav-fs-logo img {
-            height: 26px;
+            height: 32px;
             width: auto;
             display: block;
-            filter: brightness(0) invert(1);
           }
           .nav-fs-links {
             position: absolute;
@@ -216,7 +215,7 @@ export default function Navbar() {
         position: 'sticky', top: 0, zIndex: 100,
       }}>
         <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
-          <img src="/off32_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
+          <img src="/off32_cube_white.png" alt="OFF32" style={{ height: '36px', width: 'auto' }} />
         </a>
         <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
           {NAV_LINKS.map(link => {
@@ -247,9 +246,9 @@ export default function Navbar() {
         zIndex: 9999,
       }}>
         <a href="/" style={{ textDecoration: 'none' }}>
-          <img className="logo-dark" src="/off32_cube.png" alt="OFF32" style={{ height: '24px', width: 'auto' }} />
+          <img className="logo-dark" src="/off32_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
           {pathname === '/contatti' && (
-            <img className="logo-green" src="/off32_green_cube.svg" alt="" style={{ height: '24px', width: 'auto', display: 'none' }} />
+            <img className="logo-green" src="/off32_green_cube.svg" alt="" style={{ height: '30px', width: 'auto', display: 'none' }} />
           )}
         </a>
         <button type="button" className="nav-cta" onClick={openCall}>

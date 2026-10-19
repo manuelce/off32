@@ -99,7 +99,7 @@ export default function ContattiPage() {
   }
 
   return (
-    <main style={{ background: '#0D0D0D', minHeight: '100vh', color: INK, fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
+    <main style={{ background: '#141414', minHeight: '100vh', color: INK, fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
       <section className="contact-page" style={{ paddingTop: '8%', paddingBottom: '15%' }}>
         {status === 'success' ? (
           <div style={{ width: '80%', margin: '0 auto', border: LINE, padding: '64px 40px', textAlign: 'center' }}>

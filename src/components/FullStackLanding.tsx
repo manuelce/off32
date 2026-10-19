@@ -191,7 +191,7 @@ export default function FullStackLanding() {
               <span className="fs-orbit-planet" />
             </div>
             <div className="fs-orbit-core" aria-hidden="true">
-              <img src="/off32_cube.png" alt="" width={72} height={72} />
+              <img src="/off32_cube_white.png" alt="" width={72} height={72} />
               <span>5 tappe</span>
             </div>
             {fullstackCourse.learningSteps.map((step, index) => (
