@@ -48,7 +48,7 @@ export default function DevelopmentConaiPage() {
             <a key={link.label} href={link.href}>{link.label}</a>
           ))}
         </div>
-        <span>connect@off32.it · © 2025 OFF32</span>
+        <span>connect@off32.it · © 2026 OFF32</span>
       </footer>
 
       <style>{`

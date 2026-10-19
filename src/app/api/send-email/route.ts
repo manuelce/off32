@@ -120,7 +120,7 @@ export async function POST(req: Request) {
               <p style="color: #555; line-height: 1.7;">A presto,<br/><strong>Il team OFF32</strong></p>
             </div>
             <div style="background: #0D0D0D; padding: 20px 32px; text-align: center;">
-              <p style="color: #444; font-size: 11px; margin: 0; letter-spacing: 1px;">© 2025 OFF32 · OFFICINA DIGITALE · off32.it</p>
+              <p style="color: #444; font-size: 11px; margin: 0; letter-spacing: 1px;">© 2026 OFF32 · OFFICINA DIGITALE · off32.it</p>
             </div>
           </div>
         `,

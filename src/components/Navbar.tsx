@@ -112,8 +112,10 @@ export default function Navbar() {
           }
           .nav-fs-pill {
             pointer-events: auto;
+            position: relative;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 8px;
             width: min(920px, 100%);
             padding: 8px 10px 8px 16px;
@@ -129,6 +131,7 @@ export default function Navbar() {
             align-items: center;
             flex: none;
             text-decoration: none;
+            z-index: 1;
           }
           .nav-fs-logo img {
             height: 26px;
@@ -137,12 +140,15 @@ export default function Navbar() {
             filter: brightness(0) invert(1);
           }
           .nav-fs-links {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 2px;
-            flex: 1;
-            min-width: 0;
+            z-index: 1;
           }
           .nav-fs-links a {
             font-size: 14px;
@@ -174,6 +180,7 @@ export default function Navbar() {
             padding: 12px 18px;
             cursor: pointer;
             white-space: nowrap;
+            z-index: 1;
           }
           .nav-fs-cta:hover {
             filter: brightness(1.08);

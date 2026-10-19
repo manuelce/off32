@@ -300,7 +300,7 @@ export default function Home() {
             <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none', color: '#0D0D0D' }}>{link.label}</a>
           ))}
         </div>
-        <span style={meta}>connect@off32.it · © 2025 OFF32</span>
+        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
       </footer>
 
       <style>{`

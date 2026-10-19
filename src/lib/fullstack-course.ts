@@ -15,10 +15,11 @@ export const fullstackCourse = {
     lead:
       'Un percorso live di 40 ore in cui sviluppi Agenda32 con Next.js, React e Supabase, con supporto individuale e un gruppo di massimo 4 persone.',
     ctaNote: 'Scopri il metodo e verifica se il corso fa per te.',
-    /** Screenshot reale. Sostituisci con la UI del progetto corso quando disponibile. */
+    /** Demo Agenda32 nel mockup browser della hero. */
     visual: {
-      src: '/events/agenda32.jpg',
-      alt: 'Smartphone su tavolo con interfaccia mobile: menu e pulsante di prenotazione.',
+      src: '/agenda32-demo-wow_small.mp4',
+      poster: '/events/agenda32.jpg',
+      alt: 'Demo di Agenda32: piattaforma di prenotazioni costruita nel corso Full Stack.',
     },
   },
   startLabel: '11 gennaio 2027',
@@ -66,7 +67,7 @@ export const fullstackCourse = {
     outcomesTitle: 'Cosa sai fare dopo',
     outcomes: [
       'Costruire e pubblicare una web app per un tuo cliente o progetto',
-      'Essere pronto a lavorare come junior o freelance sul web',
+      'Avere le basi per iniziare a lavorare a progetti web come freelance o junior',
       'Gestire frontend, backend, database e deploy in un unico flusso',
       'Usare Git, Vercel e AI nel lavoro quotidiano sullo stack reale',
     ] as const,
@@ -201,22 +202,20 @@ export const fullstackCourse = {
         'Mi ha aiutato a fissare obiettivi realistici, spiegandomi cosa posso raggiungere e in quanto tempo, senza vendere illusioni. Onestà e trasparenza nel metodo.',
     },
     {
-      name: 'Victoria',
-      role: 'Allieva / WordPress',
-      avatar: '#e85d9a',
-      image: '/feedback/feedbackVictoria.jpg',
-      source: 'google' as const,
+      name: 'Raffaella',
+      role: 'Allieva / AI / React / JavaScript',
+      avatar: '#c45c8a',
+      source: 'superprof' as const,
       quote:
-        'Esperienza super positiva. Ha capito le mie esigenze e ha trasformato le idee in un sito chiaro, professionale e ben strutturato. Lo consiglio assolutamente.',
+        'Ottimo insegnante: chiaro e semplice nello spiegare i concetti, sempre ben organizzato. Consigliatissimo per chi vuole imparare o approfondire.',
     },
     {
-      name: 'Sofia',
-      role: 'Allieva / HTML & CSS',
-      avatar: '#c9a227',
-      image: '/feedback/sofia-gonzalez.jpg',
-      source: 'google' as const,
+      name: 'Paolo',
+      role: 'Allievo / Formazione',
+      avatar: '#2f6fed',
+      source: 'superprof' as const,
       quote:
-        'Manuel mi ha aiutato a creare un sito da zero: è stato efficace, disponibile e molto alla mano. Lo consiglio vivamente.',
+        'Fin dalle prime lezioni colpisce la competenza maturata negli anni, trasmessa in modo chiaro e organizzato, in base al proprio livello di partenza.',
     },
     {
       name: 'Emanuele',
@@ -243,20 +242,22 @@ export const fullstackCourse = {
       quote: 'Professionista molto disponibile e competente.',
     },
     {
-      name: 'Raffaella',
-      role: 'Allieva / AI / React / JavaScript',
-      avatar: '#c45c8a',
-      source: 'superprof' as const,
+      name: 'Victoria',
+      role: 'Allieva / WordPress',
+      avatar: '#e85d9a',
+      image: '/feedback/feedbackVictoria.jpg',
+      source: 'google' as const,
       quote:
-        'Ottimo insegnante: chiaro e semplice nello spiegare i concetti, sempre ben organizzato. Consigliatissimo per chi vuole imparare o approfondire.',
+        'Esperienza super positiva. Ha capito le mie esigenze e ha trasformato le idee in un sito chiaro, professionale e ben strutturato. Lo consiglio assolutamente.',
     },
     {
-      name: 'Paolo',
-      role: 'Allievo / Formazione',
-      avatar: '#2f6fed',
-      source: 'superprof' as const,
+      name: 'Sofia',
+      role: 'Allieva / HTML & CSS',
+      avatar: '#c9a227',
+      image: '/feedback/sofia-gonzalez.jpg',
+      source: 'google' as const,
       quote:
-        'Fin dalle prime lezioni colpisce la competenza maturata negli anni, trasmessa in modo chiaro e organizzato, in base al proprio livello di partenza.',
+        'Manuel mi ha aiutato a creare un sito da zero: è stato efficace, disponibile e molto alla mano. Lo consiglio vivamente.',
     },
     {
       name: 'Domenico',
@@ -378,10 +379,11 @@ export const fullstackCourse = {
   },
   offer: {
     kicker: 'Il risultato',
-    title: 'A fine corso hai un’app online sul tuo dominio che puoi usare con i tuoi clienti.',
-    lead: 'In 5 settimane e 40 ore: un prodotto pubblicato, pronto da mostrare e da usare — non un esercizio da cartella.',
+    title: 'A fine corso hai una web app online sul tuo dominio che puoi usare con i tuoi clienti.',
+    lead: 'In 5 settimane e 40 ore: un prodotto pubblicato, pronto da mostrare e da usare.',
     visual: {
-      src: '/events/agenda32.jpg',
+      src: '/agenda32-demo-wow_small.mp4',
+      poster: '/events/agenda32.jpg',
       alt: 'Agenda32 online: interfaccia di prenotazione pronta da usare con i clienti.',
       url: 'agenda32.off32.it',
     },

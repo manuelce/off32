@@ -80,7 +80,7 @@ export default function ElisabettaCariaPage() {
             <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
           ))}
         </div>
-        <span style={meta}>connect@off32.it · © 2025 OFF32</span>
+        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
       </footer>
 
       <style>{`

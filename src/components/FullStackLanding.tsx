@@ -98,9 +98,9 @@ export default function FullStackLanding() {
                 <div className="fs-browser-url">agenda32.off32.it</div>
               </div>
               <div className="fs-browser-screen">
-                <img
+                <ProjectVideoPlayer
                   src={fullstackCourse.hero.visual.src}
-                  alt={fullstackCourse.hero.visual.alt}
+                  poster={fullstackCourse.hero.visual.poster}
                 />
               </div>
             </div>
@@ -323,9 +323,9 @@ export default function FullStackLanding() {
                 <div className="fs-browser-url">{fullstackCourse.offer.visual.url}</div>
               </div>
               <div className="fs-browser-screen">
-                <img
+                <ProjectVideoPlayer
                   src={fullstackCourse.offer.visual.src}
-                  alt={fullstackCourse.offer.visual.alt}
+                  poster={fullstackCourse.offer.visual.poster}
                 />
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function FullStackLanding() {
             <a key={link.label} href={link.href}>{link.label}</a>
           ))}
         </div>
-        <span>connect@off32.it · © 2025 OFF32</span>
+        <span>connect@off32.it · © 2026 OFF32</span>
       </footer>
 
       <style>{`
@@ -523,11 +523,28 @@ export default function FullStackLanding() {
           background: ${INK};
           overflow: hidden;
         }
-        .fs-browser-screen img {
+        .fs-browser-screen img,
+        .fs-browser-screen video {
           width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: center 40%;
+          display: block;
+        }
+        .fs-browser-screen .fs-video-frame {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border: none;
+          box-shadow: none;
+          background: ${INK};
+          overflow: hidden;
+        }
+        .fs-browser-screen .fs-video-frame video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
           display: block;
         }
         .fs-for-who {
