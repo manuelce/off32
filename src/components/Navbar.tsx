@@ -32,6 +32,8 @@ function isCurrent(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname()
   const isFullStack = pathname === '/full-stack' || pathname.startsWith('/full-stack/')
+  const isMirkoWorkshop = pathname === '/workshop/mirko-camia' || pathname.startsWith('/workshop/mirko-camia/')
+  const isPillNav = isFullStack || isMirkoWorkshop
 
   useEffect(() => {
     const pin = () => {
@@ -45,7 +47,7 @@ export default function Navbar() {
     return () => window.removeEventListener('pageshow', pin)
   }, [pathname])
 
-  if (isFullStack) {
+  if (isPillNav) {
     return (
       <>
         <nav className="nav-fs" aria-label="Navigazione">
@@ -69,7 +71,7 @@ export default function Navbar() {
               })}
             </div>
             <button type="button" className="nav-fs-cta" onClick={scrollToCandidati}>
-              Prenota la tua lezione gratuita
+              {isMirkoWorkshop ? 'Riserva il tuo posto' : 'Prenota la tua lezione gratuita'}
             </button>
           </div>
         </nav>

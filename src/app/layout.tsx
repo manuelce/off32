@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
   },
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: [{ url: '/faviconoff.svg', type: 'image/svg+xml' }],
+    shortcut: '/faviconoff.svg',
+    apple: '/faviconoff.svg',
   },
 }
 
