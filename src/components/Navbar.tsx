@@ -214,7 +214,7 @@ export default function Navbar() {
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
         padding: '14px 5%',
-        background: '#fe3812',
+        background: isContatti ? '#141414' : '#fe3812',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
         <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
