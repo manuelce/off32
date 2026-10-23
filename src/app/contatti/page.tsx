@@ -273,8 +273,6 @@ export default function ContattiPage() {
         input::placeholder, textarea::placeholder { color: rgba(240, 235, 224, 0.45); }
         input:focus, textarea:focus { outline: 1px solid #f0ebe0; outline-offset: -1px; }
         @media (max-width: 768px) {
-          .nav-mobile-top .logo-dark { display: none !important; }
-          .nav-mobile-top .logo-green { display: block !important; }
           .contact-page { padding-top: 96px !important; }
         }
         @media (max-width: 860px) {

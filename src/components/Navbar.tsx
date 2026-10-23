@@ -219,7 +219,7 @@ export default function Navbar() {
       }}>
         <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
           <img
-            src={isContatti ? '/off32_green_cube.png' : '/off32_cube_white.png'}
+            src={isContatti ? '/off32_green_cube.png' : '/off32_cube.png'}
             alt="OFF32"
             style={{ height: '36px', width: 'auto' }}
           />
@@ -253,10 +253,12 @@ export default function Navbar() {
         zIndex: 9999,
       }}>
         <a href="/" style={{ textDecoration: 'none' }}>
-          <img className="logo-dark" src="/off32_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
-          {isContatti && (
-            <img className="logo-green" src="/off32_green_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto', display: 'none' }} />
-          )}
+          <img
+            className={isContatti ? 'logo-green' : 'logo-dark'}
+            src={isContatti ? '/off32_green_cube.png' : '/off32_cube.png'}
+            alt="OFF32"
+            style={{ height: '30px', width: 'auto' }}
+          />
         </a>
         <button type="button" className="nav-cta" onClick={openCall}>
           {CALL_LABEL}
