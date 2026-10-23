@@ -33,6 +33,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const isFullStack = pathname === '/full-stack' || pathname.startsWith('/full-stack/')
   const isMirkoWorkshop = pathname === '/workshop/mirko-camia' || pathname.startsWith('/workshop/mirko-camia/')
+  const isContatti = pathname === '/contatti' || pathname.startsWith('/contatti/')
   const isPillNav = isFullStack || isMirkoWorkshop
 
   useEffect(() => {
@@ -217,7 +218,11 @@ export default function Navbar() {
         position: 'sticky', top: 0, zIndex: 100,
       }}>
         <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
-          <img src="/off32_cube_white.png" alt="OFF32" style={{ height: '36px', width: 'auto' }} />
+          <img
+            src={isContatti ? '/off32_green_cube.png' : '/off32_cube_white.png'}
+            alt="OFF32"
+            style={{ height: '36px', width: 'auto' }}
+          />
         </a>
         <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
           {NAV_LINKS.map(link => {
@@ -249,8 +254,8 @@ export default function Navbar() {
       }}>
         <a href="/" style={{ textDecoration: 'none' }}>
           <img className="logo-dark" src="/off32_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto' }} />
-          {pathname === '/contatti' && (
-            <img className="logo-green" src="/off32_green_cube.svg" alt="" style={{ height: '30px', width: 'auto', display: 'none' }} />
+          {isContatti && (
+            <img className="logo-green" src="/off32_green_cube.png" alt="OFF32" style={{ height: '30px', width: 'auto', display: 'none' }} />
           )}
         </a>
         <button type="button" className="nav-cta" onClick={openCall}>
