@@ -219,7 +219,7 @@ export default function Navbar() {
       }}>
         <a href="/" style={{ textDecoration: 'none', justifySelf: 'start' }}>
           <img
-            src={isContatti ? '/off32_green_cube.png' : '/off32_cube.png'}
+            src={isContatti ? '/off32_green_cube.png?v=2' : '/off32_cube.png'}
             alt="OFF32"
             style={{ height: '36px', width: 'auto' }}
           />
@@ -255,7 +255,7 @@ export default function Navbar() {
         <a href="/" style={{ textDecoration: 'none' }}>
           <img
             className={isContatti ? 'logo-green' : 'logo-dark'}
-            src={isContatti ? '/off32_green_cube.png' : '/off32_cube.png'}
+            src={isContatti ? '/off32_green_cube.png?v=2' : '/off32_cube.png'}
             alt="OFF32"
             style={{ height: '30px', width: 'auto' }}
           />
