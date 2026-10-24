@@ -61,15 +61,15 @@ export default function Home() {
   const services = [
     {
       tag: '/ brand & creative',
-      items: ['Brand Identity', 'Brand Strategy', 'Visual Language', 'Creative Direction', 'AI Copywriting', 'Content Creation'],
+      items: ['Brand Identity', 'Brand Strategy', 'Creative Direction', 'AI Copywriting', 'Content Creation'],
     },
     {
       tag: '/ web & digital',
-      items: ['Web Design', 'Development React / Next.js', 'E-commerce Shopify', 'Landing Pages', 'UX / UI Design', 'Performance & SEO'],
+      items: ['Web Design / Development', 'E-commerce', 'Landing Pages', 'UX / UI Design', 'Performance & SEO'],
     },
     {
       tag: '/ AI systems',
-      items: ['AI Strategy', 'AI Automation', 'AI Agents', 'AI Assistants', 'AI Workflows', 'AI Integration'],
+      items: ['AI Strategy', 'AI Automation', 'AI Agents', 'AI Workflows', 'AI Integration'],
     },
   ]
 
