@@ -1,13 +1,31 @@
 'use client'
 import { useState, type CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
-import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
+import {
+  BRAND_ARTICLE_IMAGE,
+  CLIENT_ARTICLE_IMAGE,
+  ECOMMERCE_ARTICLE_IMAGE,
+  IMMERSIVE_ARTICLE_IMAGE,
+} from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
 
 const CATEGORIES = ['tutti', 'design', 'sviluppo', 'community', 'marketing', 'casi studio']
 
 const POSTS = [
+  {
+    slug: 'siti-web-immersivi',
+    image: IMMERSIVE_ARTICLE_IMAGE.url,
+    imageAlt: IMMERSIVE_ARTICLE_IMAGE.alt,
+    category: 'design',
+    tag: 'Design',
+    title: 'E se il tuo sito facesse venire voglia di restare?',
+    excerpt:
+      'I siti web immersivi non servono solo a stupire: fanno sentire qualcosa, rendono memorabile un brand e accompagnano le persone verso una scelta.',
+    author: { initials: 'EC', name: 'Elisabetta Carìa', role: 'Web Designer & UX/UI · OFF32', bg: '#EEF0FF', color: '#293cf4' },
+    date: 'Ott 2026', readTime: '6 min', featured: true,
+    bg: '#0A1228',
+  },
   {
     slug: 'come-costruire-brand-digitale',
     image: BRAND_ARTICLE_IMAGE.url,

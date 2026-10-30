@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { areaPath, SERVICE_AREAS, SERVICE_PAGES, servicePath } from '@/lib/services'
 import { BLOG_POSTS, SITE_URL } from '@/lib/seo'
 
 const paths = [
@@ -22,6 +23,7 @@ const paths = [
   '/developmentconai',
   '/blog',
   '/contatti',
+  '/servizi',
   '/privacy-policy',
   '/cookie-policy',
   '/terms-and-conditions',
@@ -34,11 +36,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === '' ? 1 : path.startsWith('/work/') || path.startsWith('/privacy') || path.startsWith('/cookie') || path.startsWith('/terms') ? 0.4 : 0.8,
   }))
 
+  const hubs = SERVICE_AREAS.map(area => ({
+    url: `${SITE_URL}${areaPath(area)}`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.85,
+  }))
+
+  const services = SERVICE_PAGES.map(service => ({
+    url: `${SITE_URL}${servicePath(service)}`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
   const posts = BLOG_POSTS.map(post => ({
     url: `${SITE_URL}/blog/${post.slug}`,
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }))
 
-  return [...pages, ...posts]
+  return [...pages, ...hubs, ...services, ...posts]
 }

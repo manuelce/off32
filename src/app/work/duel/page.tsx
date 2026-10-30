@@ -138,25 +138,83 @@ export default function DuelPage() {
       </section>
 
       <FadeIn>
-        <figure style={{ margin: 0, background: '#e7e0d4' }}>
-          <img src={COVER} alt="The Duel, copertina aperta" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <figure className="duel-cover" style={{ margin: 0, padding: '72px 5% 56px', background: '#e7e0d4' }}>
+          <div style={{ maxWidth: 720, margin: '0 auto' }}>
+            <img src={COVER} alt="The Duel, copertina aperta" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <figcaption style={{
+              marginTop: 16,
+              fontSize: 11,
+              letterSpacing: '1.8px',
+              textTransform: 'uppercase',
+              color: '#5a554e',
+              fontFamily: 'monospace',
+            }}>
+              Copertina · Visual magazine 01
+            </figcaption>
+          </div>
         </figure>
       </FadeIn>
 
       {chapters.map(chapter => (
-        <section key={chapter.index}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, padding: '28px 5%', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D' }}>
+        <section key={chapter.index} style={{ borderTop: '1px solid #0D0D0D' }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 24,
+            maxWidth: 720,
+            margin: '0 auto',
+            padding: '28px 5%',
+            borderBottom: '1px solid #0D0D0D',
+          }}>
             <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase' }}>{chapter.index} · {chapter.title}</span>
             <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#7a746c' }}>Visual magazine 01</span>
           </div>
-          {chapter.spreads.map(spread => (
-            <FadeIn key={spread.src}>
-              <figure style={{ margin: 0 }}>
-                <img src={spread.src} alt={spread.caption} style={{ width: '100%', height: 'auto', display: 'block' }} />
-                <figcaption style={{ padding: '14px 5% 28px', fontSize: 13, letterSpacing: '0.4px', color: '#3a3a3a' }}>{spread.caption}</figcaption>
-              </figure>
-            </FadeIn>
-          ))}
+
+          <div className="duel-board" style={{ maxWidth: 920, margin: '0 auto', padding: '64px 5% 80px' }}>
+            {chapter.spreads.map((spread, i) => {
+              const place = i % 3
+              const align = place === 0 ? 'flex-start' : place === 1 ? 'flex-end' : 'center'
+              const width = place === 2 ? '86%' : '68%'
+              return (
+                <FadeIn key={spread.src} delay={i * 80}>
+                  <figure
+                    className="duel-plate"
+                    style={{
+                      margin: i === chapter.spreads.length - 1 ? 0 : '0 0 72px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: align,
+                      width: '100%',
+                    }}
+                  >
+                    <div style={{ width, maxWidth: 640 }}>
+                      <img
+                        src={spread.src}
+                        alt={spread.caption}
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          display: 'block',
+                          border: '1px solid #0D0D0D',
+                        }}
+                      />
+                      <figcaption style={{
+                        marginTop: 12,
+                        fontSize: 11,
+                        letterSpacing: '1.6px',
+                        textTransform: 'uppercase',
+                        color: '#3a3a3a',
+                        fontFamily: 'monospace',
+                        textAlign: place === 1 ? 'right' : 'left',
+                      }}>
+                        {String(i + 1).padStart(2, '0')} — {spread.caption}
+                      </figcaption>
+                    </div>
+                  </figure>
+                </FadeIn>
+              )
+            })}
+          </div>
         </section>
       ))}
 
@@ -188,6 +246,9 @@ export default function DuelPage() {
         @media (max-width: 768px) {
           .issue-row, .chapter-row, .meta-grid { grid-template-columns: 1fr !important; }
           .issue-row > div { border-right: none !important; }
+          .duel-plate > div { width: 100% !important; max-width: none !important; }
+          .duel-board { padding: 40px 5% 56px !important; }
+          .duel-cover { padding: 40px 5% 36px !important; }
         }
       `}</style>
     </main>

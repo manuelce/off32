@@ -23,13 +23,38 @@ export const ECOMMERCE_ARTICLE_IMAGE = {
   height: 720,
 }
 
+export const IMMERSIVE_ARTICLE_IMAGE = {
+  url: '/blog/img/siti-web-immersivi.jpg?v=2',
+  alt: 'Laptop su scrivania crema con sito immersivo scuro sullo schermo, luci soft blu e rosa.',
+  width: 1280,
+  height: 720,
+}
+
 export const BLOG_POSTS = [
+  {
+    slug: 'siti-web-immersivi',
+    title: 'E se il tuo sito facesse venire voglia di restare?',
+    description:
+      'I siti web immersivi non servono solo a stupire: costruiscono un’esperienza memorabile e accompagnano le persone verso una scelta. Quando ha senso e come farlo senza perdere di vista il business.',
+    image: IMMERSIVE_ARTICLE_IMAGE.url,
+    imageAlt: IMMERSIVE_ARTICLE_IMAGE.alt,
+    tag: 'Design',
+    dateLabel: 'Ott 2026',
+    datePublished: '2026-10-27',
+    dateModified: '2026-10-27',
+    authorName: 'Elisabetta Carìa',
+    authorUrl: '/about/elisabetta-caria',
+  },
   {
     slug: 'come-costruire-brand-digitale',
     title: 'Come costruire un brand digitale che dura nel tempo',
     description: 'Come si costruisce un brand digitale che dura: posizione chiara, poche regole visive e un tono che resta riconoscibile quando cambiano sito e campagne.',
     image: BRAND_ARTICLE_IMAGE.url,
     imageAlt: BRAND_ARTICLE_IMAGE.alt,
+    tag: 'Design',
+    dateLabel: 'Mar 2025',
+    authorName: 'Sara Villani',
+    authorUrl: '/about/sara-villani',
   },
   {
     slug: 'scegliere-clienti-giusti',
@@ -37,6 +62,10 @@ export const BLOG_POSTS = [
     description: 'Una collaborazione funziona quando tempi, materiali e decisioni sono chiari per entrambi. Ecco come in OFF32 capiamo se un progetto è quello giusto.',
     image: CLIENT_ARTICLE_IMAGE.url,
     imageAlt: CLIENT_ARTICLE_IMAGE.alt,
+    tag: 'Community',
+    dateLabel: 'Feb 2025',
+    authorName: 'Manuel Cerasuolo',
+    authorUrl: '/about/manuel-cerasuolo',
   },
   {
     slug: 'ecommerce-performante-2025',
@@ -44,12 +73,18 @@ export const BLOG_POSTS = [
     description: 'Un e-commerce performante si decide sulla scheda prodotto, sulla velocità del telefono e su un checkout che mostra subito prezzo, spedizione e reso.',
     image: ECOMMERCE_ARTICLE_IMAGE.url,
     imageAlt: ECOMMERCE_ARTICLE_IMAGE.alt,
+    tag: 'Sviluppo',
+    dateLabel: 'Feb 2025',
     datePublished: '2025-02-01',
     dateModified: '2026-10-12',
     authorName: 'Lorenzo Salvatori',
     authorUrl: '/about/lorenzo-salvatori',
   },
 ] as const
+
+export function articlesByAuthor(authorUrl: string) {
+  return BLOG_POSTS.filter(post => 'authorUrl' in post && post.authorUrl === authorUrl)
+}
 
 export function pageMeta(
   title: string,

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import SkillTag from '@/components/SkillTag'
+import { HOME_SERVICE_LINKS } from '@/lib/services'
 import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
@@ -61,14 +62,17 @@ export default function Home() {
   const services = [
     {
       tag: '/ brand & creative',
-      items: ['Brand Identity', 'Brand Strategy', 'Creative Direction', 'AI Copywriting', 'Content Creation'],
+      hubHref: '/servizi/brand-creative',
+      items: ['Brand Identity', 'Brand Strategy', 'Creative Direction', 'Copywriting', 'Content Creation'],
     },
     {
       tag: '/ web & digital',
+      hubHref: '/servizi/web-digital',
       items: ['Web Design / Development', 'E-commerce', 'Landing Pages', 'UX / UI Design', 'Performance & SEO'],
     },
     {
       tag: '/ AI systems',
+      hubHref: '/servizi/ai-systems',
       items: ['AI Strategy', 'AI Automation', 'AI Agents', 'AI Workflows', 'AI Integration'],
     },
   ]
@@ -173,12 +177,44 @@ export default function Home() {
         <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Servizi</div>
         <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: LINE }}>
           {services.map((service, i) => (
-            <div key={service.tag} style={{ padding: '36px 28px 28px', borderRight: i < 2 ? LINE : 'none' }}>
+            <div
+              key={service.tag}
+              style={{
+                padding: '36px 28px 28px',
+                borderRight: i < 2 ? LINE : 'none',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
               <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
-              <SkillTag label={service.tag} />
-              {service.items.map(item => (
-                <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
-              ))}
+              <a href={service.hubHref} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <SkillTag label={service.tag} />
+              </a>
+              {service.items.map(item => {
+                const href = HOME_SERVICE_LINKS[item]
+                return href ? (
+                  <a
+                    key={item}
+                    href={href}
+                    style={{ display: 'block', fontSize: 14, padding: '8px 0', color: '#3a3a3a', textDecoration: 'none' }}
+                  >
+                    {item}
+                  </a>
+                ) : (
+                  <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
+                )
+              })}
+              <a
+                href={service.hubHref}
+                style={{
+                  ...button,
+                  alignSelf: 'flex-start',
+                  marginTop: 22,
+                  boxShadow: '3px 3px 0 #fe3812',
+                }}
+              >
+                {i === 0 ? 'Brand & Creative →' : i === 1 ? 'Web & Digital →' : 'AI Systems →'}
+              </a>
             </div>
           ))}
         </div>
@@ -236,8 +272,8 @@ export default function Home() {
           <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)', padding: '28px', borderBottom: LINE }}>Blog</h2>
         <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, padding: 28 }}>
           {[
+            { tag: 'Design', title: 'E se il tuo sito facesse venire voglia di restare?', slug: 'siti-web-immersivi', image: '/blog/img/siti-web-immersivi.jpg?v=2', alt: 'Laptop su scrivania crema con sito immersivo scuro sullo schermo, luci soft blu e rosa.', bg: '#0A1228' },
             { tag: 'Design', title: 'Come costruire un brand digitale che dura nel tempo', slug: 'come-costruire-brand-digitale', image: BRAND_ARTICLE_IMAGE.url, alt: BRAND_ARTICLE_IMAGE.alt, bg: '#0A1510' },
-            { tag: 'Community', title: 'Quando una collaborazione funziona', slug: 'scegliere-clienti-giusti', image: CLIENT_ARTICLE_IMAGE.url, alt: CLIENT_ARTICLE_IMAGE.alt, bg: '#12102A' },
           ].map(post => (
             <a key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
               <div style={{ height: 210, background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>

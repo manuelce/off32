@@ -1,7 +1,12 @@
 'use client'
 import { use, type CSSProperties, type ReactNode } from 'react'
 import ProjectStart from '@/components/ProjectStart'
-import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE, ECOMMERCE_ARTICLE_IMAGE } from '@/lib/seo'
+import {
+  BRAND_ARTICLE_IMAGE,
+  CLIENT_ARTICLE_IMAGE,
+  ECOMMERCE_ARTICLE_IMAGE,
+  IMMERSIVE_ARTICLE_IMAGE,
+} from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -58,6 +63,118 @@ type Article = {
 }
 
 const ARTICLES: Record<string, Article> = {
+  'siti-web-immersivi': {
+    title: 'E se il tuo sito facesse venire voglia di restare?',
+    tag: 'Design',
+    date: 'Ott 2026',
+    readTime: '6 min',
+    author: { name: 'Elisabetta Carìa', role: 'Web Designer & UX/UI · OFF32', href: '/about/elisabetta-caria' },
+    excerpt:
+      'I siti web immersivi non servono solo a stupire. Servono a far sentire qualcosa, rendere memorabile un brand e accompagnare le persone verso una scelta.',
+    image: IMMERSIVE_ARTICLE_IMAGE.url,
+    imageAlt: IMMERSIVE_ARTICLE_IMAGE.alt,
+    imageWidth: IMMERSIVE_ARTICLE_IMAGE.width,
+    imageHeight: IMMERSIVE_ARTICLE_IMAGE.height,
+    content: [
+      {
+        type: 'intro',
+        text: 'Ho sempre amato i racconti. È il motivo per cui adoro i siti immersivi, e voglio parlarvene in questo articolo.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Vi è mai capitato di entrare in un negozio solo per dare un’occhiata e ritrovarvi, dieci minuti dopo, a immaginare come starebbe quell’oggetto a casa vostra? Non è successo per caso. Forse la luce era quella giusta, gli oggetti erano disposti in modo da raccontare una storia, oppure qualcuno era riuscito a farvi immaginare una vita in cui quell’acquisto aveva perfettamente senso.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Perché vi faccio questa premessa? Ora pensate al vostro sito web. Quando qualcuno lo visita, trova soltanto le informazioni che cercava oppure riesce a entrare, anche solo per qualche istante, nel mondo del vostro brand? Ecco, è qui che entra in gioco il web design immersivo.',
+      },
+      {
+        type: 'heading',
+        text: 'Non un catalogo, ma un’esperienza',
+      },
+      {
+        type: 'paragraph',
+        text: 'Siamo abituati a visitare siti che si somigliano: una schermata iniziale, qualche immagine, una descrizione, i servizi e il solito pulsante per contattare l’azienda. Tutto al suo posto, tutto comprensibile. Eppure, spesso, è tutto dimenticabile.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un sito immersivo parte da più lontano. Parte dalla domanda: come vogliamo che le persone si sentano mentre ci scoprono?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Immaginate un piccolo brand che realizza lampade artigianali con legno recuperato. Potrebbe limitarsi a mostrare i prodotti, indicare i prezzi e spiegare i materiali. Oppure potrebbe accompagnarvi nel laboratorio, farvi scoprire le venature del legno, raccontare la storia di ogni pezzo e mostrarvi come cambia l’atmosfera di una stanza quando la lampada si accende. Il prodotto è lo stesso. Cambia il modo in cui lo incontrate.',
+      },
+      {
+        type: 'quote',
+        text: 'Diventa un viaggio, un’esperienza digitale.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un’esperienza digitale immersiva utilizza immagini, movimento, interazioni e narrazione per costruire un percorso coerente con l’identità del brand. Non è necessario riempire ogni pagina di animazioni o effetti spettacolari: a volte basta un’idea visiva forte, sviluppata con cura. L’obiettivo non è “aggiungere”, ma dare alle persone un motivo per continuare a esplorare.',
+      },
+      {
+        type: 'heading',
+        text: 'Perché un sito immersivo può fare la differenza',
+      },
+      {
+        type: 'paragraph',
+        text: 'Essere visti non significa essere ricordati. Una persona può visitare decine di siti in un giorno e dimenticarli quasi tutti. Un’esperienza originale, invece, può lasciare un’impressione più duratura.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Quando design e racconto lavorano insieme, il visitatore non incontra soltanto un prodotto o un servizio: inizia ad associare il brand a una sensazione, a un’atmosfera, a un’idea. Ed è fondamentale per un’azienda che vuole distinguersi in un mercato affollato. Non si tratta semplicemente di avere un sito bello, ma di costruire un’identità riconoscibile anche online.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Quando una persona è incuriosita, ha più motivi per esplorare una pagina, scoprire un prodotto o approfondire un servizio. Però trattenere qualcuno sul sito non è un obiettivo sufficiente in sé. Il tempo trascorso online ha valore soltanto se contribuisce a qualcosa di utile: comprendere meglio l’offerta, richiedere un preventivo, acquistare o contattare l’azienda. Insomma, a convertire gli utenti per raggiungere gli obiettivi.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ecco perché un buon web design immersivo non separa mai l’esperienza dagli obiettivi di business. L’emozione attira l’attenzione. Una strategia ben progettata aiuta a trasformarla in azione.',
+      },
+      {
+        type: 'heading',
+        text: 'Ma un sito immersivo serve davvero a tutti?',
+      },
+      {
+        type: 'paragraph',
+        text: 'No. E riconoscerlo è dovere del web designer, e anche parte di una buona strategia digitale.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Se una persona deve trovare rapidamente il numero di un dentista, consultare un orario o acquistare un ricambio specifico, probabilmente desidera arrivare all’informazione nel minor tempo possibile. Un percorso troppo elaborato rischierebbe soltanto di ostacolarla e minare il raggiungimento dell’obiettivo: la conversione.',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’esperienza immersiva diventa più interessante quando il modo in cui un brand si presenta è parte integrante del suo valore: nel mondo della moda, del design, dell’arte, dell’ospitalità, dei prodotti di fascia alta o dei lanci che vogliono lasciare il segno. In questi casi, il sito può diventare molto più di una vetrina. Può essere un’estensione dell’identità del brand, un luogo in cui il pubblico ne scopre il carattere prima ancora di acquistare.',
+      },
+      {
+        type: 'heading',
+        text: 'Il punto non è stupire, ma lasciare qualcosa',
+      },
+      {
+        type: 'paragraph',
+        text: 'Un sito web immersivo non è necessariamente quello con più animazioni, ma quello dove tutto contribuisce a costruire un’esperienza coerente, senza perdere di vista ciò che il sito deve ottenere.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Perché un sito può essere impeccabile e comunque non lasciare traccia. Può anche essere sorprendente e non portare a nessun risultato. La vera sfida del web design è tenere insieme un’esperienza che le persone ricordino e un percorso che aiuti il business a crescere.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Quindi, la prossima volta che guarderete un sito, provate a chiedervi se racconta davvero ciò che rende speciale quella attività. E soprattutto: dà alle persone un motivo per sceglierla?',
+      },
+      {
+        type: 'heading',
+        text: 'In chiusura',
+      },
+      {
+        type: 'paragraph',
+        text: 'Hai bisogno di un sito su misura per le tue esigenze? Parliamone.',
+        links: [{ href: '/contatti', label: 'Parliamone' }],
+      },
+    ],
+  },
   'come-costruire-brand-digitale': {
     title: 'Come costruire un brand digitale che dura nel tempo',
     tag: 'Design',

@@ -1,6 +1,7 @@
 'use client'
 import type { CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import TeamArticles from '@/components/TeamArticles'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -63,6 +64,8 @@ export default function SaraVillaniPage() {
           ))}
         </div>
       </section>
+
+      <TeamArticles authorUrl="/about/sara-villani" />
 
       <ProjectStart />
 

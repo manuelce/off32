@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 2" width="2400" height="800">
+  <!-- stesso ritaglio Photoshop, vettoriale: niente sgranatura a full width -->
+  <rect fill="#f8eed3" x="0" y="0" width="1" height="1"/>
+  <circle fill="#122641" cx="0.5" cy="0.5" r="0.425"/>
+
+  <rect fill="#f8eed3" x="1" y="0" width="1" height="1"/>
+  <circle fill="#d7375d" cx="1.5" cy="0.5" r="0.42"/>
+  <circle fill="#f8eed3" cx="1.5" cy="0.5" r="0.25"/>
+  <circle fill="#d7375d" cx="1.5" cy="0.5" r="0.09"/>
+
+  <rect fill="#f8eed3" x="2" y="0" width="1" height="1"/>
+  <circle fill="#d7375d" cx="2.5" cy="0.5" r="0.425"/>
+
+  <rect fill="#d7375d" x="3" y="0" width="1" height="1"/>
+  <circle fill="#122641" cx="3.5" cy="0.5" r="0.425"/>
+
+  <rect fill="#d7375d" x="0" y="1" width="1" height="1"/>
+  <circle fill="#f8eed3" cx="0.5" cy="1.5" r="0.42"/>
+  <circle fill="#d7375d" cx="0.5" cy="1.5" r="0.25"/>
+  <circle fill="#f8eed3" cx="0.5" cy="1.5" r="0.09"/>
+
+  <rect fill="#122641" x="1" y="1" width="1" height="1"/>
+  <circle fill="#f8eed3" cx="1.5" cy="1.5" r="0.425"/>
+
+  <rect fill="#f8eed3" x="2" y="1" width="1" height="1"/>
+  <circle fill="#d7375d" cx="2.5" cy="1.5" r="0.42"/>
+  <circle fill="#f8eed3" cx="2.5" cy="1.5" r="0.25"/>
+  <circle fill="#d7375d" cx="2.5" cy="1.5" r="0.09"/>
+
+  <rect fill="#f8eed3" x="3" y="1" width="1" height="1"/>
+  <circle fill="#122641" cx="3.5" cy="1.5" r="0.425"/>
+
+  <rect fill="#d7375d" x="4" y="0" width="2" height="2"/>
+  <circle fill="#f8eed3" cx="5" cy="1" r="0.85"/>
+  <circle fill="#d7375d" cx="5" cy="1" r="0.5"/>
+  <circle fill="#f8eed3" cx="5" cy="1" r="0.2"/>
+</svg>
