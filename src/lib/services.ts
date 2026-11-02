@@ -57,14 +57,13 @@ export const SERVICE_AREAS: ServiceArea[] = [
         heading: 'Brand & Creative',
         body: [
           'La brand identity è il modo in cui un’azienda si fa riconoscere: segni, colori, tipografia e regole che restano coerenti quando cambiano sito, campagne e team. Non è solo un logo. È il sistema visivo e verbale con cui le persone capiscono chi sei, anche senza leggere il nome.',
-          'Intorno all’identity ruotano le altre skill: Brand Strategy per posizionamento e messaggio, Creative Direction per tenere insieme campagne e touchpoint, Copywriting per testi che convertono (landing, email, claim, script) senza perdere voce di marca, Content Creation per visual, caroselli e asset pubblicabili su canali diversi.',
+          'Intorno all’identity ruotano le altre skill: Creative Direction per tenere insieme campagne e touchpoint, Copywriting per testi che convertono (landing, email, claim, script) senza perdere voce di marca, Content Creation per visual, caroselli e asset pubblicabili su canali diversi.',
           'Lavoriamo con founder, brand manager e team marketing che stanno lanciando, riposizionando o allineando comunicazione e prodotto. Il risultato non è un file da archiviare: è un sistema ripetibile, con regole, messaggi e riferimenti che il team può usare senza ricominciare da zero ogni volta.',
         ],
       },
     ],
     serviceSlugs: [
       'brand-identity',
-      'brand-strategy',
       'creative-direction',
       'ai-copywriting',
       'content-creation',
@@ -75,10 +74,10 @@ export const SERVICE_AREAS: ServiceArea[] = [
     label: 'Web & Digital',
     shortLabel: 'Web & Digital',
     keyword: 'agenzia web design e sviluppo',
-    title: 'Web & Digital: siti, e-commerce e UX',
+    title: 'Web & Digital: siti, e-commerce e performance',
     description:
       'Siti web, e-commerce e landing page veloci, belli e pensati per convertire. Design e sviluppo sotto lo stesso tetto.',
-    h1: 'Web & Digital: siti, e-commerce e UX',
+    h1: 'Web & Digital: siti, e-commerce e performance',
     lead:
       'Progettiamo e sviluppiamo esperienze digitali che devono funzionare: sul telefono, in campagna, al checkout. Design e codice stanno nello stesso flusso, così non si perde nulla tra mockup e release.',
     sections: [
@@ -100,7 +99,6 @@ export const SERVICE_AREAS: ServiceArea[] = [
       'web-design-sviluppo',
       'ecommerce',
       'landing-pages',
-      'ux-ui-design',
       'performance-seo',
     ],
   },
@@ -109,10 +107,10 @@ export const SERVICE_AREAS: ServiceArea[] = [
     label: 'AI Systems',
     shortLabel: 'AI Systems',
     keyword: 'AI per aziende',
-    title: 'AI Systems: strategia, automazioni e agenti AI',
+    title: 'AI Systems: automazioni e agenti AI',
     description:
-      'Integriamo l’intelligenza artificiale nei processi della tua azienda: strategia, automazioni, agenti e workflow.',
-    h1: 'AI Systems: strategia, automazioni e agenti AI',
+      'Integriamo l’intelligenza artificiale nei processi della tua azienda: automazioni, agenti e workflow.',
+    h1: 'AI Systems: automazioni e agenti AI',
     lead:
       'L’AI in OFF32 non è una moda da mettere in homepage. È un modo per togliere lavoro ripetitivo e lasciare tempo a decisioni, creatività e relazioni. Partiamo dai processi, non dagli strumenti.',
     sections: [
@@ -131,7 +129,6 @@ export const SERVICE_AREAS: ServiceArea[] = [
       },
     ],
     serviceSlugs: [
-      'ai-strategy',
       'ai-automation',
       'ai-agents',
       'ai-workflows',
@@ -197,71 +194,9 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: 'La consegna comprende i materiali previsti nella proposta: file del logo nei formati concordati per web e stampa, varianti e indicazioni su colori e tipografia. Le linee guida e le brand guidelines spiegano come utilizzare l’identità visiva per mantenere una comunicazione coerente sui diversi canali.',
       },
     ],
-    relatedSlugs: ['brand-strategy', 'creative-direction'],
+    relatedSlugs: ['creative-direction', 'content-creation'],
     workHref: '/work/duel',
     workLabel: 'The Duel',
-    blogHref: '/blog/come-costruire-brand-digitale',
-    blogLabel: 'Come costruire un brand digitale che dura',
-  },
-  {
-    slug: 'brand-strategy',
-    area: 'brand-creative',
-    label: 'Brand Strategy',
-    keyword: 'brand strategy',
-    secondaryKeywords: ['posizionamento di marca', 'brand positioning', 'naming'],
-    title: 'Brand Strategy: posizionamento e messaggio',
-    description:
-      'Posizionamento, messaggio e tono di voce prima di logo, sito e campagne. Per startup in lancio, PMI (piccole e medie imprese) in riposizionamento e professionisti che devono dire una cosa sola, bene.',
-    h1: 'Brand Strategy: posizionamento e messaggio',
-    lead:
-      'Senza strategia, brand identity e contenuti diventano decorazione. La brand strategy fissa dove stai nel mercato, per chi esisti e cosa dici, in una forma che team e fornitori possono usare.',
-    brandColumns: {
-      left: [
-        'Senza strategia, brand identity e contenuti diventano decorazione. La brand strategy fissa dove stai nel mercato, per chi esisti e cosa dici, in una forma che team e fornitori possono usare.',
-        'Di solito 2-3 sessioni in circa due settimane con founder e team: offerta, pubblico, competitor. Niente moodboard senza una decisione dietro: ogni uscita deve restare sul tavolo e guidare sito, campagne e content.',
-      ],
-      right: [
-        'Il brand positioning diventa una frase operativa: cosa fai, per chi, con quale differenza. Da lì derivano naming (se serve), messaggi chiave e tono di voce. Dove ha senso, testiamo i messaggi con clienti o prospect reali prima di fissarli.',
-        'Pensata per startup in lancio, PMI (piccole e medie imprese) che si riposizionano e professionisti che devono allineare comunicazione e offerta. Colleghiamo la strategia a brand identity, web e contenuti così non si spezza tra i reparti.',
-      ],
-    },
-    sections: [
-      {
-        heading: 'Deliverable tipici',
-        body: [
-          'Documento di posizionamento, mappa competitor, tono di voce con esempi sì/no, messaggi chiave per sito e campagne, brief per creatività e content. Poche pagine operative, non slide infinite.',
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: 'A chi è rivolta la brand strategy?',
-        a: 'A startup in lancio, PMI (piccole e medie imprese) in riposizionamento e professionisti o studi che devono chiarire offerta e messaggio prima di investire in logo, sito o campagne.',
-      },
-      {
-        q: 'Serve anche se ho già un logo?',
-        a: 'Sì, soprattutto se il messaggio cambia a seconda di chi parla. La brand strategy allinea team, brand identity e creatività su un posizionamento chiaro.',
-      },
-      {
-        q: 'Cosa comprende un progetto di brand strategy con OFF32?',
-        a: 'Di solito 2-3 sessioni in circa due settimane: offerta, pubblico, competitor; brand positioning, tono di voce e messaggi chiave; brief utili a sito, campagne e content. L’ambito si accorda dopo un primo confronto.',
-      },
-      {
-        q: 'Come testate i messaggi?',
-        a: 'Dove ha senso, li confrontiamo con clienti o prospect reali (interviste brevi o feedback mirati) prima di fissarli nei materiali. Se il perimetro non lo permette, li validiamo con criteri chiari interni al team.',
-      },
-      {
-        q: 'Fate naming?',
-        a: 'Sì, quando serve un nome nuovo o una verifica di disponibilità e tono. Lo trattiamo come parte della brand strategy, non come esercizio estetico.',
-      },
-      {
-        q: 'Quanto costa un progetto di brand strategy?',
-        a: 'Dipende dalla complessità del mercato, dal numero di stakeholder e dagli output richiesti. Dopo un primo confronto prepariamo una proposta con fasi e costi.',
-      },
-    ],
-    relatedSlugs: ['brand-identity', 'ai-copywriting'],
-    workHref: '/work/monochrome',
-    workLabel: 'Monochrome',
     blogHref: '/blog/come-costruire-brand-digitale',
     blogLabel: 'Come costruire un brand digitale che dura',
   },
@@ -383,7 +318,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: 'Principalmente in italiano; su richiesta adattiamo o coordiniamo versioni bilingue.',
       },
     ],
-    relatedSlugs: ['content-creation', 'brand-strategy'],
+    relatedSlugs: ['content-creation', 'brand-identity'],
     workHref: '/work/momento',
     workLabel: 'Momento',
     blogHref: '/blog/come-costruire-brand-digitale',
@@ -507,7 +442,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: 'Offriamo piani di cura post-lancio: aggiornamenti, piccole evoluzioni, monitoraggio.',
       },
     ],
-    relatedSlugs: ['ux-ui-design', 'performance-seo'],
+    relatedSlugs: ['landing-pages', 'performance-seo'],
     workHref: '/work/scuppoz',
     workLabel: 'Scuppoz',
     blogHref: '/blog/siti-web-immersivi',
@@ -638,68 +573,6 @@ export const SERVICE_PAGES: ServicePage[] = [
     blogLabel: 'eCommerce performante: cosa funziona davvero',
   },
   {
-    slug: 'ux-ui-design',
-    area: 'web-digital',
-    label: 'UX / UI Design',
-    keyword: 'UX UI design',
-    secondaryKeywords: ['design interfacce', 'progettazione app e siti', 'prototipi Figma'],
-    title: 'UX / UI Design: interfacce chiare',
-    description:
-      'Ricerca, wireframe, prototipi Figma e design system. Interfacce chiare per siti, app e prodotti digitali.',
-    h1: 'UX / UI Design: interfacce chiare',
-    lead:
-      'Il design delle interfacce decide se le persone capiscono cosa fare. In OFF32 uniamo UX e UI: ricerca essenziale, wireframe, prototipi Figma e UI coerente con il brand.',
-    brandColumns: {
-      left: [
-        'Il design delle interfacce decide se le persone capiscono cosa fare. In OFF32 uniamo UX e UI: ricerca essenziale, wireframe, prototipi Figma e UI coerente con il brand.',
-        'Partiamo da obiettivi e percorsi utente. Costruiamo wireframe, poi interfaccia ad alta fedeltà e prototipo cliccabile. Validiamo prima di scrivere codice costoso.',
-      ],
-      right: [
-        'Per app e siti complessi definiamo un design system leggero: componenti, stati, spacing, così sviluppo e marketing non reinventano ogni schermata.',
-        'Lavoriamo anche su redesign di prodotti esistenti: troviamo attrito, proponiamo priorità, rilasciamo a step. Se sviluppiamo noi, il passaggio a codice è continuo.',
-      ],
-    },
-    sections: [
-      {
-        heading: 'Deliverable tipici',
-        body: [
-          'Ricerca essenziale, wireframe, UI in Figma, prototipo cliccabile, design system leggero e specifiche per lo sviluppo. Su richiesta: test di usabilità rapidi.',
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: 'Cosa comprende un progetto di UX / UI Design con OFF32?',
-        a: 'Percorsi utente, wireframe, interfaccia, prototipo Figma e handoff. La profondità di ricerca e il design system si dimensionano sul prodotto.',
-      },
-      {
-        q: 'Fate solo UI “bella”?',
-        a: 'No. La UI arriva dopo chiarezza di flusso e contenuto. La bellezza senza usabilità non basta.',
-      },
-      {
-        q: 'Usate Figma?',
-        a: 'Sì, è il nostro strumento principale per design e handoff.',
-      },
-      {
-        q: 'Include research utenti?',
-        a: 'Sì, in forma proporzionata al progetto: interviste, analytics, test su prototipo.',
-      },
-      {
-        q: 'Collaborate con team di sviluppo esterni?',
-        a: 'Sì. Forniamo specifiche e supporto in fase di implementazione.',
-      },
-      {
-        q: 'Lavorate su app e siti esistenti?',
-        a: 'Sì. Partiamo dall’attrito reale, prioritizziamo e rilasciamo miglioramenti a step.',
-      },
-    ],
-    relatedSlugs: ['web-design-sviluppo', 'brand-identity'],
-    workHref: '/work/momento',
-    workLabel: 'Momento',
-    blogHref: '/blog/come-costruire-brand-digitale',
-    blogLabel: 'Come costruire un brand digitale che dura',
-  },
-  {
     slug: 'performance-seo',
     area: 'web-digital',
     label: 'Performance & SEO',
@@ -762,68 +635,6 @@ export const SERVICE_PAGES: ServicePage[] = [
     blogLabel: 'eCommerce performante: cosa funziona davvero',
   },
   {
-    slug: 'ai-strategy',
-    area: 'ai-systems',
-    label: 'AI Strategy',
-    keyword: 'strategia AI per aziende',
-    secondaryKeywords: ['consulenza intelligenza artificiale', 'AI per PMI', 'roadmap AI'],
-    title: 'AI Strategy: consulenza per aziende',
-    description:
-      'Consulenza AI per PMI e team: assessment, casi d’uso, ROI e roadmap realistica.',
-    h1: 'AI Strategy: consulenza per aziende',
-    lead:
-      'Una strategia AI per aziende parte dai processi, non dagli hype. Ti aiutiamo a capire dove l’intelligenza artificiale crea valore misurabile e dove è rumore.',
-    brandColumns: {
-      left: [
-        'Una strategia AI per aziende parte dai processi, non dagli hype. Ti aiutiamo a capire dove l’intelligenza artificiale crea valore misurabile e dove è rumore.',
-        'Mappiamo attività ripetitive, dati disponibili, vincoli di privacy e skill del team. Selezioniamo pochi casi d’uso ad alto impatto.',
-      ],
-      right: [
-        'Per ogni caso stimiamo sforzo, rischio e ROI. Esce una roadmap AI a 30/60/90 giorni, non un manifesto.',
-        'Ideale per PMI, team marketing/ops e prodotti digitali che vogliono adottare AI senza dispersione, prima di comprare tool a caso. Dopo la strategia possiamo realizzare automazioni, agenti o integrazioni, oppure restare in consulenza.',
-      ],
-    },
-    sections: [
-      {
-        heading: 'Deliverable tipici',
-        body: [
-          'Assessment dei processi, selezione casi d’uso, stima ROI, roadmap AI e raccomandazioni su tool, privacy e competenze. Su richiesta: accompagnamento alla prima implementazione.',
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: 'Cosa comprende un progetto di AI Strategy con OFF32?',
-        a: 'Workshop e assessment, priorità sui casi d’uso, stima di sforzo e ROI, roadmap operativa. L’ambito si definisce dopo un primo confronto.',
-      },
-      {
-        q: 'Serve un team data science?',
-        a: 'Non sempre. Molti casi partono da LLM e automazioni, con governance chiara.',
-      },
-      {
-        q: 'Lavorate solo su ChatGPT?',
-        a: 'No. Scegliamo modelli e tool in base a costo, privacy e integrazione.',
-      },
-      {
-        q: 'Quanto dura un assessment?',
-        a: 'Spesso 1–3 settimane, con workshop e report finale.',
-      },
-      {
-        q: 'È adatto a una PMI?',
-        a: 'Sì: le PMI guadagnano tempo se scelgono 1–2 processi giusti invece di dispersarsi.',
-      },
-      {
-        q: 'Dopo la strategia cosa succede?',
-        a: 'Possiamo realizzare automazioni, agenti o integrazioni, oppure restare in consulenza di accompagnamento.',
-      },
-    ],
-    relatedSlugs: ['ai-automation', 'ai-agents'],
-    workHref: '/work/vecere',
-    workLabel: 'Vecere',
-    blogHref: '/blog/scegliere-clienti-giusti',
-    blogLabel: 'Quando una collaborazione funziona',
-  },
-  {
     slug: 'ai-automation',
     area: 'ai-systems',
     label: 'AI Automation',
@@ -879,7 +690,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: 'Ore recuperate, errori evitati e affidabilità del flusso. Se il ROI non regge, lo diciamo prima.',
       },
     ],
-    relatedSlugs: ['ai-workflows', 'ai-strategy'],
+    relatedSlugs: ['ai-workflows', 'ai-agents'],
     workHref: '/work/vecere',
     workLabel: 'Vecere',
     blogHref: '/blog/scegliere-clienti-giusti',
@@ -1065,7 +876,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: 'Dipende da accessi e complessità dei sistemi. Dopo lo scope indichiamo una timeline realistica.',
       },
     ],
-    relatedSlugs: ['ai-agents', 'ai-strategy'],
+    relatedSlugs: ['ai-agents', 'ai-automation'],
     workHref: '/full-stack',
     workLabel: 'Corso Full Stack / Agenda32',
     blogHref: '/blog/ecommerce-performante-2025',
@@ -1103,16 +914,13 @@ export function relatedServices(service: ServicePage) {
 /** Mappa label homepage → path servizio */
 export const HOME_SERVICE_LINKS: Record<string, string> = {
   'Brand Identity': '/servizi/brand-creative/brand-identity',
-  'Brand Strategy': '/servizi/brand-creative/brand-strategy',
   'Creative Direction': '/servizi/brand-creative/creative-direction',
   'Copywriting': '/servizi/brand-creative/ai-copywriting',
   'Content Creation': '/servizi/brand-creative/content-creation',
   'Web Design / Development': '/servizi/web-digital/web-design-sviluppo',
   'E-commerce': '/servizi/web-digital/ecommerce',
   'Landing Pages': '/servizi/web-digital/landing-pages',
-  'UX / UI Design': '/servizi/web-digital/ux-ui-design',
   'Performance & SEO': '/servizi/web-digital/performance-seo',
-  'AI Strategy': '/servizi/ai-systems/ai-strategy',
   'AI Automation': '/servizi/ai-systems/ai-automation',
   'AI Agents': '/servizi/ai-systems/ai-agents',
   'AI Workflows': '/servizi/ai-systems/ai-workflows',

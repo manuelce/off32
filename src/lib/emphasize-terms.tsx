@@ -5,7 +5,6 @@ const INK = '#141414'
 /** Longer phrases first so they win over shorter overlaps. */
 const BRAND_TERMS = [
   'brand identity',
-  'brand strategy',
   'brand positioning',
   'strategia',
   'content strategy',
@@ -20,7 +19,6 @@ const BRAND_TERMS = [
   'design system',
   'landing page',
   'e-commerce',
-  'AI Strategy',
   'AI Automation',
   'AI Agents',
   'AI Workflows',

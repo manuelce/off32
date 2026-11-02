@@ -63,17 +63,17 @@ export default function Home() {
     {
       tag: '/ brand & creative',
       hubHref: '/servizi/brand-creative',
-      items: ['Brand Identity', 'Brand Strategy', 'Creative Direction', 'Copywriting', 'Content Creation'],
+      items: ['Brand Identity', 'Creative Direction', 'Copywriting', 'Content Creation'],
     },
     {
       tag: '/ web & digital',
       hubHref: '/servizi/web-digital',
-      items: ['Web Design / Development', 'E-commerce', 'Landing Pages', 'UX / UI Design', 'Performance & SEO'],
+      items: ['Web Design / Development', 'E-commerce', 'Landing Pages', 'Performance & SEO'],
     },
     {
       tag: '/ AI systems',
       hubHref: '/servizi/ai-systems',
-      items: ['AI Strategy', 'AI Automation', 'AI Agents', 'AI Workflows', 'AI Integration'],
+      items: ['AI Automation', 'AI Agents', 'AI Workflows', 'AI Integration'],
     },
   ]
 
@@ -92,7 +92,7 @@ export default function Home() {
     },
     {
       q: 'Quali servizi offrite?',
-      a: 'Tre aree. Brand e creatività: identità, strategia, direzione visiva, copy e contenuti. Web e digitale: siti in React e Next.js, e-commerce Shopify, landing, UX/UI, performance e SEO. Sistemi AI: strategia, automazioni, agenti, assistenti e integrazione nei flussi che usate già.',
+      a: 'Comunicazione digitale potenziata dall’AI, in tre aree. Brand e creatività: identità, direzione creativa, copy e contenuti. Web e digitale: siti, e-commerce, landing, performance e SEO. Sistemi AI: automazioni, agenti, workflow e integrazioni.',
     },
     {
       q: 'Quanto costano i vostri servizi?',
@@ -149,7 +149,7 @@ export default function Home() {
             {' '}digitale potenziata dall&apos;intelligenza.
           </h1>
           <p style={{ fontSize: 15, lineHeight: 1.7, maxWidth: 460, color: '#3a3a3a' }}>
-            OFF32 integra l&apos;intelligenza artificiale nella creazione di brand, esperienze digitali e campagne. Una comunicazione orientata alla performance.
+            Brand, esperienze digitali e sistemi AI in un unico flusso. Comunicazione orientata alla performance.
           </p>
           <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
             <a href="/work" style={button}>Works</a>

@@ -92,9 +92,9 @@ export default function ServiceHubView({ area }: { area: ServiceArea }) {
                 style={{ fontSize: 16, lineHeight: 1.75, color: '#3a3a3a', margin: '0 0 18px', maxWidth: '68ch' }}
               >
                 {paragraph
-                  .split(/(brand identity|Brand Strategy|Creative Direction|Copywriting|Content Creation)/g)
+                  .split(/(brand identity|Creative Direction|Copywriting|Content Creation)/g)
                   .map((part, i) =>
-                    /^(brand identity|Brand Strategy|Creative Direction|Copywriting|Content Creation)$/i.test(
+                    /^(brand identity|Creative Direction|Copywriting|Content Creation)$/i.test(
                       part,
                     ) ? (
                       <strong key={i} style={{ fontWeight: 700, color: INK }}>

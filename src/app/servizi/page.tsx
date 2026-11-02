@@ -8,7 +8,7 @@ import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
   'Servizi OFF32: brand, web e AI',
-  'Brand & Creative, Web & Digital e AI Systems. Identità, siti, e-commerce, automazioni e agenti AI.',
+  'Comunicazione digitale potenziata dall’AI: Brand & Creative, Web & Digital e AI Systems in un unico flusso.',
   '/servizi',
 )
 

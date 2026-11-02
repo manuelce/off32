@@ -136,9 +136,9 @@ export default function AboutPage() {
       </h1>
 
       <section className="about-lead">
-        <p>OFF32 è un&apos;agenzia di comunicazione digitale, multidisciplinare e indipendente.</p>
+        <p>OFF32 è un&apos;agenzia di comunicazione digitale potenziata dall&apos;AI, multidisciplinare e indipendente.</p>
         <p>
-          Il nostro lavoro comprende grafica e identità, strategia e posizionamento, siti ed esperienze digitali, comunicazione e campagne.
+          Brand, esperienze digitali e sistemi AI in un unico flusso: identità, siti, campagne e automazioni.
           Lavoriamo in team o in autonomia.
         </p>
         <p>

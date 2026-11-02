@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
-export const alt = 'OFF32 · Officina di design, AI e web app'
+export const alt = 'OFF32 · Comunicazione digitale potenziata dall’AI'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -75,7 +75,7 @@ export default async function OpenGraphImage() {
                 textTransform: 'uppercase',
               }}
             >
-              <div>Brand · Web · Campagne</div>
+              <div>Brand · Web · AI</div>
               <div>off32.it</div>
             </div>
           </div>
