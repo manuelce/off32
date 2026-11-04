@@ -1,6 +1,7 @@
 'use client'
 import { type CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SplitPageTitle from '@/components/SplitPageTitle'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -57,15 +58,6 @@ const meta: CSSProperties = {
   color: '#0D0D0D',
 }
 
-const title: CSSProperties = {
-  fontFamily: "'Canela', Georgia, serif",
-  fontWeight: 300,
-  fontSize: 'clamp(72px, 12vw, 168px)',
-  lineHeight: 0.88,
-  letterSpacing: '-3px',
-  color: '#0D0D0D',
-}
-
 export default function Work() {
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -75,14 +67,13 @@ export default function Work() {
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
       <link rel="preload" as="image" href="/works/momento/poster.jpg" />
-      <h1 className="work-title" style={{ margin: 0 }}>
-        <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
-          i nostri
-        </span>
-        <span style={{ ...title, display: 'block', textAlign: 'left', borderBottom: LINE, padding: '18px 40px 22px' }}>
-          progetti
-        </span>
-      </h1>
+      <SplitPageTitle
+        className="work-title"
+        lines={[
+          { text: 'i nostri', align: 'right' },
+          { text: 'progetti', align: 'left' },
+        ]}
+      />
 
       <section style={{ paddingTop: '15%', paddingBottom: '15%' }}>
         <div style={{ ...meta, padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>Lavori selezionati</div>

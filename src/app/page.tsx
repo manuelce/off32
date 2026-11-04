@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import ProjectStart from '@/components/ProjectStart'
-import SkillTag from '@/components/SkillTag'
+import ScrollRiseBlock from '@/components/ScrollRiseBlock'
+import ScrollRiseQuote from '@/components/ScrollRiseQuote'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
 import { BRAND_ARTICLE_IMAGE, CLIENT_ARTICLE_IMAGE } from '@/lib/seo'
 
@@ -128,12 +129,23 @@ export default function Home() {
       <link rel="preload" as="image" href="/works/conil-food-tour/laptop.webp" />
       <link rel="preload" as="image" href="/works/duel/cover.jpg" />
       <link rel="preload" as="image" href="/works/monochrome/preview.jpg" />
-      <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '88px 1fr minmax(280px, 36%)', minHeight: 'calc(100vh - 58px)', borderBottom: LINE }}>
-        <div style={{ borderRight: LINE, padding: '28px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <section
+        className="hero-grid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '88px 1fr minmax(280px, 36%)',
+          gridTemplateRows: '1fr',
+          height: 'calc(100vh - 58px)',
+          minHeight: 'calc(100vh - 58px)',
+          borderBottom: LINE,
+          alignItems: 'stretch',
+        }}
+      >
+        <div style={{ borderRight: LINE, padding: '28px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 0 }}>
           <span style={meta}>01</span>
           <BrandRoulette />
         </div>
-        <div className="hero-copy" style={{ padding: '48px 40px 14vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+        <div className="hero-copy" style={{ padding: '48px 40px 14vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', minHeight: 0 }}>
           <div style={{ ...meta, color: '#fe3812', marginBottom: 20 }}>Officina digitale</div>
           <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(48px, 6.4vw, 92px)', fontWeight: 300, lineHeight: 0.92, letterSpacing: '-2px', maxWidth: 760, marginBottom: 28 }}>
             <span className="street-word">
@@ -156,8 +168,23 @@ export default function Home() {
             <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Events</a>
           </div>
         </div>
-        <div style={{ borderLeft: LINE, position: 'relative', minHeight: 420, background: '#E7E0D4' }}>
-          <video autoPlay muted loop playsInline preload="metadata" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}>
+        <div className="hero-video" style={{ borderLeft: LINE, position: 'relative', minHeight: 0, height: '100%', background: '#E7E0D4', overflow: 'hidden' }}>
+          <video
+            className="hero-video-el"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+            }}
+          >
             <source src="/train_small.mp4" type="video/mp4" />
           </video>
           <div style={{ position: 'absolute', top: 0, bottom: 0, left: '33%', width: 1, background: 'rgba(240,235,224,0.45)' }} />
@@ -187,8 +214,22 @@ export default function Home() {
               }}
             >
               <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
-              <a href={service.hubHref} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <SkillTag label={service.tag} />
+              <a href={service.hubHref} style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', marginBottom: 16 }}>
+                <ScrollRiseQuote
+                  as="div"
+                  style={{
+                    fontFamily: "'Canela', Georgia, serif",
+                    fontSize: 'clamp(26px, 2.8vw, 34px)',
+                    fontWeight: 300,
+                    letterSpacing: '-0.4px',
+                    lineHeight: 1.05,
+                    color: '#222',
+                    overflow: 'hidden',
+                    margin: 0,
+                  }}
+                >
+                  {service.tag}
+                </ScrollRiseQuote>
               </a>
               {service.items.map(item => {
                 const href = HOME_SERVICE_LINKS[item]
@@ -221,9 +262,21 @@ export default function Home() {
       </section>
 
       <section style={{ padding: '12% 8%', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 3.2vw, 42px)', lineHeight: 1.25, letterSpacing: '-0.6px', maxWidth: 720, margin: '0 auto', color: '#0D0D0D' }}>
-          L&apos;intelligenza artificiale assorbe il lavoro ripetitivo. Il tempo che resta lo dedichiamo alla creatività e allo sviluppo.
-        </p>
+        <ScrollRiseQuote
+          style={{
+            fontFamily: "'Canela', Georgia, serif",
+            fontWeight: 300,
+            fontSize: 'clamp(28px, 3.2vw, 42px)',
+            lineHeight: 1.25,
+            letterSpacing: '-0.6px',
+            maxWidth: 720,
+            margin: '0 auto',
+            color: '#0D0D0D',
+            overflow: 'hidden',
+          }}
+        >
+          {`L'intelligenza artificiale assorbe il lavoro ripetitivo. Il tempo che resta lo dedichiamo alla creatività e allo sviluppo.`}
+        </ScrollRiseQuote>
       </section>
 
       <section id="works">
@@ -250,21 +303,47 @@ export default function Home() {
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '36px 32px', minHeight: 320 }}>
             <div style={meta}>04</div>
             <div>
-              <div style={{ fontFamily: "'Canela', Georgia, serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 300, letterSpacing: '-0.6px', lineHeight: 1.05, marginBottom: 24 }}>
-                Vuoi vedere tutti i progetti?
-              </div>
-              <a href="/work" style={button}>Tutti i lavori →</a>
+              <ScrollRiseQuote
+                as="div"
+                style={{
+                  fontFamily: "'Canela', Georgia, serif",
+                  fontSize: 'clamp(28px, 3vw, 40px)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.6px',
+                  lineHeight: 1.05,
+                  marginBottom: 24,
+                  overflow: 'hidden',
+                }}
+              >
+                {`Vuoi vedere tutti i progetti?`}
+              </ScrollRiseQuote>
+              <ScrollRiseBlock delayMs={280}>
+                <a href="/work" style={button}>Tutti i lavori →</a>
+              </ScrollRiseBlock>
             </div>
           </div>
         </div>
       </section>
 
       <section style={{ padding: '15% 8% 0', textAlign: 'center' }}>
-        <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Manifesto</div>
-        <h2 style={{ ...heading, maxWidth: 640, margin: '0 auto 20px' }}>Amiamo i dettagli. L&apos;AI li amplifica.</h2>
-        <p style={{ ...body, margin: '0 auto' }}>C&apos;è qualcosa di profondo nel rispetto al lavoro. È la spinta a costruire esperienze che durano nel tempo, a creare qualcosa che diventa indimenticabile.</p>
-        <p style={{ ...body, margin: '14px auto 28px' }}>In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.</p>
-        <a href="/about" style={button}>Scopri il manifesto →</a>
+        <ScrollRiseBlock>
+          <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Manifesto</div>
+        </ScrollRiseBlock>
+        <ScrollRiseQuote
+          as="h2"
+          style={{ ...heading, maxWidth: 640, margin: '0 auto 20px', overflow: 'hidden' }}
+        >
+          {`Amiamo i dettagli. L'AI li amplifica.`}
+        </ScrollRiseQuote>
+        <ScrollRiseBlock delayMs={280}>
+          <p style={{ ...body, margin: '0 auto' }}>
+            C&apos;è qualcosa di profondo nel rispetto al lavoro. È la spinta a costruire esperienze che durano nel tempo, a creare qualcosa che diventa indimenticabile.
+          </p>
+          <p style={{ ...body, margin: '14px auto 28px' }}>
+            In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.
+          </p>
+          <a href="/about" style={button}>Scopri il manifesto →</a>
+        </ScrollRiseBlock>
       </section>
 
       <section style={{ width: '80%', margin: '0 auto', paddingTop: '15%', paddingBottom: '15%' }}>
@@ -414,10 +493,25 @@ export default function Home() {
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
-          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: auto auto !important;
+            height: auto !important;
+            min-height: auto !important;
+          }
           .hero-grid > :first-child { display: none !important; }
           .hero-copy { padding: 112px 28px 48px !important; }
-          .hero-grid > :last-child { border-left: none !important; min-height: 280px !important; border-top: 1px solid #0D0D0D; }
+          .hero-grid > :last-child,
+          .hero-video {
+            border-left: none !important;
+            min-height: 280px !important;
+            height: 280px !important;
+            border-top: 1px solid #0D0D0D;
+          }
+          .hero-video-el {
+            object-fit: cover !important;
+            object-position: center center !important;
+          }
           .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
           .grid-3 > div, .split > div, .split > p { border-right: none !important; border-left: none !important; }
           .meta-row { --meta-inset: 16px; }

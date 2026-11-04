@@ -1,6 +1,7 @@
 'use client'
 import { useState, type CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SplitPageTitle from '@/components/SplitPageTitle'
 import {
   BRAND_ARTICLE_IMAGE,
   CLIENT_ARTICLE_IMAGE,
@@ -71,29 +72,19 @@ const meta: CSSProperties = {
   color: '#0D0D0D',
 }
 
-const title: CSSProperties = {
-  fontFamily: "'Canela', Georgia, serif",
-  fontWeight: 300,
-  fontSize: 'clamp(72px, 12vw, 168px)',
-  lineHeight: 0.88,
-  letterSpacing: '-3px',
-  color: '#0D0D0D',
-}
-
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('tutti')
   const filtered = POSTS.filter(p => activeCategory === 'tutti' || p.category === activeCategory)
 
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <h1 className="blog-title" style={{ margin: 0 }}>
-        <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
-          il nostro
-        </span>
-        <span style={{ ...title, display: 'block', textAlign: 'left', borderBottom: LINE, padding: '18px 40px 22px' }}>
-          blog
-        </span>
-      </h1>
+      <SplitPageTitle
+        className="blog-title"
+        lines={[
+          { text: 'il nostro', align: 'right' },
+          { text: 'blog', align: 'left' },
+        ]}
+      />
 
       <section style={{ paddingTop: '15%', paddingBottom: '15%' }}>
         <div style={{ background: '#F0EBE0', padding: '20px 5%', borderBottom: '1px solid #E0D8CC', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>

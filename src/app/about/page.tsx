@@ -1,6 +1,7 @@
 'use client'
 import type { CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SplitPageTitle from '@/components/SplitPageTitle'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -114,26 +115,16 @@ const meta: CSSProperties = {
   color: '#0D0D0D',
 }
 
-const title: CSSProperties = {
-  fontFamily: "'Canela', Georgia, serif",
-  fontWeight: 300,
-  fontSize: 'clamp(72px, 12vw, 168px)',
-  lineHeight: 0.88,
-  letterSpacing: '-3px',
-  color: '#0D0D0D',
-}
-
 export default function AboutPage() {
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
-      <h1 className="about-title" style={{ margin: 0 }}>
-        <span style={{ ...title, display: 'block', textAlign: 'right', borderTop: LINE, borderBottom: LINE, padding: '18px 40px 22px' }}>
-          il nostro
-        </span>
-        <span style={{ ...title, display: 'block', textAlign: 'left', borderBottom: LINE, padding: '18px 40px 22px' }}>
-          team
-        </span>
-      </h1>
+      <SplitPageTitle
+        className="about-title"
+        lines={[
+          { text: 'il nostro', align: 'right' },
+          { text: 'team', align: 'left' },
+        ]}
+      />
 
       <section className="about-lead">
         <p>OFF32 è un&apos;agenzia di comunicazione digitale potenziata dall&apos;AI, multidisciplinare e indipendente.</p>

@@ -1,6 +1,7 @@
 'use client'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SplitPageTitle from '@/components/SplitPageTitle'
 import { workshops, type Workshop } from '@/lib/workshops'
 
 const PURPLE = '#694aff'
@@ -14,15 +15,6 @@ const FILTERS = ['All', 'Full-stack', 'Design', 'E-commerce', 'Gratuito']
 const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }> = {
   'brand-identity-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/brand.jpg', focus: 'center 42%' },
   'videocorso-fullstack-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/agenda32.jpg', focus: 'center center' },
-}
-
-const title: CSSProperties = {
-  fontFamily: "'Canela', Georgia, serif",
-  fontWeight: 300,
-  fontSize: 'clamp(72px, 12vw, 168px)',
-  lineHeight: 0.88,
-  letterSpacing: '-3px',
-  color: CREAM,
 }
 
 function EventFlyer({ workshop }: { workshop: Workshop }) {
@@ -75,7 +67,7 @@ function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop;
           <div className="event-foot">
             <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
             {workshop.landingHref ? (
-              <a href={workshop.landingHref} className="event-buy">Programma corso</a>
+              <a href={workshop.landingHref} className="event-buy">{workshop.landingCta ?? 'Programma corso'}</a>
             ) : (
               <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
             )}
@@ -96,6 +88,7 @@ export default function WorkshopPage() {
   const upcoming = visible.filter(workshop => workshop.status === 'upcoming')
   const past = visible.filter(workshop => workshop.status === 'past')
   const featured = upcoming[0] ?? null
+  const moreUpcoming = upcoming.slice(1)
 
   useEffect(() => {
     if (underlinePlayed.current) return
@@ -120,13 +113,17 @@ export default function WorkshopPage() {
 
   return (
     <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
-      <h1 className="workshop-title" style={{ margin: 0, background: PURPLE }}>
-        {['Cultura.', 'Inclusione.', 'Formazione.'].map((line, i) => (
-          <span key={line} style={{ ...title, display: 'block', textAlign: i % 2 === 0 ? 'right' : 'left', borderTop: i === 0 ? LINE : undefined, borderBottom: LINE, padding: '18px 40px 22px' }}>
-            {line}
-          </span>
-        ))}
-      </h1>
+      <SplitPageTitle
+        className="workshop-title"
+        background={PURPLE}
+        color={CREAM}
+        border={LINE}
+        lines={[
+          { text: 'Cultura.', align: 'right' },
+          { text: 'Inclusione.', align: 'left' },
+          { text: 'Formazione.', align: 'right' },
+        ]}
+      />
 
       <div className="info-bar" style={{ background: '#0D0D0D', padding: '16px 5%', display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
         {[
@@ -174,6 +171,13 @@ export default function WorkshopPage() {
           <div className="events-upcoming">
             <div className="events-label">Prossimo</div>
             <EventCard workshop={featured} featured onBook={() => setSelected(featured)} />
+            {moreUpcoming.length > 0 ? (
+              <div className="events-grid" style={{ marginTop: 28 }}>
+                {moreUpcoming.map(workshop => (
+                  <EventCard key={workshop.slug} workshop={workshop} onBook={() => setSelected(workshop)} />
+                ))}
+              </div>
+            ) : null}
           </div>
         ) : null}
 
@@ -446,7 +450,6 @@ export default function WorkshopPage() {
           .event-filters { flex-wrap: wrap; }
         }
         @media (max-width: 860px) {
-          .workshop-title { padding-top: 64px; }
           .event-poster { height: 210px; }
           .events-grid { grid-template-columns: 1fr; }
           .event-card.is-featured {

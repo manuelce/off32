@@ -19,31 +19,13 @@ export type Workshop = {
   free?: boolean
   /** Se presente, la CTA apre questa route invece del dialog. */
   landingHref?: string
+  landingCta?: string
 }
 
 export const workshops: Workshop[] = [
   {
-    slug: 'brand-identity-ai',
-    index: '01',
-    tag: 'Brand',
-    kind: 'Workshop',
-    topic: 'Design',
-    title: 'Brand identity con intelligenza artificiale',
-    desc: 'Ricerca, posizionamento e direzione visiva in una sessione. L\'AI accelera i materiali. La decisione su cosa tenere resta del team.',
-    duration: '4 ore',
-    format: 'Studio o online',
-    level: 'Intermedio',
-    audience: 'Founder e brand manager',
-    status: 'past',
-    outcomes: [
-      'Una frase di posizionamento che il team può usare subito',
-      'Direzione visiva e verbale, non un logo isolato',
-      'Un flusso di produzione con l\'AI, revisionato da persone',
-    ],
-  },
-  {
     slug: FULLSTACK_SLUG,
-    index: '02',
+    index: '01',
     tag: 'Web',
     kind: 'Corsi',
     topic: 'Full-stack',
@@ -61,6 +43,25 @@ export const workshops: Workshop[] = [
       'Progetto: Agenda32, prenotazioni online adattabile a qualsiasi settore.',
       `Stack: ${fullstackCourse.stack.join(', ')}.`,
       `Prezzo del corso: ${fullstackCourse.price}.`,
+    ],
+  },
+  {
+    slug: 'brand-identity-ai',
+    index: '02',
+    tag: 'Brand',
+    kind: 'Workshop',
+    topic: 'Design',
+    title: 'Brand identity con intelligenza artificiale',
+    desc: 'Ricerca, posizionamento e direzione visiva in una sessione. L\'AI accelera i materiali. La decisione su cosa tenere resta del team.',
+    duration: '4 ore',
+    format: 'Studio o online',
+    level: 'Intermedio',
+    audience: 'Founder e brand manager',
+    status: 'past',
+    outcomes: [
+      'Una frase di posizionamento che il team può usare subito',
+      'Direzione visiva e verbale, non un logo isolato',
+      'Un flusso di produzione con l\'AI, revisionato da persone',
     ],
   },
 ]
