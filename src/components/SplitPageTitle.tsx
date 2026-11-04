@@ -26,7 +26,7 @@ type Props = {
   border?: string
 }
 
-/** Same entrance as Events Cultura/Inclusione/Formazione: opposite side → final, 0.55s ease-in. */
+/** Same entrance as Events Cultura/Inclusione/Formazione: opposite side → final, 0.7s ease-out. */
 export default function SplitPageTitle({
   lines,
   className,
@@ -84,7 +84,7 @@ export default function SplitPageTitle({
         .split-page-title-line {
           display: block;
           will-change: transform;
-          transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .split-page-title:not(.is-in) .split-page-title-row.is-right .split-page-title-line {
           transform: translateX(calc(-100cqw + 100%));
