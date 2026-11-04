@@ -7,6 +7,7 @@ import {
   CLIENT_ARTICLE_IMAGE,
   ECOMMERCE_ARTICLE_IMAGE,
   IMMERSIVE_ARTICLE_IMAGE,
+  SAGGIO_ARTICLE_IMAGE,
 } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
@@ -14,6 +15,19 @@ const LINE = '1px solid #0D0D0D'
 const CATEGORIES = ['tutti', 'design', 'sviluppo', 'community', 'marketing', 'casi studio']
 
 const POSTS = [
+  {
+    slug: 'economia-attenzione-serve-un-saggio',
+    image: SAGGIO_ARTICLE_IMAGE.url,
+    imageAlt: SAGGIO_ARTICLE_IMAGE.alt,
+    category: 'community',
+    tag: 'Community',
+    title: 'L’economia dell’attenzione è finita: ora serve un saggio',
+    excerpt:
+      'Dall’economia dell’attenzione a quella della fiducia: perché oggi conta chi sa scegliere, togliere e dare direzione, non chi produce di più.',
+    author: { initials: 'MC', name: 'Manuel Cerasuolo', role: 'Digital Project Manager · OFF32', bg: '#EEF8F3', color: '#0F6E56' },
+    date: 'Nov 2026', readTime: '9 min', featured: true,
+    bg: '#1A1520',
+  },
   {
     slug: 'siti-web-immersivi',
     image: IMMERSIVE_ARTICLE_IMAGE.url,

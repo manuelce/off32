@@ -30,7 +30,38 @@ export const IMMERSIVE_ARTICLE_IMAGE = {
   height: 720,
 }
 
+export const SAGGIO_ARTICLE_IMAGE = {
+  url: '/blog/img/saggio.jpg',
+  alt: 'Busto in marmo classico su piedistallo dorato, avvolto da fumo denso: metafora di rumore e chiarezza.',
+  width: 1024,
+  height: 573,
+}
+
+export const SAGGIO_CROCE_IMAGE = {
+  url: '/blog/img/saggio-croce.jpg',
+  alt: 'Croce di legno su una collina al tramonto, silhouette contro un cielo arancione.',
+}
+
+export const SAGGIO_ORIZZONTE_IMAGE = {
+  url: '/blog/img/saggio-orizzonte.jpg',
+  alt: 'Costa rocciosa all’alba con pale eoliche all’orizzonte e riflessi d’acqua tra le pietre.',
+}
+
 export const BLOG_POSTS = [
+  {
+    slug: 'economia-attenzione-serve-un-saggio',
+    title: 'L’economia dell’attenzione è finita: ora serve un saggio',
+    description:
+      'Dall’economia dell’attenzione a quella della fiducia: perché oggi conta chi sa scegliere, togliere e dare direzione, non chi produce di più.',
+    image: SAGGIO_ARTICLE_IMAGE.url,
+    imageAlt: SAGGIO_ARTICLE_IMAGE.alt,
+    tag: 'Community',
+    dateLabel: 'Nov 2026',
+    datePublished: '2026-11-04',
+    dateModified: '2026-11-04',
+    authorName: 'Manuel Cerasuolo',
+    authorUrl: '/about/manuel-cerasuolo',
+  },
   {
     slug: 'siti-web-immersivi',
     title: 'E se il tuo sito facesse venire voglia di restare?',

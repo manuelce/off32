@@ -6,6 +6,9 @@ import {
   CLIENT_ARTICLE_IMAGE,
   ECOMMERCE_ARTICLE_IMAGE,
   IMMERSIVE_ARTICLE_IMAGE,
+  SAGGIO_ARTICLE_IMAGE,
+  SAGGIO_CROCE_IMAGE,
+  SAGGIO_ORIZZONTE_IMAGE,
 } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
@@ -43,8 +46,11 @@ const meta: CSSProperties = {
 }
 
 type Block = {
-  type: 'intro' | 'paragraph' | 'heading' | 'quote'
-  text: string
+  type: 'intro' | 'paragraph' | 'heading' | 'quote' | 'image' | 'list'
+  text?: string
+  items?: string[]
+  src?: string
+  alt?: string
   links?: { href: string; label: string }[]
 }
 
@@ -63,6 +69,167 @@ type Article = {
 }
 
 const ARTICLES: Record<string, Article> = {
+  'economia-attenzione-serve-un-saggio': {
+    title: 'L’economia dell’attenzione è finita: ora serve un saggio',
+    tag: 'Community',
+    date: 'Nov 2026',
+    readTime: '9 min',
+    author: { name: 'Manuel Cerasuolo', role: 'Digital Project Manager · OFF32', href: '/about/manuel-cerasuolo' },
+    excerpt:
+      'Sono nel mondo dello sviluppo web, del marketing e della SEO da più di quindici anni. Quello che sta succedendo oggi non è solo un altro cambio tecnologico: è un cambio di economia.',
+    image: SAGGIO_ARTICLE_IMAGE.url,
+    imageAlt: SAGGIO_ARTICLE_IMAGE.alt,
+    imageWidth: SAGGIO_ARTICLE_IMAGE.width,
+    imageHeight: SAGGIO_ARTICLE_IMAGE.height,
+    content: [
+      {
+        type: 'intro',
+        text: 'Sono nel mondo dello sviluppo web, del marketing e della SEO da più di quindici anni. In questo periodo ho visto cambiare tutto: i motori di ricerca, i social, le tecnologie, le mode, i modi di vendere e perfino il modo in cui le persone decidono di fidarsi di un brand.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ma quello che sta succedendo oggi è diverso. Non è solo un altro cambiamento tecnologico. È un cambiamento di economia: dall’economia dell’attenzione siamo passati a un’economia della fiducia, della selezione e della direzione.',
+      },
+      {
+        type: 'heading',
+        text: 'Sappiamo tutto, ma non sappiamo cosa scegliere',
+      },
+      {
+        type: 'paragraph',
+        text: 'Oggi la conoscenza è praticamente gratuita. Chiunque può cercare un tutorial, aprire un video, leggere un articolo, chiedere a un’AI, copiare una strategia, scaricare un template o seguire cento persone che dicono di avere “la soluzione definitiva”.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il problema non è più l’accesso all’informazione. Il problema è l’eccesso di informazione. Viviamo in un mondo dove tutto è disponibile, ma quasi nulla è davvero utilizzabile. Ogni giorno arrivano nuovi strumenti, nuove piattaforme, nuovi algoritmi, nuove promesse di automazione, nuovi modi per “fare soldi online”, nuovi corsi, nuove tecniche SEO, nuove AI.',
+      },
+      {
+        type: 'paragraph',
+        text: 'E in mezzo a questa infinità di opportunità, molte persone si sentono più perse che prima. Perché avere più strade non significa sapere quale prendere.',
+      },
+      {
+        type: 'image',
+        src: SAGGIO_CROCE_IMAGE.url,
+        alt: SAGGIO_CROCE_IMAGE.alt,
+      },
+      {
+        type: 'heading',
+        text: 'L’AI ha chiuso il cerchio',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’intelligenza artificiale non ha inventato questo problema, ma l’ha reso evidente. Ora chiunque può generare testi, immagini, siti, codice, campagne, analisi e contenuti in pochi minuti. Può produrre tanto, velocemente e a costi bassissimi. Ma proprio per questo produrre non è più un vantaggio.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Se tutti possono creare, pubblicare, automatizzare e ottimizzare, la domanda non è più: “Chi sa fare le cose?” La domanda è diventata: “Chi sa capire cosa vale la pena fare?”',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’AI ha chiuso il cerchio perché ha reso l’esecuzione accessibile a tutti. Ha abbattuto il costo della produzione. Ha moltiplicato le possibilità. Ma non ha risolto il problema più importante: decidere. Decidere quale canale usare, quale messaggio funziona, cosa tagliare, quali opportunità ignorare, quale strada portare davvero un’azienda da un punto A a un punto B.',
+      },
+      {
+        type: 'heading',
+        text: 'Il mondo cerca un saggio',
+      },
+      {
+        type: 'paragraph',
+        text: 'In un mercato saturo, le persone non seguiranno chi aggiunge. Seguiranno chi sa togliere. Perché oggi siamo invasi da opzioni, contenuti, strumenti, opinioni e promesse. Siamo “svuotati” da chi produce continuamente: più post, più video, più newsletter, più funnel, più automazioni, più parole.',
+      },
+      {
+        type: 'paragraph',
+        text: 'E chi legge, guarda o acquista ha ormai un’attenzione vicina allo zero. Non perché le persone non siano interessate, ma perché sono stanche: di rumore, di contenuti generici, di promesse enormi e risultati vaghi, di dover distinguere da sole ciò che è utile da ciò che è solo ottimizzato per catturare clic.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In questo scenario emerge una figura nuova: il saggio. Non nel senso antico o teologico del termine, ma come persona capace di dare direzione.',
+      },
+      {
+        type: 'quote',
+        text: 'Il saggio non è chi sa tutto. È chi sa cosa conta.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Non vende l’idea di fare di più. Aiuta a capire cosa non fare. Non riempie: ordina. Non parla per impressionare: parla per chiarire.',
+      },
+      {
+        type: 'heading',
+        text: 'Da “chi mette” a “chi toglie”',
+      },
+      {
+        type: 'paragraph',
+        text: 'Per anni il digitale ha premiato chi metteva: più contenuti, più parole chiave, più pagine, più annunci, più social, più automazioni, più lead. Ora il valore si sposta. Il vero vantaggio competitivo non è aggiungere altre cose al mondo. È saper togliere:',
+      },
+      {
+        type: 'list',
+        items: [
+          'le attività che non producono risultati',
+          'i contenuti che non comunicano nulla',
+          'i canali che disperdono risorse',
+          'le opzioni che creano confusione',
+          'le tecnologie usate solo perché sono di tendenza',
+          'le parole che riempiono ma non dicono',
+          'le strategie complicate quando basterebbe una direzione semplice',
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: 'Togliere è difficile. Aggiungere sembra produttivo, dà la sensazione di muoversi. Togliere richiede giudizio, esperienza e responsabilità. Per questo chi sa togliere diventa prezioso.',
+      },
+      {
+        type: 'image',
+        src: SAGGIO_ORIZZONTE_IMAGE.url,
+        alt: SAGGIO_ORIZZONTE_IMAGE.alt,
+      },
+      {
+        type: 'heading',
+        text: 'L’attenzione è zero, la fiducia no',
+      },
+      {
+        type: 'paragraph',
+        text: 'Se l’attenzione delle persone è ormai quasi zero, non si vince urlando più forte. Si vince essendo chiari. Un brand oggi non deve solo essere visibile: deve essere comprensibile. Deve dire con precisione chi aiuta, quale problema risolve, perché dovrebbe essere scelto, cosa non fa e quale risultato può aspettarsi il cliente.',
+      },
+      {
+        type: 'paragraph',
+        text: 'La SEO, il web design, il marketing e l’AI restano fondamentali. Ma non sono più l’obiettivo: sono strumenti. La SEO serve a farti trovare. Il sito serve a farti capire. Il marketing serve a farti scegliere. L’AI serve ad amplificare ciò che ha già senso. Ma senza una strategia, senza una voce e senza capacità di selezione, anche gli strumenti migliori producono solo più rumore.',
+      },
+      {
+        type: 'heading',
+        text: 'Il nuovo ruolo di chi fa comunicazione',
+      },
+      {
+        type: 'paragraph',
+        text: 'Chi lavora nel digitale non può più limitarsi a “fare contenuti” o “posizionare siti”. Il ruolo è cambiato. Oggi serve essere capaci di leggere il contesto, interpretare i dati, conoscere le persone e trasformare la complessità in una direzione pratica.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Non serve un altro generatore di idee. Serve qualcuno che dica: “Questa è la strada. Questa no. Partiamo da qui.” Per questo il futuro del marketing digitale non appartiene a chi produce di più. Appartiene a chi sa scegliere meglio.',
+      },
+      {
+        type: 'heading',
+        text: 'La vera opportunità',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’AI non rende superflui gli esperti. Li rende più necessari. Perché quando tutti hanno accesso agli stessi strumenti, alla stessa conoscenza e alle stesse possibilità, la differenza non la fa la tecnologia: la fa il giudizio.',
+      },
+      {
+        type: 'paragraph',
+        text: 'La capacità di guardare un’azienda, un mercato, un brand e capire dove c’è una reale occasione, dove si sta sprecando energia, quale messaggio merita di esistere, quale azione porterà a un risultato concreto.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In un mondo pieno di opportunità, la cosa più rara non è trovare una strada. È capire quale strada è giusta. E forse è proprio questo il nuovo compito di chi fa comunicazione digitale: non aggiungere rumore, ma aiutare le persone e le aziende a trovare chiarezza. Perché il futuro non apparterrà a chi sa fare tutto. Apparterrà a chi sa guidare.',
+      },
+      {
+        type: 'heading',
+        text: 'Less is more',
+      },
+      {
+        type: 'paragraph',
+        text: 'Non perché fare meno sia sempre meglio, ma perché scegliere meno cose, fatte meglio, con più intenzione, è ciò che oggi crea valore. In un’economia dove tutti possono aggiungere, il vero vantaggio è saper togliere.',
+      },
+    ],
+  },
   'siti-web-immersivi': {
     title: 'E se il tuo sito facesse venire voglia di restare?',
     tag: 'Design',
@@ -495,34 +662,56 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
         )}
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 80px' }}>
           {article.content.map((block, i) => {
-            if (block.type === 'intro') {
+            if (block.type === 'intro' && block.text) {
               return (
                 <p key={i} style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(26px, 3vw, 34px)', lineHeight: 1.25, letterSpacing: '-0.4px', margin: '0 0 28px' }}>
                   {block.text}
                 </p>
               )
             }
-            if (block.type === 'paragraph') {
+            if (block.type === 'paragraph' && block.text) {
               return (
                 <p key={i} style={{ fontSize: 16, lineHeight: 1.75, margin: '0 0 22px' }}>
                   {withLinks(block.text, block.links)}
                 </p>
               )
             }
-            if (block.type === 'heading') {
+            if (block.type === 'heading' && block.text) {
               return (
                 <h2 key={i} style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 3vw, 36px)', letterSpacing: '-0.6px', lineHeight: 1.15, margin: '40px 0 16px' }}>
                   {block.text}
                 </h2>
               )
             }
-            if (block.type === 'quote') {
+            if (block.type === 'quote' && block.text) {
               return (
                 <blockquote key={i} style={{ margin: '36px 0', padding: '4px 0 4px 20px', borderLeft: '2px solid #fe3812' }}>
                   <p style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.25, letterSpacing: '-0.4px', margin: 0 }}>
                     {block.text}
                   </p>
                 </blockquote>
+              )
+            }
+            if (block.type === 'list' && block.items?.length) {
+              return (
+                <ul key={i} style={{ margin: '0 0 22px', padding: '0 0 0 22px', display: 'grid', gap: 10 }}>
+                  {block.items.map(item => (
+                    <li key={item} style={{ fontSize: 16, lineHeight: 1.65, color: '#0D0D0D' }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+            if (block.type === 'image' && block.src) {
+              return (
+                <figure key={i} style={{ margin: '28px 0', borderTop: LINE, borderBottom: LINE }}>
+                  <img
+                    src={block.src}
+                    alt={block.alt ?? ''}
+                    style={{ width: '100%', height: 'auto', maxHeight: 420, objectFit: 'cover', display: 'block' }}
+                  />
+                </figure>
               )
             }
             return null
