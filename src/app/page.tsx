@@ -4,7 +4,7 @@ import ProjectStart from '@/components/ProjectStart'
 import ScrollRiseBlock from '@/components/ScrollRiseBlock'
 import ScrollRiseQuote from '@/components/ScrollRiseQuote'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
-import { SAGGIO_ARTICLE_IMAGE } from '@/lib/seo'
+import { IMMERSIVE_ARTICLE_IMAGE, SAGGIO_ARTICLE_IMAGE } from '@/lib/seo'
 
 const LINE = '1px solid #0D0D0D'
 const CREAM = '#F0EBE0'
@@ -352,7 +352,7 @@ export default function Home() {
         <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, padding: 28 }}>
           {[
             { tag: 'Community', title: 'L’economia dell’attenzione è finita: ora serve un saggio', slug: 'economia-attenzione-serve-un-saggio', image: SAGGIO_ARTICLE_IMAGE.url, alt: SAGGIO_ARTICLE_IMAGE.alt, bg: '#1A1520' },
-            { tag: 'Design', title: 'E se il tuo sito facesse venire voglia di restare?', slug: 'siti-web-immersivi', image: '/blog/img/siti-web-immersivi.jpg?v=2', alt: 'Laptop su scrivania crema con sito immersivo scuro sullo schermo, luci soft blu e rosa.', bg: '#0A1228' },
+            { tag: 'Design', title: 'E se il tuo sito facesse venire voglia di restare?', slug: 'siti-web-immersivi', image: IMMERSIVE_ARTICLE_IMAGE.url, alt: IMMERSIVE_ARTICLE_IMAGE.alt, bg: '#0A1228' },
           ].map(post => (
             <a key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
               <div style={{ height: 210, background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>

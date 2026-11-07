@@ -17,17 +17,17 @@ export const CLIENT_ARTICLE_IMAGE = {
 }
 
 export const ECOMMERCE_ARTICLE_IMAGE = {
-  url: '/blog/img/ecommerce-2025.jpg',
-  alt: 'Scatola di cartone aperta, con carta velina, un pacchetto e un nastro nero, accanto a un laptop chiuso su un tavolo di legno.',
-  width: 1280,
-  height: 720,
+  url: '/blog/img/ecommerce-2025.webp',
+  alt: 'Interfaccia holografica di shopping virtuale: mano che seleziona prodotti su pannelli fluttuanti sopra una tastiera digitale.',
+  width: 1024,
+  height: 683,
 }
 
 export const IMMERSIVE_ARTICLE_IMAGE = {
-  url: '/blog/img/siti-web-immersivi.jpg?v=2',
-  alt: 'Laptop su scrivania crema con sito immersivo scuro sullo schermo, luci soft blu e rosa.',
-  width: 1280,
-  height: 720,
+  url: '/blog/img/siti-web-immersivi.webp',
+  alt: 'Figura sola su una panchina in una sala immersa in sfere luminose pastello: esperienza immersiva e attenzione.',
+  width: 1024,
+  height: 576,
 }
 
 export const SAGGIO_ARTICLE_IMAGE = {
@@ -47,12 +47,19 @@ export const SAGGIO_ORIZZONTE_IMAGE = {
   alt: 'Costa rocciosa all’alba con pale eoliche all’orizzonte e riflessi d’acqua tra le pietre.',
 }
 
+export const SAGGIO_FIDUCIA_IMAGE = {
+  url: '/blog/img/saggio-fiducia.jpg',
+  alt: 'Due silhouette di carta appese a un filo, rivolte l’una verso l’altra: metafora di relazione e fiducia.',
+  width: 1024,
+  height: 713,
+}
+
 export const BLOG_POSTS = [
   {
     slug: 'economia-attenzione-serve-un-saggio',
     title: 'L’economia dell’attenzione è finita: ora serve un saggio',
     description:
-      'Dall’economia dell’attenzione a quella della fiducia: perché oggi conta chi sa scegliere, togliere e dare direzione, non chi produce di più.',
+      'Dall’economia dell’attenzione a quella della fiducia e della selezione: perché oggi conta chi sa scegliere, togliere e dare direzione, non chi produce di più.',
     image: SAGGIO_ARTICLE_IMAGE.url,
     imageAlt: SAGGIO_ARTICLE_IMAGE.alt,
     tag: 'Community',

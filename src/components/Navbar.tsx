@@ -32,9 +32,8 @@ function isCurrent(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname()
   const isFullStack = pathname === '/full-stack' || pathname.startsWith('/full-stack/')
-  const isMirkoWorkshop = pathname === '/workshop/mirko-camia' || pathname.startsWith('/workshop/mirko-camia/')
   const isContatti = pathname === '/contatti' || pathname.startsWith('/contatti/')
-  const isPillNav = isFullStack || isMirkoWorkshop
+  const isPillNav = isFullStack
 
   useEffect(() => {
     const pin = () => {
@@ -72,7 +71,7 @@ export default function Navbar() {
               })}
             </div>
             <button type="button" className="nav-fs-cta" onClick={scrollToCandidati}>
-              {isMirkoWorkshop ? 'Riserva il tuo posto' : 'Prenota la tua lezione gratuita'}
+              Prenota la tua lezione gratuita
             </button>
           </div>
         </nav>

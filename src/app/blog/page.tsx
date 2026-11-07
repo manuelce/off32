@@ -100,8 +100,8 @@ export default function BlogPage() {
         ]}
       />
 
-      <section style={{ paddingTop: '15%', paddingBottom: '15%' }}>
-        <div style={{ background: '#F0EBE0', padding: '20px 5%', borderBottom: '1px solid #E0D8CC', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <section style={{ paddingTop: '4%', paddingBottom: '15%' }}>
+        <div style={{ background: '#F0EBE0', padding: '20px 5% 12px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {CATEGORIES.map(c => (
             <span key={c} onClick={() => setActiveCategory(c)} style={{ fontSize: '11px', padding: '5px 16px', border: `1px solid ${activeCategory === c ? '#fe3812' : '#E0D8CC'}`, borderRadius: '999px', color: activeCategory === c ? '#fe3812' : '#888', background: activeCategory === c ? '#FDF5F2' : '#fff', cursor: 'pointer', textTransform: 'capitalize' }}>
               {c}
@@ -110,10 +110,10 @@ export default function BlogPage() {
         </div>
 
         {filtered.length > 0 ? (
-          <div className="posts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, width: '80%', margin: '28px auto 0' }}>
+          <div className="posts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, width: '80%', margin: '12px auto 0' }}>
             {filtered.map((post, i) => (
-              <a key={post.slug} href={`/blog/${post.slug}`} style={{ gridColumn: i === 0 ? '1 / -1' : undefined, textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ height: 210, background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>
+              <a key={post.slug} href={`/blog/${post.slug}`} style={{ gridColumn: i === 0 ? '1 / -1' : undefined, marginBottom: i === 0 ? '10%' : undefined, textDecoration: 'none', color: '#0D0D0D', border: LINE, background: '#fff', display: 'flex', flexDirection: 'column' }}>
+                <div className={i === 0 ? 'post-cover is-featured' : 'post-cover'} style={{ background: post.bg, borderBottom: LINE, overflow: 'hidden' }}>
                   {post.image && <img src={post.image} alt={'imageAlt' in post ? post.imageAlt : ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
                 </div>
                 <div style={{ padding: '16px 16px 14px', borderBottom: LINE }}>
@@ -154,9 +154,12 @@ export default function BlogPage() {
       </footer>
 
       <style>{`
+        .post-cover { height: 210px; }
+        .post-cover.is-featured { height: clamp(360px, 42vw, 520px); }
         @media (max-width: 860px) {
           .blog-title { padding-top: 64px; }
           .posts-grid { grid-template-columns: 1fr !important; }
+          .post-cover.is-featured { height: 280px; }
         }
       `}</style>
     </main>
