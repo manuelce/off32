@@ -267,7 +267,7 @@ const ARTICLES: Record<string, Article> = {
       },
       {
         type: 'paragraph',
-        text: 'Non perché fare meno sia sempre meglio, ma perché scegliere meno cose, fatte meglio, con più intenzione, è ciò che oggi crea valore. In un’economia dove tutti possono aggiungere, il vero vantaggio è saper togliere.',
+        text: 'Non perché fare meno sia sempre meglio, ma perché scegliere meno cose, fatte meglio, con più intenzione, è ciò che oggi crea valore. **In un’economia dove tutti possono aggiungere, il vero vantaggio è saper togliere.**',
       },
     ],
   },
