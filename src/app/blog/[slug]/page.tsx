@@ -1,4 +1,5 @@
 'use client'
+import { notFound } from 'next/navigation'
 import { use, type CSSProperties, type ReactNode } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import {
@@ -669,17 +670,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
   const { slug } = use(params)
   const article = ARTICLES[slug]
 
-  if (!article) {
-    return (
-      <main style={{ background: '#F0EBE0', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
-        <div style={{ padding: '18vh 8% 20vh' }}>
-          <div style={{ ...meta, marginBottom: 16 }}>Blog</div>
-          <h1 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(40px, 5vw, 64px)', letterSpacing: '-1px', margin: '0 0 20px' }}>Articolo non trovato</h1>
-          <a href="/blog" style={{ ...meta, textDecoration: 'none' }}>← Tutti gli articoli</a>
-        </div>
-      </main>
-    )
-  }
+  if (!article) notFound()
 
   const fullImageBorder = slug === 'economia-attenzione-serve-un-saggio'
   const imageFrame: CSSProperties = fullImageBorder

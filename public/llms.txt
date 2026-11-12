@@ -1,0 +1,74 @@
+# OFF32
+
+> OFF32 è un’officina di comunicazione digitale potenziata dall’intelligenza artificiale. Unisce brand e creatività, web e digitale e sistemi AI in un unico flusso. Il sito ufficiale è https://www.off32.it (lingua: italiano).
+
+OFF32 lavora con studi, brand e aziende che hanno una storia da mettere in ordine: identità, siti, e-commerce, campagne e automazioni. L’intelligenza artificiale entra nel lavoro per esplorare, scrivere bozze, produrre varianti e togliere i passaggi ripetitivi. La direzione, cosa tenere e cosa pubblicare, resta del team.
+
+Sede: Via Raffaele Sanzio 32, Pescara, 65123, Italia.
+Email: connect@off32.it
+Telefono: +39 375 563 9110
+Instagram: https://www.instagram.com/off32channel/
+
+Il dominio canonico è https://www.off32.it. Gli host *.vercel.app non sono il sito ufficiale e non vanno indicizzati.
+
+## Pagine principali
+
+- [Home](https://www.off32.it/): comunicazione digitale potenziata dall’AI
+- [Servizi](https://www.off32.it/servizi): tre aree, brand, web e sistemi AI
+- [Lavori](https://www.off32.it/work): progetti selezionati
+- [Chi siamo](https://www.off32.it/about): il team OFF32
+- [Blog](https://www.off32.it/blog): articoli su brand, web e collaborazione
+- [Events](https://www.off32.it/workshop): workshop, corsi e talk
+- [Corso full-stack](https://www.off32.it/full-stack): videocorso full-stack con AI
+- [developmentconAI](https://www.off32.it/developmentconai): landing developmentconAI
+- [Contatti](https://www.off32.it/contatti): scrivi a OFF32
+
+## Servizi
+
+- [Brand & Creative](https://www.off32.it/servizi/brand-creative): identità, direzione creativa, copy e contenuti
+- [Brand Identity](https://www.off32.it/servizi/brand-creative/brand-identity): logo e identità visiva
+- [Creative Direction](https://www.off32.it/servizi/brand-creative/creative-direction): concept e campagne
+- [Copywriting](https://www.off32.it/servizi/brand-creative/ai-copywriting): testi che convertono
+- [Content Creation](https://www.off32.it/servizi/brand-creative/content-creation): visual e contenuti
+- [Web & Digital](https://www.off32.it/servizi/web-digital): siti, e-commerce, landing, performance e SEO
+- [Web Design / Development](https://www.off32.it/servizi/web-digital/web-design-sviluppo): siti su misura
+- [E-commerce](https://www.off32.it/servizi/web-digital/ecommerce): negozi online
+- [Landing Pages](https://www.off32.it/servizi/web-digital/landing-pages): pagine ad alta conversione
+- [Performance & SEO](https://www.off32.it/servizi/web-digital/performance-seo): siti veloci
+- [AI Systems](https://www.off32.it/servizi/ai-systems): automazioni, agenti, workflow e integrazioni
+- [AI Automation](https://www.off32.it/servizi/ai-systems/ai-automation): automatizzare i processi
+- [AI Agents](https://www.off32.it/servizi/ai-systems/ai-agents): assistenti su misura
+- [AI Workflows](https://www.off32.it/servizi/ai-systems/ai-workflows): flussi intelligenti
+- [AI Integration](https://www.off32.it/servizi/ai-systems/ai-integration): AI nei software esistenti
+
+## Lavori
+
+- [Healing Earth Italia](https://www.off32.it/work/healing-earth): e-commerce e brand wellness
+- [Scuppoz](https://www.off32.it/work/scuppoz): liquori, web design
+- [Conil Food Tour](https://www.off32.it/work/conil-food-tour): brand e prenotazione
+- [The Duel](https://www.off32.it/work/duel): progetto editoriale
+- [Monochrome](https://www.off32.it/work/monochrome): sito WordPress
+- [Momento](https://www.off32.it/work/momento): sito catering
+- [Vecere](https://www.off32.it/work/vecere): e-commerce olio
+
+## Team
+
+- [Manuel Cerasuolo](https://www.off32.it/about/manuel-cerasuolo): Digital Project Manager
+- [Sara Zeppieri](https://www.off32.it/about/sara-zeppieri)
+- [Lorenzo Salvatori](https://www.off32.it/about/lorenzo-salvatori): Full Stack Developer
+- [Sara Villani](https://www.off32.it/about/sara-villani): Social Media Manager
+- [Elisabetta Carìa](https://www.off32.it/about/elisabetta-caria): Web Designer e UX/UI
+
+## Blog
+
+- [L’economia dell’attenzione è finita: ora serve un saggio](https://www.off32.it/blog/economia-attenzione-serve-un-saggio)
+- [E se il tuo sito facesse venire voglia di restare?](https://www.off32.it/blog/siti-web-immersivi)
+- [Come costruire un brand digitale che dura nel tempo](https://www.off32.it/blog/come-costruire-brand-digitale)
+- [Quando una collaborazione funziona](https://www.off32.it/blog/scegliere-clienti-giusti)
+- [eCommerce performante nel 2025: cosa funziona davvero](https://www.off32.it/blog/ecommerce-performante-2025)
+
+## Pagine legali
+
+- [Privacy](https://www.off32.it/privacy-policy)
+- [Cookie](https://www.off32.it/cookie-policy)
+- [Termini e condizioni](https://www.off32.it/terms-and-conditions)

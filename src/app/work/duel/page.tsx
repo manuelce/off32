@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useState, useEffect } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import { SeoBr } from '@/components/SeoText'
 import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.12) {
@@ -83,8 +84,9 @@ export default function DuelPage() {
               fontWeight: 300, color: '#fff',
               lineHeight: 0.95, letterSpacing: '-3px',
               marginBottom: '40px', textTransform: 'uppercase',
+              position: 'relative',
             }}>
-              THE<br />DUEL
+              THE<SeoBr />DUEL
             </h1>
           </FadeIn>
 

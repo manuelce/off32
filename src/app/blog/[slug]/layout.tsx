@@ -1,5 +1,12 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { BLOG_POSTS, SITE_NAME, SITE_URL, pageMeta } from '@/lib/seo'
+
+export function generateStaticParams() {
+  return BLOG_POSTS.map(post => ({ slug: post.slug }))
+}
+
+export const dynamicParams = false
 
 function postImage(post: (typeof BLOG_POSTS)[number]) {
   return 'image' in post && post.image && 'imageAlt' in post && post.imageAlt
@@ -10,7 +17,7 @@ function postImage(post: (typeof BLOG_POSTS)[number]) {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const post = BLOG_POSTS.find(item => item.slug === slug)
-  if (!post) return pageMeta('Articolo', 'Articolo non trovato.', `/blog/${slug}`, 'article')
+  if (!post) notFound()
   const article = 'datePublished' in post
     ? {
         publishedTime: post.datePublished,
@@ -24,7 +31,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function Layout({ children, params }: { children: React.ReactNode; params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = BLOG_POSTS.find(item => item.slug === slug)
-  const image = post ? postImage(post) : undefined
+  if (!post) notFound()
+  const image = postImage(post)
   const jsonLd = post && image && 'datePublished' in post && 'authorName' in post
     ? {
         '@context': 'https://schema.org',

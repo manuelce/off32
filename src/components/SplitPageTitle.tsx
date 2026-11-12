@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, type CSSProperties } from 'react'
+import { SeoText } from '@/components/SeoText'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -51,7 +52,7 @@ export default function SplitPageTitle({
     <>
       <h1
         className={['split-page-title', inView ? 'is-in' : '', className].filter(Boolean).join(' ')}
-        style={{ margin: 0, background }}
+        style={{ margin: 0, background, position: 'relative' }}
       >
         {lines.map((line, i) => (
           <span
@@ -62,6 +63,7 @@ export default function SplitPageTitle({
               borderBottom: border,
             }}
           >
+            {i > 0 ? <SeoText> </SeoText> : null}
             <span
               className="split-page-title-line"
               style={{ ...defaultTextStyle, color, transitionDelay: `${i * 45}ms` }}

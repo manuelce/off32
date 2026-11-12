@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import { SeoBr } from '@/components/SeoText'
 import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.15) {
@@ -136,9 +137,9 @@ export default function HealingEarthPage() {
               fontWeight: 300, color: '#fff',
               lineHeight: 0.95, letterSpacing: '-3px',
               marginBottom: '40px', textTransform: 'uppercase',
+              position: 'relative',
             }}>
-              HEALING<br />EARTH<br />
-              <span style={{ color: '#9fff00' }}>ITALIA</span>
+              HEALING<SeoBr />EARTH<SeoBr /><span style={{ color: '#9fff00' }}>ITALIA</span>
             </h1>
           </FadeIn>
 

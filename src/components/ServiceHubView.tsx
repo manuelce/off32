@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import ProjectStart from '@/components/ProjectStart'
+import { SeoText } from '@/components/SeoText'
 import { BreadcrumbJsonLd } from '@/components/ServiceJsonLd'
+import { visualTitleLines } from '@/lib/visual-title'
 import {
   servicePath,
   servicesByArea,
@@ -26,9 +28,7 @@ export default function ServiceHubView({ area }: { area: ServiceArea }) {
     { label: 'Servizi', href: '/servizi' },
     { label: area.shortLabel },
   ]
-  const titleLines = area.shortLabel.includes(' & ')
-    ? area.shortLabel.split(' & ')
-    : [area.shortLabel]
+  const { lines: titleLines, separator: titleSeparator } = visualTitleLines(area.shortLabel, [' & '])
   const INK = '#141414'
   const isStyledHub =
     area.slug === 'brand-creative' || area.slug === 'web-digital' || area.slug === 'ai-systems'
@@ -45,7 +45,7 @@ export default function ServiceHubView({ area }: { area: ServiceArea }) {
         <div style={{ padding: '14px 5%', ...meta, color: heroInk, borderTop: titleLine }}>
           Servizi / {area.shortLabel}
         </div>
-        <h1 style={{ margin: 0 }}>
+        <h1 style={{ margin: 0, position: 'relative' }}>
           {titleLines.map((line, i) => (
             <span
               key={line}
@@ -63,6 +63,7 @@ export default function ServiceHubView({ area }: { area: ServiceArea }) {
                 color: heroInk,
               }}
             >
+              {i > 0 && titleSeparator ? <SeoText>{titleSeparator}</SeoText> : null}
               {line}
             </span>
           ))}
