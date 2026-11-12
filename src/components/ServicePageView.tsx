@@ -5,7 +5,9 @@ import TechMarquee from '@/components/TechMarquee'
 import ServiceBreadcrumb from '@/components/ServiceBreadcrumb'
 import ServiceFaqList from '@/components/ServiceFaq'
 import { BreadcrumbJsonLd, FaqJsonLd, ServiceJsonLd } from '@/components/ServiceJsonLd'
+import { SeoText } from '@/components/SeoText'
 import { emphasizeBrandTerms } from '@/lib/emphasize-terms'
+import { visualTitleLines } from '@/lib/visual-title'
 import {
   areaBySlug,
   areaPath,
@@ -43,13 +45,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
     service.area === 'brand-creative' || service.area === 'web-digital' || service.area === 'ai-systems'
   const heroInk = isStyledLeaf ? '#ffffff' : INK
   const titleLine = `1px solid ${heroInk}`
-  const titleLines = service.label.includes(' / ')
-    ? service.label.split(' / ')
-    : service.label.includes(' & ')
-      ? service.label.split(' & ')
-      : service.label.includes(' ')
-        ? service.label.split(' ')
-        : [service.label]
+  const { lines: titleLines, separator: titleSeparator } = visualTitleLines(service.label)
   const accent = isStyledLeaf ? BLUE : '#694aff'
   const columns = service.brandColumns
 
@@ -64,7 +60,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
           <div style={{ padding: '14px 5%', ...meta, color: heroInk, borderTop: titleLine }}>
             Servizi / {area.shortLabel} / {service.label}
           </div>
-          <h1 style={{ margin: 0 }}>
+          <h1 style={{ margin: 0, position: 'relative' }}>
             {titleLines.map((line, i) => (
               <span
                 key={`${line}-${i}`}
@@ -82,6 +78,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
                   color: heroInk,
                 }}
               >
+                {i > 0 && titleSeparator ? <SeoText>{titleSeparator}</SeoText> : null}
                 {line}
               </span>
             ))}

@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import { SeoBr } from '@/components/SeoText'
 import WorkSwitch from '@/components/WorkSwitch'
 
 function useInView(threshold = 0.15) {
@@ -120,9 +121,9 @@ export default function ConilFoodTourPage() {
               fontWeight: 300, color: '#fff',
               lineHeight: 0.95, letterSpacing: '-3px',
               marginBottom: '40px', textTransform: 'uppercase',
+              position: 'relative',
             }}>
-              CONIL<br />FOOD<br />
-              <span style={{ color: '#3ec6ea' }}>TOUR</span>
+              CONIL<SeoBr />FOOD<SeoBr /><span style={{ color: '#3ec6ea' }}>TOUR</span>
             </h1>
           </FadeIn>
 

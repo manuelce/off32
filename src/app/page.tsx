@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import { FaqJsonLd } from '@/components/ServiceJsonLd'
 import ScrollRiseBlock from '@/components/ScrollRiseBlock'
 import ScrollRiseQuote from '@/components/ScrollRiseQuote'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
@@ -123,6 +124,7 @@ export default function Home() {
 
   return (
     <main style={{ background: CREAM, minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", color: '#0D0D0D' }}>
+      <FaqJsonLd faqs={faqs} />
       <link rel="preload" as="video" href="/works/healingheart-card.mp4" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/healing-earth/preview.jpg" fetchPriority="high" />
       <link rel="preload" as="image" href="/works/scuppoz/preview.jpg" fetchPriority="high" />
