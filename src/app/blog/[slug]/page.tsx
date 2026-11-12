@@ -146,15 +146,15 @@ const ARTICLES: Record<string, Article> = {
     content: [
       {
         type: 'paragraph',
-        text: 'Nel mondo dello sviluppo web, del marketing e della SEO, in più di quindici anni, abbiamo visto cambiare tutto: i motori di ricerca, i social, le tecnologie, le mode, i modi di vendere e perfino il modo in cui le persone decidono di fidarsi di un brand.',
+        text: 'In più di quindici anni di web, marketing e SEO abbiamo visto cambiare strumenti, piattaforme e modi di vendere. Ogni volta sembrava la rivoluzione. Poi arrivava la successiva.',
       },
       {
         type: 'paragraph',
-        text: 'Ma quello che sta succedendo oggi è diverso. Non è solo un altro cambiamento tecnologico. È un cambiamento di economia: **dall’economia dell’attenzione siamo passati a un’economia della fiducia, della selezione e della direzione.**',
+        text: 'Quello che sta succedendo ora è un’altra cosa. Non basta più catturare attenzione: conta guadagnarsi **fiducia**, saper **selezionare** e dare una **direzione**. Perché le opportunità non mancano. Manca chi sa scegliere.',
         links: [
           {
             href: 'https://www.alessandromazzu.it/leconomia-dellattenzione-e-finita-oggi-la-fiducia-vale-piu-dei-clic/',
-            label: 'dall’economia dell’attenzione siamo passati a un’economia della fiducia, della selezione e della direzione.',
+            label: 'fiducia',
           },
         ],
       },
