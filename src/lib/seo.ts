@@ -39,7 +39,7 @@ export const SAGGIO_ARTICLE_IMAGE = {
 
 export const SAGGIO_CROCE_IMAGE = {
   url: '/blog/img/saggio-croce.jpg',
-  alt: 'Croce di legno su una collina al tramonto, silhouette contro un cielo arancione.',
+  alt: 'Silhouette di due persone su un pendio al tramonto: una in alto tende la mano a chi sale.',
 }
 
 export const SAGGIO_ORIZZONTE_IMAGE = {
