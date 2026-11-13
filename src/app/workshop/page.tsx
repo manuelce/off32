@@ -237,7 +237,6 @@ export default function WorkshopPage() {
           {[
             { label: 'Works', href: '/work' },
             { label: 'Events', href: '/workshop' },
-            { label: 'developmentconAI', href: '/developmentconai' },
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },
             { label: 'Cookie', href: '/cookie-policy' },

@@ -20,7 +20,6 @@ Il dominio canonico è https://www.off32.it. Gli host *.vercel.app non sono il s
 - [Blog](https://www.off32.it/blog): articoli su brand, web e collaborazione
 - [Events](https://www.off32.it/workshop): workshop, corsi e talk
 - [Corso full-stack](https://www.off32.it/full-stack): videocorso full-stack con AI
-- [developmentconAI](https://www.off32.it/developmentconai): landing developmentconAI
 - [Contatti](https://www.off32.it/contatti): scrivi a OFF32
 
 ## Servizi

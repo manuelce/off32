@@ -20,7 +20,6 @@ const paths = [
   '/about/elisabetta-caria',
   '/workshop',
   '/full-stack',
-  '/developmentconai',
   '/blog',
   '/contatti',
   '/servizi',
