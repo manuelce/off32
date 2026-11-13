@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import CallDock from '@/components/CallDock'
+import IubendaProvider from '@/components/IubendaProvider'
 import Navbar from '@/components/Navbar'
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/seo'
 import './globals.css'
@@ -65,6 +66,11 @@ export default function RootLayout({
   return (
     <html lang="it" suppressHydrationWarning>
       <head>
+        {/* iubenda cookie banner + autoblocking: must stay first, before GTM,
+            so trackers are held until the visitor gives consent. */}
+        {/* A plain synchronous script on purpose: next/script defers it and GTM would run first. */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script type="text/javascript" src="https://embeds.iubenda.com/widgets/31ee7b3d-1ffc-4819-8396-f52ab426f3bd.js" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -88,6 +94,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Navbar />
         {children}
         <CallDock />
+        <IubendaProvider />
       </body>
     </html>
   )
