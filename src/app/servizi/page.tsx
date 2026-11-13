@@ -117,6 +117,8 @@ export default function ServiziIndexPage() {
             { label: 'Works', href: '/work' },
             { label: 'Blog', href: '/blog' },
             { label: 'Contatti', href: '/contatti' },
+            { label: 'Privacy', href: '/privacy-policy' },
+            { label: 'Cookie', href: '/cookie-policy' },
           ].map(link => (
             <Link key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>
               {link.label}
