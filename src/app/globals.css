@@ -128,18 +128,27 @@ body {
   }
 }
 /* iubenda: on mobile the floating consent-preferences button sits bottom-right,
-   on top of the bottom navigation bar. Put it on the left, on the same row as
-   the bar, and shift the bar right to make room so no link is covered. */
+   on top of the bottom navigation bar. Keep the bar centred and put a slightly
+   smaller button in the free space to its left, on the same row. */
 @media (max-width: 768px) {
   /* Extra-specific selector: iubenda's own rules use !important too. */
   html body .iubenda-tp-btn.iubenda-tp-btn[data-tp-float][data-tp-float][data-tp-float] {
     margin: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    background-size: 30px 30px !important;
     right: auto !important;
     left: 6px !important;
     /* Vertically centred on the bar (16px from the bottom, 47px tall). */
-    bottom: 20.5px !important;
+    bottom: 24.5px !important;
   }
-  body:has(.iubenda-tp-btn) .nav-mobile-bottom {
-    padding-left: 48px;
+}
+/* On narrow phones the bar is slimmed a little so it doesn't touch the button. */
+@media (max-width: 380px) {
+  .nav-mobile-bottom > div > a {
+    font-size: 13px !important;
+    padding: 6px 4px !important;
   }
 }
