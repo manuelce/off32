@@ -127,28 +127,9 @@ body {
     z-index: 200 !important;
   }
 }
-/* iubenda: on mobile the floating consent-preferences button sits bottom-right,
-   on top of the bottom navigation bar. Keep the bar centred and put a slightly
-   smaller button in the free space to its left, on the same row. */
-@media (max-width: 768px) {
-  /* Extra-specific selector: iubenda's own rules use !important too. */
-  html body .iubenda-tp-btn.iubenda-tp-btn[data-tp-float][data-tp-float][data-tp-float] {
-    margin: 0 !important;
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    background-size: 30px 30px !important;
-    right: auto !important;
-    left: 6px !important;
-    /* Vertically centred on the bar (16px from the bottom, 47px tall). */
-    bottom: 24.5px !important;
-  }
-}
-/* On narrow phones the bar is slimmed a little so it doesn't touch the button. */
-@media (max-width: 380px) {
-  .nav-mobile-bottom > div > a {
-    font-size: 13px !important;
-    padding: 6px 4px !important;
-  }
+/* iubenda: hide the floating consent-preferences button on every screen size.
+   Visitors reopen their cookie choices from the "Aggiorna preferenze cookies" footer link
+   (handled in IubendaProvider). */
+html body .iubenda-tp-btn.iubenda-tp-btn[data-tp-float][data-tp-float][data-tp-float] {
+  display: none !important;
 }

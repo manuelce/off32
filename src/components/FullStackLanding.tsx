@@ -359,6 +359,7 @@ export default function FullStackLanding() {
             { label: 'Blog', href: '/blog' },
             { label: 'Privacy', href: '/privacy-policy' },
             { label: 'Cookie', href: '/cookie-policy' },
+            { label: 'Aggiorna preferenze cookies', href: '#controllo-cookie' },
             { label: 'Terms', href: '/terms-and-conditions' },
           ].map(link => (
             <a key={link.label} href={link.href}>{link.label}</a>

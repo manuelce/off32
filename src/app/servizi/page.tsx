@@ -119,6 +119,7 @@ export default function ServiziIndexPage() {
             { label: 'Contatti', href: '/contatti' },
             { label: 'Privacy', href: '/privacy-policy' },
             { label: 'Cookie', href: '/cookie-policy' },
+            { label: 'Aggiorna preferenze cookies', href: '#controllo-cookie' },
           ].map(link => (
             <Link key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>
               {link.label}
