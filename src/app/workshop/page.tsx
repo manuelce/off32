@@ -160,7 +160,7 @@ export default function WorkshopPage() {
 
       <section id="programma" style={{ padding: '64px 5% 80px' }}>
         <div className="events-head">
-          <div style={{ maxWidth: 560 }}>
+          <div>
             <div style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: 12 }}>{'Eventi · OFF32'}</div>
             <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(52px, 7vw, 88px)', letterSpacing: '-2px', lineHeight: 0.95, margin: '0 0 16px' }}>
               <span className="street-word">
@@ -168,7 +168,7 @@ export default function WorkshopPage() {
                 <span aria-hidden="true" className={underlineOn ? 'events-underline is-on' : 'events-underline'} />
               </span>
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: 560, margin: 0 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: '46ch', margin: 0 }}>
               Meet-up, seminari, workshop e corsi. Il calendario della formazione OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
             </p>
           </div>
@@ -286,7 +286,8 @@ export default function WorkshopPage() {
         @media (prefers-reduced-motion: reduce) {
           .events-underline { animation: none; clip-path: none; }
         }
-        .events-head { display: block; }
+        .workshop-title .split-page-title-row { padding-left: 5%; padding-right: 5%; }
+        .events-head { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr); gap: 28px 40px; align-items: end; }
         .event-filters { display: flex; flex-wrap: nowrap; gap: 8px; justify-content: flex-start; margin-top: 22px; }
         .event-filter {
           border: 1px solid #0D0D0D;
@@ -466,6 +467,7 @@ export default function WorkshopPage() {
           .event-filters { flex-wrap: wrap; }
         }
         @media (max-width: 860px) {
+          .events-head { grid-template-columns: 1fr; }
           .event-poster { height: 210px; }
           .events-grid { grid-template-columns: 1fr; }
           .event-card.is-featured {

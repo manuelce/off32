@@ -575,8 +575,8 @@ function NextAppointment() {
         <div>
           <div style={{ ...meta, marginBottom: 8 }}>{EVENT_KIND_LABEL[event.kind]}</div>
           <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)', margin: '0 0 12px' }}>{event.title}</h2>
-          {when ? <p style={{ ...body, maxWidth: 680, margin: 0 }}>{when}{event.format ? ` · ${event.format}` : ''}</p> : null}
-          <p style={{ ...body, margin: '8px 0 0' }}>{event.summary} {PARTICIPATION_NOTE}</p>
+          {when ? <p style={{ ...body, maxWidth: 'none', margin: 0 }}>{when}{event.format ? ` · ${event.format}` : ''}</p> : null}
+          <p style={{ ...body, maxWidth: 'none', margin: '8px 0 0' }}>{event.summary} {PARTICIPATION_NOTE}</p>
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <a href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer" style={button}>Entra nella community</a>
