@@ -18,8 +18,7 @@ Il dominio canonico è https://www.off32.it. Gli host *.vercel.app non sono il s
 - [Lavori](https://www.off32.it/work): progetti selezionati
 - [Studio](https://www.off32.it/about): il team OFF32
 - [Blog](https://www.off32.it/blog): articoli su brand, web e collaborazione
-- [Eventi](https://www.off32.it/workshop): meet-up, seminari, workshop e corsi
-- [Community](https://www.off32.it/community): community WhatsApp «OFF32 – Officina Digitale». Uno spazio di confronto. Dove le idee diventano progetti.
+- [Eventi](https://www.off32.it/workshop): meet-up, seminari, workshop, corsi e la community WhatsApp «OFF32 – Officina Digitale». Uno spazio di confronto. Dove le idee diventano progetti.
 - [Corso full-stack](https://www.off32.it/full-stack): corso live su Google Meet, 40 ore in 5 settimane, partenza 11 gennaio 2027. Si costruisce Agenda32.
 - [Contatti](https://www.off32.it/contatti): scrivi a OFF32
 
@@ -70,7 +69,7 @@ Il dominio canonico è https://www.off32.it. Gli host *.vercel.app non sono il s
 ## Formazione e community
 
 - Meet-up online su Google Meet, lunedì 23 novembre 2026, ore 20:00 (ora di Roma). Una chiacchierata per conoscersi. Il link di Google Meet non è pubblico: i dettagli per partecipare sono nella community WhatsApp, https://chat.whatsapp.com/IbLu4XNIYI0HWI50HZQthI
-- Community WhatsApp «OFF32 – Officina Digitale», 80 persone e in crescita. Dentro: Bacheca e il gruppo «OFF32 – dove ogni connessione è un'opportunità».
+- La community è nella pagina Eventi (https://www.off32.it/workshop#community): WhatsApp «OFF32 – Officina Digitale», 80 persone e in crescita. Dentro: Bacheca e il gruppo «OFF32 – dove ogni connessione è un'opportunità».
 - Instagram: https://www.instagram.com/off32channel/ (nella bio: CommunityOFF32). «Uno spazio di confronto. Dove le idee diventano progetti.»
 
 ## Pagine legali

@@ -19,7 +19,6 @@ const paths = [
   '/about/sara-villani',
   '/about/elisabetta-caria',
   '/workshop',
-  '/community',
   '/full-stack',
   '/blog',
   '/contatti',

@@ -3,7 +3,6 @@
 export const NAV_LINKS = [
   { label: 'Lavori', href: '/work' },
   { label: 'Eventi', href: '/workshop' },
-  { label: 'Community', href: '/community' },
   { label: 'Studio', href: '/about' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contatti', href: '/contatti' },

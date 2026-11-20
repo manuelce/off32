@@ -124,7 +124,7 @@ export default function Home() {
     },
     {
       q: 'Cos’è la community OFF32?',
-      a: 'È la community WhatsApp «OFF32 – Officina Digitale»: uno spazio di confronto, con la Bacheca e il gruppo «OFF32 – dove ogni connessione è un’opportunità». Siamo in 80, e in crescita. Si entra da Instagram @off32channel (nella bio c’è CommunityOFF32) o con l’invito WhatsApp, dalla pagina Community.',
+      a: 'È la community WhatsApp «OFF32 – Officina Digitale»: uno spazio di confronto, con la Bacheca e il gruppo «OFF32 – dove ogni connessione è un’opportunità». Siamo in 80, e in crescita. Si entra da Instagram @off32channel (nella bio c’è CommunityOFF32) o con l’invito WhatsApp, dalla pagina Eventi.',
     },
     {
       q: 'Quali eventi organizzate?',
@@ -356,7 +356,7 @@ export default function Home() {
           <p style={{ ...body, margin: '14px auto 28px' }}>
             In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.
           </p>
-          <a href="/community#manifesto" style={button}>Scopri il manifesto →</a>
+          <a href="/workshop#community" style={button}>Scopri il manifesto →</a>
         </ScrollRiseBlock>
       </section>
 

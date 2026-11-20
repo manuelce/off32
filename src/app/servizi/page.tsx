@@ -39,7 +39,7 @@ const BRIDGES = [
     text: 'Meet-up, seminari, workshop e corsi.',
   },
   {
-    href: '/community',
+    href: '/workshop#community',
     label: 'Community',
     title: 'Entra nella community',
     text: 'Uno spazio di confronto. Dove le idee diventano progetti.',

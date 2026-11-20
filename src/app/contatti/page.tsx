@@ -42,7 +42,6 @@ const paths = [
   { label: 'Studio', href: '/about' },
   { label: 'Lavori', href: '/work' },
   { label: 'Eventi', href: '/workshop' },
-  { label: 'Community', href: '/community' },
 ]
 
 export default function ContattiPage() {
@@ -207,7 +206,7 @@ export default function ContattiPage() {
                 )}
                 {contactType === 'community' && (
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                    Scrivi se vuoi entrare o proporre un incontro. La community è anche su <a href="/community" style={{ color: INK }}>questa pagina</a>.
+                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/workshop#community" style={{ color: INK }}>Eventi</a>.
                   </p>
                 )}
 

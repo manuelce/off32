@@ -5,7 +5,7 @@ import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
   'Eventi',
-  'Meet-up, seminari, workshop e corsi OFF32. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma).',
+  'Meet-up, seminari, workshop e corsi OFF32, e la community WhatsApp. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma).',
   '/workshop',
 )
 
