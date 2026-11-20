@@ -1,10 +1,9 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import HomeEvents from '@/components/HomeEvents'
 import ProjectStart from '@/components/ProjectStart'
 import SiteFooter from '@/components/SiteFooter'
 import { FaqJsonLd } from '@/components/ServiceJsonLd'
-import { PARTICIPATION_NOTE, WHATSAPP_INVITE_URL } from '@/lib/community'
-import { EVENT_KIND_LABEL, eventWhen, nextAppointment } from '@/lib/events'
 import ScrollRiseBlock from '@/components/ScrollRiseBlock'
 import ScrollRiseQuote from '@/components/ScrollRiseQuote'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
@@ -205,7 +204,7 @@ export default function Home() {
         </div>
       </section>
 
-      <NextAppointment />
+      <HomeEvents />
 
       <div className="meta-row">
         {['Est. 2025', '( Scroll )', 'AI Powered', 'Officina®'].map(item => (
@@ -513,7 +512,7 @@ export default function Home() {
             object-fit: cover !important;
             object-position: center center !important;
           }
-          .grid-3, .grid-2, .split, .works-grid, .next-slot { grid-template-columns: 1fr !important; }
+          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
           .grid-3 > div, .split > div, .split > p { border-right: none !important; border-left: none !important; }
           .meta-row { --meta-inset: 16px; }
           .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
@@ -563,29 +562,6 @@ const button: CSSProperties = {
 
 type ScanStatus = 'pass' | 'fail' | 'unavailable'
 type ScanCheck = { id: string; label: string; status: ScanStatus; detail?: string }
-
-function NextAppointment() {
-  const event = nextAppointment()
-  if (!event) return null
-  const when = eventWhen(event)
-  return (
-    <section id="prossimo-appuntamento" style={{ borderBottom: LINE, padding: '28px 5% 32px' }}>
-      <div style={{ ...meta, color: '#fe3812', marginBottom: 12 }}>Prossimo appuntamento</div>
-      <div className="next-slot" style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.8fr', gap: 24, alignItems: 'end' }}>
-        <div>
-          <div style={{ ...meta, marginBottom: 8 }}>{EVENT_KIND_LABEL[event.kind]}</div>
-          <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)', margin: '0 0 12px' }}>{event.title}</h2>
-          {when ? <p style={{ ...body, maxWidth: 'none', margin: 0 }}>{when}{event.format ? ` · ${event.format}` : ''}</p> : null}
-          <p style={{ ...body, maxWidth: 'none', margin: '8px 0 0' }}>{event.summary} {PARTICIPATION_NOTE}</p>
-        </div>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <a href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer" style={button}>Entra nella community</a>
-          <a href={`/workshop#${event.slug}`} style={button}>Vedi l’evento</a>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function SiteScan() {
   const [url, setUrl] = useState('')
