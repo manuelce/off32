@@ -204,13 +204,13 @@ export default function Home() {
         </div>
       </section>
 
-      <HomeEvents />
-
       <div className="meta-row">
         {['Est. 2025', '( Scroll )', 'AI Powered', 'Officina®'].map(item => (
           <div key={item}>{item}</div>
         ))}
       </div>
+
+      <HomeEvents />
 
       <SiteScan />
 

@@ -136,7 +136,7 @@ export default function HomeEvents() {
 
       <style>{`
         .home-events {
-          padding: 48px 5% 56px;
+          padding: 12% 5%;
           border-bottom: 1px solid ${INK};
           background: ${CREAM};
           color: ${INK};
