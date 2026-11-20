@@ -20,7 +20,9 @@ const meta = {
 
 const links = [
   { label: 'Home', href: '/' },
-  ...NAV_LINKS,
+  { label: 'Lavori', href: '/work' },
+  { label: 'Servizi', href: '/servizi' },
+  ...NAV_LINKS.filter(link => link.href !== '/work'),
 ]
 
 export default function NotFound() {
