@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
 import CommunityBlock from '@/components/CommunityBlock'
 import ProjectStart from '@/components/ProjectStart'
 import SiteFooter from '@/components/SiteFooter'
@@ -41,7 +42,7 @@ function EventFlyer({ event }: { event: Off32Event }) {
       {!poster.clean && <div className="event-flyer-title">{event.title}</div>}
       <div className="event-flyer-photo">
         {poster.image ? (
-          <img src={poster.image} alt="" style={{ objectPosition: poster.focus }} />
+          <Image src={poster.image} alt={event.imageAlt ?? ''} fill sizes="(max-width: 860px) 100vw, 40vw" className="event-flyer-img" style={{ objectPosition: poster.focus ?? 'center center' }} />
         ) : (
           <div className="event-flyer-fallback" style={{ background: poster.fg, color: poster.bg }}>{EVENT_KIND_LABEL[event.kind]}</div>
         )}
@@ -66,7 +67,14 @@ function EventCard({ event, onBook, featured = false }: { event: Off32Event; onB
     <article id={event.slug} className={[poster.clean ? 'event-card is-clean' : 'event-card', featured ? 'is-featured' : ''].filter(Boolean).join(' ')}>
       <div className="event-poster" style={{ background: poster.bg, color: poster.fg }}>
         {poster.image && (
-          <img src={poster.image} alt="" className="event-poster-img" style={{ objectPosition: poster.focus }} />
+          <Image
+            src={poster.image}
+            alt={event.imageAlt ?? ''}
+            fill
+            sizes={featured ? '(max-width: 860px) 100vw, 55vw' : '(max-width: 860px) 100vw, 30vw'}
+            className="event-poster-img"
+            style={{ objectPosition: poster.focus ?? 'center center' }}
+          />
         )}
         <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: featured ? 'clamp(32px, 3vw, 48px)' : 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{EVENT_KIND_LABEL[event.kind]}</span>
       </div>

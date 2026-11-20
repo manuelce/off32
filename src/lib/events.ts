@@ -45,6 +45,8 @@ export type Off32Event = {
   href: string | null
   cta: string | null
   image?: string
+  /** Testo alternativo dell'immagine, in italiano. */
+  imageAlt?: string
   outcomes?: string[]
 }
 
@@ -71,6 +73,8 @@ export const events: Off32Event[] = [
     status: 'upcoming',
     href: WHATSAPP_INVITE_URL,
     cta: 'Entra nella community',
+    image: '/events/conosciamoci.jpg',
+    imageAlt: 'Griglia di ritratti di persone che sorridono, immagine del meet-up Ci conosciamo.',
     outcomes: [PARTICIPATION_NOTE],
   },
   {

@@ -72,6 +72,7 @@ function eventNode(event: Off32Event) {
     eventStatus: 'https://schema.org/EventScheduled',
     inLanguage: 'it',
     url: pageUrl,
+    ...(event.image ? { image: [`${SITE_URL}${event.image}`] } : {}),
     organizer: {
       '@type': 'Organization',
       name: SITE_NAME,
