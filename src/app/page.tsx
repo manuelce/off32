@@ -1,7 +1,10 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import { FaqJsonLd } from '@/components/ServiceJsonLd'
+import { PARTICIPATION_NOTE, WHATSAPP_INVITE_URL } from '@/lib/community'
+import { EVENT_KIND_LABEL, eventWhen, nextAppointment } from '@/lib/events'
 import ScrollRiseBlock from '@/components/ScrollRiseBlock'
 import ScrollRiseQuote from '@/components/ScrollRiseQuote'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
@@ -118,7 +121,15 @@ export default function Home() {
     },
     {
       q: 'Posso vedere esempi di lavori precedenti?',
-      a: 'Sì. In Work trovi una selezione: Healing Earth, Scuppoz, Conil Food Tour, The Duel e Monochrome. Se vuoi vedere qualcosa vicino al tuo settore, scrivici.',
+      a: 'Sì. In Lavori trovi una selezione: Healing Earth, Scuppoz, Conil Food Tour, The Duel e Monochrome. Se vuoi vedere qualcosa vicino al tuo settore, scrivici.',
+    },
+    {
+      q: 'Cos’è la community OFF32?',
+      a: 'È la community WhatsApp «OFF32 – Officina Digitale»: uno spazio di confronto, con la Bacheca e il gruppo «OFF32 – dove ogni connessione è un’opportunità». Siamo in 80, e in crescita. Si entra da Instagram @off32channel (nella bio c’è CommunityOFF32) o con l’invito WhatsApp, dalla pagina Community.',
+    },
+    {
+      q: 'Quali eventi organizzate?',
+      a: 'Meet-up, seminari, workshop e corsi. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma): una chiacchierata per conoscerci. I dettagli per partecipare sono nella community WhatsApp. Il corso Agenda32, full-stack e live su Meet, parte l’11 gennaio 2027. Il calendario è nella pagina Eventi.',
     },
   ]
 
@@ -166,8 +177,8 @@ export default function Home() {
             Brand, esperienze digitali e sistemi AI in un unico flusso. Comunicazione orientata alla performance.
           </p>
           <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
-            <a href="/work" style={button}>Works</a>
-            <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Events</a>
+            <a href="/work" style={button}>Lavori</a>
+            <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Eventi</a>
           </div>
         </div>
         <div className="hero-video" style={{ borderLeft: LINE, position: 'relative', minHeight: 0, height: '100%', background: '#E7E0D4', overflow: 'hidden' }}>
@@ -193,6 +204,8 @@ export default function Home() {
           <div style={{ position: 'absolute', left: 0, right: 0, top: '62%', height: 1, background: 'rgba(240,235,224,0.45)' }} />
         </div>
       </section>
+
+      <NextAppointment />
 
       <div className="meta-row">
         {['Est. 2025', '( Scroll )', 'AI Powered', 'Officina®'].map(item => (
@@ -344,7 +357,7 @@ export default function Home() {
           <p style={{ ...body, margin: '14px auto 28px' }}>
             In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.
           </p>
-          <a href="/about" style={button}>Scopri il manifesto →</a>
+          <a href="/community#manifesto" style={button}>Scopri il manifesto →</a>
         </ScrollRiseBlock>
       </section>
 
@@ -404,21 +417,7 @@ export default function Home() {
 
       <ProjectStart />
 
-      <footer className="footer-row" style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none', color: '#0D0D0D' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         .street-word { position: relative; display: inline-block; }
@@ -514,7 +513,7 @@ export default function Home() {
             object-fit: cover !important;
             object-position: center center !important;
           }
-          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
+          .grid-3, .grid-2, .split, .works-grid, .next-slot { grid-template-columns: 1fr !important; }
           .grid-3 > div, .split > div, .split > p { border-right: none !important; border-left: none !important; }
           .meta-row { --meta-inset: 16px; }
           .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
@@ -564,6 +563,29 @@ const button: CSSProperties = {
 
 type ScanStatus = 'pass' | 'fail' | 'unavailable'
 type ScanCheck = { id: string; label: string; status: ScanStatus; detail?: string }
+
+function NextAppointment() {
+  const event = nextAppointment()
+  if (!event) return null
+  const when = eventWhen(event)
+  return (
+    <section id="prossimo-appuntamento" style={{ borderBottom: LINE, padding: '28px 5% 32px' }}>
+      <div style={{ ...meta, color: '#fe3812', marginBottom: 12 }}>Prossimo appuntamento</div>
+      <div className="next-slot" style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.8fr', gap: 24, alignItems: 'end' }}>
+        <div>
+          <div style={{ ...meta, marginBottom: 8 }}>{EVENT_KIND_LABEL[event.kind]}</div>
+          <h2 style={{ ...heading, fontSize: 'clamp(32px, 4vw, 48px)', margin: '0 0 12px' }}>{event.title}</h2>
+          {when ? <p style={{ ...body, maxWidth: 680, margin: 0 }}>{when}{event.format ? ` · ${event.format}` : ''}</p> : null}
+          <p style={{ ...body, margin: '8px 0 0' }}>{event.summary} {PARTICIPATION_NOTE}</p>
+        </div>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <a href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer" style={button}>Entra nella community</a>
+          <a href={`/workshop#${event.slug}`} style={button}>Vedi l’evento</a>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 function SiteScan() {
   const [url, setUrl] = useState('')
@@ -635,7 +657,7 @@ function SiteScan() {
   }
 
   return (
-    <section className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
+    <section id="analisi" className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
       <div className="ai-scan-card">
         <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Analisi gratuita</div>
         <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>

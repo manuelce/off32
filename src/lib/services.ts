@@ -34,6 +34,10 @@ export type ServiceArea = {
   keyword: string
   title: string
   description: string
+  /** Problema che l'area risolve, in una frase. */
+  problem: string
+  /** Esito, in una frase. */
+  outcome: string
   h1: string
   lead: string
   sections: ServiceSection[]
@@ -49,6 +53,8 @@ export const SERVICE_AREAS: ServiceArea[] = [
     title: 'Brand & Creative: identità e strategia di marca',
     description:
       'Costruiamo brand riconoscibili: identità visiva, strategia, direzione creativa e contenuti. Scopri come lavoriamo.',
+    problem: 'Un logo da solo non tiene insieme sito, campagne e team.',
+    outcome: 'Un sistema visivo e verbale che il team può usare senza ricominciare ogni volta.',
     h1: 'Brand & Creative: identità e strategia di marca',
     lead:
       'In OFF32 il brand non è un logo isolato. È la promessa che fai ogni giorno a chi ti sceglie: posizione, linguaggio visivo, tono e contenuti che restano coerenti quando cambiano sito, campagne e team.',
@@ -56,6 +62,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
       {
         heading: 'Brand & Creative',
         body: [
+          'Problema: un logo da solo non tiene insieme sito, campagne e team. Risultato: un sistema visivo e verbale che il team può usare senza ricominciare ogni volta.',
           'La brand identity è il modo in cui un’azienda si fa riconoscere: segni, colori, tipografia e regole che restano coerenti quando cambiano sito, campagne e team. Non è solo un logo. È il sistema visivo e verbale con cui le persone capiscono chi sei, anche senza leggere il nome.',
           'Intorno all’identity ruotano le altre skill: Creative Direction per tenere insieme campagne e touchpoint, Copywriting per testi che convertono (landing, email, claim, script) senza perdere voce di marca, Content Creation per visual, caroselli e asset pubblicabili su canali diversi.',
           'Lavoriamo con founder, brand manager e team marketing che stanno lanciando, riposizionando o allineando comunicazione e prodotto. Il risultato non è un file da archiviare: è un sistema ripetibile, con regole, messaggi e riferimenti che il team può usare senza ricominciare da zero ogni volta.',
@@ -77,6 +84,8 @@ export const SERVICE_AREAS: ServiceArea[] = [
     title: 'Web & Digital: siti, e-commerce e performance',
     description:
       'Siti web, e-commerce e landing page veloci, belli e pensati per convertire. Design e sviluppo sotto lo stesso tetto.',
+    problem: 'Un sito lento o poco chiaro non porta a contatto, acquisto o prenotazione.',
+    outcome: 'Un sito, un e-commerce o una landing misurabile, con design e codice nello stesso flusso.',
     h1: 'Web & Digital: siti, e-commerce e performance',
     lead:
       'Progettiamo e sviluppiamo esperienze digitali che devono funzionare: sul telefono, in campagna, al checkout. Design e codice stanno nello stesso flusso, così non si perde nulla tra mockup e release.',
@@ -84,6 +93,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
       {
         heading: 'Design e sviluppo insieme',
         body: [
+          'Problema: un sito lento o poco chiaro non porta a contatto, acquisto o prenotazione. Risultato: un sito, un e-commerce o una landing misurabile, con design e codice nello stesso flusso.',
           'Non passiamo un file e aspettiamo. Wireframe, interfaccia, stack e deploy dialogano dallo stesso tavolo. Così velocità, SEO e conversione non sono pezzi aggiunti alla fine.',
           'Usiamo stack moderni (Next.js, React e tool di prodotto) quando servono performance e controllo; su e-commerce valutiamo anche Shopify se è la scelta più sostenibile.',
         ],
@@ -109,22 +119,20 @@ export const SERVICE_AREAS: ServiceArea[] = [
     keyword: 'AI per aziende',
     title: 'AI Systems: automazioni e agenti AI',
     description:
-      'Integriamo l’intelligenza artificiale nei processi della tua azienda: automazioni, agenti e workflow.',
+      'Un solo sistema AI, in quattro moduli: automazione, agenti, workflow e integrazione.',
+    problem: 'Email, preventivi, CRM e contenuti ripetuti tolgono tempo al team.',
+    outcome: 'Un solo sistema AI, in quattro moduli, che toglie i passaggi ripetitivi e lascia le decisioni alle persone.',
     h1: 'AI Systems: automazioni e agenti AI',
     lead:
       'L’AI in OFF32 non è una moda da mettere in homepage. È un modo per togliere lavoro ripetitivo e lasciare tempo a decisioni, creatività e relazioni. Partiamo dai processi, non dagli strumenti.',
     sections: [
       {
-        heading: 'Dal bisogno allo stack',
+        heading: 'Un sistema, quattro moduli',
         body: [
-          'Mappiamo dove perdi tempo o qualità: email, preventivi, CRM, contenuti, supporto. Poi scegliamo automazioni, agenti o integrazioni API con criteri di ROI, privacy e manutenibilità.',
-          'Lavoriamo con team non tecnici e con team prodotto: documentazione chiara, handover e controlli su dati e accessi.',
-        ],
-      },
-      {
-        heading: 'Cosa significa “sistema”',
-        body: [
-          'Un pezzo AI isolato si spegne dopo la demo. Un sistema tiene insieme trigger, dati, supervisione umana e metriche. È questo che progettiamo.',
+          'Problema: email, preventivi, CRM e contenuti ripetuti tolgono tempo al team. Risultato: un solo sistema AI, in quattro moduli, che toglie i passaggi ripetitivi e lascia le decisioni alle persone.',
+          'Automation, Agents, Workflows e Integration non sono quattro offerte staccate. Sono moduli dello stesso sistema: si parte dal processo che fa perdere tempo, poi si sceglie il modulo che lo chiude.',
+          'Automation toglie i passaggi manuali. Agents usano strumenti con regole e limiti. Workflows tengono insieme la catena, con ruoli e handoff. Integration porta l’AI nei software che già usate, via API.',
+          'Mappiamo dove perdi tempo o qualità. Poi scegliamo moduli e tool con criteri di risultato, privacy e manutenibilità. Documentazione, handover e controlli su dati e accessi restano parte del lavoro. Un pezzo AI isolato si spegne dopo la demo: un sistema tiene insieme trigger, dati, supervisione umana e metriche.',
         ],
       },
     ],

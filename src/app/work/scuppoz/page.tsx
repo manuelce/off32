@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import WorkSwitch from '@/components/WorkSwitch'
+import SiteFooter from '@/components/SiteFooter'
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
@@ -203,21 +204,7 @@ export default function ScuppozPage() {
 
       <div style={{ marginTop: '15%' }}>
         <ProjectStart />
-        <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D', background: '#F0EBE0' }}>
-          <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-            {[
-              { label: 'Works', href: '/work' },
-              { label: 'Events', href: '/workshop' },
-              { label: 'Blog', href: '/blog' },
-              { label: 'Privacy', href: '/privacy-policy' },
-              { label: 'Cookie', href: '/cookie-policy' },
-              { label: 'Terms', href: '/terms-and-conditions' },
-            ].map(link => (
-              <a key={link.label} href={link.href} style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#0D0D0D', textDecoration: 'none' }}>{link.label}</a>
-            ))}
-          </div>
-          <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#0D0D0D' }}>connect@off32.it · © 2026 OFF32</span>
-        </footer>
+      <SiteFooter />
       </div>
 
       <style>{`

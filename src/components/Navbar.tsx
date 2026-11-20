@@ -1,19 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-
-const NAV_LINKS = [
-  { label: 'Works', href: '/work' },
-  { label: 'About', href: '/about' },
-  { label: 'Events', href: '/workshop' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contatti', href: '/contatti' },
-]
-
-const FULL_STACK_NAV_LINKS = [
-  { label: 'Events', href: '/workshop' },
-  { label: 'Blog', href: '/blog' },
-]
+import { NAV_LINKS } from '@/lib/site-nav'
 
 const CALL_LABEL = "Call '20"
 
@@ -56,7 +44,7 @@ export default function Navbar() {
               <img src="/off32_cube_white.png" alt="OFF32" />
             </a>
             <div className="nav-fs-links">
-              {FULL_STACK_NAV_LINKS.map(link => {
+              {NAV_LINKS.map(link => {
                 const current = isCurrent(pathname, link.href)
                 return (
                   <a
@@ -81,7 +69,7 @@ export default function Navbar() {
           position: 'fixed', bottom: '16px', left: 0, right: 0, zIndex: 200,
           pointerEvents: 'none',
         }}>
-          <div style={{
+          <div className="nav-mobile-pill" style={{
             display: 'flex', gap: '2px', alignItems: 'center',
             background: 'rgba(13,13,13,0.82)',
             border: '1px solid rgba(255,255,255,0.14)',
@@ -90,8 +78,10 @@ export default function Navbar() {
             borderRadius: '999px', padding: '6px 8px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.28)',
             pointerEvents: 'auto',
+            maxWidth: 'calc(100vw - 24px)',
+            overflowX: 'auto',
           }}>
-            {FULL_STACK_NAV_LINKS.map(link => {
+            {NAV_LINKS.map(link => {
               const current = isCurrent(pathname, link.href)
               return (
                 <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#F0EBE0', padding: '6px 5px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.2px', textDecoration: 'none', whiteSpace: 'nowrap' }}>{link.label}</a>
@@ -142,14 +132,17 @@ export default function Navbar() {
             display: flex;
             align-items: center;
             gap: 2px;
+            min-width: 0;
+            overflow-x: auto;
           }
           .nav-fs-links a {
-            font-size: 14px;
+            font-size: 13px;
             color: #F0EBE0;
-            padding: 8px 14px;
+            padding: 8px 8px;
             border-radius: 999px;
             text-decoration: none;
             letter-spacing: 0.2px;
+            white-space: nowrap;
           }
           .nav-fs-links a:hover,
           .nav-fs-links a.is-current {
@@ -182,6 +175,11 @@ export default function Navbar() {
               margin: 0 auto;
             }
             .nav-fs-mobile-bottom { display: flex !important; }
+            .nav-mobile-pill a {
+              font-size: 11px !important;
+              padding: 6px 4px !important;
+              letter-spacing: 0 !important;
+            }
           }
           @media (max-width: 480px) {
             .nav-fs { top: 14px; }
@@ -209,11 +207,11 @@ export default function Navbar() {
             style={{ height: '36px', width: 'auto' }}
           />
         </a>
-        <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px' }}>
+        <div className="nav-menu" style={{ display: 'flex', gap: '2px', background: '#141414', border: '1px solid #1C1C1C', borderRadius: '999px', padding: '4px 8px', maxWidth: 'min(760px, calc(100vw - 280px))', overflowX: 'auto' }}>
           {NAV_LINKS.map(link => {
             const current = isCurrent(pathname, link.href)
             return (
-              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '15px', color: current ? '#9fff00' : '#fe3812', padding: '6px 16px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.3px', textDecoration: 'none' }}>{link.label}</a>
+              <a key={link.label} href={link.href} aria-current={current ? 'page' : undefined} style={{ fontSize: '14px', color: current ? '#9fff00' : '#fe3812', padding: '6px 11px', borderRadius: '999px', cursor: 'pointer', letterSpacing: '0.2px', textDecoration: 'none', whiteSpace: 'nowrap' }}>{link.label}</a>
             )
           })}
         </div>
@@ -256,12 +254,14 @@ export default function Navbar() {
         position: 'fixed', bottom: '16px', left: 0, right: 0, zIndex: 200,
         pointerEvents: 'none',
       }}>
-        <div style={{
+        <div className="nav-mobile-pill" style={{
           display: 'flex', gap: '2px', alignItems: 'center',
           background: '#141414', border: '1px solid #1C1C1C',
           borderRadius: '999px', padding: '6px 8px',
           boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
           pointerEvents: 'auto',
+          maxWidth: 'calc(100vw - 24px)',
+          overflowX: 'auto',
         }}>
           {NAV_LINKS.map(link => {
             const current = isCurrent(pathname, link.href)
@@ -322,6 +322,11 @@ export default function Navbar() {
             left: 0 !important;
             right: 0 !important;
             bottom: 16px !important;
+          }
+          .nav-mobile-pill a {
+            font-size: 11px !important;
+            padding: 6px 4px !important;
+            letter-spacing: 0 !important;
           }
           main { padding-bottom: 88px; }
         }

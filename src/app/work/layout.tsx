@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
-  'Works',
+  'Lavori',
   'Selezione di progetti OFF32: brand, e-commerce, web design ed editorial.',
   '/work',
 )
