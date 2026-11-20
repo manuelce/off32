@@ -1,8 +1,6 @@
 import {
   COMMUNITY_MEMBERS,
   INSTAGRAM_FOLLOWERS,
-  INSTAGRAM_HANDLE,
-  INSTAGRAM_URL,
   WHATSAPP_INVITE_URL,
 } from '@/lib/community'
 import {
@@ -81,7 +79,6 @@ export default function HomeEvents() {
       <div className="home-events-head">
         <h2 id="home-events-title" className="home-events-lockup">
           <span className="home-events-eventi">Eventi.</span>
-          <span className="home-events-brand">OFF32</span>
         </h2>
         <p className="home-events-sticker">Lo facciamo insieme.</p>
         <a className="home-events-join" href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer">Entra nella community</a>
@@ -117,21 +114,20 @@ export default function HomeEvents() {
       <div className="home-events-stats">
         <div>
           <strong>{COMMUNITY_MEMBERS}</strong>
-          <span>membri nella community WhatsApp</span>
+          <span>Community</span>
         </div>
         <div>
           <strong>{INSTAGRAM_FOLLOWERS}</strong>
-          <span>follower su Instagram {INSTAGRAM_HANDLE}</span>
+          <span>Instagram</span>
         </div>
         <div>
           <strong>{fullstackCourse.hours}</strong>
-          <span>ore di Agenda32, {fullstackCourse.weeks} settimane, live su Meet</span>
+          <span>Agenda32</span>
         </div>
       </div>
 
       <div className="home-events-cta">
         <a href="/workshop">Vedi gli eventi</a>
-        <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
       </div>
 
       <style>{`
@@ -159,15 +155,7 @@ export default function HomeEvents() {
           font-size: clamp(88px, 13vw, 176px);
           line-height: 0.76;
           letter-spacing: -4px;
-          color: ${RED};
-        }
-        .home-events-brand {
-          font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
-          font-weight: 800;
-          font-size: clamp(40px, 5.6vw, 78px);
-          line-height: 0.8;
-          letter-spacing: -2px;
-          padding-bottom: 8px;
+          color: ${PURPLE};
         }
         .home-events-sticker {
           position: absolute;
@@ -329,6 +317,8 @@ export default function HomeEvents() {
           letter-spacing: 0.8px;
           text-transform: uppercase;
           padding: 14px 22px;
+          background: transparent;
+          box-shadow: 3px 3px 0 ${PURPLE};
         }
         @media (min-width: 980px) {
           .home-events-row { overflow: visible; }
