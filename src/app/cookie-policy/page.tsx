@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import IubendaEmbed from '@/components/IubendaEmbed'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
@@ -26,6 +27,7 @@ export default function CookiePolicyPage() {
           <IubendaEmbed type="cookie" />
         </div>
         <ProjectStart />
+        <SiteFooter />
       </main>
     );
   }

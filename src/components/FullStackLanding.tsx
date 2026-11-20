@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import FullStackApplyForm from '@/components/FullStackApplyForm'
 import FullStackFaq from '@/components/FullStackFaq'
+import SiteFooter from '@/components/SiteFooter'
 import { fullstackCourse, isConfirmed } from '@/lib/fullstack-course'
 import { track } from '@/lib/track'
 
@@ -351,21 +352,7 @@ export default function FullStackLanding() {
         </ul>
       </section>
 
-      <footer className="fs-footer">
-        <div className="fs-footer-links">
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href}>{link.label}</a>
-          ))}
-        </div>
-        <span>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter tone="purple" />
 
       <style>{`
         .fs-page { overflow-x: hidden; }

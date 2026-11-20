@@ -1,8 +1,20 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
+import CommunityBlock from '@/components/CommunityBlock'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import SplitPageTitle from '@/components/SplitPageTitle'
-import { workshops, type Workshop } from '@/lib/workshops'
+import { PARTICIPATION_NOTE, WHATSAPP_INVITE_URL } from '@/lib/community'
+import {
+  EVENT_KIND_LABEL,
+  detailsInCommunity,
+  eventWhen,
+  events,
+  kindsInUse,
+  type EventKind,
+  type Off32Event,
+} from '@/lib/events'
 
 const PURPLE = '#694aff'
 const CREAM = '#F0EBE0'
@@ -10,64 +22,79 @@ const LINE = `1px solid ${CREAM}`
 const PHONE = '+39 375 563 9110'
 const PHONE_TEL = '+393755639110'
 
-const FILTERS = ['All', 'Full-stack', 'Design', 'E-commerce', 'Gratuito']
+type Poster = { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }
 
-const posters: Record<string, { bg: string; fg: string; image?: string; focus?: string; clean?: boolean }> = {
+const posters: Record<string, Poster> = {
   'brand-identity-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/brand.jpg', focus: 'center 42%' },
   'videocorso-fullstack-ai': { bg: '#0D0D0D', fg: '#F0EBE0', image: '/events/agenda32.jpg', focus: 'center center' },
 }
 
-function EventFlyer({ workshop }: { workshop: Workshop }) {
-  const poster = posters[workshop.slug]
+const DEFAULT_POSTER: Poster = { bg: '#0D0D0D', fg: '#F0EBE0' }
+
+function posterFor(event: Off32Event): Poster {
+  return posters[event.slug] ?? { ...DEFAULT_POSTER, image: event.image }
+}
+
+function EventFlyer({ event }: { event: Off32Event }) {
+  const poster = posterFor(event)
   return (
     <div className={poster.clean ? 'event-flyer is-clean' : 'event-flyer'} style={{ background: poster.bg, color: poster.fg }}>
-      {!poster.clean && <div className="event-flyer-title">{workshop.title}</div>}
+      {!poster.clean && <div className="event-flyer-title">{event.title}</div>}
       <div className="event-flyer-photo">
         {poster.image ? (
-          <img src={poster.image} alt="" style={{ objectPosition: poster.focus }} />
+          <Image src={poster.image} alt={event.imageAlt ?? ''} fill sizes="(max-width: 860px) 100vw, 40vw" className="event-flyer-img" style={{ objectPosition: poster.focus ?? 'center center' }} />
         ) : (
-          <div className="event-flyer-fallback" style={{ background: poster.fg, color: poster.bg }}>{workshop.index}</div>
+          <div className="event-flyer-fallback" style={{ background: poster.fg, color: poster.bg }}>{EVENT_KIND_LABEL[event.kind]}</div>
         )}
-        {!poster.clean && <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Events</span>}
+        {!poster.clean && <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Eventi</span>}
         {!poster.clean && <span className="event-flyer-bar" />}
       </div>
     </div>
   )
 }
 
-function matchesFilter(workshop: Workshop, filter: string) {
-  if (filter === 'All') return true
-  if (filter === 'Gratuito') return workshop.free === true
-  return workshop.topic === filter
+function matchesFilter(event: Off32Event, filter: string) {
+  if (filter === 'Tutti') return true
+  return EVENT_KIND_LABEL[event.kind] === filter
 }
 
-function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop; onBook: () => void; featured?: boolean }) {
-  const poster = posters[workshop.slug]
-  const bookable = workshop.status === 'upcoming'
+function EventCard({ event, onBook, featured = false }: { event: Off32Event; onBook: () => void; featured?: boolean }) {
+  const poster = posterFor(event)
+  const open = event.status === 'upcoming'
+  const external = Boolean(event.href && event.href.startsWith('http'))
+  const when = eventWhen(event)
   return (
-    <article id={workshop.slug} className={[poster.clean ? 'event-card is-clean' : 'event-card', featured ? 'is-featured' : ''].filter(Boolean).join(' ')}>
+    <article id={event.slug} className={[poster.clean ? 'event-card is-clean' : 'event-card', featured ? 'is-featured' : ''].filter(Boolean).join(' ')}>
       <div className="event-poster" style={{ background: poster.bg, color: poster.fg }}>
         {poster.image && (
-          <img src={poster.image} alt="" className="event-poster-img" style={{ objectPosition: poster.focus }} />
+          <Image
+            src={poster.image}
+            alt={event.imageAlt ?? ''}
+            fill
+            sizes="(max-width: 860px) 100vw, 50vw"
+            className="event-poster-img"
+            style={{ objectPosition: poster.focus ?? 'center center' }}
+          />
         )}
-        <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: featured ? 'clamp(32px, 3vw, 48px)' : 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{workshop.topic}</span>
+        <span style={{ fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif", fontWeight: 800, fontSize: featured ? 'clamp(32px, 3vw, 48px)' : 'clamp(28px, 2.4vw, 36px)', letterSpacing: '-1px', lineHeight: 0.95, textTransform: 'uppercase' }}>{EVENT_KIND_LABEL[event.kind]}</span>
       </div>
       <div className="event-body">
         <div style={{ fontSize: 11, letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 700 }}>
-          {workshop.duration}
+          {event.duration ?? event.dateLabel ?? EVENT_KIND_LABEL[event.kind]}
         </div>
-        <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: featured ? 'clamp(32px, 3.2vw, 44px)' : 28, letterSpacing: '-0.4px', lineHeight: 1.1, margin: '12px 0' }}>{workshop.title}</h3>
-        <p style={{ fontSize: featured ? 16 : 14, lineHeight: 1.6, color: '#3a3a3a', margin: bookable ? '0 0 16px' : '0' }}>{workshop.desc}</p>
+        <h3 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: featured ? 'clamp(32px, 3.2vw, 44px)' : 28, letterSpacing: '-0.4px', lineHeight: 1.1, margin: '12px 0' }}>{event.title}</h3>
+        <p style={{ fontSize: featured ? 16 : 14, lineHeight: 1.6, color: '#3a3a3a', margin: open ? '0 0 16px' : '0' }}>{event.summary}</p>
         <div style={{ borderTop: '1px solid #0D0D0D', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13 }}>
-          <span>Formato: {workshop.format}</span>
-          <span>Per: {workshop.audience}</span>
-          {workshop.when && <span>Partenza: {workshop.when}</span>}
+          {event.format && <span>Formato: {event.format}</span>}
+          {event.audience && <span>Per: {event.audience}</span>}
+          {when && <span>{event.kind === 'corso' ? 'Partenza' : 'Quando'}: {when}</span>}
+          {detailsInCommunity(event) ? <span>{PARTICIPATION_NOTE}</span> : null}
         </div>
-        {bookable ? (
+        {open && (event.price || event.href) ? (
           <div className="event-foot">
-            <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{workshop.price ?? 'Su richiesta'}</span>
-            {workshop.landingHref ? (
-              <a href={workshop.landingHref} className="event-buy">{workshop.landingCta ?? 'Programma corso'}</a>
+            <span style={{ fontWeight: 800, fontSize: featured ? 22 : 18, letterSpacing: '-0.3px' }}>{event.price ?? ''}</span>
+            {event.href ? (
+              <a href={event.href} className="event-buy" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{event.cta ?? 'Partecipa'}</a>
             ) : (
               <button type="button" className="event-buy" onClick={onBook}>Prenota</button>
             )}
@@ -79,16 +106,18 @@ function EventCard({ workshop, onBook, featured = false }: { workshop: Workshop;
 }
 
 export default function WorkshopPage() {
-  const [filter, setFilter] = useState('All')
+  const filters = useMemo(() => {
+    const kinds: EventKind[] = kindsInUse()
+    return kinds.length > 1 ? ['Tutti', ...kinds.map(kind => EVENT_KIND_LABEL[kind])] : []
+  }, [])
+  const [filter, setFilter] = useState('Tutti')
   const [underlineOn, setUnderlineOn] = useState(false)
-  const [selected, setSelected] = useState<Workshop | null>(null)
+  const [selected, setSelected] = useState<Off32Event | null>(null)
   const underlinePlayed = useRef(false)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const visible = workshops.filter(workshop => matchesFilter(workshop, filter))
-  const upcoming = visible.filter(workshop => workshop.status === 'upcoming')
-  const past = visible.filter(workshop => workshop.status === 'past')
-  const featured = upcoming[0] ?? null
-  const moreUpcoming = upcoming.slice(1)
+  const visible = events.filter(event => matchesFilter(event, filter))
+  const upcoming = visible.filter(event => event.status === 'upcoming').sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))
+  const past = visible.filter(event => event.status === 'past')
 
   useEffect(() => {
     if (underlinePlayed.current) return
@@ -119,17 +148,16 @@ export default function WorkshopPage() {
         color={CREAM}
         border={LINE}
         lines={[
-          { text: 'Cultura.', align: 'right' },
-          { text: 'Inclusione.', align: 'left' },
-          { text: 'Formazione.', align: 'right' },
+          { text: 'Eventi.', align: 'right' },
+          { text: 'Formazione.', align: 'left' },
         ]}
       />
 
       <div className="info-bar" style={{ background: '#0D0D0D', padding: '16px 5%', display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
         {[
-          ['Da 2 ore', 'a una giornata'],
-          ['Materiali', 'inclusi'],
-          ['Date', 'concordate'],
+          ['Meet-up', 'seminari, workshop, corsi'],
+          ['Online', 'e in calendario'],
+          ['Dettagli', 'nella community'],
         ].map(([strong, rest]) => (
           <span key={strong} style={{ fontSize: '11px', letterSpacing: '1.5px', color: '#666', textTransform: 'uppercase' }}>
             <strong style={{ color: '#fff', fontWeight: 600 }}>{strong}</strong> {rest}
@@ -139,20 +167,21 @@ export default function WorkshopPage() {
 
       <section id="programma" style={{ padding: '64px 5% 80px' }}>
         <div className="events-head">
-          <div style={{ maxWidth: 560 }}>
-            <div style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: 12 }}>// events · off32</div>
+          <div>
+            <div style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: 12 }}>{'Eventi · OFF32'}</div>
             <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(52px, 7vw, 88px)', letterSpacing: '-2px', lineHeight: 0.95, margin: '0 0 16px' }}>
               <span className="street-word">
-                Events
+                Eventi
                 <span aria-hidden="true" className={underlineOn ? 'events-underline is-on' : 'events-underline'} />
               </span>
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: 560, margin: 0 }}>
-              Prossimi eventi, workshop e talk, gratuiti o a pagamento. Prenota il tuo biglietto online.
+            <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: '46ch', margin: 0 }}>
+              Meet-up, seminari, workshop e corsi. Il calendario della formazione OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
             </p>
           </div>
-          <div className="event-filters" role="tablist" aria-label="Filtra le sessioni">
-              {FILTERS.map(item => (
+          {filters.length > 0 ? (
+            <div className="event-filters" role="tablist" aria-label="Filtra gli eventi">
+              {filters.map(item => (
                 <button
                   key={item}
                   type="button"
@@ -165,19 +194,17 @@ export default function WorkshopPage() {
                 </button>
               ))}
             </div>
+          ) : null}
         </div>
 
-        {featured ? (
+        {upcoming.length > 0 ? (
           <div className="events-upcoming">
             <div className="events-label">Prossimo</div>
-            <EventCard workshop={featured} featured onBook={() => setSelected(featured)} />
-            {moreUpcoming.length > 0 ? (
-              <div className="events-grid" style={{ marginTop: 28 }}>
-                {moreUpcoming.map(workshop => (
-                  <EventCard key={workshop.slug} workshop={workshop} onBook={() => setSelected(workshop)} />
-                ))}
-              </div>
-            ) : null}
+            <div className="events-upcoming-grid">
+              {upcoming.map(event => (
+                <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} />
+              ))}
+            </div>
           </div>
         ) : null}
 
@@ -185,15 +212,15 @@ export default function WorkshopPage() {
           <div className="events-past">
             <div className="events-label">Passati</div>
             <div className="events-grid">
-              {past.map(workshop => (
-                <EventCard key={workshop.slug} workshop={workshop} onBook={() => setSelected(workshop)} />
+              {past.map(event => (
+                <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} />
               ))}
             </div>
           </div>
         ) : null}
 
         {visible.length === 0 && (
-          <p style={{ marginTop: 28, fontSize: 15 }}>Nessuna sessione in questa categoria.</p>
+          <p style={{ marginTop: 28, fontSize: 15 }}>Nessun evento in questa categoria.</p>
         )}
       </section>
 
@@ -206,17 +233,17 @@ export default function WorkshopPage() {
             aria-labelledby="event-dialog-title"
             onClick={event => event.stopPropagation()}
           >
-            <EventFlyer workshop={selected} />
+            <EventFlyer event={selected} />
             <div className="event-dialog-copy">
               <button ref={closeRef} type="button" className="event-dialog-close" aria-label="Chiudi" onClick={() => setSelected(null)}>×</button>
               <h2 id="event-dialog-title">{selected.title}</h2>
-              <p>{selected.desc}</p>
-              {selected.outcomes.map(outcome => (
+              <p>{selected.summary}</p>
+              {(selected.outcomes ?? []).map(outcome => (
                 <p key={outcome}>{outcome}</p>
               ))}
-              <div className="event-hours-label">Orari</div>
+              <div className="event-hours-label">Quando</div>
               <div className="event-hours-box">
-                <strong>{selected.when ?? `Su richiesta · ${selected.audience}`}</strong>
+                <strong>{eventWhen(selected) || selected.audience || 'Data da definire'}</strong>
               </div>
               <div className="event-contact-box">
                 <div>Contatto</div>
@@ -230,23 +257,18 @@ export default function WorkshopPage() {
         </div>
       )}
 
-      <ProjectStart />
+      <CommunityBlock />
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: '1px solid #0D0D0D', borderBottom: '1px solid #0D0D0D' }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#0D0D0D', textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#0D0D0D' }}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <ProjectStart
+        kicker="Partecipa"
+        title="Entra nella community"
+        body="Meet-up, seminari, workshop e corsi. I dettagli per partecipare, compreso il link di Google Meet quando l’incontro è online, sono nella community WhatsApp."
+        cta="Entra nella community →"
+        href={WHATSAPP_INVITE_URL}
+        external
+      />
+
+      <SiteFooter />
 
       <style>{`
         .street-word { position: relative; display: inline-block; }
@@ -270,7 +292,8 @@ export default function WorkshopPage() {
         @media (prefers-reduced-motion: reduce) {
           .events-underline { animation: none; clip-path: none; }
         }
-        .events-head { display: block; }
+        .workshop-title .split-page-title-row { padding-left: 5%; padding-right: 5%; }
+        .events-head { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr); gap: 28px 40px; align-items: end; }
         .event-filters { display: flex; flex-wrap: nowrap; gap: 8px; justify-content: flex-start; margin-top: 22px; }
         .event-filter {
           border: 1px solid #0D0D0D;
@@ -296,6 +319,13 @@ export default function WorkshopPage() {
         }
         .events-upcoming { width: 100%; }
         .events-upcoming .events-label { margin-top: 40px; }
+        .events-upcoming-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+          align-items: stretch;
+        }
+        .events-upcoming-grid .event-card { height: 100%; }
         .events-past .events-label { margin-top: 56px; }
         .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
         .event-card { background: #fff; border: 1px solid #0D0D0D; box-shadow: 7px 7px 0 #0D0D0D; display: flex; flex-direction: column; min-width: 0; }
@@ -450,8 +480,9 @@ export default function WorkshopPage() {
           .event-filters { flex-wrap: wrap; }
         }
         @media (max-width: 860px) {
+          .events-head { grid-template-columns: 1fr; }
           .event-poster { height: 210px; }
-          .events-grid { grid-template-columns: 1fr; }
+          .events-grid, .events-upcoming-grid { grid-template-columns: 1fr; }
           .event-card.is-featured {
             grid-template-columns: 1fr;
             box-shadow: 7px 7px 0 #694aff;

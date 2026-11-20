@@ -8,6 +8,7 @@ import { BreadcrumbJsonLd, FaqJsonLd, ServiceJsonLd } from '@/components/Service
 import { SeoText } from '@/components/SeoText'
 import { emphasizeBrandTerms } from '@/lib/emphasize-terms'
 import { visualTitleLines } from '@/lib/visual-title'
+import SiteFooter from '@/components/SiteFooter'
 import {
   areaBySlug,
   areaPath,
@@ -279,34 +280,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
 
       <ProjectStart />
 
-      <footer
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 24,
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          padding: '22px 28px',
-          borderTop: LINE,
-          borderBottom: LINE,
-        }}
-      >
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <Link key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none', color: '#0D0D0D' }}>
-              {link.label}
-            </Link>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }

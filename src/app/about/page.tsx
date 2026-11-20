@@ -1,7 +1,7 @@
 'use client'
-import type { CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import SplitPageTitle from '@/components/SplitPageTitle'
+import SiteFooter from '@/components/SiteFooter'
 
 const LINE = '1px solid #0D0D0D'
 
@@ -108,13 +108,6 @@ function SocialIcon({ kind }: { kind: Social }) {
   )
 }
 
-const meta: CSSProperties = {
-  fontSize: 11,
-  letterSpacing: '1.8px',
-  textTransform: 'uppercase',
-  color: '#0D0D0D',
-}
-
 export default function AboutPage() {
   return (
     <main style={{ background: '#f0ebe0', minHeight: '100vh', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -201,21 +194,7 @@ export default function AboutPage() {
 
       <ProjectStart />
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         .team-photo { filter: grayscale(1); transition: filter 0.45s ease; }

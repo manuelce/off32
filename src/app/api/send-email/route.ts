@@ -6,7 +6,8 @@ const FROM = `OFF32 <${STUDIO_EMAIL}>`
 
 const TYPES: Record<string, string> = {
   progetto: 'Progetto',
-  workshop: 'Workshop',
+  workshop: 'Eventi',
+  community: 'Community',
   candidatura: 'Candidatura corso',
   altro: 'Altro',
   call: 'Call gratuita',

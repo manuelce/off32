@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation'
 import { use, type CSSProperties, type ReactNode } from 'react'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import {
   BRAND_ARTICLE_IMAGE,
   CLIENT_ARTICLE_IMAGE,
@@ -487,7 +488,7 @@ const ARTICLES: Record<string, Article> = {
     ],
   },
   'ecommerce-performante-2025': {
-    title: 'eCommerce performante nel 2025: cosa funziona davvero',
+    title: 'eCommerce performante: cosa funziona davvero',
     tag: 'Sviluppo',
     date: 'Feb 2025',
     readTime: '8 min',
@@ -774,21 +775,7 @@ export default function BlogArticlePage({ params }: { params: Promise<{ slug: st
 
       <ProjectStart />
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         @media (max-width: 768px) {
