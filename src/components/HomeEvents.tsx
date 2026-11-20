@@ -85,6 +85,7 @@ export default function HomeEvents() {
       </div>
 
       <div className="home-events-rail" role="list">
+        <div className="home-events-line" aria-hidden="true" />
         <div className="home-events-row">
           {passes.map((pass, index) => {
             const tone = PASS_TONES[index % PASS_TONES.length]
@@ -142,7 +143,6 @@ export default function HomeEvents() {
       <style>{`
         .home-events {
           padding: 12% 5%;
-          border-bottom: 1px solid ${INK};
           background: ${CREAM};
           color: ${INK};
         }
@@ -199,11 +199,20 @@ export default function HomeEvents() {
           transform: rotate(4deg);
         }
         .home-events-rail { position: relative; margin-top: 28px; }
+        .home-events-line {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 100vw;
+          height: 2px;
+          margin-left: -50vw;
+          background: ${INK};
+        }
         .home-events-row {
           display: flex;
           gap: 16px;
           overflow-x: auto;
-          padding: 10px 2px 12px;
+          padding: 0 2px 12px;
           scroll-snap-type: x mandatory;
         }
         .home-events-pass-cta {
