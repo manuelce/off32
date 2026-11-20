@@ -71,7 +71,7 @@ function EventCard({ event, onBook, featured = false }: { event: Off32Event; onB
             src={poster.image}
             alt={event.imageAlt ?? ''}
             fill
-            sizes={featured ? '(max-width: 860px) 100vw, 55vw' : '(max-width: 860px) 100vw, 30vw'}
+            sizes="(max-width: 860px) 100vw, 50vw"
             className="event-poster-img"
             style={{ objectPosition: poster.focus ?? 'center center' }}
           />
@@ -118,8 +118,6 @@ export default function WorkshopPage() {
   const visible = events.filter(event => matchesFilter(event, filter))
   const upcoming = visible.filter(event => event.status === 'upcoming').sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))
   const past = visible.filter(event => event.status === 'past')
-  const featured = upcoming[0] ?? null
-  const moreUpcoming = upcoming.slice(1)
 
   useEffect(() => {
     if (underlinePlayed.current) return
@@ -199,17 +197,14 @@ export default function WorkshopPage() {
           ) : null}
         </div>
 
-        {featured ? (
+        {upcoming.length > 0 ? (
           <div className="events-upcoming">
             <div className="events-label">Prossimo</div>
-            <EventCard event={featured} featured onBook={() => setSelected(featured)} />
-            {moreUpcoming.length > 0 ? (
-              <div className="events-grid" style={{ marginTop: 28 }}>
-                {moreUpcoming.map(event => (
-                  <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} />
-                ))}
-              </div>
-            ) : null}
+            <div className="events-upcoming-grid">
+              {upcoming.map(event => (
+                <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} />
+              ))}
+            </div>
           </div>
         ) : null}
 
@@ -324,6 +319,13 @@ export default function WorkshopPage() {
         }
         .events-upcoming { width: 100%; }
         .events-upcoming .events-label { margin-top: 40px; }
+        .events-upcoming-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+          align-items: stretch;
+        }
+        .events-upcoming-grid .event-card { height: 100%; }
         .events-past .events-label { margin-top: 56px; }
         .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
         .event-card { background: #fff; border: 1px solid #0D0D0D; box-shadow: 7px 7px 0 #0D0D0D; display: flex; flex-direction: column; min-width: 0; }
@@ -480,7 +482,7 @@ export default function WorkshopPage() {
         @media (max-width: 860px) {
           .events-head { grid-template-columns: 1fr; }
           .event-poster { height: 210px; }
-          .events-grid { grid-template-columns: 1fr; }
+          .events-grid, .events-upcoming-grid { grid-template-columns: 1fr; }
           .event-card.is-featured {
             grid-template-columns: 1fr;
             box-shadow: 7px 7px 0 #694aff;
