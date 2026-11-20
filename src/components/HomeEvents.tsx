@@ -79,11 +79,12 @@ export default function HomeEvents() {
   return (
     <section id="prossimo-appuntamento" className="home-events" aria-labelledby="home-events-title">
       <div className="home-events-head">
-        <div>
-          <div className="home-events-kicker">Formazione</div>
-          <h2 id="home-events-title">Prossimi appuntamenti.</h2>
-        </div>
-        <p className="home-events-sticker">Online</p>
+        <h2 id="home-events-title" className="home-events-lockup">
+          <span className="home-events-eventi">Eventi.</span>
+          <span className="home-events-brand">OFF32</span>
+        </h2>
+        <p className="home-events-sticker">Lo facciamo insieme.</p>
+        <a className="home-events-join" href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer">Entra nella community</a>
       </div>
 
       <div className="home-events-rail" role="list">
@@ -129,7 +130,6 @@ export default function HomeEvents() {
       </div>
 
       <div className="home-events-cta">
-        <a href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer">Entra nella community</a>
         <a href="/workshop">Vedi gli eventi</a>
         <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
       </div>
@@ -142,38 +142,64 @@ export default function HomeEvents() {
           color: ${INK};
         }
         .home-events-head {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) auto;
-          gap: 24px 32px;
-          align-items: end;
+          position: relative;
+          min-height: 168px;
+          padding-bottom: 18px;
         }
-        .home-events-kicker {
-          font-size: 11px;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
-          color: ${RED};
-          margin-bottom: 10px;
+        .home-events-lockup {
+          display: flex;
+          align-items: flex-end;
+          gap: 10px 18px;
+          margin: 0;
+          max-width: 78%;
         }
-        .home-events h2 {
+        .home-events-eventi {
           font-family: 'Canela', Georgia, serif;
           font-weight: 300;
-          font-size: clamp(48px, 6vw, 88px);
+          font-size: clamp(88px, 13vw, 176px);
+          line-height: 0.76;
+          letter-spacing: -4px;
+          color: ${RED};
+        }
+        .home-events-brand {
+          font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
+          font-weight: 800;
+          font-size: clamp(40px, 5.6vw, 78px);
+          line-height: 0.8;
           letter-spacing: -2px;
-          line-height: 0.92;
-          margin: 0;
+          padding-bottom: 8px;
         }
         .home-events-sticker {
-          margin: 0 0 10px;
-          background: ${INK};
-          color: ${LIME};
-          font-size: 13px;
+          position: absolute;
+          right: 6%;
+          top: 8px;
+          margin: 0;
+          background: ${RED};
+          color: ${CREAM};
+          font-size: clamp(13px, 1.3vw, 16px);
           font-weight: 800;
-          letter-spacing: 1.4px;
+          letter-spacing: 0.8px;
           text-transform: uppercase;
           padding: 10px 14px;
           border: 2px solid ${INK};
-          box-shadow: 4px 4px 0 ${RED};
-          transform: rotate(-7deg);
+          box-shadow: 5px 5px 0 ${INK};
+          transform: rotate(-8deg);
+        }
+        .home-events-join {
+          position: absolute;
+          right: 12px;
+          bottom: -4px;
+          background: ${INK};
+          color: ${LIME};
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.6px;
+          text-transform: uppercase;
+          padding: 16px 18px;
+          border: 2px solid ${INK};
+          box-shadow: 7px 7px 0 ${PURPLE};
+          transform: rotate(4deg);
         }
         .home-events-rail { position: relative; margin-top: 36px; }
         .home-events-line {
@@ -304,17 +330,16 @@ export default function HomeEvents() {
           text-transform: uppercase;
           padding: 14px 22px;
         }
-        .home-events-cta a:first-child {
-          background: ${INK};
-          color: ${CREAM};
-        }
         @media (min-width: 980px) {
           .home-events-row { overflow: visible; }
           .home-events-pass { flex: 0 0 196px; }
         }
         @media (max-width: 720px) {
-          .home-events-head { grid-template-columns: 1fr; }
-          .home-events-sticker { justify-self: start; }
+          .home-events-head { min-height: 0; padding-bottom: 8px; }
+          .home-events-lockup { max-width: none; flex-direction: column; align-items: flex-start; }
+          .home-events-sticker, .home-events-join { position: static; }
+          .home-events-sticker { margin: 8px 0 0 12px; }
+          .home-events-join { display: inline-block; margin: 22px 0 8px auto; }
           .home-events-stats { grid-template-columns: 1fr; }
           .home-events-stats > div { border-right: none; border-bottom: 2px solid ${INK}; }
           .home-events-stats > div:last-child { border-bottom: none; }
@@ -324,7 +349,7 @@ export default function HomeEvents() {
           .home-events-pass:hover { transform: rotate(0deg) translateY(3px); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .home-events-pass, .home-events-sticker { transform: none; }
+          .home-events-pass, .home-events-sticker, .home-events-join { transform: none; }
         }
       `}</style>
     </section>
