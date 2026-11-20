@@ -81,11 +81,10 @@ export default function HomeEvents() {
           <span className="home-events-eventi">Eventi.</span>
         </h2>
         <p className="home-events-sticker">Lo facciamo insieme.</p>
-        <a className="home-events-join" href={WHATSAPP_INVITE_URL} target="_blank" rel="noreferrer">Entra nella community</a>
+        <a className="home-events-join" href="/workshop">Vedi eventi</a>
       </div>
 
       <div className="home-events-rail" role="list">
-        <div className="home-events-line" aria-hidden="true" />
         <div className="home-events-row">
           {passes.map((pass, index) => {
             const tone = PASS_TONES[index % PASS_TONES.length]
@@ -105,9 +104,19 @@ export default function HomeEvents() {
                 <span className="home-events-pass-title">{pass.title}</span>
                 <span className="home-events-pass-line">{pass.line}</span>
                 <span className="home-events-barcode" aria-hidden="true" />
-              </a>
-            )
-          })}
+            </a>
+          )
+        })}
+          <a
+            href={WHATSAPP_INVITE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="home-events-pass home-events-pass-cta"
+            style={{ background: INK, color: LIME, ['--tilt' as string]: '-3deg' }}
+          >
+            <span className="home-events-clip" aria-hidden="true" />
+            <span className="home-events-pass-title">Entra nella community</span>
+          </a>
         </div>
       </div>
 
@@ -189,21 +198,25 @@ export default function HomeEvents() {
           box-shadow: 7px 7px 0 ${PURPLE};
           transform: rotate(4deg);
         }
-        .home-events-rail { position: relative; margin-top: 36px; }
-        .home-events-line {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          height: 2px;
-          background: ${INK};
-        }
+        .home-events-rail { position: relative; margin-top: 28px; }
         .home-events-row {
           display: flex;
           gap: 16px;
           overflow-x: auto;
-          padding: 0 2px 12px;
+          padding: 10px 2px 12px;
           scroll-snap-type: x mandatory;
+        }
+        .home-events-pass-cta {
+          justify-content: center;
+          box-shadow: 7px 7px 0 ${PURPLE};
+        }
+        .home-events-pass-cta .home-events-pass-title {
+          font-family: 'Axiforma', 'Helvetica Neue', sans-serif;
+          font-weight: 800;
+          font-size: 22px;
+          letter-spacing: 0.4px;
+          line-height: 1.05;
+          text-transform: uppercase;
         }
         .home-events-pass {
           position: relative;
