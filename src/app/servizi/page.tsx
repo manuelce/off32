@@ -35,7 +35,7 @@ const BRIDGES = [
   {
     href: '/workshop',
     label: 'Formazione',
-    title: 'Eventi',
+    title: 'Corsi',
     text: 'Meet-up, seminari, workshop e corsi.',
   },
   {

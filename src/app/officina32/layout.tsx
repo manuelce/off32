@@ -3,7 +3,7 @@ import { SITE_NAME, SITE_URL } from '@/lib/seo'
 
 const title = 'Officina32 · OFF32 community'
 const description =
-  'La community WhatsApp di OFF32: 80 persone, il meet-up Ci conosciamo e il corso Agenda32. Uno spazio di confronto. Dove le idee diventano progetti.'
+  'La community WhatsApp di OFF32: 80 persone e il meet-up Ci conosciamo. Uno spazio di confronto. Dove le idee diventano progetti.'
 
 export const metadata: Metadata = {
   title: { absolute: title },

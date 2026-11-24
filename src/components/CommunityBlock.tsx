@@ -70,7 +70,7 @@ const communityLd = {
   description: `${INSTAGRAM_LINE} ${COMMUNITY_NAME}, ${COMMUNITY_MEMBERS_LABEL}.`,
   isPartOf: {
     '@type': 'WebPage',
-    name: 'Eventi',
+    name: 'Corsi',
     url: `${SITE_URL}/workshop`,
   },
 }

@@ -78,10 +78,10 @@ export default function HomeEvents() {
     <section id="prossimo-appuntamento" className="home-events" aria-labelledby="home-events-title">
       <div className="home-events-head">
         <h2 id="home-events-title" className="home-events-lockup">
-          <span className="home-events-eventi">Eventi.</span>
+          <span className="home-events-eventi">Corsi.</span>
         </h2>
         <p className="home-events-sticker">Lo facciamo insieme.</p>
-        <a className="home-events-join" href="/workshop">Vedi eventi</a>
+        <a className="home-events-join" href="/workshop">Vedi corsi</a>
       </div>
 
       <div className="home-events-rail" role="list">
@@ -137,7 +137,7 @@ export default function HomeEvents() {
       </div>
 
       <div className="home-events-cta">
-        <a href="/workshop">Vedi gli eventi</a>
+        <a href="/workshop">Vedi i corsi</a>
       </div>
 
       <style>{`

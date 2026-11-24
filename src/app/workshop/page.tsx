@@ -46,7 +46,7 @@ function EventFlyer({ event }: { event: Off32Event }) {
         ) : (
           <div className="event-flyer-fallback" style={{ background: poster.fg, color: poster.bg }}>{EVENT_KIND_LABEL[event.kind]}</div>
         )}
-        {!poster.clean && <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Eventi</span>}
+        {!poster.clean && <span className="event-flyer-side" style={{ color: poster.image ? CREAM : poster.bg }}>Corsi</span>}
         {!poster.clean && <span className="event-flyer-bar" />}
       </div>
     </div>
@@ -148,7 +148,7 @@ export default function WorkshopPage() {
         color={CREAM}
         border={LINE}
         lines={[
-          { text: 'Eventi.', align: 'right' },
+          { text: 'Corsi.', align: 'right' },
           { text: 'Formazione.', align: 'left' },
         ]}
       />
@@ -168,10 +168,10 @@ export default function WorkshopPage() {
       <section id="programma" style={{ padding: '64px 5% 80px' }}>
         <div className="events-head">
           <div>
-            <div style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: 12 }}>{'Eventi · OFF32'}</div>
+            <div style={{ fontSize: 11, letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: 12 }}>{'Corsi · OFF32'}</div>
             <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(52px, 7vw, 88px)', letterSpacing: '-2px', lineHeight: 0.95, margin: '0 0 16px' }}>
               <span className="street-word">
-                Eventi
+                Corsi
                 <span aria-hidden="true" className={underlineOn ? 'events-underline is-on' : 'events-underline'} />
               </span>
             </h2>

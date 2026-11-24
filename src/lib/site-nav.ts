@@ -2,7 +2,7 @@
 
 export const NAV_LINKS = [
   { label: 'Lavori', href: '/work' },
-  { label: 'Eventi', href: '/workshop' },
+  { label: 'Corsi', href: '/workshop' },
   { label: 'Studio', href: '/about' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contatti', href: '/contatti' },

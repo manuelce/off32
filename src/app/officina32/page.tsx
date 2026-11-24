@@ -21,7 +21,6 @@ import {
   upcomingEvents,
   type Off32Event,
 } from '@/lib/events'
-import { fullstackCourse } from '@/lib/fullstack-course'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
 
 const CREAM = '#F0EBE0'
@@ -45,9 +44,6 @@ function shortDate(iso: string) {
 }
 
 function passLine(event: Off32Event) {
-  if (event.kind === 'corso') {
-    return `${fullstackCourse.hoursLabel} · ${fullstackCourse.weeks} settimane · ${fullstackCourse.price} · live su Meet`
-  }
   if (event.date) {
     return [event.timeLabel ? `ore ${event.timeLabel}` : null, event.format].filter(Boolean).join(' · ')
   }
@@ -59,8 +55,8 @@ function focusFor(event: Off32Event) {
 }
 
 export default function Officina32Page() {
-  const upcoming = upcomingEvents()
-  const past = events.filter(event => event.status === 'past')
+  const upcoming = upcomingEvents().filter(event => event.kind !== 'corso')
+  const past = events.filter(event => event.status === 'past' && event.kind !== 'corso')
   const undatedKinds = EVENT_KIND_ORDER.filter(kind => !events.some(event => event.kind === kind))
   const passes = [...upcoming, ...past]
   const meetup = events.find(event => event.image)
@@ -124,10 +120,6 @@ export default function Officina32Page() {
           <strong>{INSTAGRAM_FOLLOWERS}</strong>
           <span>Instagram</span>
         </div>
-        <div>
-          <strong>{fullstackCourse.hours}</strong>
-          <span>Agenda32</span>
-        </div>
       </section>
 
       <section className="officina32-calendar" aria-labelledby="officina32-calendario">
@@ -135,7 +127,7 @@ export default function Officina32Page() {
           <p className="officina32-kicker">Calendario</p>
           <h2 id="officina32-calendario">In calendario</h2>
           <p className="officina32-lead">
-            Meet-up, seminari, workshop e corsi. Il calendario della formazione OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
+            Meet-up, seminari e workshop. Il calendario della community OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
           </p>
         </div>
 
@@ -162,12 +154,9 @@ export default function Officina32Page() {
                   <h3>{event.title}</h3>
                   <p className="officina32-card-summary">{event.summary}</p>
                   <ul className="officina32-meta">
-                    {event.kind === 'corso' ? <li>Durata: {fullstackCourse.hoursLabel}</li> : null}
                     {event.format ? <li>Formato: {event.format}</li> : null}
                     {event.audience ? <li>Per: {event.audience}</li> : null}
-                    {when ? <li>{event.kind === 'corso' ? 'Partenza' : 'Quando'}: {when}</li> : null}
-                    {event.kind === 'corso' ? <li>{fullstackCourse.priceNote}</li> : null}
-                    {event.kind === 'corso' ? <li>{fullstackCourse.scheduleNote}</li> : null}
+                    {when ? <li>Quando: {when}</li> : null}
                     {detailsInCommunity(event) ? <li>{event.outcomes?.[0]}</li> : null}
                   </ul>
                   {event.href ? (
@@ -437,7 +426,7 @@ export default function Officina32Page() {
         }
         .officina32-facts {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 1fr 1fr;
           gap: 12px;
           background: ${INK};
           color: ${CREAM};
@@ -743,7 +732,17 @@ export default function Officina32Page() {
           .officina32-facts { padding: 28px 5%; }
           .officina32-calendar,
           .officina32-community { padding: 80px 5% 12px; }
-          .officina32-upcoming { grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
+          .officina32-upcoming { grid-template-columns: 1fr; }
+          .officina32-upcoming .officina32-card {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.9fr) 1.2fr;
+          }
+          .officina32-upcoming .officina32-card-photo {
+            height: 100%;
+            min-height: 320px;
+            border-bottom: none;
+            border-right: 1px solid ${INK};
+          }
           .officina32-card-photo { height: 268px; }
           .officina32-sheet {
             grid-template-columns: minmax(280px, 0.9fr) 1.2fr;
@@ -766,10 +765,10 @@ export default function Officina32Page() {
           }
           .officina32-row {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 280px));
-            justify-content: space-between;
+            grid-template-columns: repeat(2, minmax(0, 320px));
+            justify-content: start;
             overflow: visible;
-            gap: 24px;
+            gap: 48px;
             padding-bottom: 28px;
           }
           .officina32-pass { flex: none; width: auto; min-height: 270px; }

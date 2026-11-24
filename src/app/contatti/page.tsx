@@ -41,7 +41,7 @@ const channels = [
 const paths = [
   { label: 'Studio', href: '/about' },
   { label: 'Lavori', href: '/work' },
-  { label: 'Eventi', href: '/workshop' },
+  { label: 'Corsi', href: '/workshop' },
 ]
 
 export default function ContattiPage() {
@@ -144,7 +144,7 @@ export default function ContattiPage() {
                 <div className="contact-types">
                   {([
                     { value: 'progetto', label: 'Progetto' },
-                    { value: 'workshop', label: 'Eventi' },
+                    { value: 'workshop', label: 'Corsi' },
                     { value: 'community', label: 'Community' },
                     { value: 'altro', label: 'Altro' },
                   ] as const).map(type => (
@@ -201,12 +201,12 @@ export default function ContattiPage() {
                 )}
                 {contactType === 'workshop' && (
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                    Indicaci date e numero di partecipanti. Il programma è nella pagina <a href="/workshop" style={{ color: INK }}>Eventi</a>.
+                    Indicaci date e numero di partecipanti. Il programma è nella pagina <a href="/workshop" style={{ color: INK }}>Corsi</a>.
                   </p>
                 )}
                 {contactType === 'community' && (
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/workshop#community" style={{ color: INK }}>Eventi</a>.
+                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/workshop#community" style={{ color: INK }}>Corsi</a>.
                   </p>
                 )}
 

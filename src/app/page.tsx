@@ -124,11 +124,11 @@ export default function Home() {
     },
     {
       q: 'Cos’è la community OFF32?',
-      a: 'È la community WhatsApp «OFF32 – Officina Digitale»: uno spazio di confronto, con la Bacheca e il gruppo «OFF32 – dove ogni connessione è un’opportunità». Siamo in 80, e in crescita. Si entra da Instagram @off32channel (nella bio c’è CommunityOFF32) o con l’invito WhatsApp, dalla pagina Eventi.',
+      a: 'È la community WhatsApp «OFF32 – Officina Digitale»: uno spazio di confronto, con la Bacheca e il gruppo «OFF32 – dove ogni connessione è un’opportunità». Siamo in 80, e in crescita. Si entra da Instagram @off32channel (nella bio c’è CommunityOFF32) o con l’invito WhatsApp, dalla pagina Corsi.',
     },
     {
       q: 'Quali eventi organizzate?',
-      a: 'Meet-up, seminari, workshop e corsi. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma): una chiacchierata per conoscerci. I dettagli per partecipare sono nella community WhatsApp. Il corso Agenda32, full-stack e live su Meet, parte l’11 gennaio 2027. Il calendario è nella pagina Eventi.',
+      a: 'Meet-up, seminari, workshop e corsi. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma): una chiacchierata per conoscerci. I dettagli per partecipare sono nella community WhatsApp. Il corso Agenda32, full-stack e live su Meet, parte l’11 gennaio 2027. Il calendario è nella pagina Corsi.',
     },
   ]
 
@@ -177,7 +177,7 @@ export default function Home() {
           </p>
           <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
             <a href="/work" style={button}>Lavori</a>
-            <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Eventi</a>
+            <a href="/workshop" style={{ ...button, boxShadow: '3px 3px 0 #694aff' }}>Corsi</a>
           </div>
         </div>
         <div className="hero-video" style={{ borderLeft: LINE, position: 'relative', minHeight: 0, height: '100%', background: '#E7E0D4', overflow: 'hidden' }}>
