@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useState, type ChangeEvent, type CSSProperties } from 'react'
 import { workshopBySlug } from '@/lib/workshops'
+import SiteFooter from '@/components/SiteFooter'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-type ContactType = 'progetto' | 'workshop' | 'altro' | null
+type ContactType = 'progetto' | 'workshop' | 'community' | 'altro' | null
 
 const INK = '#f0ebe0'
 const LINE = '1px solid #f0ebe0'
@@ -38,9 +39,9 @@ const channels = [
 ]
 
 const paths = [
-  { label: 'About', href: '/about' },
-  { label: 'Works', href: '/work' },
-  { label: 'Events', href: '/workshop' },
+  { label: 'Studio', href: '/about' },
+  { label: 'Lavori', href: '/work' },
+  { label: 'Corsi', href: '/workshop' },
 ]
 
 export default function ContattiPage() {
@@ -54,7 +55,7 @@ export default function ContattiPage() {
     const tipo = params.get('tipo')
     const corso = params.get('corso')
 
-    if (tipo === 'progetto' || tipo === 'workshop' || tipo === 'altro') {
+    if (tipo === 'progetto' || tipo === 'workshop' || tipo === 'community' || tipo === 'altro') {
       setContactType(tipo)
     }
 
@@ -140,12 +141,13 @@ export default function ContattiPage() {
                 style={{ padding: '28px 28px 32px' }}
               >
                 <div style={{ ...meta, marginBottom: 10 }}>Sono un</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', border: LINE, marginBottom: 22 }}>
+                <div className="contact-types">
                   {([
                     { value: 'progetto', label: 'Progetto' },
-                    { value: 'workshop', label: 'Events' },
+                    { value: 'workshop', label: 'Corsi' },
+                    { value: 'community', label: 'Community' },
                     { value: 'altro', label: 'Altro' },
-                  ] as const).map((type, i) => (
+                  ] as const).map(type => (
                     <button
                       key={type.value}
                       type="button"
@@ -154,7 +156,6 @@ export default function ContattiPage() {
                         background: contactType === type.value ? INK : 'transparent',
                         color: contactType === type.value ? '#0D0D0D' : INK,
                         border: 'none',
-                        borderRight: i < 2 ? LINE : 'none',
                         padding: '12px 8px',
                         cursor: 'pointer',
                         fontFamily: 'inherit',
@@ -200,7 +201,12 @@ export default function ContattiPage() {
                 )}
                 {contactType === 'workshop' && (
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                    Indicaci date e numero di partecipanti. Il programma è nella pagina <a href="/workshop" style={{ color: INK }}>workshop</a>.
+                    Indicaci date e numero di partecipanti. Il programma è nella pagina <a href="/workshop" style={{ color: INK }}>Corsi</a>.
+                  </p>
+                )}
+                {contactType === 'community' && (
+                  <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
+                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/workshop#community" style={{ color: INK }}>Corsi</a>.
                   </p>
                 )}
 
@@ -253,21 +259,7 @@ export default function ContattiPage() {
         )}
       </section>
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter tone="dark" />
 
       <style>{`
         input::placeholder, textarea::placeholder { color: rgba(240, 235, 224, 0.45); }
@@ -275,11 +267,17 @@ export default function ContattiPage() {
         @media (max-width: 768px) {
           .contact-page { padding-top: 96px !important; }
         }
+        .contact-types { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid #f0ebe0; margin-bottom: 22px; }
+        .contact-types button { border-right: 1px solid #f0ebe0; }
+        .contact-types button:last-child { border-right: none; }
         @media (max-width: 860px) {
           .contact-frame { width: 100% !important; }
           .contact-layout { grid-template-columns: 1fr !important; }
           .contact-layout > div { border-right: none !important; border-bottom: 1px solid #f0ebe0; }
           .contact-fields { grid-template-columns: 1fr !important; }
+          .contact-types { grid-template-columns: 1fr 1fr; }
+          .contact-types button:nth-child(2) { border-right: none; }
+          .contact-types button:nth-child(-n + 2) { border-bottom: 1px solid #f0ebe0; }
         }
       `}</style>
     </main>

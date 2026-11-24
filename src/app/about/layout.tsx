@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
-  'About',
-  'OFF32: comunicazione digitale potenziata dall’AI. Il team: Manuel Cerasuolo, Sara Zeppieri, Lorenzo Salvatori, Sara Villani e Elisabetta Carìa.',
+  'Studio',
+  'Lo studio OFF32: comunicazione digitale potenziata dall’AI. Il team: Manuel Cerasuolo, Sara Zeppieri, Lorenzo Salvatori, Sara Villani e Elisabetta Carìa.',
   '/about',
 )
 

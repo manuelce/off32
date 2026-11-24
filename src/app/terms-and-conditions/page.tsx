@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
@@ -71,6 +72,7 @@ export default function TermsAndConditionsPage() {
           </p>
         </div>
         <ProjectStart />
+        <SiteFooter />
       </main>
     );
   }

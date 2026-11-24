@@ -1,7 +1,8 @@
 'use client'
-import { useState, type CSSProperties } from 'react'
+import { useState } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import SplitPageTitle from '@/components/SplitPageTitle'
+import SiteFooter from '@/components/SiteFooter'
 import {
   BRAND_ARTICLE_IMAGE,
   CLIENT_ARTICLE_IMAGE,
@@ -71,20 +72,13 @@ const POSTS = [
     imageAlt: ECOMMERCE_ARTICLE_IMAGE.alt,
     category: 'sviluppo',
     tag: 'Sviluppo',
-    title: 'eCommerce performante nel 2025: cosa funziona davvero',
+    title: 'eCommerce performante: cosa funziona davvero',
     excerpt: 'Un e-commerce performante si decide sulla scheda prodotto, sulla velocità del telefono e su un checkout che mostra subito prezzo, spedizione e reso.',
     author: { initials: 'LS', name: 'Lorenzo Salvatori', role: 'Full Stack Developer · OFF32', bg: '#FDF0EB', color: '#993C1D' },
     date: 'Feb 2025', readTime: '8 min', featured: false,
     bg: '#0A0A14',
   },
 ]
-
-const meta: CSSProperties = {
-  fontSize: 11,
-  letterSpacing: '1.8px',
-  textTransform: 'uppercase',
-  color: '#0D0D0D',
-}
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('tutti')
@@ -137,21 +131,7 @@ export default function BlogPage() {
 
       <ProjectStart />
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         .post-cover { height: 210px; }

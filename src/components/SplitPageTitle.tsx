@@ -107,7 +107,8 @@ export default function SplitPageTitle({
           .split-page-title.work-title,
           .split-page-title.about-title,
           .split-page-title.blog-title,
-          .split-page-title.workshop-title {
+          .split-page-title.workshop-title,
+          .split-page-title.community-title {
             padding-top: 64px;
           }
         }

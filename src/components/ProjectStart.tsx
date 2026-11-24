@@ -13,12 +13,28 @@ const meta: CSSProperties = {
   color: '#0D0D0D',
 }
 
-export default function ProjectStart() {
+type ProjectStartProps = {
+  kicker?: string
+  title?: string
+  body?: string
+  cta?: string
+  href?: string
+  external?: boolean
+}
+
+export default function ProjectStart({
+  kicker = 'Inizia un progetto',
+  title = 'Hai un progetto in mente?',
+  body = 'Raccontacelo. Trasformiamo idee in comunicazione che funziona davvero.',
+  cta = 'Scrivici →',
+  href = '/contatti',
+  external = false,
+}: ProjectStartProps = {}) {
   return (
     <section className="project-start" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', borderTop: LINE, background: '#f0ebe0', color: '#0D0D0D', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
       <div style={{ padding: '72px 40px' }}>
         <ScrollRiseBlock>
-          <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Inizia un progetto</div>
+          <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>{kicker}</div>
         </ScrollRiseBlock>
         <ScrollRiseQuote
           as="h2"
@@ -32,13 +48,19 @@ export default function ProjectStart() {
             overflow: 'hidden',
           }}
         >
-          {`Hai un progetto in mente?`}
+          {title}
         </ScrollRiseQuote>
       </div>
       <div style={{ borderLeft: LINE, padding: '72px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
         <ScrollRiseBlock delayMs={280} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <p style={{ fontSize: 15, lineHeight: 1.75, color: '#3a3a3a', maxWidth: 520, margin: 0 }}>Raccontacelo. Trasformiamo idee in comunicazione che funziona davvero.</p>
-          <a href="/contatti" style={{ display: 'inline-block', border: LINE, color: '#0D0D0D', textDecoration: 'none', fontSize: 12, letterSpacing: '0.8px', textTransform: 'uppercase', padding: '14px 22px', background: 'transparent', alignSelf: 'flex-start' }}>Scrivici →</a>
+          <p style={{ fontSize: 15, lineHeight: 1.75, color: '#3a3a3a', maxWidth: 520, margin: 0 }}>{body}</p>
+          <a
+            href={href}
+            {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+            style={{ display: 'inline-block', border: LINE, color: '#0D0D0D', textDecoration: 'none', fontSize: 12, letterSpacing: '0.8px', textTransform: 'uppercase', padding: '14px 22px', background: 'transparent', alignSelf: 'flex-start' }}
+          >
+            {cta}
+          </a>
         </ScrollRiseBlock>
       </div>
       <style>{`

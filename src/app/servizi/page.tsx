@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
 import Link from 'next/link'
 import ProjectStart from '@/components/ProjectStart'
+import SiteFooter from '@/components/SiteFooter'
 import ServiceBreadcrumb from '@/components/ServiceBreadcrumb'
 import { BreadcrumbJsonLd } from '@/components/ServiceJsonLd'
-import { areaPath, SERVICE_AREAS } from '@/lib/services'
+import { areaPath, SERVICE_AREAS, servicePath, servicesByArea } from '@/lib/services'
 import { pageMeta } from '@/lib/seo'
 
 export const metadata: Metadata = pageMeta(
@@ -23,11 +25,33 @@ const meta = {
   color: '#0D0D0D',
 }
 
+const BRIDGES = [
+  {
+    href: '/#analisi',
+    label: 'Analisi gratuita',
+    title: 'Analisi SEO',
+    text: 'Controlla HTTPS, titolo, descrizione e le basi della SEO. È gratuita.',
+  },
+  {
+    href: '/workshop',
+    label: 'Formazione',
+    title: 'Corsi',
+    text: 'Meet-up, seminari, workshop e corsi.',
+  },
+  {
+    href: '/workshop#community',
+    label: 'Community',
+    title: 'Entra nella community',
+    text: 'Uno spazio di confronto. Dove le idee diventano progetti.',
+  },
+]
+
 export default function ServiziIndexPage() {
   const crumbs = [
     { label: 'Home', href: '/' },
     { label: 'Servizi' },
   ]
+  const aiModules = servicesByArea('ai-systems')
 
   return (
     <main style={{ background: CREAM, color: '#0D0D0D', minHeight: '100vh', fontFamily: "'Axiforma', 'Helvetica Neue', sans-serif" }}>
@@ -50,7 +74,7 @@ export default function ServiziIndexPage() {
           Servizi
         </h1>
         <p style={{ fontSize: 17, lineHeight: 1.65, color: '#3a3a3a', maxWidth: '52ch', margin: 0 }}>
-          Tre aree, un solo modo di lavorare: chiarezza di obiettivo, design e tecnica nello stesso flusso, AI dove toglie lavoro ripetitivo.
+          Tre aree. Ognuna parte da un problema e arriva a un risultato: brand, web e un unico sistema AI.
         </p>
       </header>
 
@@ -62,38 +86,116 @@ export default function ServiziIndexPage() {
             gap: 16,
           }}
         >
-          {SERVICE_AREAS.map(area => (
+          {SERVICE_AREAS.map(area => {
+            const cardStyle: CSSProperties = {
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+              padding: '28px 22px',
+              border: LINE,
+              background: '#fff',
+              boxShadow: `6px 6px 0 ${PURPLE}`,
+              textDecoration: 'none',
+              color: '#0D0D0D',
+              minHeight: 220,
+            }
+            const body = (
+              <>
+                <span style={meta}>{area.keyword}</span>
+                <strong
+                  style={{
+                    fontFamily: "'Canela', Georgia, serif",
+                    fontWeight: 300,
+                    fontSize: 'clamp(28px, 3vw, 36px)',
+                    letterSpacing: '-0.8px',
+                    lineHeight: 1.05,
+                  }}
+                >
+                  {area.shortLabel}
+                </strong>
+                <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a' }}>
+                  <strong style={{ color: '#0D0D0D' }}>Problema. </strong>
+                  {area.problem}
+                </span>
+                <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a', marginTop: 'auto' }}>
+                  <strong style={{ color: '#0D0D0D' }}>Risultato. </strong>
+                  {area.outcome}
+                </span>
+              </>
+            )
+            if (area.slug === 'ai-systems') {
+              return (
+                <article key={area.slug} style={cardStyle}>
+                  <Link href={areaPath(area)} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <span style={meta}>{area.keyword}</span>
+                    <strong
+                      style={{
+                        fontFamily: "'Canela', Georgia, serif",
+                        fontWeight: 300,
+                        fontSize: 'clamp(28px, 3vw, 36px)',
+                        letterSpacing: '-0.8px',
+                        lineHeight: 1.05,
+                      }}
+                    >
+                      {area.shortLabel}
+                    </strong>
+                  </Link>
+                  <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a' }}>
+                    <strong style={{ color: '#0D0D0D' }}>Problema. </strong>
+                    {area.problem}
+                  </span>
+                  <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a' }}>
+                    <strong style={{ color: '#0D0D0D' }}>Risultato. </strong>
+                    {area.outcome}
+                  </span>
+                  <span style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 'auto' }}>
+                    <span style={meta}>Moduli</span>
+                    {aiModules.map(service => (
+                      <Link key={service.slug} href={servicePath(service)} style={{ fontSize: 14, color: '#0D0D0D' }}>
+                        {service.label}
+                      </Link>
+                    ))}
+                  </span>
+                </article>
+              )
+            }
+            return (
+              <Link key={area.slug} href={areaPath(area)} style={cardStyle}>
+                {body}
+              </Link>
+            )
+          })}
+        </div>
+      </section>
+
+      <section style={{ padding: '0 5% 56px' }}>
+        <div style={{ ...meta, marginBottom: 16 }}>Collegamenti</div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 16,
+          }}
+        >
+          {BRIDGES.map(item => (
             <Link
-              key={area.slug}
-              href={areaPath(area)}
+              key={item.href}
+              href={item.href}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 12,
-                padding: '28px 22px',
+                gap: 10,
+                padding: '22px 18px',
                 border: LINE,
                 background: '#fff',
                 boxShadow: `6px 6px 0 ${PURPLE}`,
                 textDecoration: 'none',
                 color: '#0D0D0D',
-                minHeight: 220,
               }}
             >
-              <span style={meta}>{area.keyword}</span>
-              <strong
-                style={{
-                  fontFamily: "'Canela', Georgia, serif",
-                  fontWeight: 300,
-                  fontSize: 'clamp(28px, 3vw, 36px)',
-                  letterSpacing: '-0.8px',
-                  lineHeight: 1.05,
-                }}
-              >
-                {area.shortLabel}
-              </strong>
-              <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a', marginTop: 'auto' }}>
-                {area.description}
-              </span>
+              <span style={meta}>{item.label}</span>
+              <strong style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 28, letterSpacing: '-0.6px' }}>{item.title}</strong>
+              <span style={{ fontSize: 14, lineHeight: 1.55, color: '#3a3a3a' }}>{item.text}</span>
             </Link>
           ))}
         </div>
@@ -101,32 +203,7 @@ export default function ServiziIndexPage() {
 
       <ProjectStart />
 
-      <footer
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 24,
-          flexWrap: 'wrap',
-          padding: '22px 5%',
-          borderTop: LINE,
-          borderBottom: LINE,
-        }}
-      >
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Contatti', href: '/contatti' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-          ].map(link => (
-            <Link key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>
-              {link.label}
-            </Link>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }

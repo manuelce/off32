@@ -111,7 +111,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'ecommerce-performante-2025',
-    title: 'eCommerce performante nel 2025: cosa funziona davvero',
+    title: 'eCommerce performante: cosa funziona davvero',
     description: 'Un e-commerce performante si decide sulla scheda prodotto, sulla velocità del telefono e su un checkout che mostra subito prezzo, spedizione e reso.',
     image: ECOMMERCE_ARTICLE_IMAGE.url,
     imageAlt: ECOMMERCE_ARTICLE_IMAGE.alt,

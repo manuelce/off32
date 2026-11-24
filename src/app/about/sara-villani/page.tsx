@@ -2,8 +2,7 @@
 import type { CSSProperties } from 'react'
 import ProjectStart from '@/components/ProjectStart'
 import TeamArticles from '@/components/TeamArticles'
-
-const LINE = '1px solid #0D0D0D'
+import SiteFooter from '@/components/SiteFooter'
 
 const meta: CSSProperties = {
   fontSize: 11,
@@ -69,21 +68,7 @@ export default function SaraVillaniPage() {
 
       <ProjectStart />
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', padding: '22px 28px', borderTop: LINE, borderBottom: LINE }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
-          {[
-            { label: 'Works', href: '/work' },
-            { label: 'Events', href: '/workshop' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Privacy', href: '/privacy-policy' },
-            { label: 'Cookie', href: '/cookie-policy' },
-            { label: 'Terms', href: '/terms-and-conditions' },
-          ].map(link => (
-            <a key={link.label} href={link.href} style={{ ...meta, textDecoration: 'none' }}>{link.label}</a>
-          ))}
-        </div>
-        <span style={meta}>connect@off32.it · © 2026 OFF32</span>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         .profile-grid {
