@@ -19,6 +19,7 @@ function isCurrent(pathname: string, href: string) {
 
 export default function Navbar() {
   const pathname = usePathname()
+  const isOfficinaLanding = pathname === '/officina32'
   const isFullStack = pathname === '/full-stack' || pathname.startsWith('/full-stack/')
   const isContatti = pathname === '/contatti' || pathname.startsWith('/contatti/')
   const isPillNav = isFullStack
@@ -34,6 +35,8 @@ export default function Navbar() {
     window.addEventListener('pageshow', pin)
     return () => window.removeEventListener('pageshow', pin)
   }, [pathname])
+
+  if (isOfficinaLanding) return null
 
   if (isPillNav) {
     return (

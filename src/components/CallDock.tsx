@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { usePathname } from 'next/navigation'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -83,6 +84,7 @@ function monthCells(year: number, month: number) {
 }
 
 export default function CallDock() {
+  const pathname = usePathname()
   const today = useMemo(() => romeNow(), [])
   const todayKey = dayKey(today.year, today.month, today.day)
   const lastKey = shiftKey(todayKey, HORIZON)
@@ -172,6 +174,8 @@ export default function CallDock() {
   const nextMonth = cursor.month === 12 ? { year: cursor.year + 1, month: 1 } : { year: cursor.year, month: cursor.month + 1 }
   const canGoBack = prevKey > dayKey(today.year, today.month, 1)
   const canGoForward = dayKey(nextMonth.year, nextMonth.month, 1) <= lastKey
+
+  if (pathname === '/officina32') return null
 
   return (
     <>
