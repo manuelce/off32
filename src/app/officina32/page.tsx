@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Officina32Program from '@/components/Officina32Program'
 import {
   COMMUNITY_BIO_MENTION,
   COMMUNITY_BOARD,
@@ -12,15 +13,7 @@ import {
   INSTAGRAM_URL,
   WHATSAPP_INVITE_URL,
 } from '@/lib/community'
-import {
-  EVENT_KIND_LABEL,
-  EVENT_KIND_ORDER,
-  detailsInCommunity,
-  eventWhen,
-  events,
-  upcomingEvents,
-  type Off32Event,
-} from '@/lib/events'
+import { events } from '@/lib/events'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
 
 const CREAM = '#F0EBE0'
@@ -30,36 +23,8 @@ const PURPLE = '#694aff'
 const LIME = '#9fff00'
 const PAPER = '#fff'
 
-const TONES = [RED, INK, PURPLE] as const
-
-function ink(tone: string) {
-  return tone === CREAM || tone === LIME ? INK : CREAM
-}
-
-const MONTHS = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic']
-
-function shortDate(iso: string) {
-  const [year, month, day] = iso.split('-')
-  return `${Number(day)} ${MONTHS[Number(month) - 1]} ${year}`
-}
-
-function passLine(event: Off32Event) {
-  if (event.date) {
-    return [event.timeLabel ? `ore ${event.timeLabel}` : null, event.format].filter(Boolean).join(' · ')
-  }
-  return [event.duration, event.format].filter(Boolean).join(' · ')
-}
-
-function focusFor(event: Off32Event) {
-  return event.slug === 'brand-identity-ai' ? 'center 42%' : 'center center'
-}
-
 export default function Officina32Page() {
-  const upcoming = upcomingEvents().filter(event => event.kind !== 'corso')
-  const past = events.filter(event => event.status === 'past' && event.kind !== 'corso')
-  const undatedKinds = EVENT_KIND_ORDER.filter(kind => !events.some(event => event.kind === kind))
-  const passes = [...upcoming, ...past]
-  const meetup = events.find(event => event.image)
+  const meetup = events.find(event => event.kind === 'meet-up' && event.image)
 
   const pageLd = {
     '@context': 'https://schema.org',
@@ -122,100 +87,7 @@ export default function Officina32Page() {
         </div>
       </section>
 
-      <section className="officina32-calendar" aria-labelledby="officina32-calendario">
-        <div className="officina32-calendar-head">
-          <p className="officina32-kicker">Calendario</p>
-          <h2 id="officina32-calendario">In calendario</h2>
-          <p className="officina32-lead">
-            Meet-up, seminari e workshop. Il calendario della community OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
-          </p>
-        </div>
-
-        <div className="officina32-upcoming">
-          {upcoming.map(event => {
-            const external = Boolean(event.href?.startsWith('http'))
-            const when = eventWhen(event)
-            return (
-              <article key={event.slug} className="officina32-card">
-                <div className="officina32-card-photo">
-                  {event.image ? (
-                    <Image
-                      src={event.image}
-                      alt={event.imageAlt ?? event.title}
-                      fill
-                      sizes="(max-width: 900px) 90vw, 45vw"
-                      style={{ objectFit: 'cover', objectPosition: focusFor(event) }}
-                    />
-                  ) : null}
-                  <span>{EVENT_KIND_LABEL[event.kind]}</span>
-                </div>
-                <div className="officina32-card-body">
-                  <p className="officina32-card-kicker">{event.dateLabel ?? event.duration ?? EVENT_KIND_LABEL[event.kind]}</p>
-                  <h3>{event.title}</h3>
-                  <p className="officina32-card-summary">{event.summary}</p>
-                  <ul className="officina32-meta">
-                    {event.format ? <li>Formato: {event.format}</li> : null}
-                    {event.audience ? <li>Per: {event.audience}</li> : null}
-                    {when ? <li>Quando: {when}</li> : null}
-                    {detailsInCommunity(event) ? <li>{event.outcomes?.[0]}</li> : null}
-                  </ul>
-                  {event.href ? (
-                    <div className="officina32-card-foot">
-                      <span>{event.price ?? ''}</span>
-                      <a href={event.href} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
-                        {event.cta ?? 'Partecipa'}
-                      </a>
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            )
-          })}
-        </div>
-
-        {past.map(event => (
-          <article key={event.slug} className="officina32-sheet">
-            <div className="officina32-card-photo">
-              {event.image ? (
-                <Image
-                  src={event.image}
-                  alt={event.imageAlt ?? event.title}
-                  fill
-                  sizes="(max-width: 900px) 90vw, 36vw"
-                  style={{ objectFit: 'cover', objectPosition: focusFor(event) }}
-                />
-              ) : null}
-              <span>{EVENT_KIND_LABEL[event.kind]}</span>
-            </div>
-            <div className="officina32-card-body">
-              <p className="officina32-card-kicker">Senza data</p>
-              <h3>{event.title}</h3>
-              <p className="officina32-card-summary">{event.summary}</p>
-              <ul className="officina32-meta">
-                {event.duration ? <li>Durata: {event.duration}</li> : null}
-                {event.format ? <li>Formato: {event.format}</li> : null}
-                {event.audience ? <li>Per: {event.audience}</li> : null}
-              </ul>
-              {event.outcomes && event.outcomes.length > 0 ? (
-                <ul className="officina32-outcomes">
-                  {event.outcomes.map(item => <li key={item}>{item}</li>)}
-                </ul>
-              ) : null}
-            </div>
-          </article>
-        ))}
-
-        {undatedKinds.length > 0 ? (
-          <ul className="officina32-kinds">
-            {undatedKinds.map(kind => (
-              <li key={kind}>
-                <strong>{EVENT_KIND_LABEL[kind]}</strong>
-                <span>Nel calendario della formazione, senza una data pubblicata.</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </section>
+      <Officina32Program />
 
       <section className="officina32-community" aria-labelledby="officina32-manifesto">
         <div className="officina32-community-head">
@@ -246,47 +118,6 @@ export default function Officina32Page() {
             <p>La bacheca della community {COMMUNITY_NAME}.</p>
             <p className="officina32-group"><strong>Gruppo. </strong>«{COMMUNITY_GROUP}»</p>
           </article>
-        </div>
-      </section>
-
-      <section className="officina32-rail" aria-label="Pass degli eventi">
-        <div className="officina32-track">
-          <div className="officina32-linebar" aria-hidden="true" />
-          <div className="officina32-row">
-            {passes.map((event, index) => {
-              const tone = TONES[index % TONES.length]
-              const external = Boolean(event.href?.startsWith('http'))
-              const inner = (
-                <>
-                  <span className="officina32-clip" aria-hidden="true" />
-                  <span className="officina32-pass-kicker">{event.date ? shortDate(event.date) : 'Senza data'}</span>
-                  <span className="officina32-pass-label">{EVENT_KIND_LABEL[event.kind]}</span>
-                  <span className="officina32-pass-title">{event.title}</span>
-                  <span className="officina32-pass-line">{passLine(event)}</span>
-                  <span className="officina32-barcode" aria-hidden="true" />
-                </>
-              )
-              const style = { background: tone, color: ink(tone), ['--tilt' as string]: `${index % 2 === 0 ? -2 : 1.6}deg` }
-              if (!event.href) {
-                return (
-                  <article key={event.slug} className="officina32-pass" style={style}>
-                    {inner}
-                  </article>
-                )
-              }
-              return (
-                <a
-                  key={event.slug}
-                  className="officina32-pass"
-                  href={event.href}
-                  style={style}
-                  {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                >
-                  {inner}
-                </a>
-              )
-            })}
-          </div>
         </div>
       </section>
 
@@ -468,12 +299,38 @@ export default function Officina32Page() {
           line-height: 1.65;
           color: #3a3a3a;
         }
-        .officina32-upcoming {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 20px;
-          margin-top: 28px;
+        .officina32-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+        .officina32-filter {
+          border: 1px solid ${INK};
+          background: transparent;
+          color: ${INK};
+          padding: 8px 12px;
+          font-family: inherit;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          cursor: pointer;
         }
+        .officina32-filter.is-on { background: ${PURPLE}; border-color: ${PURPLE}; color: ${CREAM}; }
+        .officina32-cat { margin-top: 32px; }
+        .officina32-cat > h3 {
+          margin: 0 0 14px;
+          font-family: 'Canela', Georgia, serif;
+          font-weight: 300;
+          font-size: clamp(28px, 4vw, 40px);
+          letter-spacing: -0.8px;
+        }
+        .officina32-kindline, .officina32-empty {
+          margin: 0;
+          padding: 18px 20px;
+          border: 1px solid ${INK};
+          background: ${PAPER};
+          box-shadow: 6px 6px 0 ${PURPLE};
+        }
+        .officina32-kindline { display: flex; flex-direction: column; gap: 4px; }
+        .officina32-kindline strong { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; }
+        .officina32-kindline span, .officina32-empty { font-size: 15px; line-height: 1.5; color: #3a3a3a; }
         .officina32-card,
         .officina32-sheet,
         .officina32-grid article {
@@ -530,6 +387,7 @@ export default function Officina32Page() {
           text-transform: uppercase;
         }
         .officina32-card h3,
+        .officina32-sheet h3,
         .officina32-grid h3 {
           margin: 0;
           font-family: 'Canela', Georgia, serif;
@@ -732,12 +590,11 @@ export default function Officina32Page() {
           .officina32-facts { padding: 28px 5%; }
           .officina32-calendar,
           .officina32-community { padding: 80px 5% 12px; }
-          .officina32-upcoming { grid-template-columns: 1fr; }
-          .officina32-upcoming .officina32-card {
+          .officina32-cat .officina32-card {
             display: grid;
             grid-template-columns: minmax(280px, 0.9fr) 1.2fr;
           }
-          .officina32-upcoming .officina32-card-photo {
+          .officina32-cat .officina32-card .officina32-card-photo {
             height: 100%;
             min-height: 320px;
             border-bottom: none;
