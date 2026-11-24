@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import { NextResponse } from 'next/server'
+import { allowRequest, clientKey } from '@/lib/rate-limit'
 
 const STUDIO_EMAIL = 'connect@off32.it'
 const FROM = `OFF32 <${STUDIO_EMAIL}>`
@@ -34,8 +35,23 @@ function mailer() {
   })
 }
 
+const TOO_MANY = { error: 'Troppe richieste. Riprova tra qualche minuto.' }
+
 export async function POST(req: Request) {
-  const body = await req.json()
+  // Ogni invio fa partire anche una risposta automatica all'indirizzo indicato:
+  // senza limite, il modulo si potrebbe usare per inondare di email chiunque.
+  if (!allowRequest(`send-email:${clientKey(req)}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json(TOO_MANY, { status: 429 })
+  }
+
+  let body: Record<string, unknown>
+  try {
+    const parsed = await req.json()
+    if (!parsed || typeof parsed !== 'object') throw new Error('body')
+    body = parsed
+  } catch {
+    return NextResponse.json({ error: 'Dati mancanti' }, { status: 400 })
+  }
   const name = String(body.name ?? '').trim()
   const email = String(body.email ?? '').trim()
   const subject = String(body.subject ?? '').trim()
@@ -56,6 +72,11 @@ export async function POST(req: Request) {
 
   if (!name || !email || !message || !email.includes('@')) {
     return NextResponse.json({ error: 'Dati mancanti' }, { status: 400 })
+  }
+
+  // Stesso destinatario da IP diversi: massimo 3 risposte automatiche all'ora.
+  if (!allowRequest(`send-email-to:${email.toLowerCase()}`, 3, 60 * 60 * 1000)) {
+    return NextResponse.json(TOO_MANY, { status: 429 })
   }
 
   const safeName = escapeHtml(name)
