@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
-import HomeEvents from '@/components/HomeEvents'
 import ProjectStart from '@/components/ProjectStart'
 import SiteFooter from '@/components/SiteFooter'
 import { FaqJsonLd } from '@/components/ServiceJsonLd'
@@ -209,8 +208,6 @@ export default function Home() {
           <div key={item}>{item}</div>
         ))}
       </div>
-
-      <HomeEvents />
 
       <SiteScan />
 
