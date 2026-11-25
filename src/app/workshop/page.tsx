@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import CommunityBlock from '@/components/CommunityBlock'
 import ProjectStart from '@/components/ProjectStart'
 import SiteFooter from '@/components/SiteFooter'
 import SplitPageTitle from '@/components/SplitPageTitle'
@@ -258,8 +257,6 @@ export default function WorkshopPage() {
           </div>
         </div>
       )}
-
-      <CommunityBlock />
 
       <ProjectStart
         kicker="Partecipa"
