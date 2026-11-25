@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import CommunityBlock from '@/components/CommunityBlock'
 import ProjectStart from '@/components/ProjectStart'
 import SiteFooter from '@/components/SiteFooter'
 import SplitPageTitle from '@/components/SplitPageTitle'
@@ -11,8 +10,6 @@ import {
   detailsInCommunity,
   eventWhen,
   events,
-  kindsInUse,
-  type EventKind,
   type Off32Event,
 } from '@/lib/events'
 
@@ -53,9 +50,18 @@ function EventFlyer({ event }: { event: Off32Event }) {
   )
 }
 
-function matchesFilter(event: Off32Event, filter: string) {
+const COURSE_FILTERS = ['Tutti', 'Programmazione', 'IA', 'Design', 'Marketing'] as const
+type CourseFilter = (typeof COURSE_FILTERS)[number]
+
+/** Categorie della pagina Corsi. Un corso può stare in più di una. Il meet-up non è in questa pagina. */
+const COURSE_TOPICS: Record<string, readonly CourseFilter[]> = {
+  'videocorso-fullstack-ai': ['Programmazione'],
+  'brand-identity-ai': ['Design', 'IA'],
+}
+
+function matchesFilter(event: Off32Event, filter: CourseFilter) {
   if (filter === 'Tutti') return true
-  return EVENT_KIND_LABEL[event.kind] === filter
+  return (COURSE_TOPICS[event.slug] ?? []).includes(filter)
 }
 
 function EventCard({ event, onBook, featured = false }: { event: Off32Event; onBook: () => void; featured?: boolean }) {
@@ -106,16 +112,13 @@ function EventCard({ event, onBook, featured = false }: { event: Off32Event; onB
 }
 
 export default function WorkshopPage() {
-  const filters = useMemo(() => {
-    const kinds: EventKind[] = kindsInUse()
-    return kinds.length > 1 ? ['Tutti', ...kinds.map(kind => EVENT_KIND_LABEL[kind])] : []
-  }, [])
-  const [filter, setFilter] = useState('Tutti')
+  const [filter, setFilter] = useState<CourseFilter>('Tutti')
   const [underlineOn, setUnderlineOn] = useState(false)
   const [selected, setSelected] = useState<Off32Event | null>(null)
   const underlinePlayed = useRef(false)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const visible = events.filter(event => matchesFilter(event, filter))
+  const catalog = useMemo(() => events.filter(event => event.kind !== 'meet-up'), [])
+  const visible = catalog.filter(event => matchesFilter(event, filter))
   const upcoming = visible.filter(event => event.status === 'upcoming').sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))
   const past = visible.filter(event => event.status === 'past')
 
@@ -155,7 +158,7 @@ export default function WorkshopPage() {
 
       <div className="info-bar" style={{ background: '#0D0D0D', padding: '16px 5%', display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
         {[
-          ['Meet-up', 'seminari, workshop, corsi'],
+          ['Corsi', 'programmazione, design, IA'],
           ['Online', 'e in calendario'],
           ['Dettagli', 'nella community'],
         ].map(([strong, rest]) => (
@@ -176,33 +179,31 @@ export default function WorkshopPage() {
               </span>
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.65, color: '#3a3a3a', maxWidth: '46ch', margin: 0 }}>
-              Meet-up, seminari, workshop e corsi. Il calendario della formazione OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
+              Programmazione, design e IA. Il calendario dei corsi OFF32. Per partecipare, entra nella community: lì arrivano i dettagli.
             </p>
           </div>
-          {filters.length > 0 ? (
-            <div className="event-filters" role="tablist" aria-label="Filtra gli eventi">
-              {filters.map(item => (
-                <button
-                  key={item}
-                  type="button"
-                  role="tab"
-                  aria-selected={filter === item}
-                  className={filter === item ? 'event-filter is-on' : 'event-filter'}
-                  onClick={() => setFilter(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          ) : null}
+          <div className="event-filters" role="tablist" aria-label="Filtra i corsi">
+            {COURSE_FILTERS.map(item => (
+              <button
+                key={item}
+                type="button"
+                role="tab"
+                aria-selected={filter === item}
+                className={filter === item ? 'event-filter is-on' : 'event-filter'}
+                onClick={() => setFilter(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
 
         {upcoming.length > 0 ? (
           <div className="events-upcoming">
             <div className="events-label">Prossimo</div>
-            <div className="events-upcoming-grid">
+            <div className={upcoming.length === 1 ? 'events-upcoming-grid is-single' : 'events-upcoming-grid'}>
               {upcoming.map(event => (
-                <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} />
+                <EventCard key={event.slug} event={event} onBook={() => setSelected(event)} featured={upcoming.length === 1} />
               ))}
             </div>
           </div>
@@ -220,7 +221,7 @@ export default function WorkshopPage() {
         ) : null}
 
         {visible.length === 0 && (
-          <p style={{ marginTop: 28, fontSize: 15 }}>Nessun evento in questa categoria.</p>
+          <p className="events-empty">Presto nuovi corsi</p>
         )}
       </section>
 
@@ -257,12 +258,10 @@ export default function WorkshopPage() {
         </div>
       )}
 
-      <CommunityBlock />
-
       <ProjectStart
         kicker="Partecipa"
         title="Entra nella community"
-        body="Meet-up, seminari, workshop e corsi. I dettagli per partecipare, compreso il link di Google Meet quando l’incontro è online, sono nella community WhatsApp."
+        body="I dettagli per partecipare sono nella community WhatsApp."
         cta="Entra nella community →"
         href={WHATSAPP_INVITE_URL}
         external
@@ -294,7 +293,7 @@ export default function WorkshopPage() {
         }
         .workshop-title .split-page-title-row { padding-left: 5%; padding-right: 5%; }
         .events-head { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr); gap: 28px 40px; align-items: end; }
-        .event-filters { display: flex; flex-wrap: nowrap; gap: 8px; justify-content: flex-start; margin-top: 22px; }
+        .event-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; margin-top: 22px; }
         .event-filter {
           border: 1px solid #0D0D0D;
           background: transparent;
@@ -325,7 +324,9 @@ export default function WorkshopPage() {
           gap: 28px;
           align-items: stretch;
         }
+        .events-upcoming-grid.is-single { grid-template-columns: 1fr; }
         .events-upcoming-grid .event-card { height: 100%; }
+        .events-empty { margin: 36px 0 0; font-family: 'Canela', Georgia, serif; font-weight: 300; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.6px; }
         .events-past .events-label { margin-top: 56px; }
         .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
         .event-card { background: #fff; border: 1px solid #0D0D0D; box-shadow: 7px 7px 0 #0D0D0D; display: flex; flex-direction: column; min-width: 0; }

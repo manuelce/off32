@@ -206,7 +206,7 @@ export default function ContattiPage() {
                 )}
                 {contactType === 'community' && (
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: INK, margin: '0 0 18px' }}>
-                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/workshop#community" style={{ color: INK }}>Corsi</a>.
+                    Scrivi se vuoi entrare o proporre un incontro. La community è nella pagina <a href="/officina32" style={{ color: INK }}>Officina32</a>.
                   </p>
                 )}
 
