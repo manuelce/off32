@@ -423,6 +423,19 @@ export default function Officina32Page() {
           background: linear-gradient(to bottom, rgba(13, 13, 13, 0.45) 0%, rgba(13, 13, 13, 0.12) 42%, rgba(13, 13, 13, 0.62) 100%);
           z-index: 1;
         }
+        .officina32-card-photo.is-portrait {
+          align-items: center;
+          justify-content: center;
+          background: ${CREAM};
+        }
+        .officina32-card-photo.is-portrait::before { display: none; }
+        .officina32-card-photo.is-portrait img {
+          width: 68%;
+          height: auto;
+          aspect-ratio: 1;
+          border-radius: 50%;
+          object-fit: cover;
+        }
         .officina32-card-photo span {
           position: relative;
           z-index: 2;

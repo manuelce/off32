@@ -57,7 +57,7 @@ function eventsFor(kind: EventKind) {
 export default function Officina32Program() {
   const [filter, setFilter] = useState<Filter>('Tutti')
   const visible = GROUPS.filter(group => filter === 'Tutti' || group.id === filter)
-  const passes = visible.flatMap(group => eventsFor(group.kind))
+  const passes = visible.flatMap(group => group.kind === 'meet-up' ? eventsFor(group.kind) : [])
 
   return (
     <>
@@ -86,22 +86,10 @@ export default function Officina32Program() {
 
         <div className="officina32-board">
           {visible.flatMap(group => {
-            const items = eventsFor(group.kind)
-            if (items.length === 0 && group.kind === 'seminario') {
-              return [(
-                <article key="seminario-line" className="officina32-card">
-                  <div className="officina32-card-body">
-                    <p className="officina32-card-kicker">{EVENT_KIND_LABEL.seminario}</p>
-                    <p className="officina32-card-summary">Nel calendario della formazione, senza una data pubblicata.</p>
-                  </div>
-                </article>
-              )]
-            }
-            return items.map(event => <EventPiece key={event.slug} event={event} />)
+            if (group.kind === 'workshop') return [<WorkshopPlaceholder key="workshop-placeholder" />]
+            if (group.kind === 'seminario') return [<GaiaSeminar key="seminario-gaia" />]
+            return eventsFor(group.kind).map(event => <EventPiece key={event.slug} event={event} />)
           })}
-          {visible.every(group => eventsFor(group.kind).length === 0 && group.kind !== 'seminario') ? (
-            <p className="officina32-empty">Nessun appuntamento pubblicato.</p>
-          ) : null}
         </div>
       </section>
 
@@ -148,6 +136,43 @@ export default function Officina32Program() {
         </section>
       ) : null}
     </>
+  )
+}
+
+function WorkshopPlaceholder() {
+  return (
+    <article className="officina32-card">
+      <div className="officina32-card-body">
+        <p className="officina32-card-kicker">Workshop</p>
+        <h3>In arrivo</h3>
+        <p className="officina32-card-summary">Presto il prossimo workshop.</p>
+      </div>
+    </article>
+  )
+}
+
+function GaiaSeminar() {
+  return (
+    <article className="officina32-card">
+      <div className="officina32-card-photo is-portrait">
+        <Image
+          src="/officina32/gaia-zuccaro.webp"
+          alt="Gaia Zuccaro"
+          width={640}
+          height={640}
+          sizes="(max-width: 900px) 70vw, 16vw"
+        />
+      </div>
+      <div className="officina32-card-body">
+        <p className="officina32-card-kicker">Seminario</p>
+        <h3>Gaia Zuccaro</h3>
+        <p className="officina32-card-summary">UI design / interaction design</p>
+        <p className="officina32-card-summary">
+          Interaction designer: progetta interfacce utente e nuove brand identity. Coordina il Master UI di Talent Garden Innovation School e ha fatto un corso per Learnn.com.
+        </p>
+        <p className="officina32-card-kicker">Data in arrivo</p>
+      </div>
+    </article>
   )
 }
 
