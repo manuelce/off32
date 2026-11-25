@@ -13,7 +13,7 @@ import {
   INSTAGRAM_URL,
   WHATSAPP_INVITE_URL,
 } from '@/lib/community'
-import { events } from '@/lib/events'
+import { OFFICINA_POLAROIDS } from '@/lib/officina32-polaroids'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
 
 const CREAM = '#F0EBE0'
@@ -24,8 +24,6 @@ const LIME = '#9fff00'
 const PAPER = '#fff'
 
 export default function Officina32Page() {
-  const meetup = events.find(event => event.kind === 'meet-up' && event.image)
-
   const pageLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -58,22 +56,38 @@ export default function Officina32Page() {
             Entra nella community
           </a>
         </div>
-        {meetup?.image ? (
-          <figure className="officina32-hero-figure">
-            <Image
-              src={meetup.image}
-              alt={meetup.imageAlt ?? meetup.title}
-              fill
-              priority
-              sizes="(max-width: 900px) 90vw, 42vw"
-              style={{ objectFit: 'cover', objectPosition: 'center center' }}
-            />
-            <span className="officina32-sticker">
-              <strong>{COMMUNITY_MEMBERS}</strong>
-              persone
-            </span>
-          </figure>
-        ) : null}
+        <figure className="officina32-hero-figure">
+          <div className="officina32-slate" aria-hidden="true" />
+          <ul className="officina32-polaroids">
+            {OFFICINA_POLAROIDS.map(item => (
+              <li
+                key={item.src}
+                className={item.mobileTop == null ? 'officina32-polaroid is-wide' : 'officina32-polaroid'}
+                style={{
+                  top: `${item.top}%`,
+                  left: `${item.left}%`,
+                  zIndex: item.z,
+                  ['--rot' as string]: `${item.rotate}deg`,
+                  ['--mt' as string]: item.mobileTop == null ? undefined : `${item.mobileTop}%`,
+                  ['--ml' as string]: item.mobileLeft == null ? undefined : `${item.mobileLeft}%`,
+                }}
+              >
+                <Image
+                  src={item.src}
+                  alt={`Segnaposto: ritratto di fantasia, ${item.name}.`}
+                  width={420}
+                  height={560}
+                  sizes="(max-width: 900px) 28vw, 12vw"
+                />
+                <span>{item.name}</span>
+              </li>
+            ))}
+          </ul>
+          <span className="officina32-sticker">
+            <strong>{COMMUNITY_MEMBERS}</strong>
+            persone
+          </span>
+        </figure>
       </section>
 
       <section className="officina32-facts" aria-label="Numeri della community">
@@ -219,18 +233,66 @@ export default function Officina32Page() {
           box-shadow: 6px 6px 0 ${PURPLE};
         }
         .officina32-join.is-compact { margin-top: 0; font-size: 12px; padding: 14px 16px; }
+        @font-face {
+          font-family: 'Caveat';
+          src: url('/fonts/Caveat-Regular.woff2') format('woff2');
+          font-weight: 400 700;
+          font-style: normal;
+          font-display: swap;
+        }
         .officina32-hero-figure {
           position: relative;
           margin: 0;
-          aspect-ratio: 16 / 10;
+          aspect-ratio: 1 / 1;
           border: 1px solid ${INK};
           box-shadow: 10px 10px 0 ${PURPLE};
-          background: ${INK};
+          background: #242424;
           overflow: hidden;
+        }
+        .officina32-slate {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(ellipse at 18% 0%, rgba(255,255,255,0.07), transparent 42%),
+            radial-gradient(ellipse at 90% 100%, rgba(0,0,0,0.35), transparent 46%),
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 4px),
+            #2a2a2a;
+        }
+        .officina32-polaroids {
+          position: absolute;
+          inset: 0;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .officina32-polaroid {
+          position: absolute;
+          width: 30%;
+          margin: 0;
+          padding: 5px 5px 0;
+          background: #f6f3ec;
+          box-shadow: 0 10px 18px rgba(0,0,0,0.38);
+          transform: rotate(var(--rot));
+        }
+        .officina32-polaroid img {
+          display: block;
+          width: 100%;
+          height: auto;
+          aspect-ratio: 3 / 4;
+          object-fit: cover;
+        }
+        .officina32-polaroid span {
+          display: block;
+          padding: 1px 4px 7px;
+          font-family: 'Caveat', cursive;
+          font-size: 18px;
+          line-height: 1;
+          text-align: center;
+          color: #1c1c1c;
         }
         .officina32-sticker {
           position: absolute;
-          z-index: 2;
+          z-index: 30;
           top: 14px;
           right: 14px;
           display: flex;
@@ -586,6 +648,8 @@ export default function Officina32Page() {
           .officina32 h1 { font-size: clamp(84px, 6.6vw, 112px); }
           .officina32-line { font-size: clamp(32px, 2.4vw, 44px); max-width: 14ch; }
           .officina32-hero-figure { aspect-ratio: 5 / 4; min-height: 420px; }
+          .officina32-polaroid { width: 22%; }
+          .officina32-polaroid span { font-size: 22px; padding-bottom: 8px; }
           .officina32-facts { padding: 28px 5%; }
           .officina32-calendar,
           .officina32-community { padding: 80px 5% 12px; }
@@ -629,6 +693,8 @@ export default function Officina32Page() {
           .officina32-close .officina32-back { flex: 0 0 auto; }
         }
         @media (max-width: 899px) {
+          .officina32-polaroid.is-wide { display: none; }
+          .officina32-polaroid { top: var(--mt); left: var(--ml); width: 26%; }
           .officina32-linebar { display: none; }
           .officina32-row {
             flex-direction: column;
