@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMeta(
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <EventsJsonLd events={events.filter(event => event.kind !== 'meet-up')} />
+      <EventsJsonLd events={events.filter(event => event.kind !== 'meet-up' && event.kind !== 'seminario')} />
       {children}
     </>
   )

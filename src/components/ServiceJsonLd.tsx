@@ -66,6 +66,7 @@ function eventNode(event: Off32Event) {
     name: `${EVENT_KIND_LABEL[event.kind]} OFF32: ${event.title}`,
     description,
     startDate: event.startDate ?? event.date,
+    ...(event.endDate ? { endDate: event.endDate } : {}),
     eventAttendanceMode: event.attendance === 'online'
       ? 'https://schema.org/OnlineEventAttendanceMode'
       : undefined,

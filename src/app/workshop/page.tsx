@@ -117,7 +117,7 @@ export default function WorkshopPage() {
   const [selected, setSelected] = useState<Off32Event | null>(null)
   const underlinePlayed = useRef(false)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const catalog = useMemo(() => events.filter(event => event.kind !== 'meet-up'), [])
+  const catalog = useMemo(() => events.filter(event => event.kind !== 'meet-up' && event.kind !== 'seminario'), [])
   const visible = catalog.filter(event => matchesFilter(event, filter))
   const upcoming = visible.filter(event => event.status === 'upcoming').sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))
   const past = visible.filter(event => event.status === 'past')

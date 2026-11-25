@@ -18,14 +18,14 @@ const LIME = '#9fff00'
 
 const TONES = ['#fe3812', INK, PURPLE] as const
 
-const FILTERS = ['Tutti', 'Workshop', 'Meet-up', 'Seminari'] as const
+const FILTERS = ['Tutti', 'Seminari', 'Meet-up', 'Workshop'] as const
 type Filter = (typeof FILTERS)[number]
 type GroupId = Exclude<Filter, 'Tutti'>
 
 const GROUPS: { id: GroupId; kind: EventKind }[] = [
-  { id: 'Workshop', kind: 'workshop' },
-  { id: 'Meet-up', kind: 'meet-up' },
   { id: 'Seminari', kind: 'seminario' },
+  { id: 'Meet-up', kind: 'meet-up' },
+  { id: 'Workshop', kind: 'workshop' },
 ]
 
 function ink(tone: string) {
@@ -57,7 +57,7 @@ function eventsFor(kind: EventKind) {
 export default function Officina32Program() {
   const [filter, setFilter] = useState<Filter>('Tutti')
   const visible = GROUPS.filter(group => filter === 'Tutti' || group.id === filter)
-  const passes = visible.flatMap(group => eventsFor(group.kind))
+  const passes = visible.flatMap(group => group.kind === 'meet-up' ? eventsFor(group.kind) : [])
 
   return (
     <>
@@ -86,22 +86,10 @@ export default function Officina32Program() {
 
         <div className="officina32-board">
           {visible.flatMap(group => {
-            const items = eventsFor(group.kind)
-            if (items.length === 0 && group.kind === 'seminario') {
-              return [(
-                <article key="seminario-line" className="officina32-card">
-                  <div className="officina32-card-body">
-                    <p className="officina32-card-kicker">{EVENT_KIND_LABEL.seminario}</p>
-                    <p className="officina32-card-summary">Nel calendario della formazione, senza una data pubblicata.</p>
-                  </div>
-                </article>
-              )]
-            }
-            return items.map(event => <EventPiece key={event.slug} event={event} />)
+            if (group.kind === 'workshop') return [<WorkshopPlaceholder key="workshop-placeholder" />]
+            if (group.kind === 'seminario') return [<GaiaSeminar key="seminario-gaia" />]
+            return eventsFor(group.kind).map(event => <EventPiece key={event.slug} event={event} />)
           })}
-          {visible.every(group => eventsFor(group.kind).length === 0 && group.kind !== 'seminario') ? (
-            <p className="officina32-empty">Nessun appuntamento pubblicato.</p>
-          ) : null}
         </div>
       </section>
 
@@ -148,6 +136,46 @@ export default function Officina32Program() {
         </section>
       ) : null}
     </>
+  )
+}
+
+function WorkshopPlaceholder() {
+  return (
+    <article className="officina32-card">
+      <div className="officina32-card-body">
+        <p className="officina32-card-kicker">Workshop</p>
+        <h3>In arrivo</h3>
+        <p className="officina32-card-summary">Presto il prossimo workshop.</p>
+      </div>
+    </article>
+  )
+}
+
+function GaiaSeminar() {
+  const event = events.find(item => item.kind === 'seminario')
+  if (!event) return null
+  return (
+    <article className="officina32-card">
+      <div className="officina32-card-photo">
+        <Image
+          src={event.image ?? '/officina32/gaia-zuccaro.webp'}
+          alt={event.imageAlt ?? 'Gaia Zuccaro sul palco'}
+          fill
+          sizes="(max-width: 900px) 90vw, 30vw"
+          style={{ objectFit: 'cover', objectPosition: 'right 28%' }}
+        />
+        <span>Seminario</span>
+      </div>
+      <div className="officina32-card-body">
+        <p className="officina32-card-kicker">{event.dateLabel}</p>
+        <h3>Gaia Zuccaro</h3>
+        <p className="officina32-card-summary">UI design / interaction design</p>
+        <p className="officina32-card-summary">{event.summary}</p>
+        <ul className="officina32-meta">
+          <li>Quando: {eventWhen(event)}</li>
+        </ul>
+      </div>
+    </article>
   )
 }
 
