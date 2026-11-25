@@ -38,7 +38,7 @@ export default function Officina32Page() {
   return (
     <main className="officina32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageLd) }} />
-      <EventsJsonLd events={events.filter(event => event.kind === 'meet-up')} />
+      <EventsJsonLd events={events.filter(event => event.kind === 'meet-up' || event.kind === 'seminario')} />
 
       <header className="officina32-bar">
         <a href="/" className="officina32-logo" aria-label="OFF32, torna al sito">

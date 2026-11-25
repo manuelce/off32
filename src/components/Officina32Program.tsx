@@ -152,12 +152,14 @@ function WorkshopPlaceholder() {
 }
 
 function GaiaSeminar() {
+  const event = events.find(item => item.kind === 'seminario')
+  if (!event) return null
   return (
     <article className="officina32-card">
       <div className="officina32-card-photo">
         <Image
-          src="/officina32/gaia-zuccaro.webp"
-          alt="Gaia Zuccaro sul palco"
+          src={event.image ?? '/officina32/gaia-zuccaro.webp'}
+          alt={event.imageAlt ?? 'Gaia Zuccaro sul palco'}
           fill
           sizes="(max-width: 900px) 90vw, 30vw"
           style={{ objectFit: 'cover', objectPosition: 'right 28%' }}
@@ -165,13 +167,13 @@ function GaiaSeminar() {
         <span>Seminario</span>
       </div>
       <div className="officina32-card-body">
-        <p className="officina32-card-kicker">Seminario</p>
+        <p className="officina32-card-kicker">{event.dateLabel}</p>
         <h3>Gaia Zuccaro</h3>
         <p className="officina32-card-summary">UI design / interaction design</p>
-        <p className="officina32-card-summary">
-          Interaction designer: progetta interfacce utente e nuove brand identity. Coordina il Master UI di Talent Garden Innovation School e ha fatto un corso per Learnn.com.
-        </p>
-        <p className="officina32-card-kicker">Data in arrivo</p>
+        <p className="officina32-card-summary">{event.summary}</p>
+        <ul className="officina32-meta">
+          <li>Quando: {eventWhen(event)}</li>
+        </ul>
       </div>
     </article>
   )
