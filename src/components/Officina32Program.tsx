@@ -84,25 +84,25 @@ export default function Officina32Program() {
           </div>
         </div>
 
-        {visible.map(group => {
-          const items = eventsFor(group.kind)
-          const seminarLine = group.kind === 'seminario' && items.length === 0
-          return (
-            <section key={group.id} className="officina32-cat" aria-labelledby={`officina32-${group.kind}`}>
-              <h3 id={`officina32-${group.kind}`}>{group.id}</h3>
-              {items.map(event => <EventPiece key={event.slug} event={event} />)}
-              {seminarLine ? (
-                <p className="officina32-kindline">
-                  <strong>{EVENT_KIND_LABEL.seminario}</strong>
-                  <span>Nel calendario della formazione, senza una data pubblicata.</span>
-                </p>
-              ) : null}
-              {items.length === 0 && !seminarLine ? (
-                <p className="officina32-empty">Nessun appuntamento pubblicato.</p>
-              ) : null}
-            </section>
-          )
-        })}
+        <div className="officina32-board">
+          {visible.flatMap(group => {
+            const items = eventsFor(group.kind)
+            if (items.length === 0 && group.kind === 'seminario') {
+              return [(
+                <article key="seminario-line" className="officina32-card">
+                  <div className="officina32-card-body">
+                    <p className="officina32-card-kicker">{EVENT_KIND_LABEL.seminario}</p>
+                    <p className="officina32-card-summary">Nel calendario della formazione, senza una data pubblicata.</p>
+                  </div>
+                </article>
+              )]
+            }
+            return items.map(event => <EventPiece key={event.slug} event={event} />)
+          })}
+          {visible.every(group => eventsFor(group.kind).length === 0 && group.kind !== 'seminario') ? (
+            <p className="officina32-empty">Nessun appuntamento pubblicato.</p>
+          ) : null}
+        </div>
       </section>
 
       {passes.length > 0 ? (
@@ -156,14 +156,14 @@ function EventPiece({ event }: { event: Off32Event }) {
   const when = eventWhen(event)
   const open = event.status === 'upcoming'
   return (
-    <article className={open ? 'officina32-card' : 'officina32-sheet'}>
+    <article className="officina32-card">
       <div className="officina32-card-photo">
         {event.image ? (
           <Image
             src={event.image}
             alt={event.imageAlt ?? event.title}
             fill
-            sizes="(max-width: 900px) 90vw, 45vw"
+            sizes="(max-width: 900px) 90vw, 30vw"
             style={{ objectFit: 'cover', objectPosition: focusFor(event) }}
           />
         ) : null}

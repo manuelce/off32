@@ -313,24 +313,23 @@ export default function Officina32Page() {
           cursor: pointer;
         }
         .officina32-filter.is-on { background: ${PURPLE}; border-color: ${PURPLE}; color: ${CREAM}; }
-        .officina32-cat { margin-top: 32px; }
-        .officina32-cat > h3 {
-          margin: 0 0 14px;
-          font-family: 'Canela', Georgia, serif;
-          font-weight: 300;
-          font-size: clamp(28px, 4vw, 40px);
-          letter-spacing: -0.8px;
+        .officina32-board {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-top: 28px;
+          align-items: stretch;
         }
-        .officina32-kindline, .officina32-empty {
+        .officina32-empty {
           margin: 0;
           padding: 18px 20px;
           border: 1px solid ${INK};
           background: ${PAPER};
           box-shadow: 6px 6px 0 ${PURPLE};
+          font-size: 15px;
+          line-height: 1.5;
+          color: #3a3a3a;
         }
-        .officina32-kindline { display: flex; flex-direction: column; gap: 4px; }
-        .officina32-kindline strong { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; }
-        .officina32-kindline span, .officina32-empty { font-size: 15px; line-height: 1.5; color: #3a3a3a; }
         .officina32-card,
         .officina32-sheet,
         .officina32-grid article {
@@ -590,17 +589,8 @@ export default function Officina32Page() {
           .officina32-facts { padding: 28px 5%; }
           .officina32-calendar,
           .officina32-community { padding: 80px 5% 12px; }
-          .officina32-cat .officina32-card {
-            display: grid;
-            grid-template-columns: minmax(280px, 0.9fr) 1.2fr;
-          }
-          .officina32-cat .officina32-card .officina32-card-photo {
-            height: 100%;
-            min-height: 320px;
-            border-bottom: none;
-            border-right: 1px solid ${INK};
-          }
-          .officina32-card-photo { height: 268px; }
+          .officina32-board { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+          .officina32-card-photo { height: 200px; }
           .officina32-sheet {
             grid-template-columns: minmax(280px, 0.9fr) 1.2fr;
             margin-top: 28px;
