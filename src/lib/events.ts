@@ -27,6 +27,8 @@ export type Off32Event = {
   timeZone: string | null
   /** Inizio ISO 8601 per i dati strutturati. Null se manca il giorno. */
   startDate: string | null
+  /** Fine ISO 8601. Null se la fine non è pubblicata. */
+  endDate?: string | null
   attendance: 'online' | null
   /** Piattaforma, es. "Google Meet". Non è un URL. */
   platform: string | null
@@ -52,16 +54,17 @@ export type Off32Event = {
 
 export const events: Off32Event[] = [
   {
-    slug: 'meetup-2027-01-19',
+    slug: 'meetup-2027-01-18',
     kind: 'meet-up',
     title: 'Ci conosciamo',
     summary:
       'Una semplice chiacchierata online: ci conosciamo, condividiamo e ci vediamo.',
-    date: '2027-01-19',
-    dateLabel: 'Martedì 19 gennaio 2027',
-    timeLabel: '20:00',
+    date: '2027-01-18',
+    dateLabel: 'Lunedì 18 gennaio 2027',
+    timeLabel: '20:00 – 22:00',
     timeZone: 'Europe/Rome',
-    startDate: '2027-01-19T20:00:00+01:00',
+    startDate: '2027-01-18T20:00:00+01:00',
+    endDate: '2027-01-18T22:00:00+01:00',
     attendance: 'online',
     platform: 'Google Meet',
     sessionUrl: null,

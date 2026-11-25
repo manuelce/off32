@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Officina32Program from '@/components/Officina32Program'
+import { EventsJsonLd } from '@/components/ServiceJsonLd'
 import {
   COMMUNITY_BIO_MENTION,
   COMMUNITY_BOARD,
@@ -13,6 +14,7 @@ import {
   INSTAGRAM_URL,
   WHATSAPP_INVITE_URL,
 } from '@/lib/community'
+import { events } from '@/lib/events'
 import { OFFICINA_POLAROIDS } from '@/lib/officina32-polaroids'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
 
@@ -36,6 +38,7 @@ export default function Officina32Page() {
   return (
     <main className="officina32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageLd) }} />
+      <EventsJsonLd events={events.filter(event => event.kind === 'meet-up')} />
 
       <header className="officina32-bar">
         <a href="/" className="officina32-logo" aria-label="OFF32, torna al sito">
