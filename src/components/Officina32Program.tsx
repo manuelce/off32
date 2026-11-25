@@ -18,14 +18,14 @@ const LIME = '#9fff00'
 
 const TONES = ['#fe3812', INK, PURPLE] as const
 
-const FILTERS = ['Tutti', 'Workshop', 'Meet-up', 'Seminari'] as const
+const FILTERS = ['Tutti', 'Seminari', 'Meet-up', 'Workshop'] as const
 type Filter = (typeof FILTERS)[number]
 type GroupId = Exclude<Filter, 'Tutti'>
 
 const GROUPS: { id: GroupId; kind: EventKind }[] = [
-  { id: 'Workshop', kind: 'workshop' },
-  { id: 'Meet-up', kind: 'meet-up' },
   { id: 'Seminari', kind: 'seminario' },
+  { id: 'Meet-up', kind: 'meet-up' },
+  { id: 'Workshop', kind: 'workshop' },
 ]
 
 function ink(tone: string) {
