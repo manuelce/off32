@@ -54,16 +54,16 @@ export type Off32Event = {
 
 export const events: Off32Event[] = [
   {
-    slug: 'meetup-2027-01-19',
+    slug: 'meetup-2026-11-23',
     kind: 'meet-up',
     title: 'Ci conosciamo',
     summary:
       'Una semplice chiacchierata online: ci conosciamo, condividiamo e ci vediamo.',
-    date: '2027-01-19',
-    dateLabel: 'Martedì 19 gennaio 2027',
+    date: '2026-11-23',
+    dateLabel: 'Lunedì 23 novembre 2026',
     timeLabel: '20:00',
     timeZone: 'Europe/Rome',
-    startDate: '2027-01-19T20:00:00+01:00',
+    startDate: '2026-11-23T20:00:00+01:00',
     attendance: 'online',
     platform: 'Google Meet',
     sessionUrl: null,
