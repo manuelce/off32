@@ -127,7 +127,7 @@ export default function Home() {
     },
     {
       q: 'Quali eventi organizzate?',
-      a: 'Meet-up, seminari, workshop e corsi. Il meet-up del 23 novembre 2026 è online su Google Meet alle 20:00 (ora di Roma): una chiacchierata per conoscerci. I dettagli per partecipare sono nella community WhatsApp. Il corso Agenda32, full-stack e live su Meet, parte l’11 gennaio 2027. Il calendario è nella pagina Corsi.',
+      a: 'Meet-up, seminari, workshop e corsi. Il meet-up del 19 gennaio 2027 è online su Google Meet alle 20:00 (ora di Roma): una chiacchierata per conoscerci. I dettagli per partecipare sono nella community WhatsApp. Il corso Agenda32, full-stack e live su Meet, parte l’11 gennaio 2027. Il calendario è nella pagina Corsi.',
     },
   ]
 

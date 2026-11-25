@@ -154,14 +154,15 @@ function WorkshopPlaceholder() {
 function GaiaSeminar() {
   return (
     <article className="officina32-card">
-      <div className="officina32-card-photo is-portrait">
+      <div className="officina32-card-photo">
         <Image
           src="/officina32/gaia-zuccaro.webp"
-          alt="Gaia Zuccaro"
-          width={640}
-          height={640}
-          sizes="(max-width: 900px) 70vw, 16vw"
+          alt="Gaia Zuccaro sul palco"
+          fill
+          sizes="(max-width: 900px) 90vw, 30vw"
+          style={{ objectFit: 'cover', objectPosition: 'right 28%' }}
         />
+        <span>Seminario</span>
       </div>
       <div className="officina32-card-body">
         <p className="officina32-card-kicker">Seminario</p>
