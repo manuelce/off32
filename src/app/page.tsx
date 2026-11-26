@@ -5,6 +5,7 @@ import SiteFooter from '@/components/SiteFooter'
 import { FaqJsonLd } from '@/components/ServiceJsonLd'
 import ScrollRiseBlock from '@/components/ScrollRiseBlock'
 import ScrollRiseQuote from '@/components/ScrollRiseQuote'
+import { COMMUNITY_MEMBERS, COMMUNITY_NAME } from '@/lib/community'
 import { HOME_SERVICE_LINKS } from '@/lib/services'
 import { IMMERSIVE_ARTICLE_IMAGE, SAGGIO_ARTICLE_IMAGE } from '@/lib/seo'
 
@@ -213,60 +214,64 @@ export default function Home() {
 
       <section id="services">
         <div style={{ padding: '22px 28px', ...meta, borderTop: LINE, borderBottom: LINE }}>Servizi</div>
-        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: LINE }}>
+        <div
+          className="services-folders"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 18,
+            padding: '28px 22px 32px',
+            borderBottom: LINE,
+          }}
+        >
           {services.map((service, i) => (
-            <div
-              key={service.tag}
-              style={{
-                padding: '36px 28px 28px',
-                borderRight: i < 2 ? LINE : 'none',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
-              <a href={service.hubHref} style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', marginBottom: 16 }}>
-                <ScrollRiseQuote
-                  as="div"
+            <div key={service.tag} className="service-folder">
+              <div className="service-folder-tab" aria-hidden="true" />
+              <div className="service-folder-body">
+                <div style={{ ...meta, marginBottom: 8 }}>0{i + 1}</div>
+                <a href={service.hubHref} style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', marginBottom: 16 }}>
+                  <ScrollRiseQuote
+                    as="div"
+                    style={{
+                      fontFamily: "'Canela', Georgia, serif",
+                      fontSize: 'clamp(26px, 2.8vw, 34px)',
+                      fontWeight: 300,
+                      letterSpacing: '-0.4px',
+                      lineHeight: 1.05,
+                      color: '#222',
+                      overflow: 'hidden',
+                      margin: 0,
+                    }}
+                  >
+                    {service.tag}
+                  </ScrollRiseQuote>
+                </a>
+                {service.items.map(item => {
+                  const href = HOME_SERVICE_LINKS[item]
+                  return href ? (
+                    <a
+                      key={item}
+                      href={href}
+                      style={{ display: 'block', fontSize: 14, padding: '8px 0', color: '#3a3a3a', textDecoration: 'none' }}
+                    >
+                      {item}
+                    </a>
+                  ) : (
+                    <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
+                  )
+                })}
+                <a
+                  href={service.hubHref}
                   style={{
-                    fontFamily: "'Canela', Georgia, serif",
-                    fontSize: 'clamp(26px, 2.8vw, 34px)',
-                    fontWeight: 300,
-                    letterSpacing: '-0.4px',
-                    lineHeight: 1.05,
-                    color: '#222',
-                    overflow: 'hidden',
-                    margin: 0,
+                    ...button,
+                    alignSelf: 'flex-start',
+                    marginTop: 22,
+                    boxShadow: '3px 3px 0 #fe3812',
                   }}
                 >
-                  {service.tag}
-                </ScrollRiseQuote>
-              </a>
-              {service.items.map(item => {
-                const href = HOME_SERVICE_LINKS[item]
-                return href ? (
-                  <a
-                    key={item}
-                    href={href}
-                    style={{ display: 'block', fontSize: 14, padding: '8px 0', color: '#3a3a3a', textDecoration: 'none' }}
-                  >
-                    {item}
-                  </a>
-                ) : (
-                  <div key={item} style={{ fontSize: 14, padding: '8px 0', color: '#3a3a3a' }}>{item}</div>
-                )
-              })}
-              <a
-                href={service.hubHref}
-                style={{
-                  ...button,
-                  alignSelf: 'flex-start',
-                  marginTop: 22,
-                  boxShadow: '3px 3px 0 #fe3812',
-                }}
-              >
-                {i === 0 ? 'Brand & Creative →' : i === 1 ? 'Web & Digital →' : 'AI Systems →'}
-              </a>
+                  {i === 0 ? 'Brand & Creative →' : i === 1 ? 'Web & Digital →' : 'AI Systems →'}
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -336,25 +341,55 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ padding: '15% 8% 0', textAlign: 'center' }}>
-        <ScrollRiseBlock>
-          <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Manifesto</div>
-        </ScrollRiseBlock>
-        <ScrollRiseQuote
-          as="h2"
-          style={{ ...heading, maxWidth: 640, margin: '0 auto 20px', overflow: 'hidden' }}
-        >
-          {`Amiamo i dettagli. L'AI li amplifica.`}
-        </ScrollRiseQuote>
-        <ScrollRiseBlock delayMs={280}>
-          <p style={{ ...body, margin: '0 auto' }}>
-            C&apos;è qualcosa di profondo nel rispetto al lavoro. È la spinta a costruire esperienze che durano nel tempo, a creare qualcosa che diventa indimenticabile.
-          </p>
-          <p style={{ ...body, margin: '14px auto 28px' }}>
-            In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.
-          </p>
-          <a href="/officina32" style={button}>Scopri il manifesto →</a>
-        </ScrollRiseBlock>
+      <section className="studio-split" aria-label="Community e studio">
+        <div className="studio-split-col">
+          <ScrollRiseBlock>
+            <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Officina32 Community</div>
+          </ScrollRiseBlock>
+          <ScrollRiseQuote
+            as="h2"
+            style={{ ...heading, fontSize: 'clamp(30px, 3vw, 46px)', maxWidth: 460, margin: '0 auto 20px', overflow: 'hidden' }}
+          >
+            Uno spazio di confronto.
+          </ScrollRiseQuote>
+          <ScrollRiseBlock delayMs={280}>
+            <p style={{ ...body, maxWidth: 420, margin: '0 auto' }}>
+              Dove le idee diventano progetti. Un posto per conoscersi e far partire lavori veri.
+            </p>
+            <p style={{ ...body, maxWidth: 420, margin: '14px auto 28px' }}>
+              {COMMUNITY_MEMBERS} persone nella community WhatsApp «{COMMUNITY_NAME}», e in crescita.
+            </p>
+            <a href="/officina32" style={button}>Entra nella community →</a>
+          </ScrollRiseBlock>
+        </div>
+
+        <div className="studio-orb-slot" aria-hidden="true">
+          <span className="studio-orb-wrap">
+            <span className="studio-orb" />
+            <span className="studio-orb-shadow" />
+          </span>
+        </div>
+
+        <div className="studio-split-col">
+          <ScrollRiseBlock>
+            <div style={{ ...meta, color: '#fe3812', marginBottom: 16 }}>Studio</div>
+          </ScrollRiseBlock>
+          <ScrollRiseQuote
+            as="h2"
+            style={{ ...heading, fontSize: 'clamp(30px, 3vw, 46px)', maxWidth: 460, margin: '0 auto 20px', overflow: 'hidden' }}
+          >
+            {`Amiamo i dettagli. L'AI li amplifica.`}
+          </ScrollRiseQuote>
+          <ScrollRiseBlock delayMs={280}>
+            <p style={{ ...body, maxWidth: 420, margin: '0 auto' }}>
+              C&apos;è qualcosa di profondo nel rispetto al lavoro. È la spinta a costruire esperienze che durano nel tempo, a creare qualcosa che diventa indimenticabile.
+            </p>
+            <p style={{ ...body, maxWidth: 420, margin: '14px auto 28px' }}>
+              In OFF32, officina digitale di comunicazione AI, ascoltiamo la storia del tuo brand e la trasformiamo in impatto reale, usando l&apos;intelligenza artificiale come strumento, non come scorciatoia.
+            </p>
+            <a href="/about" style={button}>Il nostro studio →</a>
+          </ScrollRiseBlock>
+        </div>
       </section>
 
       <section style={{ width: '80%', margin: '0 auto', paddingTop: '15%', paddingBottom: '15%' }}>
@@ -487,6 +522,102 @@ export default function Home() {
           overflow: hidden;
           white-space: nowrap;
         }
+        .service-folder {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          padding-top: 13px;
+        }
+        .service-folder-tab {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 74px;
+          height: 14px;
+          background: #F0EBE0;
+          border: 1px solid #0D0D0D;
+          border-bottom: none;
+          border-radius: 4px 7px 0 0;
+          z-index: 2;
+        }
+        .service-folder-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          padding: 28px 24px 24px;
+          background: #F0EBE0;
+          border: 1px solid #0D0D0D;
+          border-radius: 0 6px 6px 6px;
+        }
+        .studio-split {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 12px;
+          padding: 12% 5% 8%;
+          text-align: center;
+        }
+        .studio-split-col { min-width: 0; position: relative; z-index: 1; }
+        .studio-orb-slot {
+          position: relative;
+          width: clamp(64px, 7vw, 96px);
+          height: clamp(190px, 22vw, 270px);
+          z-index: 3;
+          pointer-events: none;
+        }
+        .studio-orb-wrap {
+          position: absolute;
+          left: 50%;
+          top: 46%;
+          width: clamp(176px, 21vw, 258px);
+          height: clamp(176px, 21vw, 258px);
+          transform: translate(-50%, -50%);
+          animation: studio-orb-float 6.5s ease-in-out infinite;
+        }
+        .studio-orb {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background:
+            radial-gradient(circle at 32% 28%, rgba(255,255,255,0.96) 0 5%, rgba(255,255,255,0.28) 14%, transparent 32%),
+            radial-gradient(circle at 72% 78%, rgba(70,6,0,0.62) 0%, transparent 46%),
+            radial-gradient(circle at 40% 36%, #ff8b68 0%, #fe3812 34%, #c41c06 64%, #5c0c02 100%);
+          box-shadow:
+            inset -22px -26px 36px rgba(40, 0, 0, 0.42),
+            inset 12px 14px 22px rgba(255, 255, 255, 0.32),
+            0 18px 28px rgba(13, 13, 13, 0.16);
+        }
+        .studio-orb::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: radial-gradient(circle at 30% 24%, rgba(255,255,255,0.72), transparent 24%);
+          animation: studio-orb-glint 5.5s ease-in-out infinite;
+        }
+        .studio-orb-shadow {
+          position: absolute;
+          left: 50%;
+          bottom: -22px;
+          width: 78%;
+          height: 28px;
+          transform: translateX(-50%);
+          background: radial-gradient(ellipse, rgba(13,13,13,0.28), transparent 70%);
+          filter: blur(2px);
+        }
+        @keyframes studio-orb-float {
+          0%, 100% { transform: translate(-50%, -54%); }
+          50% { transform: translate(-50%, -46%); }
+        }
+        @keyframes studio-orb-glint {
+          0%, 100% { opacity: 0.75; transform: translate(0, 0); }
+          50% { opacity: 1; transform: translate(7%, 5%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .studio-orb-wrap, .studio-orb::after { animation: none; }
+          .studio-orb-wrap { transform: translate(-50%, -50%); }
+        }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
           .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
@@ -509,12 +640,16 @@ export default function Home() {
             object-fit: cover !important;
             object-position: center center !important;
           }
-          .grid-3, .grid-2, .split, .works-grid { grid-template-columns: 1fr !important; }
-          .grid-3 > div, .split > div, .split > p { border-right: none !important; border-left: none !important; }
+          .services-folders, .grid-2, .split, .works-grid, .studio-split { grid-template-columns: 1fr !important; }
+          .studio-split { padding: 72px 24px 48px; gap: 8px; }
+          .studio-orb-slot { width: 100%; height: 188px; margin: 8px 0; }
+          .studio-orb-wrap { width: 148px; height: 148px; }
+          .services-folders { gap: 22px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .split > div, .split > p { border-right: none !important; border-left: none !important; }
           .meta-row { --meta-inset: 16px; }
           .meta-row > div { font-size: 9px; letter-spacing: 0.6px; padding-top: 12px; padding-bottom: 12px; }
-          .grid-3 > div, .grid-2 > a { border-bottom: 1px solid #0D0D0D; }
-          .grid-3 > div:last-child, .grid-2 > a:last-child { border-bottom: none; }
+          .grid-2 > a { border-bottom: 1px solid #0D0D0D; }
+          .grid-2 > a:last-child { border-bottom: none; }
           main { padding-bottom: 88px; }
           h1 { font-size: 42px !important; letter-spacing: -1px !important; }
         }
