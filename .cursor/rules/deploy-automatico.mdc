@@ -1,0 +1,15 @@
+---
+description: Dopo ogni modifica richiesta, commit e push su main così Vercel pubblica da solo
+alwaysApply: true
+---
+
+# Deploy automatico
+
+Quando finisci una modifica che l'utente ha chiesto su questo sito, pubblicala subito. Non aspettare che scriva «deploya tutto».
+
+1. Controlla `git status`, `git diff` e `git log` per lo stile dei messaggi.
+2. Fai commit solo dei file di quella modifica. Non includere `.env` o segreti.
+3. Push su `main`. Vercel pubblica in produzione da solo.
+4. Aspetta che il deploy risulti completato e verifica che la pagina pubblica mostri la modifica.
+
+Non fare force push. Non fare commit a metà di un lavoro ancora incompleto: pubblica quando la richiesta è finita.
