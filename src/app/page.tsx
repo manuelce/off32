@@ -500,6 +500,7 @@ export default function Home() {
           width: 60%;
           margin: 0 auto;
           isolation: isolate;
+          border-radius: 22px;
         }
         .ai-scan-frame::before,
         .ai-scan-frame::after {
@@ -508,31 +509,34 @@ export default function Home() {
           pointer-events: none;
           background: conic-gradient(
             from var(--scan-angle),
-            rgba(41, 60, 244, 0.22) 0deg,
-            rgba(41, 60, 244, 0.08) 220deg,
-            #293cf4 312deg,
-            #f2f4ff 338deg,
-            #293cf4 360deg
+            rgba(41, 60, 244, 0.55) 0deg,
+            #293cf4 36deg,
+            #ffffff 70deg,
+            #b7c2ff 102deg,
+            #293cf4 148deg,
+            rgba(41, 60, 244, 0.62) 230deg,
+            rgba(41, 60, 244, 0.4) 360deg
           );
-          animation: ai-scan-glow 4.6s linear infinite;
+          animation: ai-scan-glow 3.8s linear infinite;
         }
         .ai-scan-frame::before {
-          inset: -2px;
+          inset: -3px;
+          border-radius: 25px;
           z-index: 0;
         }
         .ai-scan-frame::after {
-          inset: -22px;
+          inset: -18px;
+          border-radius: 40px;
           filter: blur(16px);
-          opacity: 0.9;
+          opacity: 0.95;
           z-index: -1;
         }
         .ai-scan-card {
           position: relative;
           z-index: 1;
+          border-radius: 22px;
           text-align: center;
           background: #F0EBE0;
-          border: 1px solid #0D0D0D;
-          box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
         }
         @keyframes ai-scan-glow {
@@ -661,7 +665,7 @@ export default function Home() {
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
           .ai-scan-frame { width: 100%; }
-          .ai-scan-card { padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
+          .ai-scan-card { padding: 28px 20px 24px; }
           .hero-grid {
             grid-template-columns: 1fr !important;
             grid-template-rows: auto auto !important;
