@@ -490,11 +490,6 @@ export default function Home() {
         }
         .meta-row > div:first-child { text-align: left; padding-left: var(--meta-inset); }
         .meta-row > div:last-child { text-align: right; padding-right: var(--meta-inset); }
-        @property --scan-angle {
-          syntax: '<angle>';
-          initial-value: 0deg;
-          inherits: false;
-        }
         .ai-scan-frame {
           position: relative;
           width: 60%;
@@ -502,34 +497,18 @@ export default function Home() {
           isolation: isolate;
           border-radius: 22px;
         }
-        .ai-scan-frame::before,
-        .ai-scan-frame::after {
-          content: '';
+        .ai-scan-svg {
           position: absolute;
+          inset: 0;
+          overflow: visible;
           pointer-events: none;
-          background: conic-gradient(
-            from var(--scan-angle),
-            rgba(41, 60, 244, 0.1) 0deg,
-            rgba(41, 60, 244, 0.1) 248deg,
-            rgba(41, 60, 244, 0.22) 300deg,
-            rgba(41, 60, 244, 0.45) 326deg,
-            #ffffff 342deg,
-            rgba(41, 60, 244, 0.16) 356deg,
-            rgba(41, 60, 244, 0.1) 360deg
-          );
-          animation: ai-scan-glow 3.8s linear infinite;
+          z-index: 2;
         }
-        .ai-scan-frame::before {
-          inset: -3px;
-          border-radius: 25px;
-          z-index: 0;
+        .ai-scan-dash {
+          animation: ai-scan-dash 5.2s linear infinite;
         }
-        .ai-scan-frame::after {
-          inset: -8px;
-          border-radius: 30px;
-          filter: blur(12px);
-          opacity: 0.4;
-          z-index: -1;
+        .ai-scan-dash.is-head {
+          filter: blur(2.4px);
         }
         .ai-scan-card {
           position: relative;
@@ -539,8 +518,9 @@ export default function Home() {
           background: #F0EBE0;
           padding: 40px 36px 32px;
         }
-        @keyframes ai-scan-glow {
-          to { --scan-angle: 360deg; }
+        @keyframes ai-scan-dash {
+          from { stroke-dashoffset: var(--dash-start); }
+          to { stroke-dashoffset: calc(var(--dash-start) - var(--len)); }
         }
         .brand-roulette {
           position: relative;
@@ -660,7 +640,7 @@ export default function Home() {
         @media (prefers-reduced-motion: reduce) {
           .studio-orb-wrap, .studio-orb::after { animation: none; }
           .studio-orb-wrap { transform: translate(-50%, -50%); }
-          .ai-scan-frame::before, .ai-scan-frame::after { animation: none; }
+          .ai-scan-dash { animation: none; }
         }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
@@ -740,6 +720,73 @@ const button: CSSProperties = {
 type ScanStatus = 'pass' | 'fail' | 'unavailable'
 type ScanCheck = { id: string; label: string; status: ScanStatus; detail?: string }
 
+const SCAN_RADIUS = 22
+
+function ScanGlow() {
+  const ref = useRef<SVGSVGElement>(null)
+  const [size, setSize] = useState({ w: 0, h: 0 })
+
+  useEffect(() => {
+    const frame = ref.current?.parentElement
+    if (!frame) return
+    const measure = () => {
+      const rect = frame.getBoundingClientRect()
+      setSize({ w: rect.width, h: rect.height })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(frame)
+    return () => observer.disconnect()
+  }, [])
+
+  const { w, h } = size
+  const inset = 2
+  const innerW = Math.max(0, w - inset * 2)
+  const innerH = Math.max(0, h - inset * 2)
+  const radius = Math.min(SCAN_RADIUS, innerW / 2, innerH / 2)
+  const length = 2 * (innerW - 2 * radius) + 2 * (innerH - 2 * radius) + 2 * Math.PI * radius
+  const tail = length * 0.14
+  const head = length * 0.028
+  const shared = {
+    x: inset,
+    y: inset,
+    width: innerW,
+    height: innerH,
+    rx: radius,
+    fill: 'none' as const,
+    pathLength: length,
+  }
+
+  return (
+    <svg ref={ref} className="ai-scan-svg" width={w || '100%'} height={h || '100%'} aria-hidden="true">
+      {length > 0 && (
+        <>
+          <rect {...shared} stroke="#293cf4" strokeOpacity="0.14" strokeWidth="1.5" />
+          <rect
+            {...shared}
+            className="ai-scan-dash"
+            stroke="#293cf4"
+            strokeOpacity="0.4"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray={`${tail} ${length - tail}`}
+            style={{ '--dash-start': 0, '--len': length } as CSSProperties}
+          />
+          <rect
+            {...shared}
+            className="ai-scan-dash is-head"
+            stroke="#293cf4"
+            strokeWidth="9"
+            strokeLinecap="round"
+            strokeDasharray={`${head} ${length - head}`}
+            style={{ '--dash-start': -(tail - head), '--len': length } as CSSProperties}
+          />
+        </>
+      )}
+    </svg>
+  )
+}
+
 function SiteScan() {
   const [url, setUrl] = useState('')
   const [email, setEmail] = useState('')
@@ -812,6 +859,7 @@ function SiteScan() {
   return (
     <section id="analisi" className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
       <div className="ai-scan-frame">
+      <ScanGlow />
       <div className="ai-scan-card">
         <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Analisi gratuita</div>
         <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
