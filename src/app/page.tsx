@@ -266,7 +266,7 @@ export default function Home() {
                     ...button,
                     alignSelf: 'flex-start',
                     marginTop: 22,
-                    boxShadow: '3px 3px 0 #fe3812',
+                    boxShadow: '3px 3px 0 #293cf4',
                   }}
                 >
                   {i === 0 ? 'Brand & Creative →' : i === 1 ? 'Web & Digital →' : 'AI Systems →'}
