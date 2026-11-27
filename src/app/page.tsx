@@ -509,13 +509,13 @@ export default function Home() {
           pointer-events: none;
           background: conic-gradient(
             from var(--scan-angle),
-            rgba(41, 60, 244, 0.55) 0deg,
-            #293cf4 36deg,
-            #ffffff 70deg,
-            #b7c2ff 102deg,
-            #293cf4 148deg,
-            rgba(41, 60, 244, 0.62) 230deg,
-            rgba(41, 60, 244, 0.4) 360deg
+            rgba(41, 60, 244, 0.1) 0deg,
+            rgba(41, 60, 244, 0.1) 248deg,
+            rgba(41, 60, 244, 0.22) 300deg,
+            rgba(41, 60, 244, 0.45) 326deg,
+            #ffffff 342deg,
+            rgba(41, 60, 244, 0.16) 356deg,
+            rgba(41, 60, 244, 0.1) 360deg
           );
           animation: ai-scan-glow 3.8s linear infinite;
         }
@@ -525,10 +525,10 @@ export default function Home() {
           z-index: 0;
         }
         .ai-scan-frame::after {
-          inset: -18px;
-          border-radius: 40px;
-          filter: blur(16px);
-          opacity: 0.95;
+          inset: -8px;
+          border-radius: 30px;
+          filter: blur(12px);
+          opacity: 0.4;
           z-index: -1;
         }
         .ai-scan-card {
