@@ -490,14 +490,53 @@ export default function Home() {
         }
         .meta-row > div:first-child { text-align: left; padding-left: var(--meta-inset); }
         .meta-row > div:last-child { text-align: right; padding-right: var(--meta-inset); }
-        .ai-scan-card {
+        @property --scan-angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+        .ai-scan-frame {
+          position: relative;
           width: 60%;
           margin: 0 auto;
+          isolation: isolate;
+        }
+        .ai-scan-frame::before,
+        .ai-scan-frame::after {
+          content: '';
+          position: absolute;
+          pointer-events: none;
+          background: conic-gradient(
+            from var(--scan-angle),
+            rgba(41, 60, 244, 0.22) 0deg,
+            rgba(41, 60, 244, 0.08) 220deg,
+            #293cf4 312deg,
+            #f2f4ff 338deg,
+            #293cf4 360deg
+          );
+          animation: ai-scan-glow 4.6s linear infinite;
+        }
+        .ai-scan-frame::before {
+          inset: -2px;
+          z-index: 0;
+        }
+        .ai-scan-frame::after {
+          inset: -22px;
+          filter: blur(16px);
+          opacity: 0.9;
+          z-index: -1;
+        }
+        .ai-scan-card {
+          position: relative;
+          z-index: 1;
           text-align: center;
           background: #F0EBE0;
           border: 1px solid #0D0D0D;
           box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
+        }
+        @keyframes ai-scan-glow {
+          to { --scan-angle: 360deg; }
         }
         .brand-roulette {
           position: relative;
@@ -617,10 +656,12 @@ export default function Home() {
         @media (prefers-reduced-motion: reduce) {
           .studio-orb-wrap, .studio-orb::after { animation: none; }
           .studio-orb-wrap { transform: translate(-50%, -50%); }
+          .ai-scan-frame::before, .ai-scan-frame::after { animation: none; }
         }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
-          .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
+          .ai-scan-frame { width: 100%; }
+          .ai-scan-card { padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
           .hero-grid {
             grid-template-columns: 1fr !important;
             grid-template-rows: auto auto !important;
@@ -766,6 +807,7 @@ function SiteScan() {
 
   return (
     <section id="analisi" className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
+      <div className="ai-scan-frame">
       <div className="ai-scan-card">
         <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Analisi gratuita</div>
         <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
@@ -876,6 +918,7 @@ function SiteScan() {
             </div>
           </div>
         ) : null}
+      </div>
       </div>
     </section>
   )
