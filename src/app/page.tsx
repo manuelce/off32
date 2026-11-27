@@ -490,35 +490,14 @@ export default function Home() {
         }
         .meta-row > div:first-child { text-align: left; padding-left: var(--meta-inset); }
         .meta-row > div:last-child { text-align: right; padding-right: var(--meta-inset); }
-        .ai-scan-frame {
-          position: relative;
+        .ai-scan-card {
           width: 60%;
           margin: 0 auto;
-          isolation: isolate;
-          border-radius: 22px;
-        }
-        .ai-scan-svg {
-          position: absolute;
-          inset: 0;
-          overflow: visible;
-          pointer-events: none;
-        }
-        .ai-scan-svg.is-bloom { z-index: 0; }
-        .ai-scan-svg.is-core { z-index: 2; }
-        .ai-scan-dash {
-          animation: ai-scan-dash 5.6s linear infinite;
-        }
-        .ai-scan-card {
-          position: relative;
-          z-index: 1;
-          border-radius: 22px;
           text-align: center;
           background: #F0EBE0;
+          border: 1px solid #0D0D0D;
+          box-shadow: 10px 10px 0 #0D0D0D;
           padding: 40px 36px 32px;
-        }
-        @keyframes ai-scan-dash {
-          from { stroke-dashoffset: var(--dash-start); }
-          to { stroke-dashoffset: calc(var(--dash-start) - var(--len)); }
         }
         .brand-roulette {
           position: relative;
@@ -638,12 +617,10 @@ export default function Home() {
         @media (prefers-reduced-motion: reduce) {
           .studio-orb-wrap, .studio-orb::after { animation: none; }
           .studio-orb-wrap { transform: translate(-50%, -50%); }
-          .ai-scan-dash { animation: none; }
         }
         @media (max-width: 860px) {
           .ai-scan { padding-left: 20px !important; padding-right: 28px !important; }
-          .ai-scan-frame { width: 100%; }
-          .ai-scan-card { padding: 28px 20px 24px; }
+          .ai-scan-card { width: 100%; padding: 28px 20px 24px; box-shadow: 7px 7px 0 #0D0D0D; }
           .hero-grid {
             grid-template-columns: 1fr !important;
             grid-template-rows: auto auto !important;
@@ -718,91 +695,6 @@ const button: CSSProperties = {
 type ScanStatus = 'pass' | 'fail' | 'unavailable'
 type ScanCheck = { id: string; label: string; status: ScanStatus; detail?: string }
 
-const SCAN_RADIUS = 22
-
-function ScanGlow() {
-  const ref = useRef<SVGSVGElement>(null)
-  const [size, setSize] = useState({ w: 0, h: 0 })
-
-  useEffect(() => {
-    const frame = ref.current?.parentElement
-    if (!frame) return
-    const measure = () => {
-      const rect = frame.getBoundingClientRect()
-      setSize({ w: rect.width, h: rect.height })
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(frame)
-    return () => observer.disconnect()
-  }, [])
-
-  const { w, h } = size
-  const inset = 2
-  const innerW = Math.max(0, w - inset * 2)
-  const innerH = Math.max(0, h - inset * 2)
-  const radius = Math.min(SCAN_RADIUS, innerW / 2, innerH / 2)
-  const length = 2 * (innerW - 2 * radius) + 2 * (innerH - 2 * radius) + 2 * Math.PI * radius
-  const tail = length * 0.32
-  const shared = {
-    x: inset,
-    y: inset,
-    width: innerW,
-    height: innerH,
-    rx: radius,
-    fill: 'none' as const,
-    pathLength: length,
-    stroke: '#293cf4',
-  }
-  const edge = { '--len': length, '--dash-start': 0 } as CSSProperties
-
-  return (
-    <>
-      <svg ref={ref} className="ai-scan-svg is-bloom" width={w || '100%'} height={h || '100%'} aria-hidden="true">
-        {length > 0 && (
-          <>
-            <defs>
-              <filter id="ai-scan-halo" x="-120%" y="-120%" width="340%" height="340%">
-                <feGaussianBlur stdDeviation="18" />
-              </filter>
-              <filter id="ai-scan-swell" x="-120%" y="-120%" width="340%" height="340%">
-                <feGaussianBlur stdDeviation="14" />
-              </filter>
-            </defs>
-            <rect {...shared} strokeWidth="18" strokeOpacity="0.28" filter="url(#ai-scan-halo)" />
-            <rect
-              {...shared}
-              className="ai-scan-dash"
-              strokeWidth="34"
-              strokeOpacity="1"
-              strokeLinecap="round"
-              filter="url(#ai-scan-swell)"
-              strokeDasharray={`${tail} ${length - tail}`}
-              style={edge}
-            />
-          </>
-        )}
-      </svg>
-      <svg className="ai-scan-svg is-core" width={w || '100%'} height={h || '100%'} aria-hidden="true">
-        {length > 0 && (
-          <>
-            <rect {...shared} strokeWidth="1.75" strokeOpacity="0.55" />
-            <rect
-              {...shared}
-              className="ai-scan-dash"
-              strokeWidth="4"
-              strokeOpacity="1"
-              strokeLinecap="round"
-              strokeDasharray={`${tail} ${length - tail}`}
-              style={edge}
-            />
-          </>
-        )}
-      </svg>
-    </>
-  )
-}
-
 function SiteScan() {
   const [url, setUrl] = useState('')
   const [email, setEmail] = useState('')
@@ -874,8 +766,6 @@ function SiteScan() {
 
   return (
     <section id="analisi" className="ai-scan" style={{ padding: '15% 40px calc(15% + 10px)' }}>
-      <div className="ai-scan-frame">
-      <ScanGlow />
       <div className="ai-scan-card">
         <div style={{ ...meta, color: '#fe3812', marginBottom: 14 }}>Analisi gratuita</div>
         <h2 style={{ fontFamily: "'Canela', Georgia, serif", fontWeight: 300, fontSize: 'clamp(32px, 3.6vw, 52px)', lineHeight: 0.95, letterSpacing: '-1px', margin: '0 0 16px' }}>
@@ -986,7 +876,6 @@ function SiteScan() {
             </div>
           </div>
         ) : null}
-      </div>
       </div>
     </section>
   )
