@@ -502,13 +502,11 @@ export default function Home() {
           inset: 0;
           overflow: visible;
           pointer-events: none;
-          z-index: 2;
         }
+        .ai-scan-svg.is-bloom { z-index: 0; }
+        .ai-scan-svg.is-core { z-index: 2; }
         .ai-scan-dash {
-          animation: ai-scan-dash 5.2s linear infinite;
-        }
-        .ai-scan-dash.is-head {
-          filter: blur(2.4px);
+          animation: ai-scan-dash 5.6s linear infinite;
         }
         .ai-scan-card {
           position: relative;
@@ -745,8 +743,7 @@ function ScanGlow() {
   const innerH = Math.max(0, h - inset * 2)
   const radius = Math.min(SCAN_RADIUS, innerW / 2, innerH / 2)
   const length = 2 * (innerW - 2 * radius) + 2 * (innerH - 2 * radius) + 2 * Math.PI * radius
-  const tail = length * 0.14
-  const head = length * 0.028
+  const tail = length * 0.32
   const shared = {
     x: inset,
     y: inset,
@@ -755,35 +752,54 @@ function ScanGlow() {
     rx: radius,
     fill: 'none' as const,
     pathLength: length,
+    stroke: '#293cf4',
   }
+  const edge = { '--len': length, '--dash-start': 0 } as CSSProperties
 
   return (
-    <svg ref={ref} className="ai-scan-svg" width={w || '100%'} height={h || '100%'} aria-hidden="true">
-      {length > 0 && (
-        <>
-          <rect {...shared} stroke="#293cf4" strokeOpacity="0.14" strokeWidth="1.5" />
-          <rect
-            {...shared}
-            className="ai-scan-dash"
-            stroke="#293cf4"
-            strokeOpacity="0.4"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray={`${tail} ${length - tail}`}
-            style={{ '--dash-start': 0, '--len': length } as CSSProperties}
-          />
-          <rect
-            {...shared}
-            className="ai-scan-dash is-head"
-            stroke="#293cf4"
-            strokeWidth="9"
-            strokeLinecap="round"
-            strokeDasharray={`${head} ${length - head}`}
-            style={{ '--dash-start': -(tail - head), '--len': length } as CSSProperties}
-          />
-        </>
-      )}
-    </svg>
+    <>
+      <svg ref={ref} className="ai-scan-svg is-bloom" width={w || '100%'} height={h || '100%'} aria-hidden="true">
+        {length > 0 && (
+          <>
+            <defs>
+              <filter id="ai-scan-halo" x="-120%" y="-120%" width="340%" height="340%">
+                <feGaussianBlur stdDeviation="18" />
+              </filter>
+              <filter id="ai-scan-swell" x="-120%" y="-120%" width="340%" height="340%">
+                <feGaussianBlur stdDeviation="14" />
+              </filter>
+            </defs>
+            <rect {...shared} strokeWidth="18" strokeOpacity="0.28" filter="url(#ai-scan-halo)" />
+            <rect
+              {...shared}
+              className="ai-scan-dash"
+              strokeWidth="34"
+              strokeOpacity="1"
+              strokeLinecap="round"
+              filter="url(#ai-scan-swell)"
+              strokeDasharray={`${tail} ${length - tail}`}
+              style={edge}
+            />
+          </>
+        )}
+      </svg>
+      <svg className="ai-scan-svg is-core" width={w || '100%'} height={h || '100%'} aria-hidden="true">
+        {length > 0 && (
+          <>
+            <rect {...shared} strokeWidth="1.75" strokeOpacity="0.55" />
+            <rect
+              {...shared}
+              className="ai-scan-dash"
+              strokeWidth="4"
+              strokeOpacity="1"
+              strokeLinecap="round"
+              strokeDasharray={`${tail} ${length - tail}`}
+              style={edge}
+            />
+          </>
+        )}
+      </svg>
+    </>
   )
 }
 
